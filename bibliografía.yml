@@ -1,0 +1,53 @@
+anthony2023enumerating:
+  type: article
+  title: "Enumerating soil biodiversity"
+  author:
+    - Anthony, M. A.
+    - Bender, S. F.
+    - van der Heijden, M. G. A.
+  date: 2023
+  journal: "Proceedings of the National Academy of Sciences (Proc. Natl. Acad. Sci. U.S.A.)"
+  volume: 120
+  issue: 33
+  pages: e2304663120
+  doi: 10.1073/pnas.2304663120
+  url: "https://doi.org/10.1073/pnas.2304663120"
+  language: en
+
+fao2020state:
+  type: book
+  title: "State of Knowledge of Soil Biodiversity: Status, Challenges and Potentialities"
+  author: "FAO"
+  date: 2020
+  doi: 10.4060/cb1928en
+  url: "https://doi.org/10.4060/cb1928en"
+  organization: "Food and Agriculture Organization of the United Nations"
+  language: en
+
+sob4es2023:
+  type: web
+  title: "Integrating Soil Biodiversity into Ecosystem Services"
+  author: "SOB4ES"
+  date: 2023
+  url: "https://www.sob4es.eu/"
+  language: en
+
+studer2021towards:
+  type: article
+  title: "Towards CRISP-ML(Q): A Machine Learning Process Model with Quality Assurance Methodology"
+  author:
+    - Studer, S.
+    - Bui, T. B.
+    - Drescher, C.
+    - Hanuschkin, A.
+    - Winkler, L.
+    - Peters, S.
+    - Müller, K.-R.
+  date: 2021
+  journal: "Machine Learning and Knowledge Extraction (Mach. Learn. Knowl. Extr.)"
+  volume: 3
+  issue: 2
+  pages: 392-413
+  doi: 10.3390/make3020020
+  url: "https://doi.org/10.3390/make3020020"
+  language: en
