@@ -39,7 +39,8 @@
 
         para a obtención do Título de Graduado en Enxeñaría Informática
 
-        #strong[Desarrollo de un sistema de monitorización y automatización de los valores de conductividad en acuarios con Arduino]
+        #strong[Desarrollo y evaluación de modelos de aprendizaje automático para la predicción de
+la biodiversidad del suelo]
 
       ],
     )],
@@ -78,7 +79,7 @@
 
         #strong[Titor/a:] Javier Rodeiro Iglesias
 
-        #strong[Área de coñecemento:] Linguaxes e Sistemas Informáticos
+        #strong[Área de coñecemento:] [Pendiente de confirmar/buscar]
 
         #strong[Departamento:] Informática
 
@@ -129,12 +130,13 @@
         header: [  // Cabezado de página 
                 #set text(10pt)
                 #set align(center)
-                #h(1fr) _Desarrollo de un sistema de monitorización y automatización de los valores de conductividad en acuarios con Arduino_
+                #h(1fr) _Desarrollo y evaluación de modelos de aprendizaje automático para la predicción de
+la biodiversidad del suelo_
                 ],
         paper: "a4",
         margin: (x: 2.5cm, y: 3cm),
         footer: context [ //pie de página
-                   #set align(top+center)
+                   #set align(top+right)
                    #set text(10pt)
                    #counter(page).display("1")
                    ]
@@ -177,7 +179,7 @@
 
 // Índice general #############################################################
 
-
+#outline(title: [Índice])
 #show heading.where(level: 1): set text(
   size: 0pt
 )
