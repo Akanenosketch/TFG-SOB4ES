@@ -1,0 +1,49 @@
+# Files exported from the app
+Datasets
+Datasets/*
+
+RESULTADO DE REFERENCIA
+
+# Environment & secrets 
+.env
+.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.tox/
+.venv/
+venv/
+env/
+pip-wheel-metadata/
+
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.rdb
+
+# IDEs & editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+
+# Docker
+docker-compose.override.yml
+
+# Logs & coverage
+*.log
+.coverage
+htmlcov/
