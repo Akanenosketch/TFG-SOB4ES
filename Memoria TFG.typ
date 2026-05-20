@@ -1,14 +1,8 @@
 #set text(lang:"es")
-#box(
-  stroke: 0pt,
-  image(
-    "media/image1.png", height: 0.4930555555555556in, width: 2.7083333333333335in,
-  ),
-)
 
 // Portada     
 
-#image("media/Portada.pdf", page: 1, width: 100%)
+#image("media/Portada.pdf", page: 1, width: 100%, height: 100%)
 
 // Fin portada
 /*
