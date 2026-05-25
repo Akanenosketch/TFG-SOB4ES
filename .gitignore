@@ -2,6 +2,9 @@
 Datasets
 Datasets/*
 
+# Imágenes que será de utilidad para la documetnación
+media/* 
+
 RESULTADO DE REFERENCIA
 
 # Environment & secrets 
