@@ -4,6 +4,7 @@ Datasets/*
 
 # Archivos descargados a lo largo de la recolecta de datos online (pendiente de reasignar rutas)
 data-prep/output/cds_downloads/*
+data-prep/01_datos_locales (1).ipynb
 
 # Otros archivos generados al acceder a los datasets (los lock)
 .~lock.*
