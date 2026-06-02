@@ -1,0 +1,22 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="FYOr5kYBqRXIx7uWijwj">
+    <mxGraphModel dx="1649" dy="916" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="70" width="370" x="240" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="70" width="370" x="240" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="70" width="370" x="240" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="70" width="370" x="240" y="480" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
