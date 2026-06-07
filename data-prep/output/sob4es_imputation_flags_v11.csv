@@ -1,5 +1,6 @@
 SITE_ID,clay_content_was_missing,silt_content_was_missing,sand_content_was_missing,aggregate_stability_was_missing,BACTERIA_SHANNON_was_missing,FUNGI_SHANNON_was_missing,EUKARYOTES_SHANNON_was_missing,Earthworm_Abundance_was_missing,Earthworm_Richness_was_missing,Earthworm_Shannon_lombrices_resumen_was_missing,bac_asv_richness_was_missing,bac_total_reads_was_missing,fun_asv_richness_was_missing,fun_total_reads_was_missing,euk_asv_richness_was_missing,euk_total_reads_was_missing,oomy_asv_richness_was_missing,oomy_total_reads_was_missing,cerc_asv_richness_was_missing,cerc_total_reads_was_missing,eu_clay_content_was_missing,eu_sand_content_was_missing,eu_silt_content_was_missing,eu_soil_texture_class_was_missing,eu_water_holding_capacity_was_missing,eu_CN_ratio_was_missing,eu_P_was_missing,eu_pH_was_missing,eu_As_was_missing,eu_organic_carbon_octop_was_missing,eu_Zn_was_missing,eu_env_zone_was_missing,eu_land_cover_was_missing,eu_soil_type_wrb_was_missing
 BE_001,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BE_002,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 BE_003,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 BE_004,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 BE_005,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
