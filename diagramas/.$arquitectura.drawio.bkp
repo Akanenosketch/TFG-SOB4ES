@@ -1,19 +1,28 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="FYOr5kYBqRXIx7uWijwj">
-    <mxGraphModel dx="1649" dy="916" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1410" dy="916" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="kYGK6aSAg2V1nRZVulDA-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-5" edge="1" parent="1" source="kYGK6aSAg2V1nRZVulDA-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#b0e3e6;strokeColor=#0e8088;" target="kYGK6aSAg2V1nRZVulDA-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" value="&lt;font style=&quot;font-size: 20px;&quot; face=&quot;Helvetica&quot;&gt;Capa de ingesta de datos&lt;/font&gt;" vertex="1">
           <mxGeometry height="70" width="370" x="240" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="kYGK6aSAg2V1nRZVulDA-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-6" edge="1" parent="1" source="kYGK6aSAg2V1nRZVulDA-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#b0e3e6;strokeColor=#0e8088;" target="kYGK6aSAg2V1nRZVulDA-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Capa de procesamiento de datos&lt;/font&gt;" vertex="1">
           <mxGeometry height="70" width="370" x="240" y="260" as="geometry" />
         </mxCell>
-        <mxCell id="kYGK6aSAg2V1nRZVulDA-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-7" edge="1" parent="1" source="kYGK6aSAg2V1nRZVulDA-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#b0e3e6;strokeColor=#0e8088;" target="kYGK6aSAg2V1nRZVulDA-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Capa de modelado predictivo&lt;/font&gt;" vertex="1">
           <mxGeometry height="70" width="370" x="240" y="370" as="geometry" />
         </mxCell>
-        <mxCell id="kYGK6aSAg2V1nRZVulDA-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+        <mxCell id="kYGK6aSAg2V1nRZVulDA-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Capa de evaluación de modelos&lt;/font&gt;" vertex="1">
           <mxGeometry height="70" width="370" x="240" y="480" as="geometry" />
         </mxCell>
       </root>
