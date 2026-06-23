@@ -1,0 +1,24 @@
+# Dependencias del proyecto SOB4ES
+# Entornos para Notebooks: Random Forest, Regresión (Ridge) y XGBoost
+
+# Manipulación y procesamiento de datos
+pandas>=2.0.0
+numpy>=1.24.0  
+
+# Modelado predictivo y métricas de evaluación
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+
+# Almacenamiento y persistencia de modelos (.pkl)
+joblib>=1.3.0
+
+# Explicabilidad del modelo e interpretabilidad
+shap>=0.42.0
+
+# Visualización de gráficos
+matplotlib>=3.7.0
+
+# Soporte para la ejecución de Jupyter Notebooks
+jupyter # la más reciente a secas para que no salgan los warning sobre tqdm
+jupyterlab>=4.0.0
+notebook>=7.0.0
