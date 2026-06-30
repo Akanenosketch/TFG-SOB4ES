@@ -1,6 +1,7 @@
 # Datasets originales
 Datasets
 Datasets/*
+data-prep/*
 
 # Archivos descargados a lo largo de la recolecta de datos online (pendiente de reasignar rutas)
 data-prep/output/cds_downloads/*
