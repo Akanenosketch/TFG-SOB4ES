@@ -1,4 +1,4 @@
-Target,RandomForest Multisalida,Randome Forest con RegressorChain,MLP Estandar,RF Individual,XGBoost Multisalida,XGBoost Individual,MLP Perdida Custom,Regresión Individual
+Target,RandomForest Multisalida,Random Forest con RegressorChain,MLP Estandar,RF Individual,XGBoost Multisalida,XGBoost Individual,MLP Perdida Custom,Regresión Individual
 GLOBAL,0.1143,0.0901,0.0847,0.0689,0.0658,0.0636,0.0624,-0.1397
 nematode_shannon_z,0.2009,0.1659,0.1461,0.1141,0.1793,0.1644,0.1,-0.0703
 macro_shannon_z,0.2545,0.3408,0.2717,0.2797,0.4068,0.399,0.2584,0.0514
