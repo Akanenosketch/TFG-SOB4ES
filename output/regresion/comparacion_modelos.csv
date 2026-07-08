@@ -6,4 +6,4 @@ RF Individual,0.0689,0.9239,0.6997
 XGBoost Multisalida,0.0658,0.9248,0.6859
 XGBoost Individual,0.0636,0.9246,0.6859
 MLP Perdida Custom,0.0624,0.9362,0.6918
-Regresión Individual,-0.1397,1.0036,0.7592
+Regresión Individual,-0.0164,0.9665,0.7444
