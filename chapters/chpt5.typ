@@ -131,6 +131,89 @@ A lo largo del desarrollo de esta capa, se hacen uso de las siguientes librería
       kind: table,
   )
 
+- *XGBoost:* Librería que implementa algoritmos de ML bajo el framework de Gradient Boosting[]. Su aprendizaje se basa en árboles de decisión potenciados por el framework mencionado previamente.\
+  Además de hacer uso de la propia librería destacamos el siguiente submódulo o función:
+  - *XGBRegressor:* Implementa el algoritmo de gradient boosting sobre los árboles de decisión. Además, de que permite trabajar con múltiples salidas haciendo uso del argumento `multi_strategy=multi_output_tree`.
+  #colbreak()
+
+- *PyTorch:* Librería que se emplea principalmente para actividades de ML, y para la creación de redes neuronales. Actualmente es una de las más empleadas dentro del entorno académico e investigador.\ 
+  De esta librería destacamos los siguientes elementos:
+
+  #figure(
+    align(center)[
+      #table(columns: (30%,70%), align: (center,center), 
+      table.header(
+        table.cell(align: center)[*Submódulo/Módulo*], [*Descripción*]),  
+      table.cell(align: center)[*torch*], 
+        table.cell(align: left)[Librería principal de PyTorch, proporcionando los tensores, el cálculo de gradientes (autograd) y el optimizador Adam usado para entrenar a las redes neuronales.],
+      table.cell(align: center)[*torch.nn*], 
+        table.cell(align: left)[Módulo de torch encargado de la definición y construcción de redes neuronales. En términos de definición se pueden definir las capas, el modo de activación, la regularización y la función de pérdida, entre otros elementos.],
+      table.cell(align: center)[*torch.utils.data.\ DataLoader*], 
+        table.cell(align: left, rowspan: 2)[Se encargan de gestionar la división del conjunto de entrenamiento en lotes de trabajo (batches) y su iteración aleatoria durante cada período de entrenamiento.],
+      table.cell(align: center)[*torch.utils.data.\ TensorDataset*], 
+      )],
+      caption: [Tabla de submódulos empleados de la librería PyTorch],
+      kind: table,
+  )
+
+- *joblib:* Librería que permite la serialización de las funciones como también la computación paralela. Esto es de gran utilidad a la hora de entrenar y trabajar con los diferentes modelos, especialmente para manejar la concurrencia y la persistencia de los modelos creados haciendo uso de scikit-learn y XGBoost.
+
   #colbreak()
 
 == Capa de evaluación de modelos <capa-evaluacion>
+
+El objetivo principal de esta capa final es evaluar los diferentes modelos desarrollados en la Capa de modelado predictivo y a partir de las evaluaciones realizadas, hacer las siguientes acciones:\
++ Escoger los modelos que presentan una mayor utilidad y funcionalidad para el proyecto.
++ Mejorar los modelos escogidos en múltiples iteraciones.
+Una vez más, de forma similar a las capas anteriores, esta capa se divide en las siguientes fases:
++ *Fase de validación individual:* Durante el desarrollo de los modelos, en cada notebook se han integrado varias celdas que tienen como objetivo realizar la validación cruzada para cada modelo antes de generar todos los modelos resultantes.\
+  Esto se realiza para comprobar ya en la construcción de los modelos si los parámetros escogidos son los más efectivos o si estos, por otro lado, están provocando un sobreajuste en el modelo. También permite prevenir la fuga de datos originado por un entrenamiento deficiente o mal preparado.
+
+  De esta fase se obtienen datos que figuran en los outputs de los notebooks de cada uno de los modelos diseñados, además de los modelos resultantes que serán usados en la siguiente fase.
+
++ *Fase de validación en conjunto de los modelos generados:* Para el correcto desarrollo de esta fase se van a crear dos notebooks más que se van a encargar de realizar la evaluación y validación de los modelos con dos puntos de vista distinto, los cuales son los siguientes:
+  + *Punto de vista numérico:* En este notebook nos centramos en cargar todos los modelos desarrollados y evaluar el rendimiento de cada uno de los modelos contra el dataset creado para las pruebas.\
+    Dentro de este punto de vista nos centramos en las siguientes métricas, cuyas definiciones se pueden encontrar en el [INSERTAR ANEXO]:
+    - *R2 global.*
+    - *R2 por target.*
+    - *RMSE.*
+    - *MAE.*
+    A partir de la ejecución del notebook se podrán ver los resultados de las pruebas tanto en las celdas de salida del notebook, como en los archivos de resultado que se exportan en la última fase de ejecución. Estos archivos contienen los resultados de la comparación entre modelos y el R2 por cada target de todos los modelos probados.
+  + *Punto de vista discreto:* En este notebook sigue una metodología similar de realización de pruebas en comparación con el notebook anterior, pero para este se realiza una clasificación para poder ver los resultados, no tanto como números, sino como aciertos y fallos.\ 
+    Dentro de este punto de vista nos podemos centrar en otras métricas, cuyas definiciones también se pueden encontrar en el [INSERTAR ANEXO]:
+      - *Matrices de confusión.*
+      - *Kappa de Cohen.*
+      - *F1-macro.*
++ *Análisis de resultados y aplicación de mejoras:* El objetivo principal de esta fase es analizar los resultados obtenidos en la fase anterior, en la primera vuelta escoger los modelos que presentan el mejor funcionamiento y, a partir de la segunda vuelta, aplicar mejoras para intentar mejorar aún más el rendimiento.
+  
+  Esta fase no requiere de desarrollo de código, es únicamente ver los resultados obtenidos, analizarlos y mejorarlos en la medida de lo posible en base a las capacidades y limitaciones que se tienen.
+
+A lo largo del desarrollo de esta capa, se hacen uso de las siguientes librerías:
+- *scikit-learn:* véase definición anterior. Para esta capa hacemos uso de los siguientes submódulos de scikit-learn:
+
+  #figure(
+    align(center)[
+      #table(columns: (30%,70%), align: (center,center), 
+      table.header(
+        table.cell(align: center)[*Submódulo*], [*Descripción*]),  
+      table.cell(align: center)[*metrics.r2_score*], 
+        table.cell(align: left)[Calcula el coeficiente de determinación R2, la métrica principal para medir qué proporción de la varianza real da explicado el modelo.],
+      table.cell(align: center)[*metrics.\ mean_squared_error*], 
+        table.cell(align: left)[Calcula el error cuadrático medio, empleado para medir el error de predicción penalizando más de esa forma los errores grandes.],
+      table.cell(align: center)[*metric.\ mean_absolute_error*], 
+        table.cell(align: left)[Calcula el error absoluto medio (MAE).],
+      table.cell(align: center)[*inspection.\ permuttion_importance*], 
+        table.cell(align: left)[Mide la importancia de cada variable predictora mediante el barajeo de sus valores y observando en cuánto cae el rendimiento del modelo. Se emplea en los modelos los cuales presentan compatibilidad son SHAP (modelos que no son de árbol) y también para complementar a SHAP.],
+      table.cell(align: center)[*base.BaseEstimator*], 
+        table.cell(align: left, rowspan: 2)[Clases empleadas para envolver un modelo creado con PyTorch en una interfaz compatible con scikit-learn. Es necesario para poder hacer uso de permutation_importance sobre redes neuronales (son incompatibles de base).],
+      table.cell(align: center)[*base.RegressorMixin*], 
+      )],
+      caption: [Tabla de submódulos empleados de la librería scikit-learn (para evaluación)],
+      kind: table,
+  )
+
+  También se hacen uso de los submódulos RepeatedKFold y cross_validate, los cuales ya se han explicado en la parte de librerías empleadas de la Capa de modelado predictivo.
+
+- *SHAP:* Librería que calcula los valores shapley haciendo uso de TreeExplainer para determinar la contribución exacta de cada variable a cada predicción realizada. Esto nos permite ver de forma gráfica cómo funciona el modelo y también ver cuánto impacto tiene cada una de las variables en los diferentes targets establecidos.
+- *matplotlib:* Librería creada para la generación de visualizaciones de diferentes tipos en Python, permitiendo mostrar datos de forma gráfica y crear ilustraciones gráficas complejas de forma intuitiva y sencilla. También funciona como motor subyacente para otras librerías como shap y seaborn.
+- *seaborn:* Librería basada en matplotlib, permitiendo la creación de gráficas de datos con una interfaz de mayor nivel en comparación con matplotlib y está integrado de forma más cercana con otras librerías empleadas en este trabajo como pandas. 
