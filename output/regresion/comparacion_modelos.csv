@@ -6,4 +6,4 @@ XGBoost Multisalida,0.0779,0.9188,0.6847
 XGBoost Individual,0.069,0.9289,0.7044
 Regresión Individual,-0.0159,0.9663,0.7436
 MLP Estandar,-0.0171,0.9462,0.7114
-MLP Perdida Custom,-0.0544,0.9622,0.7073
+MLP Perdida Custom,-0.0212,0.9517,0.7103
