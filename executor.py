@@ -8,9 +8,7 @@ Que hace por cada notebook:
      limite de tiempo por celda.
   2. Guarda el resultado sobre el propio notebook (con las tablas/graficas ya
      generadas dentro).
-  3. Exporta tambien una version en HTML junto al notebook, para verlo sin abrir
-     Jupyter.
-  4. Si un notebook falla (una celda lanza una excepcion), no interrumpe el resto:
+  3. Si un notebook falla (una celda lanza una excepcion), no interrumpe el resto:
      sigue con el siguiente y lo apunta en el resumen final.
 
 Uso:
@@ -65,23 +63,10 @@ def ejecutar_notebook(nb_path: Path) -> dict:
 
     ok = resultado.returncode == 0
 
-    html_generado = None
-    if ok:
-        # Exporta tambien a HTML junto al notebook, para poder verlo sin abrir Jupyter.
-        cmd_html = [
-            sys.executable, "-m", "jupyter", "nbconvert",
-            "--to", "html",
-            str(nb_path),
-        ]
-        r_html = subprocess.run(cmd_html, capture_output=True, text=True)
-        if r_html.returncode == 0:
-            html_generado = nb_path.with_suffix(".html").name
-
     return {
         "notebook": nb_path.name,
         "ok": ok,
         "duracion_s": round(duracion, 1),
-        "salida_html": html_generado,
         "error": None if ok else _extraer_error(resultado.stderr),
     }
 
@@ -146,7 +131,7 @@ def main():
         if not r["ok"]:
             print("      " + r["error"].replace("\n", "\n      "))
 
-    resumen_path = output_dir / "resumen_ejecucion.txt"
+    resumen_path = Path("resumen_ejecucion.txt")
     with open(resumen_path, "w", encoding="utf-8") as f:
         for r in resultados:
             estado = "OK" if r["ok"] else "FALLO"
