@@ -4,18 +4,14 @@ Ejecuta de principio a fin varios notebooks (todos los .ipynb de una carpeta, o 
 que le indiques) y deja constancia de si cada uno termino bien o fallo.
 
 Que hace por cada notebook:
-  1. Ejecuta todas las celdas en orden (jupyter nbconvert --execute).
-  2. Guarda el resultado en <notebook>_ejecutado.ipynb (con las tablas/graficas ya
-     generadas), sin tocar el notebook original.
-  3. Exporta tambien una version en HTML, para verlo sin abrir Jupyter.
-  4. Si un notebook falla (una celda lanza una excepcion, o se agota el timeout), no
-     interrumpe el resto: sigue con el siguiente y lo apunta en el resumen final.
-
-Que NO ejecuta (se descarta automaticamente):
-  - Los notebooks que ya son una salida de una ejecucion anterior de este script
-    (terminan en "_ejecutado.ipynb"), para no re-ejecutar resultados sobre resultados.
-  - Cualquier cosa dentro de una carpeta ".ipynb_checkpoints" (son copias temporales
-    que crea Jupyter, no notebooks reales).
+  1. Ejecuta todas las celdas en orden (jupyter nbconvert --execute --inplace), sin
+     limite de tiempo por celda.
+  2. Guarda el resultado sobre el propio notebook (con las tablas/graficas ya
+     generadas dentro).
+  3. Exporta tambien una version en HTML junto al notebook, para verlo sin abrir
+     Jupyter.
+  4. Si un notebook falla (una celda lanza una excepcion), no interrumpe el resto:
+     sigue con el siguiente y lo apunta en el resumen final.
 
 Uso:
     python ejecutar_pruebas.py
@@ -30,12 +26,12 @@ Uso:
     python ejecutar_pruebas.py --pattern "prueba*.ipynb"
         -> vuelve al comportamiento anterior: solo los que empiecen por "prueba"
 
-    python ejecutar_pruebas.py --timeout 1200 --output-dir resultados
-        -> timeout mas largo (en segundos) por notebook, y carpeta de salida distinta
-
 Requisitos: jupyter y nbconvert instalados (pip install jupyter nbconvert ipykernel),
 y el kernel de Python que usan los notebooks disponible (el que se ve en
 "kernelspec" -> "name" dentro del .ipynb; por defecto "python3").
+
+AVISO: al ejecutar in-place, el notebook original se sobreescribe con los resultados
+de la ejecucion. Si quieres conservar el original sin ejecutar, haz una copia antes.
 """
 
 import argparse
@@ -45,64 +41,46 @@ import time
 from pathlib import Path
 
 
-def buscar_notebooks(directorio: Path, pattern: str, recursive: bool, output_dir: Path) -> list:
-    """Busca notebooks segun el patron, descartando checkpoints, salidas de una
-    ejecucion anterior de este script, y cualquier cosa dentro de output_dir."""
+def buscar_notebooks(directorio: Path, pattern: str, recursive: bool) -> list:
+    """Busca notebooks segun el patron."""
     buscador = directorio.rglob(pattern) if recursive else directorio.glob(pattern)
-
-    notebooks = []
-    for nb in buscador:
-        if ".ipynb_checkpoints" in nb.parts:
-            continue
-        if nb.stem.endswith("_ejecutado"):
-            continue
-        try:
-            if output_dir.resolve() in nb.resolve().parents:
-                continue
-        except OSError:
-            pass
-        notebooks.append(nb)
-
-    return sorted(notebooks)
+    return sorted(buscador)
 
 
-def ejecutar_notebook(nb_path: Path, output_dir: Path, timeout: int) -> dict:
-    """Ejecuta un notebook de principio a fin y devuelve un resumen del resultado."""
-    output_dir.mkdir(parents=True, exist_ok=True)
-    nb_ejecutado = output_dir / f"{nb_path.stem}_ejecutado.ipynb"
-
+def ejecutar_notebook(nb_path: Path) -> dict:
+    """Ejecuta un notebook de principio a fin, sobreescribiendolo con el resultado,
+    y devuelve un resumen. No aplica timeout: cada celda puede tardar lo que
+    necesite."""
     inicio = time.time()
     cmd = [
         sys.executable, "-m", "jupyter", "nbconvert",
         "--to", "notebook",
         "--execute",
-        f"--ExecutePreprocessor.timeout={timeout}",
-        "--output", nb_ejecutado.name,
-        "--output-dir", str(output_dir),
+        "--inplace",
+        "--ExecutePreprocessor.timeout=-1",
         str(nb_path),
     ]
     resultado = subprocess.run(cmd, capture_output=True, text=True)
     duracion = time.time() - inicio
 
-    ok = resultado.returncode == 0 and nb_ejecutado.exists()
+    ok = resultado.returncode == 0
 
     html_generado = None
     if ok:
-        # Exporta tambien a HTML, para poder verlo sin abrir Jupyter.
+        # Exporta tambien a HTML junto al notebook, para poder verlo sin abrir Jupyter.
         cmd_html = [
             sys.executable, "-m", "jupyter", "nbconvert",
             "--to", "html",
-            str(nb_ejecutado),
+            str(nb_path),
         ]
         r_html = subprocess.run(cmd_html, capture_output=True, text=True)
         if r_html.returncode == 0:
-            html_generado = nb_ejecutado.with_suffix(".html").name
+            html_generado = nb_path.with_suffix(".html").name
 
     return {
         "notebook": nb_path.name,
         "ok": ok,
         "duracion_s": round(duracion, 1),
-        "salida_ipynb": nb_ejecutado.name if ok else None,
         "salida_html": html_generado,
         "error": None if ok else _extraer_error(resultado.stderr),
     }
@@ -131,17 +109,7 @@ def main():
         "--recursive", action="store_true",
         help="Busca tambien en subcarpetas (por defecto solo mira el directorio actual)",
     )
-    parser.add_argument(
-        "--timeout", type=int, default=900000,
-        help="Timeout en segundos por notebook (default: 900 = 15 min)",
-    )
-    parser.add_argument(
-        "--output-dir", default="resultados_ejecucion",
-        help="Carpeta donde se guardan los notebooks ejecutados y los HTML (default: resultados_ejecucion)",
-    )
     args = parser.parse_args()
-
-    output_dir = Path(args.output_dir)
 
     if args.notebooks:
         notebooks = [Path(n) for n in args.notebooks]
@@ -150,23 +118,22 @@ def main():
         for nb in notebooks_faltantes:
             print(f"[AVISO] No existe: {nb} (se omite)")
     else:
-        notebooks_existentes = buscar_notebooks(Path("."), args.pattern, args.recursive, output_dir)
+        notebooks_existentes = buscar_notebooks(Path("."), args.pattern, args.recursive)
 
     if not notebooks_existentes:
         print(f"No se encontro ningun notebook (patron: {args.pattern}, recursive={args.recursive}). "
               f"Nada que ejecutar.")
         sys.exit(1)
 
-    print(f"Ejecutando {len(notebooks_existentes)} notebook(s), timeout={args.timeout}s cada uno, "
-          f"salida en '{output_dir}/'\n")
+    print(f"Ejecutando {len(notebooks_existentes)} notebook(s) in-place, sin timeout...\n")
 
     resultados = []
     for nb_path in notebooks_existentes:
         print(f"-> {nb_path.name} ...", end=" ", flush=True)
-        r = ejecutar_notebook(nb_path, output_dir, args.timeout)
+        r = ejecutar_notebook(nb_path)
         resultados.append(r)
         if r["ok"]:
-            print(f"OK ({r['duracion_s']}s) -> {output_dir}/{r['salida_ipynb']}")
+            print(f"OK ({r['duracion_s']}s)")
         else:
             print(f"FALLO ({r['duracion_s']}s)")
 
