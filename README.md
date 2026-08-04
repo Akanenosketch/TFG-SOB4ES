@@ -5,19 +5,30 @@ Este repositorio contiene los pipelines completos para el entrenamiento, evaluac
 
 ## Objetivos de la Rama
 
-1. **Desarrollo de Modelos Estructurados:** Implementar algoritmos de aprendizaje automatico (Regresion Lineal Regularizada, Random Forest y XGBoost) para establecer tanto lineas base interpretables como modelos avanzados de alto rendimiento.
-2. **Optimizacion y Validacion:** Ejecutar busquedas exhaustivas de hiperparametros (Tuning) y validar la robustez y capacidad de generalizacion de los modelos mediante validacion cruzada repetida.
-3. **Interpretabilidad:** Integrar tecnicas de explicabilidad, como valores SHAP (Shapley Additive exPlanations) y permutation importance, para comprender el impacto de cada variable ambiental en las predicciones.
-4. **Puesta en Produccion:** Exportar los modelos optimizados en formato serializado (`.pkl`) y establecer pruebas de humo (Sanity Checks) para garantizar la integridad matematica y de software del flujo de inferencia.
+Esta rama presenta como objetivo probar la **sensibilidad del random_state**.
+
+Es decir en esta rama se prueba con `random_state=128` para ver qué cambios ocurren a lo largo de las ejecuciones de los diferentes notebooks y, en consecuencia, ver si ocurren cambios dentro del ranking final de modelos.
+
+Esta prueba es la segunda iteración de las pruebas de sensibilidad de `random_state`, siendo 27 el primer valor y 128 el segundo.
 
 
 ## Contenidos de la Rama
 
-La rama se estructura principalmente alrededor de tres cuadernos de Jupyter, cada uno dedicado al ciclo de vida completo de una familia algoritmica concreta:
+La rama se estructura principalmente alrededor de ocho cuadernos de Jupyter, cada uno dedicado al ciclo de vida completo de una familia algoritmica concreta:
 
-* **`reg-model.ipynb`:** Modelo de Regresion Lineal Regularizada (Ridge). Utilizado como modelo base, estabilizando los coeficientes mediante penalizacion L2 frente a la colinealidad de las variables.
-* **`rf-model.ipynb`:** Modelo Random Forest. Implementa un ensamble de arboles de decision para capturar relaciones no lineales complejas, generando multiples estimadores para reducir la varianza.
+* **`reg_model.ipynb`:** Modelo de Regresion Lineal Regularizada (Ridge).
+* **`rf_model.ipynb`:** Modelo Random Forest.
+* **`rf_multisalida.ipynb`:** Modelo Random Forest con multisalida.
+* **`regressorchain.ipynb`:** Modelo de Random Forest con RegressorChain.
 * **`xgboost-model.ipynb`:** Modelo Avanzado (XGBoost). Utiliza la arquitectura de Gradient Boosting para maximizar el rendimiento predictivo, empaquetado en una solucion de ensamble por expertos.
+* **`xgb_multisalida.ipynb`:** Modelo XGBoost con multisalida.
+* **`mlp_multisalida.ipynb`:** Modelo basado en redes neuronales multicapa con multisalida.
+* **`mlp_custom_loss.ipynb`:** Modelo basado en redes neuronales multicapa con pérdida personalizable.`
+
+A partir de ahí se incluyen los diferentes elementos adicionales:
+* **`comparador_modelos.ipynb`:** Carga todos los modelos y comprueba cuál de ellos es mejor dentro de un ranking en base a métricas numéricas (R2, RMSE, MAE).
+* **`comparador_clasificacion.ipynb`:** Carga todos los modelos y comprueba cuál de ellos es mejor dentro de un ranking en base a métricas discretas (Kappa, F1, Matrices de confusión).
+* **`executor.py`:** Script para facilitar la ejecución automática de todos los notebooks.
 
 ### Conjuntos de Datos Requeridos
 Los flujos de trabajo asumen la existencia de tres divisiones de datos pre-procesados, estratificados espacialmente por pais de origen:
