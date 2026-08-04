@@ -1,1 +1,1 @@
-reg-model.ipynb rf_model.ipynb rf_multisalida.ipynb regressorchain.ipynb xgboost-model.ipynb xgb_multisalida.ipynb mlp_multisalida.ipynb mlp_custom_loss.ipynb comparador_modelos.ipynb comparador_clasificación.ipynb
+comparador_clasificación.ipynb comparador_modelos.ipynb mlp_multisalida.ipynb mlp_custom_loss.ipynb xgboost-model.ipynb xgb_multisalida.ipynb regressorchain.ipynb rf_multisalida.ipynb rf_model.ipynb reg-model.ipynb
