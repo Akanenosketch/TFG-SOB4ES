@@ -132,7 +132,7 @@ def main():
         help="Busca tambien en subcarpetas (por defecto solo mira el directorio actual)",
     )
     parser.add_argument(
-        "--timeout", type=int, default=900,
+        "--timeout", type=int, default=900000,
         help="Timeout en segundos por notebook (default: 900 = 15 min)",
     )
     parser.add_argument(
