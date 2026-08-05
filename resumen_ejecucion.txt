@@ -1,30 +1,20 @@
-FALLO | reg_model.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | reg_model.ipynb | 93.3s
 ----------------------------------------------------------------------
-FALLO | rf_model.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | rf_model.ipynb | 104.2s
 ----------------------------------------------------------------------
-FALLO | rf_multisalida.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | rf_multisalida.ipynb | 192.8s
 ----------------------------------------------------------------------
-FALLO | regressorchain.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | regressorchain.ipynb | 79.6s
 ----------------------------------------------------------------------
-FALLO | xgb_multisalida.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | xgb_multisalida.ipynb | 1958.1s
 ----------------------------------------------------------------------
-FALLO | xgboost_model.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | xgboost_model.ipynb | 923.2s
 ----------------------------------------------------------------------
-FALLO | mlp_custom_loss.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | mlp_custom_loss.ipynb | 75.7s
 ----------------------------------------------------------------------
-FALLO | mlp_multisalida.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | mlp_multisalida.ipynb | 44.0s
 ----------------------------------------------------------------------
-FALLO | comparador_modelos.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | comparador_modelos.ipynb | 46.1s
 ----------------------------------------------------------------------
-FALLO | comparador_clasificacion.ipynb | 0.0s
-/usr/bin/python: No module named jupyter
+OK | comparador_clasificacion.ipynb | 26.7s
 ----------------------------------------------------------------------
