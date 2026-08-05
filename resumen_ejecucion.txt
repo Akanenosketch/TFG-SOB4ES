@@ -1,50 +1,30 @@
-OK | reg_model.ipynb | 95.2s
+FALLO | reg_model.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-OK | rf_model.ipynb | 104.1s
+FALLO | rf_model.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-OK | rf_multisalida.ipynb | 193.0s
+FALLO | rf_multisalida.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-OK | regressorchain.ipynb | 79.1s
+FALLO | regressorchain.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-OK | xgb_multisalida.ipynb | 1963.6s
+FALLO | xgb_multisalida.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-OK | xgboost_model.ipynb | 927.1s
+FALLO | xgboost_model.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-OK | mlp_custom_loss.ipynb | 128.5s
+FALLO | mlp_custom_loss.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-OK | mlp_multisalida.ipynb | 45.7s
+FALLO | mlp_multisalida.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-FALLO | comparador_modelos.ipynb | 0.9s
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbconvert/exporters/exporter.py", line 201, in from_filename
-    return self.from_file(f, resources=resources, **kw)
-           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbconvert/exporters/exporter.py", line 221, in from_file
-    nbformat.read(file_stream, as_version=4), resources=resources, **kw
-    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/__init__.py", line 174, in read
-    return reads(buf, as_version, capture_validation_error, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/__init__.py", line 92, in reads
-    nb = reader.reads(s, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/reader.py", line 75, in reads
-    nb_dict = parse_json(s, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/reader.py", line 25, in parse_json
-    raise NotJSONError(message) from e
-nbformat.reader.NotJSONError: Notebook does not appear to be JSON: '{\n "cells": [\n  {\n   "cell_type": "m...
+FALLO | comparador_modelos.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
-FALLO | comparador_clasificacion.ipynb | 0.9s
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbconvert/exporters/exporter.py", line 201, in from_filename
-    return self.from_file(f, resources=resources, **kw)
-           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbconvert/exporters/exporter.py", line 221, in from_file
-    nbformat.read(file_stream, as_version=4), resources=resources, **kw
-    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/__init__.py", line 174, in read
-    return reads(buf, as_version, capture_validation_error, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/__init__.py", line 92, in reads
-    nb = reader.reads(s, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/reader.py", line 75, in reads
-    nb_dict = parse_json(s, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/reader.py", line 25, in parse_json
-    raise NotJSONError(message) from e
-nbformat.reader.NotJSONError: Notebook does not appear to be JSON: '{\n "cells": [\n  {\n   "cell_type": "m...
+FALLO | comparador_clasificacion.ipynb | 0.0s
+/usr/bin/python: No module named jupyter
 ----------------------------------------------------------------------
