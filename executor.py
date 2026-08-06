@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Ejecuta de principio a fin varios notebooks (todos los .ipynb de una carpeta, o los
 que le indiques) y deja constancia de si cada uno termino bien o fallo.
@@ -9,7 +8,9 @@ Que hace por cada notebook:
   2. Guarda el resultado sobre el propio notebook (con las tablas/graficas ya
      generadas dentro).
   3. Si un notebook falla (una celda lanza una excepcion), no interrumpe el resto:
-     sigue con el siguiente y lo apunta en el resumen final.
+     sigue con el siguiente y lo apunta en el resumen final (output/report/resumen_ejecucion.txt).
+  4. Si termino bien, hace commit del notebook con git automaticamente.
+     Usa --no-git para desactivar esto.
 
 Uso:
     python ejecutar_pruebas.py
@@ -78,6 +79,32 @@ def _extraer_error(stderr: str) -> str:
     return "\n".join(lineas[-15:]) if lineas else "Error desconocido (nbconvert no genero stderr)."
 
 
+def git_commit(paths: list, mensaje: str) -> bool:
+    """Hace 'git add' de los paths indicados y un commit con el mensaje dado.
+    Devuelve True si el commit se creo, False si fallo o no habia nada que commitear
+    (por ejemplo, si el notebook ya estaba igual que en el ultimo commit)."""
+    paths_str = [str(p) for p in paths if p is not None]
+    if not paths_str:
+        return False
+
+    add = subprocess.run(["git", "add", *paths_str], capture_output=True, text=True)
+    if add.returncode != 0:
+        print(f"      [git] fallo 'git add': {add.stderr.strip()}")
+        return False
+
+    commit = subprocess.run(
+        ["git", "commit", "-m", mensaje], capture_output=True, text=True
+    )
+    if commit.returncode != 0:
+        # Suele ser porque no hay cambios que commitear; no es un error grave.
+        if "nothing to commit" in commit.stdout.lower():
+            return False
+        print(f"      [git] fallo 'git commit': {commit.stdout.strip()} {commit.stderr.strip()}")
+        return False
+
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Ejecuta notebooks Jupyter de principio a fin, uno detras de otro."
@@ -93,6 +120,10 @@ def main():
     parser.add_argument(
         "--recursive", action="store_true",
         help="Busca tambien en subcarpetas (por defecto solo mira el directorio actual)",
+    )
+    parser.add_argument(
+        "--no-git", action="store_true",
+        help="No hace commit automatico tras cada notebook (por defecto SI se commitea)",
     )
     args = parser.parse_args()
 
@@ -119,6 +150,12 @@ def main():
         resultados.append(r)
         if r["ok"]:
             print(f"OK ({r['duracion_s']}s)")
+            if not args.no_git:
+                mensaje = f"Ejecuta {nb_path.name} ({r['duracion_s']}s)"
+                if git_commit([nb_path], mensaje):
+                    print(f"      [git] commit: {mensaje}")
+                else:
+                    print("      [git] sin cambios que commitear")
         else:
             print(f"FALLO ({r['duracion_s']}s)")
 
@@ -131,7 +168,9 @@ def main():
         if not r["ok"]:
             print("      " + r["error"].replace("\n", "\n      "))
 
-    resumen_path = Path("resumen_ejecucion.txt")
+    resumen_dir = Path("output") / "report"
+    resumen_dir.mkdir(parents=True, exist_ok=True)
+    resumen_path = resumen_dir / "resumen_ejecucion.txt"
     with open(resumen_path, "w", encoding="utf-8") as f:
         for r in resultados:
             estado = "OK" if r["ok"] else "FALLO"
