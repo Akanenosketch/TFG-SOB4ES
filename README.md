@@ -5,19 +5,45 @@ Este repositorio contiene los pipelines completos para el entrenamiento, evaluac
 
 ## Objetivos de la Rama
 
-1. **Desarrollo de Modelos Estructurados:** Implementar algoritmos de aprendizaje automatico (Regresion Lineal Regularizada, Random Forest y XGBoost) para establecer tanto lineas base interpretables como modelos avanzados de alto rendimiento.
-2. **Optimizacion y Validacion:** Ejecutar busquedas exhaustivas de hiperparametros (Tuning) y validar la robustez y capacidad de generalizacion de los modelos mediante validacion cruzada repetida.
-3. **Interpretabilidad:** Integrar tecnicas de explicabilidad, como valores SHAP (Shapley Additive exPlanations) y permutation importance, para comprender el impacto de cada variable ambiental en las predicciones.
-4. **Puesta en Produccion:** Exportar los modelos optimizados en formato serializado (`.pkl`) y establecer pruebas de humo (Sanity Checks) para garantizar la integridad matematica y de software del flujo de inferencia.
+Esta rama tiene como objetivo probar si se puede mejorar los outputs proporcionados por los modelos de las dos siguientes formas:
 
+1. Combinando los outputs de los modelos individuales de una de las siguientes formas:
+    
+    - **Media simple:** media aritmética de las 8 predicciones, mismo peso para todas. Línea base.
+    - **Media ponderada (R2):** pesos proporcionales al R² de cada modelo en meta-train (negativos recortados a 0), normalizados a sumar 1.
+    - **Top-k (k=4):** media simple, pero solo entre los 4 modelos con mejor R² en meta-train; descarta los débiles en vez de darles poco peso.
+    - **Mediana:** valor central de las 8 predicciones en vez de la media. Más robusta a un modelo atípico, sin calibrar nada.
+    - **Stacking convexo:** pesos `w ≥ 0`, `Σw = 1`, optimizados para minimizar el error en meta-train (`scipy.optimize`, SLSQP). Como una media ponderada pero óptima en vez de basada solo en R² individual.
+
+2. Entrenando varios meta-modelos con los outputs de los valores como valores de entrada y teniendo parte de los valores de **`eval.csv`** como entrenamiento/referencia. Los meta-modelos entrenados son los siguentes:
+
+    - **Ridge (L2):** regresión lineal con regularización L2; permite pesos negativos, penaliza coeficientes grandes.
+    - **Lasso (L1):** regularización L1; puede llevar coeficientes de modelos irrelevantes exactamente a 0.
+    - **ElasticNet (L1+L2):** combina L1 + L2, punto intermedio entre Ridge y Lasso.
+    - **Lineal (s/regularización):** regresión lineal sin regularizar. Sin red de seguridad frente al sobreajuste con poco meta-train.
+    - **RandomForest:** único candidato no lineal; poca profundidad para frenar el sobreajuste, pero el más inestable entre targets. Se usa una profundidad máxima de 3.
+
+En esta iteración se prueba con solamente 8 de los 21 targets.
 
 ## Contenidos de la Rama
 
-La rama se estructura principalmente alrededor de tres cuadernos de Jupyter, cada uno dedicado al ciclo de vida completo de una familia algoritmica concreta:
+La rama se estructura principalmente alrededor de ocho cuadernos de Jupyter, cada uno dedicado al ciclo de vida completo de una familia algoritmica concreta:
 
-* **`reg-model.ipynb`:** Modelo de Regresion Lineal Regularizada (Ridge). Utilizado como modelo base, estabilizando los coeficientes mediante penalizacion L2 frente a la colinealidad de las variables.
-* **`rf-model.ipynb`:** Modelo Random Forest. Implementa un ensamble de arboles de decision para capturar relaciones no lineales complejas, generando multiples estimadores para reducir la varianza.
+* **`reg_model.ipynb`:** Modelo de Regresion Lineal Regularizada (Ridge).
+* **`rf_model.ipynb`:** Modelo Random Forest.
+* **`rf_multisalida.ipynb`:** Modelo Random Forest con multisalida.
+* **`regressorchain.ipynb`:** Modelo de Random Forest con RegressorChain.
 * **`xgboost-model.ipynb`:** Modelo Avanzado (XGBoost). Utiliza la arquitectura de Gradient Boosting para maximizar el rendimiento predictivo, empaquetado en una solucion de ensamble por expertos.
+* **`xgb_multisalida.ipynb`:** Modelo XGBoost con multisalida.
+* **`mlp_multisalida.ipynb`:** Modelo basado en redes neuronales multicapa con multisalida.
+* **`mlp_custom_loss.ipynb`:** Modelo basado en redes neuronales multicapa con pérdida personalizable.`
+
+A partir de ahí se incluyen los diferentes elementos adicionales:
+* **`comparador_modelos.ipynb`:** Carga todos los modelos y comprueba cuál de ellos es mejor dentro de un ranking en base a métricas numéricas (R2, RMSE, MAE).
+* **`comparador_clasificacion.ipynb`:** Carga todos los modelos y comprueba cuál de ellos es mejor dentro de un ranking en base a métricas discretas (Kappa, F1, Matrices de confusión).
+* **`prueba_ensamblado_con_modelos.ipynb`:** Carga todos los modelos y comprueba si la diferencia de los outputs de los meta-modelos son menores en comparación con los outputs originales teniendo de referencia el valor real.
+* **`prueba_ensamblado.ipynb`:** Carga todos los modelos y comprueba si la diferencia de los outputs de los outputs combinador son menores en comparación con los outputs originales teniendo de referencia el valor real. 
+* **`executor.py`:** Script para facilitar la ejecución automática de todos los notebooks.
 
 ### Conjuntos de Datos Requeridos
 Los flujos de trabajo asumen la existencia de tres divisiones de datos pre-procesados, estratificados espacialmente por pais de origen:
