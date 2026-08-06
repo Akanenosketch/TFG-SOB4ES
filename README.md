@@ -7,6 +7,8 @@ Este repositorio contiene los pipelines completos para el entrenamiento, evaluac
 
 Esta rama tiene como objetivo probar y comporbar cuáles son los modelos más prominentes a pesar de recorrer un rango valores de `random_state`.
 
+En esta primera iteración se prueva con los valores de 0 a 101, una a uno.
+
 ## Contenidos de la Rama
 
 La rama se estructura principalmente alrededor de ocho cuadernos de Jupyter, cada uno dedicado al ciclo de vida completo de una familia algoritmica concreta:
