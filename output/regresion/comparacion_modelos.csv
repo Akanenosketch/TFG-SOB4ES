@@ -6,4 +6,4 @@ Random Forest con RegressorChain,0.0796,0.9173,0.68
 XGBoost Individual,0.067,0.93,0.7058
 MLP Estandar,-0.0122,0.9543,0.7021
 Regresión Individual,-0.0164,0.9665,0.7444
-MLP Perdida Custom,-0.0367,0.9572,0.7091
+MLP Perdida Custom,-0.0863,0.97,0.714
