@@ -1,0 +1,9 @@
+Notebook,R2 (model-prep-var),R2 (model-prep-var-1),R2 (model-prep-var-2),R2 (model-prep-var-1-2),R2 (model-prep-var-3),R2 (model-prep-var-1-3),R2 (model-prep-var-2-3),R2 (model-prep-var-1-2-3)
+reg-model.ipynb,0.2789,0.275,0.2803,0.2761,0.282,0.282,0.282,0.282
+rf_model.ipynb,0.5492,0.555,0.5502,0.5396,0.5507,0.5395,0.5361,0.5443
+rf_multisalida.ipynb,0.4509,0.4317,0.4375,0.4703,0.4326,0.4655,0.4636,0.4581
+regressorchain.ipynb,0.5607,0.5592,0.5577,0.5652,0.5581,0.5652,0.5612,0.5574
+xgboost_model.ipynb,0.5171,0.5138,0.5128,0.5155,0.5118,0.5174,0.5149,0.5124
+xgb_multisalida.ipynb,0.5893,0.5975,0.5862,0.5905,0.5794,0.5829,0.5744,0.596
+mlp_multisalida.ipynb,0.4628,0.4257,0.4447,0.4449,0.4358,0.4247,0.4394,0.4468
+mlp_custom_loss.ipynb,0.4854,0.4768,0.4735,0.4691,0.4467,0.4728,0.4861,0.4551
