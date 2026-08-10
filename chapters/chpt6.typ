@@ -1,35 +1,127 @@
-= Tecnologías e integración de productos de terceros
-<tecnologias-e-integracion-de-productos-de-terceros>
+= Planificación y seguimiento <planificacion-y-seguimiento>
+== Planificación <planificacion>
 
-En esta sección de la memoria justificaremos las elecciones realizadas en cuestión a las tecnologías, servicios y programas de terceros empleados en el desarrollo de este trabajo. Parte de estos elementos ya se encuentran definidos en la sección de *Arquitectura*.
+La planificación de este trabajo ha empezado a partir del inicio del mismo, en mayo de 2026, a partir de ahí se planifica su desarrollo de la forma en la que se indica en la siguiente tabla:
 
-== Fuentes de datos remotas
+#figure(
+  align(center)[
+    #table(columns: (4), align: (center, left,),
+    table.header(
+      table.cell(align: center)[*Período*],
+      table.cell(align: center)[*Fase CRISP-ML(Q)*],
+      table.cell(align: center)[*Actividades Planificadas*],
+      table.cell(align: center)[*Hitos*]),  
+    table.cell(align: center)[*Mayo*], 
+      table.cell(align: left)[Comprensión y preparación inicial de los datos.], 
+      table.cell(align: left )[Ingesta, limpieza, armonización e integración de los datos (ficheros y fuentes remotas).], 
+      table.cell(align: left)[Datasets intermedios de los datos en ficheros como de los datos de solicitudes remotas.], 
+    table.cell(align: center)[*1 jun - 15 jun*], 
+      table.cell(align: left)[Cierre de la preparación de los datos.], 
+      table.cell(align: left)[Correcciones de los notebooks de ingesta y procesamiento de datos. Búsquedas iniciales sobre modelos predictivos.], 
+      table.cell(align: left)[Datasets de datos finales. Lista de posibles modelos predictivos a probar.], 
+    table.cell(align: center)[*16 jun - 1 jul*], 
+      table.cell(align: left)[Modelado de modelos], 
+      table.cell(align: left)[Desarrollo de los modelos para entrenar.Entrenar los diferentes modelos y experimentar con las diferentes variables posibles.], 
+      table.cell(align: left)[Modelos entrenados. Documentación aparte sobre los diferentes modelos desarrollados.],
+    table.cell(align: center)[*2 jul -15 ago*], 
+      table.cell(align: left)[Evaluación de modelos y mejoras],
+      table.cell(align: left)[Evaluar los modelos teniendo en cuenta las métricas resultantes de todas las pruebas. Mejorar los diferentes modelos en base a los resultados obtenidos en las pruebas.], 
+      table.cell(align: left)[Informes sobre las pruebas realizadas en los diferentes modelos y sus correspondientes resultados. Modelos predictivos mejorados (múltiples iteraciones de ellos) en base a lo obtenido en las pruebas anteriores.],
+    table.cell(align: center)[*16 ago - sept*], 
+      table.cell(align: left)[Documentación final, revisión y entrega],
+      table.cell(align: left)[Completar la limpieza y el refinamiento de la documentación final. Comprobar que todo lo elaborado funciona correctamente. Preparar el material de soporte necesario para la defensa.], 
+      table.cell(align: left)[Documentación revisada y pulida. Materiales de apoyo para la defensa (i.e. presentación, documentación adicional). Todos los archivos requeridos para la entrega.],
+    )],
+     caption: [Planificación del TFG.],
+     kind: table,
+)
 
-A pesar de existir una inmensa cantidad de herramientas online a partir de las que se pueden obtener datos para adicionar a los datasets del proyecto se han decidido escoger las siguientes al presentar una mayor facilidad para su trabajo, además de estar generalmente centradas a nivel europeo.
+Dentro de la planificación no se tiene en cuenta los elementos relacionados con la documentación, debido a que este es un elemento que se ha planificado realizar a lo largo de toda la duración de este trabajo de fin de grado. Esto permite tener todos datos y todos los progresos realizados ya redactados para facilitar las actividades de pulido y mejora de la documentación de la memoria del TFG. 
 
-Para la realización de este TFG se han hecho uso de las siguientes fuentes de datos remotos:
-- *Google Earth Engine (GEE):* Se eligió como fuente de imágenes satelitales (Sentinel-2) frente a otras alternativas por los siguientes motivos:
-  - Su acceso es gratuito para actividades de investigación y uso no comercial. 
-  - Presenta un catálogo de más de 900 datasets públicos, los cuales incluye Setinel-2 ya en formato Level-2A (reflectancia de superficie, con corrección atmosférica aplicada) listo ya para el análisis sin tener que descargar los archivos y sin tener que hacer preprocesamiento en local.
-  - Tiene integración con la API oficial de Python a través de la librería `earthengine-api`, que permite ejecutar el procesamiento geoespacial directamente sobre la infraestructura de Google en vez de tener que hacerlo en local. 
-- *CDS:* Se eligió como fuente de datos de reanálisis climático (ERA5) por los siguientes motivos:
-  - Su cobertura europea es consistente con el ámbito del proyecto SOB4ES.
-  - Dispone de un cliente oficial en Python mediante la librería `cdsapi` que se configura con un token de acceso personal y permite la automatización de las descargas directamente desde los scripts de Python.
-  - Es un servicio gratuito tras el registro en la plataforma y proporciona los datos en formatos estándar (NetCDF/GRIB), los cuales tienen librerías para procesarlos con facilidad dentro de Python.
-- *Copernicus DEM:* Se eligió para la obtención del modelo de elevación digital por lo siguientes motivos:
-  - Ofrece resolución de 30 metros a escala global (GLO-30) distribuida como Cloud Optimized GeoTIFF y disponible de forma gratuita al público general.
-  - Conexión mediante un bucket público de AWS S3 sin necesidad de autenticación ni registro previo.
-  - La estructura empleada por el servidor de AWS S3, simplifica notablemente la integración del mismo en el flujo en comparación con otras fuentes de DEN que exigen credenciales y/o portales de descarga manual.
-  
-  #colbreak()
+También como se puede ver en la planificación, la aplicación de CRISP-ML(Q) se ha adaptado a las necesidades de este trabajo, motivo por el cual los nombres de las fases no coinciden completamente con lo indicado en la correspondiente documentación sobre la metodología de desarrollo.       
 
-== Librerías de procesamiento y modelado
+En el siguiente Diagrama de Gantt, podemos ver de forma más gráfica la planificación que se ha realizado para la elaboración de este trabajo.         
 
-== Otros recursos empleados
 
-== Integridad y reproducibilidad
-Todas las tecnologías de terceros descritas, pertenecientes al campo del desarrollo y evaluación de modelos, como también de preparación de modelos, como se indica previamente en la sección de *Arquitectura*, quedarán registrados de forma versionada en un fichero `requirements.txt`.
 
-Dicho fichero se actualizará a lo largo de todo el desarrollo de este TFG, lo que permitirá que en caso de querer reproducir este trabajo se pueda hacer de forma fiel y sin problemas.
+Además del diagrama de Gantt mostrado en el diagrama  anterior, en la siguiente tabla se muestra la distribución de horas y porcentaje de esfuerzo estimado para cada una de las correspondientes fases de desarrollo de este trabajo.
 
-Las instrucciones para reproducir todo el proceso se podrán encontrar en la sección de *Manual de Usuario*.
+#figure(
+  align(center)[
+    #table(columns: (3), align: (center), 
+    table.header(
+      table.cell(align: center)[*Fase CRISP-ML(Q)*],
+      table.cell(align: center)[*Duración estimada \ (en horas)*],
+      table.cell(align: center)[*Porcentaje de esfuerzo \ estimado (%)*],),  
+    table.cell(align: left)[*Comprensión y preparación inicial de los datos*], 
+      table.cell(align: center)[50], 
+      table.cell(align: center)[18.3%], 
+    table.cell(align: left)[*Cierre de la preparación de los datos*], 
+      table.cell(align: center)[40], 
+      table.cell(align: center)[13.3%], 
+    table.cell(align: left)[*Modelado de los modelos*], 
+      table.cell(align: center)[70], 
+      table.cell(align: center)[23.3%], 
+    table.cell(align: left)[*Evaluación de modelos y mejoras*], 
+      table.cell(align: center)[110], 
+      table.cell(align: center)[36.7%], 
+    table.cell(align: left)[*Documentación final, revisión y entrega*], 
+      table.cell(align: center)[30], 
+      table.cell(align: center)[10%], 
+    table.cell(align: left)[*Total*], 
+      table.cell(align: center)[300], 
+      table.cell(align: center)[100%],
+    )],
+     caption: [Distribución de horas y porcentajes de esfuerzo estimados],
+     kind: table,
+)
+
+== Puntos críticos <puntos-criticos>
+
+Dentro de un proyecto, especialmente dentro del ciclo de vida del mismo, los *puntos críticos* se definen como aquellos componentes, fases o tareas, que debido a la complejidad técnica o al desconocimiento inicial al empezar el proyecto, presentan un riesgo más elevado de poder provocar desviaciones en el cronograma establecido inicialmente. También pueden afectar en mayor o menor medida a la calidad del producto final.
+
+Dentro del marco de este TFG, los principales puntos críticos se concentran en el desarrollo de modelos y la evaluación formal de los mismos. A continuación, se describirán los diferentes puntos críticos y sus riesgos de forma más detallada y las estrategias de mitigación aplicadas.
+
+=== Desarrollo y parametrización de los modelos predictivos
+
+El desarrollo y parametrización de los modelos predictivos se considera como un punto crítico debido a que el rendimiento final del sistema va a depender de las decisiones tomadas al inicio del desarrollo. Entre esas decisiones se destacan las siguientes:
++ Número y tipo de modelos a entrenar y desarrollar.
++ Selección del espacio y  tiempo de búsqueda/cómputo disponible.
+
+La selección de modelos debe de contar con el hecho de que se dispone de un set reducido de datos. Si se seleccionan modelos, los cuales no operan bien con pocos datos, entonces como consecuencia los rendimientos van a ser mucho peores de lo esperable. 
+
+Además, aún escogiendo modelos capaces de operar con pocos datos, siempre va a haber cierta cantidad de modelos que presenten sobreajuste ya por defecto. Esto mismo se podrá ver a lo largo del desarrollo de la memoria y en el *Anexo III*.
+
+Un ajuste deficiente de hiperparámetros o una mala elección del espacio de búsqueda inicial puede provocar un sobreajuste mucho mayor al ya predispuesto por el hecho de la falta de datos.
+
+=== Evaluacicón de modelos y control de calidad (QA)
+
+La evaluación formal de los modelos es muy importante, porque de ella depende la selección final de los algoritmos a emplear. Un error en esta fase podría invalidar todas las conclusiones de este trabajo.
+
+Además, la calidad de los datos de entrada, condiciona directamente a la fiabilidad de cualquier métrica obtenida, por lo que un fallo no detectado en las capas inferiores del flujo de trabajo puede propagarse silenciosamente hasta la evaluación final.
+
+=== Estrategias de mitigación
+
+Para reducir, en la medida de lo posible, los riesgos provenientes de los puntos anteriores se han aplicado las siguientes medidas de mitigación:
+- Uso sistemático de validación cruzada repetida en todos los modelos desarrollados, en lugar de hacer uso de una única partición de validación, para obtener estimaciones más robustas y precisas sobre el rendimiento real.
+- Separación estricta del dataset original en tres subconjuntos (entrenamiento, validación y evaluación) desde la fase inicial de modelos de modelos. Esto permite evitar que el set de evaluación se use en ningún momento en otros procesos para los cuales no fue creado, como puede ser la búsqueda de hiperparámetros.
+- Registro de los campos sin datos de los datasets originales mediante un archivo de banderas de imputación. Esto permite tener un mayor conocimiento y control sobre los datos que se poseen o que siguen carentes en todo momento, además, permite la determinación sobre qué datos son mediciones reales y cuáles son estimaciones. 
+- Revisiones periódicas del proceso de desarrollo en forma de reuniones semanales (véase *@seguimiento*), permitiendo así detectar errores o desviaciones en el desarrollo y parametrización de los modelos antes de que afecten a fases posteriores.
+- Realización de pruebas complementarias para la simplificación y mejor selección de los modelos finales (véase PONER SECCIÖN). Dichas pruebas también sirven para medir la robustez actual de los modelos.
+
+== Seguimiento <seguimiento>
+
+El seguimiento del progreso del presente TFG se realiza mediante la celebración de reuniones periódicas, generalmente semanales, entre el alumnado, el tutor y el co-tutor del proyecto. Estas reuniones constituyen el mecanismo principal de control y coordinación a lo largo de todo el desarrollo del trabajo.
+
+Estas reuniones tienen los siguientes objetivos:
++ *Comunicación de avances:* exponer el trabajo realizado durante el período transcurrido desde la anterior reunión, incluyendo los resultados obtenidos así como las dificultades o problemas encontrados.
++ *Resolución de dudas:* plantear y aclarar todas las cuestiones técnicas, metodológicas o de alcance que hayan surgido durante el desarrollo de las tareas.
++ *Definición de próximos pasos:* Establecer y acordar las tareas a abordar durante el siguiente intervalo temporal, ajustando la planificación en función del estado real del proyecto.
+
+Este esquema de seguimiento continuo permite mantener una supervisión constante sobre la evolución del proyecto, facilitando la detección temprana de desviaciones respecto a la planificación inicial y posibilitando la adopción de medidas correctoras cuando resulta necesario. Asimismo, la periodicidad semanal proporciona un marco de trabajo estructurado que favorece la organización del esfuerzo en tiempos cortos y bien definidos, contribuyendo a un desarrollo incremental y controlado del trabajo.
+
+En casos en los que las circunstancias del proyecto lo requiera, por ejemplo, antes hitos relevantes o la necesidad de abordar decisiones de mayor importancia, la frecuencia de las reuniones puede ajustarse, intensificando o espaciando su frecuencia en función de las necesidades puntuales del desarrollo.
+
+== Justificación de desviaciones <justificacion-de-desviaciones>
+
+A fecha de 30/07/2026, no existen diferencias con la planificación creada.

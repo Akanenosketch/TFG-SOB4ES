@@ -1,4 +1,21 @@
-= Arquitectura <arquitectura>
+= Marco teórico o práctico
+
+== Fundamentos del aprendizaje automático <fundamentos-del-aprendizaje-automatico>
+
+=== Tipos de aprendizaje automático <tipos-de-aprendizaje-automatico>
+
+==== Aprendizaje supervisado <aprendizaje-supervisado>
+
+==== Aprendizaje no supervisado <aprendizaje-no-supervisado>
+
+==== Aprendizaje semi-supervisado <aprendizaje-semi-supervisado>
+
+==== Aprendizaje por refuerzo <aprendizaje-por-refuerzo>
+
+== Herramientas empleadas <herramientas-empleadas>
+
+
+== Arquitectura <arquitectura>
 Para proporcionar una respuesta a los objetivos planteados y permitir la predicción de la biodiversidad del suelo a partir de variables ambientales, se ha diseñado una arquitectura de software basada en un flujo de datos modular y desacoplado, permitiendo de esta forma que cualquier cambio en alguna de las capas no provoque tener que realizar cambios en el resto de las capas.
 
 El uso de este enfoque garantiza la reproducibilidad del sistema ante la posibilidad de incluir nuevas fuentes de datos o nuevos algoritmos de aprendizaje automático.
@@ -13,7 +30,7 @@ La arquitectura explicada previamente se compone de cuatro capas, las cuales tra
 
   #colbreak()
 
-== Capa de ingesta de datos <capa-ingesta>
+=== Capa de ingesta de datos <capa-ingesta>
 
 Esta capa se encarga de la adquisición de datos con las diferentes APIs a emplear, como también cargar los diferentes archivos de los datasets que se tengan en local. \
 La adquisición de datos se realiza en dos fases, las cuales están basadas en el origen de los datos que se van a recolectar:
@@ -36,7 +53,7 @@ Al final de todo el procesamiento de esta capa se crea un archivo requirements.t
 
   #colbreak()
 
-== Capa de procesamiento de datos <capa-procesamiento>
+=== Capa de procesamiento de datos <capa-procesamiento>
 
 Esta capa tiene como objetivo unificar las diferentes fuentes de datos bajo un marco de coordenadas común y resolver las diferentes discrepancias entre los datos, estandarizándolos y armonizándolos para poder emplearlos en futuras capas.\
 Este proceso se hace dividiéndolo en tres subprocesos o fases:
@@ -60,7 +77,7 @@ Además de los subprocesos, a lo largo de procesamiento de esta datos se hace us
 - *dbfread:* Librería ligera de bajo nivel capaz de leer de forma nativa y eficiente archivos con formato .bdf, facilitando la extracción de la información tabular contenida en ciertos conjuntos de datos vectoriales del catálogo europeo.
 - *netCDF4:* Librería que permite la lectura, escritura y manipulación de archivos con formatos netCDF y HDF5. 
 
-== Capa de modelado predictivo <capa-modelado>
+=== Capa de modelado predictivo <capa-modelado>
 
 El objetivo principal de esta capa es el desarrollo de los diferentes modelos predictivos como también la preparación de los sets de aprendizaje y pruebas y su consecuente entrenamiento.\
 Antes de comenzar a trabajar en esta capa es recomendable tener el dataset con los datos finales preparado y armonizado para que el proceso pueda, de esta forma, ser mucho más lineal y sencillo de seguir. 
@@ -160,7 +177,7 @@ A lo largo del desarrollo de esta capa, se hacen uso de las siguientes librería
 
   #colbreak()
 
-== Capa de evaluación de modelos <capa-evaluacion>
+=== Capa de evaluación de modelos <capa-evaluacion>
 
 El objetivo principal de esta capa final es evaluar los diferentes modelos desarrollados en la Capa de modelado predictivo y a partir de las evaluaciones realizadas, hacer las siguientes acciones:\
 + Escoger los modelos que presentan una mayor utilidad y funcionalidad para el proyecto.

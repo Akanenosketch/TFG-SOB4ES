@@ -8,6 +8,7 @@
 
 //Ajustes
 #set text(lang: "es")
+#set par(justify: true)
 
 //Ajuste nombre encabezado
 
@@ -168,26 +169,6 @@ target: figure.where(kind: table))
 #pagebreak()
 
 #include "chapters/chpt9.typ"
-
-#pagebreak()
-
-#include "chapters/chpt10.typ"
-
-#pagebreak()
-
-#include "chapters/chpt11.typ"
-
-#pagebreak()
-
-#include "chapters/chpt12.typ"
-
-#pagebreak()
-
-#include "chapters/chpt13.typ"
-
-#pagebreak()
-
-#include "chapters/chpt14.typ"
 
 #pagebreak()
 

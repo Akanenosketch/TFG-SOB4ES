@@ -51,3 +51,389 @@ studer2021towards:
   doi: 10.3390/make3020020
   url: "https://doi.org/10.3390/make3020020"
   language: en
+
+setsEntrenamiento1:
+  type: video
+  title: "Los sets de entrenamiento, validación y prueba"
+  author:
+    - name: "Codificando Bits"
+  date: 2023-06-16
+  url: "https://www.youtube.com/watch?v=79K93XBOsIg"
+  note: "Última visita: 15/06/2026"
+
+setsEntrenamiento2:
+  type: web
+  title: "Sets de Entrenamiento, Test y Validación"
+  author: ["Na", "Na"]
+  date: 2020-12-19
+  url: "https://www.aprendemachinelearning.com/sets-de-entrenamiento-test-validacion-cruzada/"
+  parent:
+    title: "Aprende Machine Learning"
+  note: "Última visita: 15/06/2026"
+
+crispML-Q:
+  type: web
+  title: "Ml-ops.org"
+  date: 2025-03-24
+  url: "https://ml-ops.org/content/crisp-ml"
+  note: "Última visita: 30/06/2026"
+
+googleEarthEngine:
+  type: web
+  title: "Google Earth Engine"
+  url: "https://earthengine.google.com/"
+  note: "Última visita: 17/06/2026"
+
+copernicusHomepage:
+  type: web
+  title: "Homepage | Copernicus"
+  url: "https://www.copernicus.eu/en"
+  note: "Última visita: 17/06/2026"
+
+numpy:
+  type: web
+  title: "NumPy"
+  url: "https://numpy.org/es/"
+  note: "Última visita: 29/06/2026"
+
+pandas:
+  type: web
+  title: "pandas - Python Data Analysis Library"
+  url: "https://pandas.pydata.org/"
+  note: "Última visita: 29/06/2026"
+
+rasterio:
+  type: web
+  title: "Rasterio: access to geospatial raster data — rasterio 1.4.4 documentation"
+  url: "https://rasterio.readthedocs.io/en/stable/"
+  note: "Última visita: 29/06/2026"
+
+desarrolloIterativoIncremental:
+  type: web
+  title: "Desarrollo iterativo e incremental"
+  date: 2018-10-14
+  url: "https://proyectosagiles.org/desarrollo-iterativo-incremental/"
+  parent:
+    title: "Proyectos Ágiles"
+  note: "Última visita: 30/06/2026"
+
+scikitLearn:
+  type: web
+  title: "scikit-learn: machine learning in Python — scikit-learn 1.9.0 documentation"
+  url: "https://scikit-learn.org/stable/"
+  note: "Última visita: 04/07/2026"
+
+xgboostDocs:
+  type: web
+  title: "XGBoost Documentation — xgboost 3.3.0 documentation"
+  url: "https://xgboost.readthedocs.io/en/stable/"
+  note: "Última visita: 04/07/2026"
+
+xgboostIBM:
+  type: web
+  title: "XGBoost"
+  parent:
+    title: "IBM"
+  url: "https://www.ibm.com/es-es/think/topics/xgboost"
+  note: "Última visita: 04/07/2026"
+
+pytorchDocs:
+  type: web
+  title: "PyTorch documentation"
+  author:
+    - name: "PyTorch Contributors"
+  date: 2023-01-01
+  url: "https://docs.pytorch.org/docs/2.12/index.html"
+  note: "Última visita: 04/07/2026"
+
+joblib:
+  type: web
+  title: "Joblib: running Python functions as pipeline jobs — joblib 1.5.3 documentation"
+  url: "https://joblib.readthedocs.io/en/stable/"
+  note: "Última visita: 04/07/2026"
+
+shapDocs:
+  type: web
+  title: "Welcome to the SHAP documentation — SHAP latest documentation"
+  url: "https://shap.readthedocs.io/en/latest/"
+  note: "Última visita: 05/07/2026"
+
+matplotlib:
+  type: web
+  title: "Matplotlib — Visualization with Python"
+  url: "https://matplotlib.org/"
+  note: "Última visita: 05/07/2026"
+
+seabornDocs:
+  type: web
+  title: "seaborn: statistical data visualization — seaborn 0.13.2 documentation"
+  url: "https://seaborn.pydata.org/"
+  note: "Última visita: 05/07/2026"
+
+waskomSeaborn:
+  type: article-journal
+  title: "seaborn: statistical data visualization"
+  author:
+    - name: "Michael Waskom"
+  parent:
+    title: "The Journal of Open Source Software"
+  volume: 6
+  issue: 60
+  page-range: "3021"
+  date: 2021-04
+  doi: "10.21105/joss.03021"
+
+xarrayDocs:
+  type: web
+  title: "Xarray documentation"
+  parent:
+    title: "Xarray"
+  url: "https://docs.xarray.dev/en/stable/"
+  note: "Última visita: 05/07/2026"
+
+dbfread:
+  type: web
+  title: "dbfread - Read DBF Files with Python — dbfread 2.0.7 documentation"
+  url: "https://dbfread.readthedocs.io/en/latest/"
+  note: "Última visita: 05/07/2026"
+
+googleColab:
+  type: web
+  title: "CoLAB"
+  parent:
+    title: "Google for Developers"
+  url: "https://developers.google.com/colab"
+  note: "Última visita: 05/07/2026"
+
+netcdf4:
+  type: web
+  title: "netCDF4 API documentation"
+  url: "https://unidata.github.io/netcdf4-python/"
+  note: "Última visita: 06/07/2026"
+
+crispDM:
+  type: web
+  title: "What is CRISP DM?"
+  author:
+    - name: "N. Hotz"
+  date: 2024-12-09
+  parent:
+    title: "Data Science PM"
+  url: "https://www.datascience-pm.com/crisp-dm-2/"
+  note: "Última visita: 01/08/2026"
+
+ridgeRegressionIBM:
+  type: web
+  title: "Ridge Regression"
+  parent:
+    title: "IBM"
+  url: "https://www.ibm.com/es-es/think/topics/ridge-regression"
+  note: "Última visita: 04/08/2026"
+
+pythonOrg:
+  type: web
+  title: "Welcome to Python.org"
+  parent:
+    title: "Python.org"
+  date: 2026-08-05
+  url: "https://www.python.org/"
+  note: "Última visita: 06/08/2026"
+
+salakoEarthworms:
+  type: article
+  title: "Modelling and Spatial Prediction of Earthworms Ecological-Groups Distribution Reveal Their Habitat and Environmental Preferences"
+  author:
+    - name: "G. Salako"
+    - name: "A. Zaitsev"
+    - name: "B. Betancur-Corredor"
+    - name: "D. J. Russell"
+  parent:
+    title: "SSRN"
+  date: 2024
+  url: "https://ssrn.com/abstract=4925999"
+  note: "Última visita: 30/07/2026"
+
+diggingDeeperEarthworms:
+  type: article
+  title: "Digging deeper: deep joint species distribution modeling reveals environmental drivers of Earthworm Communities"
+  parent:
+    title: "ResearchGate"
+  date: 2025
+  url: "https://www.researchgate.net/publication/392737042"
+  note: "Última visita: 30/07/2026"
+
+limitsPromisesEOFoundationModels:
+  type: article
+  title: "Limits and promises of Earth Observation Foundation Models in Predicting Multi-Trophic Soil Biodiversity"
+  parent:
+    title: "bioRxiv"
+  date: 2025
+  url: "https://www.biorxiv.org/content/10.1101/2025.05.16.654504"
+  note: "Última visita: 30/07/2026"
+
+soilMicrobiomePrediction:
+  type: article-journal
+  title: "Soil microbiome prediction using traditional machine learning and deep learning models"
+  parent:
+    title: "Scientific Reports"
+  date: 2026
+  url: "https://www.nature.com/articles/s41598-026-39537-w"
+  note: "Última visita: 30/07/2026"
+
+scribbrCitationGenerator:
+  type: web
+  title: "Free Citation Generator | APA, MLA, Chicago | Scribbr"
+  parent:
+    title: "Scribbr"
+  date: 2025-02-17
+  url: "https://www.scribbr.com/citation/generator/"
+  note: "Última visita: 06/08/26"
+
+googleDocsWikipedia:
+  type: web
+  title: "Google Docs"
+  author:
+    - name: "Wikipedia contributors"
+  parent:
+    title: "Wikipedia"
+  date: 2026-07-30
+  url: "https://en.wikipedia.org/wiki/Google_Docs"
+  note: "Última visita: 06/08/2026"
+
+typstHomepage:
+  type: web
+  title: "Typst: The new foundation for documents"
+  parent:
+    title: "Typst"
+  date: 2026-06-15
+  url: "https://typst.app/"
+  note: "Última visita: 06/08/2026"
+
+climateDataStore:
+  type: web
+  title: "Climate Data Store"
+  url: "https://cds.climate.copernicus.eu/"
+  note: "Última visita: 06/08/26"
+
+copernicusDEM:
+  type: web
+  title: "Copernicus DEM - Global and European Digital Elevation Model"
+  author:
+    - name: "Copernicus Data Space Ecosystem"
+  parent:
+    title: "Copernicus Data Space Ecosystem"
+  date: 2026-05-05
+  url: "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM"
+  note: "Última visita: 06/08/2026"
+
+geronHandsOnML:
+  type: book
+  title: "Hands-on machine learning with Scikit-Learn, Keras, and TensorFlow"
+  author:
+    - name: "Aurélien Géron"
+  edition: "3"
+  publisher: "O'Reilly Media, Inc."
+  date: 2022
+
+arthurSamuelWikipedia:
+  type: web
+  title: "Arthur Samuel (computer scientist)"
+  author:
+    - name: "Wikipedia contributors"
+  parent:
+    title: "Wikipedia"
+  date: 2026-04-03
+  url: "https://en.wikipedia.org/wiki/Arthur_Samuel_(computer_scientist)"
+  note: "Última visita: 08/08/26"
+
+samuelCheckers:
+  type: article-journal
+  title: "Some Studies in Machine Learning Using the Game of Checkers"
+  author:
+    - name: "A. L. Samuel"
+  parent:
+    title: "IBM Journal of Research and Development"
+  volume: 3
+  issue: 3
+  page-range: "210-229"
+  date: 1959
+
+latexProject:
+  type: web
+  title: "LaTeX - A document preparation system"
+  url: "https://www.latex-project.org/"
+  note: "Última visita: 08/08/26"
+
+tomMitchellWikipedia:
+  type: web
+  title: "Tom M. Mitchell"
+  author:
+    - name: "Wikipedia contributors"
+  parent:
+    title: "Wikipedia"
+  date: 2026-03-08
+  url: "https://en.wikipedia.org/wiki/Tom_M._Mitchell"
+  note: "Última visita: 08/08/26"
+
+reutersMindImages:
+  type: web
+  title: "Computer trained to 'read' mind images of words"
+  author:
+    - name: "Reuters"
+  parent:
+    title: "Reuters"
+  date: 2008-06-02
+  url: "https://www.reuters.com/article/us-computer-mind-idUSN2939892820080529/"
+  note: "Última visita: 07/08/2026"
+
+mitchellMachineLearning:
+  type: book
+  title: "Machine Learning"
+  author:
+    - name: "T. M. Mitchell"
+  location: "New York"
+  publisher: "McGraw-Hill"
+  date: 1997
+
+russellNorvigAIMA:
+  type: book
+  title: "Artificial Intelligence: A Modern Approach"
+  author:
+    - name: "S. J. Russell"
+    - name: "P. Norvig"
+  edition: "4"
+  publisher: "Pearson"
+  date: 2020
+
+cohenKappa:
+  type: article-journal
+  title: "A Coefficient of Agreement for Nominal Scales"
+  author:
+    - name: "J. Cohen"
+  parent:
+    title: "Educational and Psychological Measurement"
+  volume: 20
+  issue: 1
+  page-range: "37-46"
+  date: 1960
+
+guyonElisseeffFeatureSelection:
+  type: article-journal
+  title: "An Introduction to Variable and Feature Selection"
+  author:
+    - name: "I. Guyon"
+    - name: "A. Elisseeff"
+  parent:
+    title: "Journal of Machine Learning Research"
+  volume: 3
+  page-range: "1157-1182"
+  date: 2003
+
+bergmannMachineLearningIBM:
+  type: web
+  title: "Machine learning"
+  author:
+    - name: "D. Bergmann"
+  date: 2025-08
+  url: "https://www.ibm.com/es-es/think/topics/machine-learning"
+  note: "Última visita: 08/08/2026"
