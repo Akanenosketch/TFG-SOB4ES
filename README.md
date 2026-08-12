@@ -7,9 +7,9 @@ Este repositorio contiene los pipelines completos para el entrenamiento, evaluac
 
 Esta rama presenta como objetivo probar la **sensibilidad del random_state**.
 
-Es decir en esta rama se prueba con `random_state=128` para ver qué cambios ocurren a lo largo de las ejecuciones de los diferentes notebooks y, en consecuencia, ver si ocurren cambios dentro del ranking final de modelos.
+Es decir en esta rama se prueba con `random_state=27` para ver qué cambios ocurren a lo largo de las ejecuciones de los diferentes notebooks y, en consecuencia, ver si ocurren cambios dentro del ranking final de modelos.
 
-Esta prueba es la segunda iteración de las pruebas de sensibilidad de `random_state`, siendo 27 el primer valor y 128 el segundo.
+Esta prueba es la primera iteración de las pruebas de sensibilidad de `random_state`, siendo 27 el primer valor y 128 el segundo.
 
 
 ## Contenidos de la Rama
