@@ -42,7 +42,10 @@ También como se puede ver en la planificación, la aplicación de CRISP-ML(Q) s
 
 En el siguiente Diagrama de Gantt, podemos ver de forma más gráfica la planificación que se ha realizado para la elaboración de este trabajo.         
 
-
+#figure(
+  image("../media/diagrama-gantt.png", height: 25%),
+  caption: ["Diagrama de Gantt con la planificación del TFG."],
+)
 
 Además del diagrama de Gantt mostrado en el diagrama  anterior, en la siguiente tabla se muestra la distribución de horas y porcentaje de esfuerzo estimado para cada una de las correspondientes fases de desarrollo de este trabajo.
 
@@ -82,6 +85,7 @@ Dentro de un proyecto, especialmente dentro del ciclo de vida del mismo, los *pu
 
 Dentro del marco de este TFG, los principales puntos críticos se concentran en el desarrollo de modelos y la evaluación formal de los mismos. A continuación, se describirán los diferentes puntos críticos y sus riesgos de forma más detallada y las estrategias de mitigación aplicadas.
 
+  #colbreak()
 === Desarrollo y parametrización de los modelos predictivos
 
 El desarrollo y parametrización de los modelos predictivos se considera como un punto crítico debido a que el rendimiento final del sistema va a depender de las decisiones tomadas al inicio del desarrollo. Entre esas decisiones se destacan las siguientes:
@@ -109,6 +113,7 @@ Para reducir, en la medida de lo posible, los riesgos provenientes de los puntos
 - Revisiones periódicas del proceso de desarrollo en forma de reuniones semanales (véase *@seguimiento*), permitiendo así detectar errores o desviaciones en el desarrollo y parametrización de los modelos antes de que afecten a fases posteriores.
 - Realización de pruebas complementarias para la simplificación y mejor selección de los modelos finales (véase PONER SECCIÖN). Dichas pruebas también sirven para medir la robustez actual de los modelos.
 
+  #colbreak()
 == Seguimiento <seguimiento>
 
 El seguimiento del progreso del presente TFG se realiza mediante la celebración de reuniones periódicas, generalmente semanales, entre el alumnado, el tutor y el co-tutor del proyecto. Estas reuniones constituyen el mecanismo principal de control y coordinación a lo largo de todo el desarrollo del trabajo.

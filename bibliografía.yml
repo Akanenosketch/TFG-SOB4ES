@@ -171,7 +171,7 @@ seabornDocs:
   note: "Última visita: 05/07/2026"
 
 waskomSeaborn:
-  type: article-journal
+  type: article
   title: "seaborn: statistical data visualization"
   author:
     - name: "Michael Waskom"
@@ -272,7 +272,7 @@ limitsPromisesEOFoundationModels:
   note: "Última visita: 30/07/2026"
 
 soilMicrobiomePrediction:
-  type: article-journal
+  type: article
   title: "Soil microbiome prediction using traditional machine learning and deep learning models"
   parent:
     title: "Scientific Reports"
@@ -347,7 +347,7 @@ arthurSamuelWikipedia:
   note: "Última visita: 08/08/26"
 
 samuelCheckers:
-  type: article-journal
+  type: article
   title: "Some Studies in Machine Learning Using the Game of Checkers"
   author:
     - name: "A. L. Samuel"
@@ -406,7 +406,7 @@ russellNorvigAIMA:
   date: 2020
 
 cohenKappa:
-  type: article-journal
+  type: article
   title: "A Coefficient of Agreement for Nominal Scales"
   author:
     - name: "J. Cohen"
@@ -418,7 +418,7 @@ cohenKappa:
   date: 1960
 
 guyonElisseeffFeatureSelection:
-  type: article-journal
+  type: article
   title: "An Introduction to Variable and Feature Selection"
   author:
     - name: "I. Guyon"

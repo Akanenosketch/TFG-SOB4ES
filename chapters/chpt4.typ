@@ -8,7 +8,11 @@ CRISP-ML(Q) (Cross-Industry Standard Process of Machine Learning with Quality As
 
 Para dotar a este proceso de un marco de ingeniería robusto y estricto, CRISP-ML(Q) organiza el flujo de trabajo en seis fases cíclicas interconectada entre sí, integrando así, de forma transversal, los diversos controles de QA (Quality Assurance) en cada una de las transiciones. 
 
-[Diagrama con las diferentes fases de CRISP-ML(Q)]
+#figure(
+  image("../media/crisp-ml-process.jpg", height: 25%),
+  caption: ["Diagrama con las diferentes fases de CRISP-ML(Q)"],
+)
+
 
 En el diagrama anterior, podemos distinguir las siguientes fases:
 + *Comprensión del negocio y de los datos:* Definición del problema predictivo y auditoría inicial de la viabilidad de las fuentes proporcionadas.
