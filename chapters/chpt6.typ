@@ -98,7 +98,7 @@ Además, aún escogiendo modelos capaces de operar con pocos datos, siempre va a
 
 Un ajuste deficiente de hiperparámetros o una mala elección del espacio de búsqueda inicial puede provocar un sobreajuste mucho mayor al ya predispuesto por el hecho de la falta de datos.
 
-=== Evaluacicón de modelos y control de calidad (QA)
+=== Evaluación de modelos y control de calidad (QA)
 
 La evaluación formal de los modelos es muy importante, porque de ella depende la selección final de los algoritmos a emplear. Un error en esta fase podría invalidar todas las conclusiones de este trabajo.
 
