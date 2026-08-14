@@ -36,29 +36,11 @@
 
 //Espacio entre párrafos
 #v(90pt)
-
-  //Ajustes de página
-#set page(
-        numbering: "1",
-        header: [  // Cabezado de página 
-                #set text(10pt)
-                #set align(center)
-                #h(1fr) _Desarrollo y evaluación de modelos de aprendizaje automático para la predicción de
-la biodiversidad del suelo_
-                ],
-        paper: "a4",
-        margin: (x: 2.5cm, y: 3cm),
-        footer: context [ //pie de página
-                   #set align(top+right)
-                   #set text(10pt)
-                   #counter(page).display("1")
-                   ]
-        )  
         
 
 // Tipografía normal    
 #set text(
-          size: 10pt,
+          size: 10.5pt,
           font: "Libertinus Serif",
          ) 
 
@@ -74,7 +56,7 @@ la biodiversidad del suelo_
 // Ajustes para las formulas matemáticas
 #show math.equation: set text(
       font: "New Computer Modern Math",
-      size: 10pt
+      size: 10.5pt
 )
 
   //Alinear texto
@@ -133,6 +115,27 @@ target: figure.where(kind: table))
 #set heading(numbering: "1.1.1.")
 
 // fin de ajustes, inicio del documento (Introducción)
+
+  //Ajustes de página
+#set page(
+        numbering: "1",
+        header: [  // Cabezado de página 
+                #set text(10pt)
+                #set align(center)
+                #h(1fr) _Desarrollo y evaluación de modelos de aprendizaje automático para la predicción de
+la biodiversidad del suelo_
+                ],
+        paper: "a4",
+        margin: (x: 2.5cm, y: 3cm),
+        footer: context [ //pie de página
+                   #set align(top+right)
+                   #set text(10pt)
+                   #counter(page).display("1")
+                   ]
+        )  
+        
+//Contador de paginas <- 0
+#counter(page).update(1)
 
 #pagebreak()
 
