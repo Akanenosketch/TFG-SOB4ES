@@ -1,35 +1,20 @@
-OK | reg_model.ipynb | 108.3s
+OK | reg_model.ipynb | 97.1s
 ----------------------------------------------------------------------
-OK | rf_model.ipynb | 156.5s
+OK | rf_model.ipynb | 113.7s
 ----------------------------------------------------------------------
-OK | rf_multisalida.ipynb | 272.1s
+OK | rf_multisalida.ipynb | 189.5s
 ----------------------------------------------------------------------
-OK | regressorchain.ipynb | 122.2s
+OK | regressorchain.ipynb | 56.5s
 ----------------------------------------------------------------------
-OK | xgb_multisalida.ipynb | 2127.3s
+OK | xgb_multisalida.ipynb | 1962.8s
 ----------------------------------------------------------------------
-OK | xgboost_model.ipynb | 936.1s
+OK | xgboost_model.ipynb | 919.9s
 ----------------------------------------------------------------------
-OK | mlp_custom_loss.ipynb | 125.4s
+OK | mlp_custom_loss.ipynb | 96.8s
 ----------------------------------------------------------------------
-OK | mlp_multisalida.ipynb | 42.5s
+OK | mlp_multisalida.ipynb | 61.5s
 ----------------------------------------------------------------------
-FALLO | comparador_modelos.ipynb | 0.9s
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbconvert/exporters/exporter.py", line 201, in from_filename
-    return self.from_file(f, resources=resources, **kw)
-           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbconvert/exporters/exporter.py", line 221, in from_file
-    nbformat.read(file_stream, as_version=4), resources=resources, **kw
-    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/__init__.py", line 174, in read
-    return reads(buf, as_version, capture_validation_error, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/__init__.py", line 92, in reads
-    nb = reader.reads(s, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/reader.py", line 75, in reads
-    nb_dict = parse_json(s, **kwargs)
-  File "/home/aka/Desktop/GitHub/TFG-SOB4ES/.venv/lib/python3.14/site-packages/nbformat/reader.py", line 25, in parse_json
-    raise NotJSONError(message) from e
-nbformat.reader.NotJSONError: Notebook does not appear to be JSON: '{\n "cells": [\n  {\n   "cell_type": "m...
+OK | comparador_modelos.ipynb | 39.3s
 ----------------------------------------------------------------------
-OK | comparador_clasificacion.ipynb | 33.4s
+OK | comparador_clasificacion.ipynb | 23.6s
 ----------------------------------------------------------------------
