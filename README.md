@@ -5,12 +5,7 @@ Este repositorio contiene los pipelines completos para el entrenamiento, evaluac
 
 ## Objetivos de la Rama
 
-Esta rama presenta como objetivo probar la **sensibilidad del random_state**.
-
-Es decir en esta rama se prueba con `random_state=128` para ver qué cambios ocurren a lo largo de las ejecuciones de los diferentes notebooks y, en consecuencia, ver si ocurren cambios dentro del ranking final de modelos.
-
-Esta prueba es la segunda iteración de las pruebas de sensibilidad de `random_state`, siendo 27 el primer valor y 128 el segundo.
-
+Esta rama es donde se almacena el código base de este TFG. A partir de esta rama se generan el código relacionado a todas las diferentes pruebas realizadas.
 
 ## Contenidos de la Rama
 
@@ -57,3 +52,4 @@ Para replicar o ejecutar los cuadernos en esta rama, es imprescindible el uso de
 2. Instalar el arbol de dependencias mediante `pip install -r requirements.txt`.
 3. Para la correcta renderizacion de los graficos SHAP, registrar el entorno como Kernel local de Jupyter.
 4. (Opcional) Configurar la variable de entorno `PYTHONWARNINGS="ignore"` si se experimenta redundancia de salidas durante la ejecucion de hilos paralelos (`n_jobs=-1`).
+5. (Si no quieres ejecutar de uno en uno) `python executor.py [notebooks a ejecutar]`.
