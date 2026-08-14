@@ -57,3 +57,4 @@ Para replicar o ejecutar los cuadernos en esta rama, es imprescindible el uso de
 2. Instalar el arbol de dependencias mediante `pip install -r requirements.txt`.
 3. Para la correcta renderizacion de los graficos SHAP, registrar el entorno como Kernel local de Jupyter.
 4. (Opcional) Configurar la variable de entorno `PYTHONWARNINGS="ignore"` si se experimenta redundancia de salidas durante la ejecucion de hilos paralelos (`n_jobs=-1`).
+5. (Si no quieres ejecutar de uno en uno) `python executor.py [notebooks a ejecutar]`.
