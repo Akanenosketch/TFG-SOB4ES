@@ -5,7 +5,7 @@ Este repositorio contiene los pipelines completos para el entrenamiento, evaluac
 
 ## Objetivos de la Rama
 
-El objetivo de esta rama es de comprobar el funcionamiento de los modelos al borrar `mo_z`, parte de la prueba de **eliminación de variables no relevantes**.
+El objetivo de esta rama es de comprobar el funcionamiento de los modelos al borrar `cu_z` y `ni_z`, parte de la prueba de **eliminación de variables no relevantes**.
 
 ## Contenidos de la Rama
 
