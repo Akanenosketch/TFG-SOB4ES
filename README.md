@@ -1,11 +1,9 @@
 # SOB4ES - Modelado Predictivo de Biodiversidad
 ### CRISP-ML(Q) - Fase 3 y 4: Desarrollo y evaluacion de los modelos
 
-Este repositorio contiene los pipelines completos para el entrenamiento, evaluacion y puesta en produccion de los modelos predictivos del proyecto SOB4ES. El objetivo principal del sistema es predecir indices de diversidad biologica (como el indice de Shannon H') a partir de variables edafologicas, climaticas y espaciales.
+Este repositorio contiene los pipelines completos para el entrenamiento, evaluacion y puesta en produccion de los modelos predictivos del proyecto SOB4ES, como también otros elementos como los archivos para la preparación de datos y la documentación pertinente. 
 
-## Objetivos de la Rama
-
-Esta rama es donde se almacena el código base de este TFG. A partir de esta rama se generan el código relacionado a todas las diferentes pruebas realizadas.
+El objetivo principal del sistema es predecir indices de diversidad biologica (como el indice de Shannon H') a partir de variables edafologicas, climaticas y espaciales.
 
 ## Contenidos de la Rama
 
