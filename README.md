@@ -1,5 +1,5 @@
 # SOB4ES - Modelado Predictivo de Biodiversidad
-### Documentation
+### Documentación
 
 Este repositorio contiene los pipelines completos para el entrenamiento, evaluacion y puesta en produccion de los modelos predictivos del proyecto SOB4ES. El objetivo principal del sistema es predecir indices de diversidad biologica (como el indice de Shannon H') a partir de variables edafologicas, climaticas y espaciales.
 
