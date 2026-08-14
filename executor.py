@@ -151,7 +151,7 @@ def main():
         if r["ok"]:
             print(f"OK ({r['duracion_s']}s)")
             if not args.no_git:
-                mensaje = f"Ejecuta {nb_path.name} ({r['duracion_s']}s)"
+                mensaje = f"[executor.py] Executed {nb_path.name} without issues. Elapsed time ({r['duracion_s']}s...)"
                 if git_commit([nb_path], mensaje):
                     print(f"      [git] commit: {mensaje}")
                 else:

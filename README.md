@@ -5,8 +5,7 @@ Este repositorio contiene los pipelines completos para el entrenamiento, evaluac
 
 ## Objetivos de la Rama
 
-Esta rama es donde se almacena el código base de este TFG.
-
+Esta rama es donde se almacena el código base de este TFG. A partir de esta rama se generan el código relacionado a todas las diferentes pruebas realizadas.
 
 ## Contenidos de la Rama
 
