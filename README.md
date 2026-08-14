@@ -41,8 +41,6 @@ La rama se estructura principalmente alrededor de ocho cuadernos de Jupyter, cad
 A partir de ahí se incluyen los diferentes elementos adicionales:
 * **`comparador_modelos.ipynb`:** Carga todos los modelos y comprueba cuál de ellos es mejor dentro de un ranking en base a métricas numéricas (R2, RMSE, MAE).
 * **`comparador_clasificacion.ipynb`:** Carga todos los modelos y comprueba cuál de ellos es mejor dentro de un ranking en base a métricas discretas (Kappa, F1, Matrices de confusión).
-* **`prueba_ensamblado_con_modelos.ipynb`:** Carga todos los modelos y comprueba si la diferencia de los outputs de los meta-modelos son menores en comparación con los outputs originales teniendo de referencia el valor real.
-* **`prueba_ensamblado.ipynb`:** Carga todos los modelos y comprueba si la diferencia de los outputs de los outputs combinador son menores en comparación con los outputs originales teniendo de referencia el valor real. 
 * **`executor.py`:** Script para facilitar la ejecución automática de todos los notebooks.
 
 ### Conjuntos de Datos Requeridos
@@ -72,3 +70,4 @@ Para replicar o ejecutar los cuadernos en esta rama, es imprescindible el uso de
 2. Instalar el arbol de dependencias mediante `pip install -r requirements.txt`.
 3. Para la correcta renderizacion de los graficos SHAP, registrar el entorno como Kernel local de Jupyter.
 4. (Opcional) Configurar la variable de entorno `PYTHONWARNINGS="ignore"` si se experimenta redundancia de salidas durante la ejecucion de hilos paralelos (`n_jobs=-1`).
+5. (Si no quieres ejecutar de uno en uno) `python executor.py [notebooks a ejecutar]`.
