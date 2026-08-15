@@ -1,6 +1,6 @@
-OK | regressorchain.ipynb | 93.5s
+OK | regressorchain.ipynb | 111.8s
 ----------------------------------------------------------------------
-OK | comparador_modelos.ipynb | 49.1s
+OK | comparador_modelos.ipynb | 48.2s
 ----------------------------------------------------------------------
-OK | comparador_clasificacion.ipynb | 27.5s
+OK | comparador_clasificacion.ipynb | 29.8s
 ----------------------------------------------------------------------
