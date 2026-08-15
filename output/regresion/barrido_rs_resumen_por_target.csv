@@ -1,169 +1,169 @@
 target,Modelo,r2_medio,r2_std,veces_top1,veces_top3,pct_top1,pct_top3
-bac_asv_richness_z,MLP Estandar,-0.14730838363261295,0.043021538933421546,0,0,0.0,0.0
-bac_asv_richness_z,MLP Perdida Custom,-0.11472889521798339,0.03884352446464503,0,0,0.0,0.0
-bac_asv_richness_z,RF Individual,-0.0007259459824867931,0.011209481709345276,17,86,16.8,85.1
-bac_asv_richness_z,Random Forest con RegressorChain,-0.03884046302746647,0.03838155019349068,8,27,7.9,26.7
-bac_asv_richness_z,RandomForest Multisalida,0.0020338091527885536,0.006889052739317696,20,98,19.8,97.0
+bac_asv_richness_z,MLP Estandar,-0.1456936975524653,0.04729448031070011,0,0,0.0,0.0
+bac_asv_richness_z,MLP Perdida Custom,-0.179121309613284,0.06927277739458272,0,0,0.0,0.0
+bac_asv_richness_z,RF Individual,-0.0015066920568304813,0.011038211545087788,12,68,2.4,13.8
+bac_asv_richness_z,Random Forest con RegressorChain,-0.009690049641132254,0.02144149599458273,415,439,84.5,89.4
+bac_asv_richness_z,RandomForest Multisalida,0.004113854034692511,0.007184790858352787,20,84,4.1,17.1
 bac_asv_richness_z,Regresión Individual,-0.0760556702294383,0.0,0,0,0.0,0.0
 bac_asv_richness_z,XGBoost Individual,-0.0504054553042339,0.0,0,0,0.0,0.0
-bac_asv_richness_z,XGBoost Multisalida,0.010572375551880678,0.018349664898543252,56,92,55.4,91.1
-bac_shannon_z,MLP Estandar,-0.10571488057320397,0.04615783735698537,0,1,0.0,1.0
-bac_shannon_z,MLP Perdida Custom,-0.06064336320912247,0.03818988811727041,0,9,0.0,8.9
-bac_shannon_z,RF Individual,0.001144011222669911,0.012370612313367845,1,86,1.0,85.1
-bac_shannon_z,Random Forest con RegressorChain,0.014291899773086739,0.029732966579432068,40,94,39.6,93.1
-bac_shannon_z,RandomForest Multisalida,0.028211527171063146,0.00892685175572462,60,101,59.4,100.0
+bac_asv_richness_z,XGBoost Multisalida,0.010661842191707356,0.016745788887775327,44,80,9.0,16.3
+bac_shannon_z,MLP Estandar,-0.10394464650761712,0.05329496201604331,0,2,0.0,0.4
+bac_shannon_z,MLP Perdida Custom,-0.13527995916504526,0.07252795428356217,0,1,0.0,0.2
+bac_shannon_z,RF Individual,0.0008399060727018986,0.014651491312859706,2,81,0.4,16.5
+bac_shannon_z,Random Forest con RegressorChain,0.02485146504281325,0.02503099027961335,442,489,90.0,99.6
+bac_shannon_z,RandomForest Multisalida,0.029410950678674167,0.007847802304584414,47,90,9.6,18.3
 bac_shannon_z,Regresión Individual,-0.0812391862285295,0.0,0,0,0.0,0.0
-bac_shannon_z,XGBoost Individual,-0.2091851813239265,0.0,0,0,0.0,0.0
-bac_shannon_z,XGBoost Multisalida,-0.03573297385274725,0.022221562100902443,0,12,0.0,11.9
-cerc_asv_richness_z,MLP Estandar,-0.008862795657094934,0.039998519240405116,0,0,0.0,0.0
-cerc_asv_richness_z,MLP Perdida Custom,-0.0036653679294770787,0.04455246740642999,0,0,0.0,0.0
-cerc_asv_richness_z,RF Individual,0.11901513729321954,0.009392865142608947,44,94,43.6,93.1
-cerc_asv_richness_z,Random Forest con RegressorChain,0.10576619053001295,0.020406243910192228,22,52,21.8,51.5
-cerc_asv_richness_z,RandomForest Multisalida,0.11832300109843116,0.006284144064453794,31,100,30.7,99.0
-cerc_asv_richness_z,Regresión Individual,0.10186081318603972,0.0,0,35,0.0,34.7
+bac_shannon_z,XGBoost Individual,-0.20918518132392652,0.0,0,0,0.0,0.0
+bac_shannon_z,XGBoost Multisalida,-0.03612773306222087,0.02074100716874829,0,8,0.0,1.6
+cerc_asv_richness_z,MLP Estandar,-0.010862226461622418,0.04668695994060824,0,1,0.0,0.2
+cerc_asv_richness_z,MLP Perdida Custom,-0.03827578740648541,0.05842804164228127,0,0,0.0,0.0
+cerc_asv_richness_z,RF Individual,0.11872549117400377,0.00982979871005928,29,82,5.9,16.7
+cerc_asv_richness_z,Random Forest con RegressorChain,0.11338180922611223,0.01918307784466766,434,458,88.4,93.3
+cerc_asv_richness_z,RandomForest Multisalida,0.11782064116838845,0.006446934043977393,23,85,4.7,17.3
+cerc_asv_richness_z,Regresión Individual,0.10186081318603969,0.0,0,18,0.0,3.7
 cerc_asv_richness_z,XGBoost Individual,-0.0037691705848834,0.0,0,0,0.0,0.0
-cerc_asv_richness_z,XGBoost Multisalida,0.09542261450389815,0.014468652420021672,4,22,4.0,21.8
-cerc_shannon_z,MLP Estandar,-0.15472913375142927,0.04833314842097512,0,0,0.0,0.0
-cerc_shannon_z,MLP Perdida Custom,-0.11358873975484862,0.04834143749376044,0,0,0.0,0.0
-cerc_shannon_z,RF Individual,-0.02993995506465055,0.013759848036988681,0,7,0.0,6.9
-cerc_shannon_z,Random Forest con RegressorChain,0.010787292691201664,0.019600047984134752,41,89,40.6,88.1
-cerc_shannon_z,RandomForest Multisalida,-0.002271227364061088,0.007702953475938259,0,92,0.0,91.1
-cerc_shannon_z,Regresión Individual,0.015451015952051,0.0,59,101,58.4,100.0
+cerc_asv_richness_z,XGBoost Multisalida,0.09599993087354068,0.01752074154534315,5,27,1.0,5.5
+cerc_shannon_z,MLP Estandar,-0.14527619439664996,0.04711321714108799,0,0,0.0,0.0
+cerc_shannon_z,MLP Perdida Custom,-0.1543160424359282,0.07244758208089419,0,1,0.0,0.2
+cerc_shannon_z,RF Individual,-0.02829983089702978,0.009825898608768055,0,11,0.0,2.2
+cerc_shannon_z,Random Forest con RegressorChain,-0.0015830471561815095,0.01774514753680946,417,478,84.9,97.4
+cerc_shannon_z,RandomForest Multisalida,-0.0032397762995291838,0.00833305497190419,2,81,0.4,16.5
+cerc_shannon_z,Regresión Individual,0.015451015952051,0.0,72,90,14.7,18.3
 cerc_shannon_z,XGBoost Individual,-0.5394929450089265,0.0,0,0,0.0,0.0
-cerc_shannon_z,XGBoost Multisalida,-0.030328131832203634,0.02122966479652813,1,14,1.0,13.9
-coll_shannon_z,MLP Estandar,-0.7220728071967387,0.2803386907998531,1,12,1.0,11.9
-coll_shannon_z,MLP Perdida Custom,-0.9778723162729569,0.2813161144230516,0,0,0.0,0.0
-coll_shannon_z,RF Individual,-0.41947160990614474,0.029633533400571704,0,62,0.0,61.4
-coll_shannon_z,Random Forest con RegressorChain,-0.6863376730078878,0.3009025377672413,0,33,0.0,32.7
-coll_shannon_z,RandomForest Multisalida,-0.19466253819494247,0.01650878115716322,100,101,99.0,100.0
+cerc_shannon_z,XGBoost Multisalida,-0.032673893822965226,0.019022657299476286,0,10,0.0,2.0
+coll_shannon_z,MLP Estandar,-0.690260302112144,0.29219832236741344,1,14,0.2,2.9
+coll_shannon_z,MLP Perdida Custom,-1.1843934350719802,0.35256241504241537,0,1,0.0,0.2
+coll_shannon_z,RF Individual,-0.4192998121009621,0.02859758965366626,0,41,0.0,8.4
+coll_shannon_z,Random Forest con RegressorChain,-0.5794337558345382,0.25542766416700896,401,452,81.7,92.1
+coll_shannon_z,RandomForest Multisalida,-0.19796991387944055,0.02005130087350198,89,90,18.1,18.3
 coll_shannon_z,Regresión Individual,-0.4997815668028846,0.0,0,0,0.0,0.0
 coll_shannon_z,XGBoost Individual,-0.7069237846791518,0.0,0,0,0.0,0.0
-coll_shannon_z,XGBoost Multisalida,-0.3794619782364123,0.03705051722498838,0,95,0.0,94.1
-coll_species_richness_z,MLP Estandar,-1.2895309393425247,0.4607262727719264,0,5,0.0,5.0
-coll_species_richness_z,MLP Perdida Custom,-1.615700411420644,0.437365227639872,0,0,0.0,0.0
-coll_species_richness_z,RF Individual,-0.547829143432399,0.041762195627365745,0,97,0.0,96.0
-coll_species_richness_z,Random Forest con RegressorChain,-0.7512363013657942,0.22670652293542704,0,47,0.0,46.5
-coll_species_richness_z,RandomForest Multisalida,-0.2973415644100805,0.023063970504473442,101,101,100.0,100.0
-coll_species_richness_z,Regresión Individual,-0.7340579954886903,0.0,0,5,0.0,5.0
-coll_species_richness_z,XGBoost Individual,-0.8919052617537843,0.0,0,0,0.0,0.0
-coll_species_richness_z,XGBoost Multisalida,-0.6517028074738617,0.05958758204231947,0,48,0.0,47.5
-earthworm_richness_z,MLP Estandar,0.48070150595830907,0.04017332103689829,0,4,0.0,4.0
-earthworm_richness_z,MLP Perdida Custom,0.45374526234079743,0.043324522660653376,0,0,0.0,0.0
-earthworm_richness_z,RF Individual,0.5467004304137121,0.0105064256949394,0,99,0.0,98.0
-earthworm_richness_z,Random Forest con RegressorChain,0.5602585023748968,0.011015929526292054,6,99,5.9,98.0
-earthworm_richness_z,RandomForest Multisalida,0.44932315560981706,0.008717487913911377,0,0,0.0,0.0
+coll_shannon_z,XGBoost Multisalida,-0.38508925357100254,0.03731912457940838,0,73,0.0,14.9
+coll_species_richness_z,MLP Estandar,-1.2423278309375414,0.48669660233137935,1,6,0.2,1.2
+coll_species_richness_z,MLP Perdida Custom,-2.031802046088686,0.6066946980650871,0,1,0.0,0.2
+coll_species_richness_z,RF Individual,-0.5571775658165521,0.03934260074160378,0,88,0.0,17.9
+coll_species_richness_z,Random Forest con RegressorChain,-0.681898850374145,0.19852752180285713,401,440,81.7,89.6
+coll_species_richness_z,RandomForest Multisalida,-0.3013695887526786,0.029268372458958917,89,90,18.1,18.3
+coll_species_richness_z,Regresión Individual,-0.7340579954886904,0.0,0,2,0.0,0.4
+coll_species_richness_z,XGBoost Individual,-0.8919052617537844,0.0,0,0,0.0,0.0
+coll_species_richness_z,XGBoost Multisalida,-0.6590218917448009,0.057175878970289966,0,44,0.0,9.0
+earthworm_richness_z,MLP Estandar,0.47367204853317685,0.037571205095686185,0,10,0.0,2.0
+earthworm_richness_z,MLP Perdida Custom,0.438638921874167,0.05866421087328815,0,5,0.0,1.0
+earthworm_richness_z,RF Individual,0.5475785293250645,0.011269333143313583,1,90,0.2,18.3
+earthworm_richness_z,Random Forest con RegressorChain,0.5278817147239118,0.01214971191330392,401,476,81.7,96.9
+earthworm_richness_z,RandomForest Multisalida,0.44823758575560996,0.007632421105074139,0,0,0.0,0.0
 earthworm_richness_z,Regresión Individual,0.2789313433634833,0.0,0,0,0.0,0.0
 earthworm_richness_z,XGBoost Individual,0.4895472609270274,0.0,0,0,0.0,0.0
-earthworm_richness_z,XGBoost Multisalida,0.5866378307162865,0.011171694467430722,95,101,94.1,100.0
-earthworm_shannon_z,MLP Estandar,0.3867535231701677,0.04326323668709009,0,1,0.0,1.0
-earthworm_shannon_z,MLP Perdida Custom,0.3532598522537567,0.04232177884539354,0,0,0.0,0.0
-earthworm_shannon_z,RF Individual,0.5034150071024618,0.009953107552071693,3,101,3.0,100.0
-earthworm_shannon_z,Random Forest con RegressorChain,0.4986011507402064,0.024521099401256404,5,100,5.0,99.0
-earthworm_shannon_z,RandomForest Multisalida,0.4140000174471842,0.00911533709297236,0,0,0.0,0.0
+earthworm_richness_z,XGBoost Multisalida,0.5860333294412241,0.01254831714208772,89,90,18.1,18.3
+earthworm_shannon_z,MLP Estandar,0.38111339195430494,0.042596630564333444,0,1,0.0,0.2
+earthworm_shannon_z,MLP Perdida Custom,0.33986284114160686,0.06299180674301746,0,1,0.0,0.2
+earthworm_shannon_z,RF Individual,0.5030136076350574,0.009229560058359867,3,90,0.6,18.3
+earthworm_shannon_z,Random Forest con RegressorChain,0.4791928770654077,0.015743594321779877,401,489,81.7,99.6
+earthworm_shannon_z,RandomForest Multisalida,0.4130755449631927,0.00811134913765159,0,0,0.0,0.0
 earthworm_shannon_z,Regresión Individual,0.2395443154158835,0.0,0,0,0.0,0.0
-earthworm_shannon_z,XGBoost Individual,0.3898016099461643,0.0,0,0,0.0,0.0
-earthworm_shannon_z,XGBoost Multisalida,0.5342828793930174,0.01076554611258317,93,101,92.1,100.0
-euk_asv_richness_z,MLP Estandar,0.23834605715101076,0.04222423376078782,21,67,20.8,66.3
-euk_asv_richness_z,MLP Perdida Custom,0.1934385758713874,0.04320525775057329,5,20,5.0,19.8
-euk_asv_richness_z,RF Individual,0.23914387474322032,0.014018536638335855,5,83,5.0,82.2
-euk_asv_richness_z,Random Forest con RegressorChain,0.2761391324105895,0.03127082941953387,68,95,67.3,94.1
-euk_asv_richness_z,RandomForest Multisalida,0.18526659502588477,0.007788765613348127,0,0,0.0,0.0
+earthworm_shannon_z,XGBoost Individual,0.38980160994616436,0.0,0,0,0.0,0.0
+earthworm_shannon_z,XGBoost Multisalida,0.5329074069074512,0.011413460966018578,87,90,17.7,18.3
+euk_asv_richness_z,MLP Estandar,0.23973611688888077,0.0444469389052749,26,60,5.3,12.2
+euk_asv_richness_z,MLP Perdida Custom,0.15883749894021013,0.06240937889244613,4,7,0.8,1.4
+euk_asv_richness_z,RF Individual,0.2379724206382003,0.013812242414294676,7,73,1.4,14.9
+euk_asv_richness_z,Random Forest con RegressorChain,0.2556200728467744,0.01838957705863166,453,489,92.3,99.6
+euk_asv_richness_z,RandomForest Multisalida,0.18342215478741716,0.009538458375171092,0,0,0.0,0.0
 euk_asv_richness_z,Regresión Individual,0.0399642628615142,0.0,0,0,0.0,0.0
 euk_asv_richness_z,XGBoost Individual,0.1322405677890876,0.0,0,0,0.0,0.0
-euk_asv_richness_z,XGBoost Multisalida,0.22070968013943487,0.017879064999508098,2,38,2.0,37.6
-euk_shannon_z,MLP Estandar,0.156607341414312,0.03494233355591583,34,74,33.7,73.3
-euk_shannon_z,MLP Perdida Custom,0.10143474291888133,0.03952039727677623,0,14,0.0,13.9
-euk_shannon_z,RF Individual,0.164440117156586,0.008947940145777608,29,98,28.7,97.0
-euk_shannon_z,Random Forest con RegressorChain,0.1639035643997067,0.018852971493195262,38,92,37.6,91.1
-euk_shannon_z,RandomForest Multisalida,0.136614584639121,0.0060130969096056025,0,24,0.0,23.8
+euk_asv_richness_z,XGBoost Multisalida,0.22158797633209,0.016343292457306376,1,42,0.2,8.6
+euk_shannon_z,MLP Estandar,0.15437261373685654,0.03328542472213471,34,62,6.9,12.6
+euk_shannon_z,MLP Perdida Custom,0.09203889245740737,0.053600149763618765,5,15,1.0,3.1
+euk_shannon_z,RF Individual,0.1665382477865892,0.008385513092347505,39,89,7.9,18.1
+euk_shannon_z,Random Forest con RegressorChain,0.15088944713024735,0.01954589226990318,413,462,84.1,94.1
+euk_shannon_z,RandomForest Multisalida,0.13472761268212494,0.006182430935140724,0,41,0.0,8.4
 euk_shannon_z,Regresión Individual,0.0407474755720241,0.0,0,0,0.0,0.0
 euk_shannon_z,XGBoost Individual,0.0163413551712425,0.0,0,0,0.0,0.0
-euk_shannon_z,XGBoost Multisalida,0.09610736899911916,0.021375329378239067,0,1,0.0,1.0
-fun_asv_richness_z,MLP Estandar,0.012918939384464985,0.02343556300803158,55,85,54.5,84.2
-fun_asv_richness_z,MLP Perdida Custom,-0.006667315868422099,0.022508942962110298,13,49,12.9,48.5
-fun_asv_richness_z,RF Individual,-0.018678718183203248,0.005814647017540962,0,7,0.0,6.9
-fun_asv_richness_z,Random Forest con RegressorChain,-0.02958789823423565,0.011937135157961782,0,2,0.0,2.0
-fun_asv_richness_z,RandomForest Multisalida,-0.004882834001160887,0.0037442357230780634,0,59,0.0,58.4
-fun_asv_richness_z,Regresión Individual,0.0086708771782151,0.0,33,101,32.7,100.0
-fun_asv_richness_z,XGBoost Individual,-0.16281992843271922,0.0,0,0,0.0,0.0
-fun_asv_richness_z,XGBoost Multisalida,-0.06647927283568905,0.017558985106608485,0,0,0.0,0.0
-fun_shannon_z,MLP Estandar,-0.09465513909061472,0.041327690234281476,2,4,2.0,4.0
-fun_shannon_z,MLP Perdida Custom,-0.07108446327330664,0.029593898882125567,3,7,3.0,6.9
-fun_shannon_z,RF Individual,-0.03859802519569124,0.010469115472453168,2,19,2.0,18.8
-fun_shannon_z,Random Forest con RegressorChain,-0.027830617400699423,0.011847010655863497,16,63,15.8,62.4
-fun_shannon_z,RandomForest Multisalida,-0.017780736977417035,0.005486421477015967,29,98,28.7,97.0
-fun_shannon_z,Regresión Individual,-0.0161081349245613,0.0,47,100,46.5,99.0
-fun_shannon_z,XGBoost Individual,-0.18366522508324307,0.0,0,0,0.0,0.0
-fun_shannon_z,XGBoost Multisalida,-0.048974752045424966,0.017802045556427698,2,12,2.0,11.9
-macro_order_richness_z,MLP Estandar,0.3342045287762881,0.04408136865397855,4,65,4.0,64.4
-macro_order_richness_z,MLP Perdida Custom,0.28370447795753934,0.0497401615153316,0,16,0.0,15.8
-macro_order_richness_z,RF Individual,0.3102608790035754,0.012347542635264058,0,21,0.0,20.8
-macro_order_richness_z,Random Forest con RegressorChain,0.3917786961794628,0.042148196831150606,38,100,37.6,99.0
-macro_order_richness_z,RandomForest Multisalida,0.254281460612768,0.009982521849192787,0,0,0.0,0.0
+euk_shannon_z,XGBoost Multisalida,0.09876473270852873,0.01670385179870378,0,2,0.0,0.4
+fun_asv_richness_z,MLP Estandar,0.02074692963041255,0.02206356538932987,60,83,12.2,16.9
+fun_asv_richness_z,MLP Perdida Custom,-0.014634738393010547,0.03262984687219958,11,36,2.2,7.3
+fun_asv_richness_z,RF Individual,-0.019888687829755662,0.005803792393000339,0,3,0.0,0.6
+fun_asv_richness_z,Random Forest con RegressorChain,-0.026624680083704343,0.010491339832722065,401,403,81.7,82.1
+fun_asv_richness_z,RandomForest Multisalida,-0.005185385757699517,0.0038193061296902973,0,56,0.0,11.4
+fun_asv_richness_z,Regresión Individual,0.0086708771782151,0.0,19,90,3.9,18.3
+fun_asv_richness_z,XGBoost Individual,-0.1628199284327192,0.0,0,0,0.0,0.0
+fun_asv_richness_z,XGBoost Multisalida,-0.0643792365332489,0.01716868520315413,0,0,0.0,0.0
+fun_shannon_z,MLP Estandar,-0.10119321866207089,0.03678079125117964,0,1,0.0,0.2
+fun_shannon_z,MLP Perdida Custom,-0.10750419509779276,0.047124950386058406,0,1,0.0,0.2
+fun_shannon_z,RF Individual,-0.03709540290030319,0.010619102867928788,0,25,0.0,5.1
+fun_shannon_z,Random Forest con RegressorChain,-0.029553758224352588,0.013622382075706412,410,454,83.5,92.5
+fun_shannon_z,RandomForest Multisalida,-0.01796256188277561,0.005378128699807966,29,87,5.9,17.7
+fun_shannon_z,Regresión Individual,-0.0161081349245613,0.0,46,88,9.4,17.9
+fun_shannon_z,XGBoost Individual,-0.1836652250832431,0.0,0,0,0.0,0.0
+fun_shannon_z,XGBoost Multisalida,-0.0500597517261338,0.02212278385626976,6,15,1.2,3.1
+macro_order_richness_z,MLP Estandar,0.32941379996335207,0.04252276518208108,3,50,0.6,10.2
+macro_order_richness_z,MLP Perdida Custom,0.284127878067936,0.060114825023929556,0,25,0.0,5.1
+macro_order_richness_z,RF Individual,0.3114671724247092,0.011312249926049395,0,18,0.0,3.7
+macro_order_richness_z,Random Forest con RegressorChain,0.37888826853536794,0.0368796316483522,427,488,87.0,99.4
+macro_order_richness_z,RandomForest Multisalida,0.25629596597643073,0.00784491519149519,0,0,0.0,0.0
 macro_order_richness_z,Regresión Individual,0.1521030756371686,0.0,0,0,0.0,0.0
-macro_order_richness_z,XGBoost Individual,0.18862876839243273,0.0,0,0,0.0,0.0
-macro_order_richness_z,XGBoost Multisalida,0.40839215062048095,0.017838873715330397,59,101,58.4,100.0
-macro_shannon_z,MLP Estandar,0.2447495863826174,0.042140423805525774,0,15,0.0,14.9
-macro_shannon_z,MLP Perdida Custom,0.2035946499141704,0.04254771786915558,0,1,0.0,1.0
-macro_shannon_z,RF Individual,0.2761680637631561,0.009467844881615728,0,40,0.0,39.6
-macro_shannon_z,Random Forest con RegressorChain,0.22763245548895683,0.09168095705399712,0,45,0.0,44.6
-macro_shannon_z,RandomForest Multisalida,0.1983466192302208,0.008644717682742026,0,0,0.0,0.0
+macro_order_richness_z,XGBoost Individual,0.1886287683924327,0.0,0,0,0.0,0.0
+macro_order_richness_z,XGBoost Multisalida,0.410279291503196,0.020317311053602762,61,90,12.4,18.3
+macro_shannon_z,MLP Estandar,0.24074848519085718,0.04061795442456149,0,11,0.0,2.2
+macro_shannon_z,MLP Perdida Custom,0.1951640200151861,0.05778631233791784,0,1,0.0,0.2
+macro_shannon_z,RF Individual,0.27392618841728966,0.011821729037696732,0,33,0.0,6.7
+macro_shannon_z,Random Forest con RegressorChain,0.2318074958863592,0.07502397225593692,401,446,81.7,90.8
+macro_shannon_z,RandomForest Multisalida,0.19958270678354073,0.007017093898443766,0,0,0.0,0.0
 macro_shannon_z,Regresión Individual,0.1257139074895296,0.0,0,0,0.0,0.0
-macro_shannon_z,XGBoost Individual,0.3276728756105698,0.0,0,101,0.0,100.0
-macro_shannon_z,XGBoost Multisalida,0.373167340560044,0.01416532081716956,101,101,100.0,100.0
-meso_shannon_z,MLP Estandar,-0.4110608851572596,0.12137016383206811,1,4,1.0,4.0
-meso_shannon_z,MLP Perdida Custom,-0.32056324437258615,0.09479855067608799,0,14,0.0,13.9
-meso_shannon_z,RF Individual,-0.18775865322467852,0.011572776607936396,0,96,0.0,95.0
-meso_shannon_z,Random Forest con RegressorChain,-0.3141990285127297,0.14696585634128054,3,44,3.0,43.6
-meso_shannon_z,RandomForest Multisalida,-0.12175643513589088,0.00861311367674412,97,101,96.0,100.0
-meso_shannon_z,Regresión Individual,-0.2498916095231236,0.0,0,42,0.0,41.6
+macro_shannon_z,XGBoost Individual,0.3276728756105698,0.0,0,90,0.0,18.3
+macro_shannon_z,XGBoost Multisalida,0.3698724690800158,0.01710104672994874,90,90,18.3,18.3
+meso_shannon_z,MLP Estandar,-0.3920020617389604,0.10473111026433433,0,4,0.0,0.8
+meso_shannon_z,MLP Perdida Custom,-0.4505622074406858,0.1380766154326323,0,4,0.0,0.8
+meso_shannon_z,RF Individual,-0.18872178150399976,0.013433573698376023,0,89,0.0,18.1
+meso_shannon_z,Random Forest con RegressorChain,-0.24385178178821357,0.10125979020096951,409,459,83.3,93.5
+meso_shannon_z,RandomForest Multisalida,-0.12115895999700087,0.008383839823870072,82,90,16.7,18.3
+meso_shannon_z,Regresión Individual,-0.2498916095231236,0.0,0,23,0.0,4.7
 meso_shannon_z,XGBoost Individual,-0.2781467129805499,0.0,0,0,0.0,0.0
-meso_shannon_z,XGBoost Multisalida,-0.28972524281963996,0.02371267994778161,0,2,0.0,2.0
-meso_species_richness_z,MLP Estandar,-0.2219069424007424,0.09915142876808804,1,4,1.0,4.0
-meso_species_richness_z,MLP Perdida Custom,-0.1551139428272541,0.08108252704954645,3,17,3.0,16.8
-meso_species_richness_z,RF Individual,-0.04957750867122947,0.011857221930251401,3,101,3.0,100.0
-meso_species_richness_z,Random Forest con RegressorChain,-0.0899665001207484,0.043271671185420926,7,51,6.9,50.5
-meso_species_richness_z,RandomForest Multisalida,-0.025588235611728013,0.007488570236573307,87,101,86.1,100.0
-meso_species_richness_z,Regresión Individual,-0.0959168294079584,0.0,0,24,0.0,23.8
+meso_shannon_z,XGBoost Multisalida,-0.28151606570275245,0.022755654668136734,0,2,0.0,0.4
+meso_species_richness_z,MLP Estandar,-0.20587154365055133,0.08870144382878503,0,6,0.0,1.2
+meso_species_richness_z,MLP Perdida Custom,-0.2472452567319993,0.11316145539921109,0,3,0.0,0.6
+meso_species_richness_z,RF Individual,-0.052259415694489234,0.011434418834352837,1,89,0.2,18.1
+meso_species_richness_z,Random Forest con RegressorChain,-0.05938562186991378,0.0381321062461477,415,470,84.5,95.7
+meso_species_richness_z,RandomForest Multisalida,-0.024223154435991833,0.007028972170085625,75,90,15.3,18.3
+meso_species_richness_z,Regresión Individual,-0.0959168294079584,0.0,0,12,0.0,2.4
 meso_species_richness_z,XGBoost Individual,-0.1809318149826448,0.0,0,0,0.0,0.0
-meso_species_richness_z,XGBoost Multisalida,-0.12015029184946442,0.018570692099033143,0,5,0.0,5.0
-nematode_shannon_z,MLP Estandar,0.11985302153978519,0.03307447947373296,1,19,1.0,18.8
-nematode_shannon_z,MLP Perdida Custom,0.0374499485242961,0.03605865115658999,0,0,0.0,0.0
-nematode_shannon_z,RF Individual,0.13994941963960078,0.015090655933195824,0,30,0.0,29.7
-nematode_shannon_z,Random Forest con RegressorChain,0.15439677913469976,0.014136711494154785,1,73,1.0,72.3
-nematode_shannon_z,RandomForest Multisalida,0.15303758393609052,0.008803325979263803,0,76,0.0,75.2
-nematode_shannon_z,Regresión Individual,0.011160511952442002,0.0,0,0,0.0,0.0
-nematode_shannon_z,XGBoost Individual,0.1367928685847697,0.0,0,4,0.0,4.0
-nematode_shannon_z,XGBoost Multisalida,0.21091046208915107,0.01718932206813289,99,101,98.0,100.0
-oomy_asv_richness_z,MLP Estandar,0.0012521622441233448,0.04478830629122806,0,0,0.0,0.0
-oomy_asv_richness_z,MLP Perdida Custom,0.050647054024858314,0.04155693304032767,0,0,0.0,0.0
-oomy_asv_richness_z,RF Individual,0.18781959684162683,0.012204922804171698,10,87,9.9,86.1
-oomy_asv_richness_z,Random Forest con RegressorChain,0.20787660774077946,0.02109133859548024,76,97,75.2,96.0
-oomy_asv_richness_z,RandomForest Multisalida,0.19256678355028556,0.006492058059158529,14,98,13.9,97.0
-oomy_asv_richness_z,Regresión Individual,0.1034625001826371,0.0,0,0,0.0,0.0
+meso_species_richness_z,XGBoost Multisalida,-0.1253041188668219,0.019917534647037622,0,1,0.0,0.2
+nematode_shannon_z,MLP Estandar,0.11432167740243292,0.03181578386457897,1,11,0.2,2.2
+nematode_shannon_z,MLP Perdida Custom,0.04171750073114323,0.04045646132184283,0,0,0.0,0.0
+nematode_shannon_z,RF Individual,0.14093027272750266,0.013807598950984091,0,28,0.0,5.7
+nematode_shannon_z,Random Forest con RegressorChain,0.14563728520885094,0.014078792394995645,401,456,81.7,92.9
+nematode_shannon_z,RandomForest Multisalida,0.15369176744257684,0.008419915447261044,0,79,0.0,16.1
+nematode_shannon_z,Regresión Individual,0.011160511952442,0.0,0,0,0.0,0.0
+nematode_shannon_z,XGBoost Individual,0.1367928685847697,0.0,0,7,0.0,1.4
+nematode_shannon_z,XGBoost Multisalida,0.2140372873303244,0.017316614123407084,89,90,18.1,18.3
+oomy_asv_richness_z,MLP Estandar,0.00024399683884307837,0.04383510723222583,0,0,0.0,0.0
+oomy_asv_richness_z,MLP Perdida Custom,-0.005390478454808787,0.06997082099275462,0,0,0.0,0.0
+oomy_asv_richness_z,RF Individual,0.1892184866168687,0.0116374131199175,17,78,3.5,15.9
+oomy_asv_richness_z,Random Forest con RegressorChain,0.19440912849315106,0.01614242078887555,450,482,91.6,98.2
+oomy_asv_richness_z,RandomForest Multisalida,0.19162105300762475,0.006022719317868011,22,88,4.5,17.9
+oomy_asv_richness_z,Regresión Individual,0.10346250018263711,0.0,0,0,0.0,0.0
 oomy_asv_richness_z,XGBoost Individual,0.0733622030756572,0.0,0,0,0.0,0.0
-oomy_asv_richness_z,XGBoost Multisalida,0.16604336849136248,0.015336294863017982,1,21,1.0,20.8
-oomy_shannon_z,MLP Estandar,0.09911127320961906,0.03808586845139044,23,62,22.8,61.4
-oomy_shannon_z,MLP Perdida Custom,0.06328358997824073,0.03959593641187729,3,21,3.0,20.8
-oomy_shannon_z,RF Individual,0.0951000810100214,0.01568714865936863,1,48,1.0,47.5
-oomy_shannon_z,Random Forest con RegressorChain,0.09393130436035257,0.014843772709977733,1,48,1.0,47.5
-oomy_shannon_z,RandomForest Multisalida,0.12785351724756736,0.007469358841968214,73,101,72.3,100.0
-oomy_shannon_z,Regresión Individual,0.0857221154957514,0.0,0,1,0.0,1.0
-oomy_shannon_z,XGBoost Individual,0.0869448795617706,0.0,0,21,0.0,20.8
-oomy_shannon_z,XGBoost Multisalida,0.050460019418828134,0.01975881454552362,0,1,0.0,1.0
-orib_shannon_z,MLP Estandar,0.24918479322095968,0.025360657084893094,72,98,71.3,97.0
-orib_shannon_z,MLP Perdida Custom,0.21324733507642224,0.028649267469158097,7,67,6.9,66.3
-orib_shannon_z,RF Individual,0.16036169763823488,0.008026900750973034,0,0,0.0,0.0
-orib_shannon_z,Random Forest con RegressorChain,0.1954179531510273,0.024242048703957082,2,38,2.0,37.6
-orib_shannon_z,RandomForest Multisalida,0.1683316560382062,0.005403288576759312,0,1,0.0,1.0
-orib_shannon_z,Regresión Individual,0.11372535013558119,0.0,0,0,0.0,0.0
+oomy_asv_richness_z,XGBoost Multisalida,0.16842658880267297,0.015815468979855033,2,23,0.4,4.7
+oomy_shannon_z,MLP Estandar,0.09810443579725624,0.043347580460730215,19,52,3.9,10.6
+oomy_shannon_z,MLP Perdida Custom,0.0545345884396645,0.0586275714195395,10,18,2.0,3.7
+oomy_shannon_z,RF Individual,0.09433354411916418,0.015288225526883506,1,46,0.2,9.4
+oomy_shannon_z,Random Forest con RegressorChain,0.09860886318906434,0.01564318292191614,401,451,81.7,91.9
+oomy_shannon_z,RandomForest Multisalida,0.1280252665428682,0.007709146529451406,60,90,12.2,18.3
+oomy_shannon_z,Regresión Individual,0.0857221154957514,0.0,0,2,0.0,0.4
+oomy_shannon_z,XGBoost Individual,0.0869448795617706,0.0,0,11,0.0,2.2
+oomy_shannon_z,XGBoost Multisalida,0.052335671693098065,0.019100171562496444,0,1,0.0,0.2
+orib_shannon_z,MLP Estandar,0.2504680770140836,0.027606358082672155,50,88,10.2,17.9
+orib_shannon_z,MLP Perdida Custom,0.22058618045145295,0.04610956977963501,27,69,5.5,14.1
+orib_shannon_z,RF Individual,0.1577798023510196,0.007492154767835987,0,1,0.0,0.2
+orib_shannon_z,Random Forest con RegressorChain,0.18201333241297674,0.021928374017206126,401,421,81.7,85.7
+orib_shannon_z,RandomForest Multisalida,0.1683799955595819,0.00583016774690023,0,3,0.0,0.6
+orib_shannon_z,Regresión Individual,0.1137253501355812,0.0,0,0,0.0,0.0
 orib_shannon_z,XGBoost Individual,0.1569763504755617,0.0,0,0,0.0,0.0
-orib_shannon_z,XGBoost Multisalida,0.2282705261523761,0.013163441376993365,20,99,19.8,98.0
-orib_species_richness_z,MLP Estandar,0.2914657353251327,0.03493623052601781,66,94,65.3,93.1
-orib_species_richness_z,MLP Perdida Custom,0.24433788720806898,0.034239953819070634,4,59,4.0,58.4
-orib_species_richness_z,RF Individual,0.22797443679123947,0.010564553223901887,1,6,1.0,5.9
-orib_species_richness_z,Random Forest con RegressorChain,0.2210739568370088,0.022018081130472277,0,12,0.0,11.9
-orib_species_richness_z,RandomForest Multisalida,0.23724403810444145,0.008022822959180958,0,32,0.0,31.7
+orib_shannon_z,XGBoost Multisalida,0.2294584210301244,0.013041160824704783,13,89,2.6,18.1
+orib_species_richness_z,MLP Estandar,0.2941921856154296,0.033810235135407596,48,84,9.8,17.1
+orib_species_richness_z,MLP Perdida Custom,0.26250684760804277,0.055579952327007784,21,66,4.3,13.4
+orib_species_richness_z,RF Individual,0.22527385198881744,0.01050091412307173,0,4,0.0,0.8
+orib_species_richness_z,Random Forest con RegressorChain,0.19930790506063886,0.022885652252653148,401,402,81.7,81.9
+orib_species_richness_z,RandomForest Multisalida,0.23602725601352895,0.00796344648378621,0,26,0.0,5.3
 orib_species_richness_z,Regresión Individual,0.092076863981214,0.0,0,0,0.0,0.0
 orib_species_richness_z,XGBoost Individual,-0.1267094419770009,0.0,0,0,0.0,0.0
-orib_species_richness_z,XGBoost Multisalida,0.278690895228652,0.015381677500751027,30,100,29.7,99.0
+orib_species_richness_z,XGBoost Multisalida,0.28364045234295926,0.0163206856822858,21,89,4.3,18.1
