@@ -1,22 +1,22 @@
 target,modelo_ganador,veces_top1,pct_top1,r2_medio
-bac_asv_richness_z,XGBoost Multisalida,56,55.4,0.010572375551880678
-bac_shannon_z,RandomForest Multisalida,59,58.4,0.028211527171063143
-cerc_asv_richness_z,RF Individual,44,43.6,0.11901513729321951
-cerc_shannon_z,Regresión Individual,59,58.4,0.015451015952051
-coll_shannon_z,RandomForest Multisalida,100,99.0,-0.19466253819494242
-coll_species_richness_z,RandomForest Multisalida,101,100.0,-0.29734156441008047
-earthworm_richness_z,XGBoost Multisalida,95,94.1,0.5866378307162865
-earthworm_shannon_z,XGBoost Multisalida,93,92.1,0.5342828793930174
-euk_asv_richness_z,Random Forest con RegressorChain,69,68.3,0.2761391324105895
-euk_shannon_z,Random Forest con RegressorChain,37,36.6,0.1639035643997067
-fun_asv_richness_z,MLP Estandar,58,57.4,0.012918939384464985
-fun_shannon_z,Regresión Individual,47,46.5,-0.0161081349245613
-macro_order_richness_z,XGBoost Multisalida,57,56.4,0.40839215062048095
+bac_asv_richness_z,XGBoost Multisalida,42,41.6,0.010572375551880678
+bac_shannon_z,RandomForest Multisalida,52,51.5,0.028211527171063153
+cerc_asv_richness_z,RF Individual,50,49.5,0.122691136218384
+cerc_shannon_z,Regresión Individual,87,86.1,0.015451015952051
+coll_shannon_z,RandomForest Multisalida,100,99.0,-0.19466253819494247
+coll_species_richness_z,RandomForest Multisalida,101,100.0,-0.2973415644100805
+earthworm_richness_z,XGBoost Multisalida,93,92.1,0.5866378307162865
+earthworm_shannon_z,XGBoost Multisalida,101,100.0,0.5342828793930174
+euk_asv_richness_z,Random Forest con RegressorChain,48,47.5,0.2547393475590699
+euk_shannon_z,RF Individual,75,74.3,0.1684169089243549
+fun_asv_richness_z,MLP Estandar,50,49.5,0.010112744782123859
+fun_shannon_z,Regresión Individual,40,39.6,-0.0161081349245613
+macro_order_richness_z,XGBoost Multisalida,80,79.2,0.40839215062048095
 macro_shannon_z,XGBoost Multisalida,101,100.0,0.373167340560044
-meso_shannon_z,RandomForest Multisalida,97,96.0,-0.12175643513589085
-meso_species_richness_z,RandomForest Multisalida,89,88.1,-0.025588235611728013
-nematode_shannon_z,XGBoost Multisalida,99,98.0,0.21091046208915107
-oomy_asv_richness_z,Random Forest con RegressorChain,76,75.2,0.20787660774077946
-oomy_shannon_z,RandomForest Multisalida,68,67.3,0.12785351724756738
-orib_shannon_z,MLP Estandar,64,63.4,0.24918479322095968
-orib_species_richness_z,MLP Estandar,56,55.4,0.2914657353251327
+meso_shannon_z,RandomForest Multisalida,84,83.2,-0.12175643513589084
+meso_species_richness_z,RandomForest Multisalida,72,71.3,-0.02558823561172802
+nematode_shannon_z,XGBoost Multisalida,100,99.0,0.21091046208915107
+oomy_asv_richness_z,Random Forest con RegressorChain,61,60.4,0.19952510857770914
+oomy_shannon_z,MLP Estandar,101,100.0,0.1937630942257539
+orib_shannon_z,XGBoost Multisalida,69,68.3,0.2282705261523761
+orib_species_richness_z,XGBoost Multisalida,80,79.2,0.278690895228652

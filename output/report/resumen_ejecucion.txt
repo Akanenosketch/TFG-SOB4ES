@@ -1,22 +1,24 @@
-OK | reg_model.ipynb | 94.4s
+OK | reg_model.ipynb | 97.6s
 ----------------------------------------------------------------------
-OK | rf_model.ipynb | 415.4s
+OK | rf_model.ipynb | 395.3s
 ----------------------------------------------------------------------
-OK | rf_multisalida.ipynb | 214.4s
+OK | rf_multisalida.ipynb | 207.8s
 ----------------------------------------------------------------------
-OK | regressorchain.ipynb | 633.5s
+OK | regressorchain.ipynb | 506.9s
 ----------------------------------------------------------------------
-OK | xgb_multisalida.ipynb | 2221.6s
+OK | xgb_multisalida.ipynb | 2219.7s
 ----------------------------------------------------------------------
-OK | xgboost_model.ipynb | 1084.4s
+OK | xgboost_model.ipynb | 1075.8s
 ----------------------------------------------------------------------
-OK | mlp_custom_loss.ipynb | 392.3s
+OK | mlp_custom_loss.ipynb | 303.4s
 ----------------------------------------------------------------------
-OK | mlp_multisalida.ipynb | 150.9s
+OK | mlp_multisalida.ipynb | 184.4s
 ----------------------------------------------------------------------
-OK | comparador_modelos.ipynb | 57.8s
+OK | comparador_modelos.ipynb | 47.9s
 ----------------------------------------------------------------------
-OK | comparador_clasificacion.ipynb | 32.9s
+OK | comparador_clasificacion.ipynb | 27.7s
 ----------------------------------------------------------------------
 OK | comparador_barrido_rs.ipynb | 3.9s
+----------------------------------------------------------------------
+OK | comparador_variables.ipynb | 2.7s
 ----------------------------------------------------------------------
