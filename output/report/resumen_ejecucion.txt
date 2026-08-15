@@ -1,10 +1,4 @@
-OK | reg_model.ipynb | 92.1s
-----------------------------------------------------------------------
-OK | rf_model.ipynb | 104.7s
-----------------------------------------------------------------------
-OK | rf_multisalida.ipynb | 183.7s
-----------------------------------------------------------------------
-FALLO | regressorchain.ipynb | 33.1s
+FALLO | regressorchain.ipynb | 32.9s
 Analisis del efecto del orden en la cadena...
   Posicion en cadena -> target -> R2 (train):
 ------------------
@@ -21,21 +15,13 @@ Analisis del efecto del orden en la cadena...
 [32m      9[39m [38;5;66;03m# 2. Importancia MDI del modelo base (primer target)[39;00m
 [31mNameError[39m: name 'y_pred_train' is not defined
 ----------------------------------------------------------------------
-OK | xgb_multisalida.ipynb | 2024.9s
+OK | comparador_modelos.ipynb | 58.6s
 ----------------------------------------------------------------------
-OK | xgboost_model.ipynb | 942.2s
+OK | comparador_clasificacion.ipynb | 32.6s
 ----------------------------------------------------------------------
-OK | mlp_custom_loss.ipynb | 118.4s
+OK | comparador_variables.ipynb | 2.7s
 ----------------------------------------------------------------------
-OK | mlp_multisalida.ipynb | 63.8s
+OK | prueba_ensamblado_con_modelos.ipynb | 127.3s
 ----------------------------------------------------------------------
-OK | comparador_modelos.ipynb | 57.3s
-----------------------------------------------------------------------
-OK | comparador_clasificacion.ipynb | 33.3s
-----------------------------------------------------------------------
-OK | comparador_variables.ipynb | 2.9s
-----------------------------------------------------------------------
-OK | prueba_ensamblado_con_modelos.ipynb | 129.3s
-----------------------------------------------------------------------
-OK | prueba_ensamblado.ipynb | 127.0s
+OK | prueba_ensamblado.ipynb | 127.4s
 ----------------------------------------------------------------------
