@@ -1,10 +1,10 @@
-OK | regressorchain.ipynb | 506.9s
+OK | regressorchain.ipynb | 577.4s
 ----------------------------------------------------------------------
-OK | comparador_modelos.ipynb | 49.4s
+OK | comparador_modelos.ipynb | 58.4s
 ----------------------------------------------------------------------
-OK | comparador_clasificacion.ipynb | 27.7s
+OK | comparador_clasificacion.ipynb | 34.3s
 ----------------------------------------------------------------------
-OK | comparador_barrido_rs.ipynb | 3.8s
+OK | comparador_barrido_rs.ipynb | 4.8s
 ----------------------------------------------------------------------
-OK | comparador_variables.ipynb | 2.7s
+OK | comparador_variables.ipynb | 3.2s
 ----------------------------------------------------------------------
