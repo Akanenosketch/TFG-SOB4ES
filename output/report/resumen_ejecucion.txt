@@ -1,37 +1,22 @@
-OK | reg_model.ipynb | 93.0s
+OK | reg_model.ipynb | 94.4s
 ----------------------------------------------------------------------
-OK | rf_model.ipynb | 103.2s
+OK | rf_model.ipynb | 107.4s
 ----------------------------------------------------------------------
-OK | rf_multisalida.ipynb | 181.1s
+OK | rf_multisalida.ipynb | 184.2s
 ----------------------------------------------------------------------
-FALLO | regressorchain.ipynb | 28.3s
-Analisis del efecto del orden en la cadena...
-  Posicion en cadena -> target -> R2 (train):
-------------------
-[31m---------------------------------------------------------------------------[39m
-[31mNameError[39m                                 Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[6][39m[32m, line 6[39m
-[32m      2[39m 
-[32m      3[39m [38;5;66;03m# 1. Evaluación por posición en la cadena[39;00m
-[32m      4[39m print([33m'  Posicion en cadena -> target -> R2 (train):'[39m)
-[32m      5[39m [38;5;28;01mfor[39;00m i, t [38;5;28;01min[39;00m enumerate(TARGETS):
-[32m----> [39m[32m6[39m     r2 = r2_score(y_train.iloc[:, i], y_pred_train[:, i])
-[32m      7[39m     print(f'    Posicion {i+[32m1[39m:2d} | {t:30} R2: {r2:.4f}')
-[32m      8[39m 
-[32m      9[39m [38;5;66;03m# 2. Importancia MDI del modelo base (primer target)[39;00m
-[31mNameError[39m: name 'y_pred_train' is not defined
+OK | regressorchain.ipynb | 80.2s
 ----------------------------------------------------------------------
-OK | xgb_multisalida.ipynb | 2010.2s
+OK | xgb_multisalida.ipynb | 2009.4s
 ----------------------------------------------------------------------
-OK | xgboost_model.ipynb | 939.5s
+OK | xgboost_model.ipynb | 939.4s
 ----------------------------------------------------------------------
-OK | mlp_custom_loss.ipynb | 119.6s
+OK | mlp_custom_loss.ipynb | 86.5s
 ----------------------------------------------------------------------
-OK | mlp_multisalida.ipynb | 44.5s
+OK | mlp_multisalida.ipynb | 39.3s
 ----------------------------------------------------------------------
-OK | comparador_modelos.ipynb | 56.7s
+OK | comparador_modelos.ipynb | 45.4s
 ----------------------------------------------------------------------
-OK | comparador_clasificacion.ipynb | 32.2s
+OK | comparador_clasificacion.ipynb | 26.5s
 ----------------------------------------------------------------------
 OK | comparador_variables.ipynb | 2.6s
 ----------------------------------------------------------------------
