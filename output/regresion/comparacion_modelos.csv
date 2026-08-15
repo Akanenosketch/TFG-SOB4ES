@@ -4,6 +4,6 @@ RF Individual,0.0904,0.9178,0.6926
 XGBoost Multisalida,0.0835,0.9187,0.6838
 Random Forest con RegressorChain,0.0796,0.9173,0.68
 XGBoost Individual,0.067,0.93,0.7058
-MLP Estandar,0.0017,0.942,0.7063
 Regresión Individual,-0.0164,0.9665,0.7444
-MLP Perdida Custom,-0.0595,0.9669,0.708
+MLP Perdida Custom,-0.0367,0.9572,0.7091
+MLP Estandar,-0.038,0.9597,0.7042
