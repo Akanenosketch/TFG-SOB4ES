@@ -2,7 +2,7 @@ Modelo,R2 global,RMSE,MAE
 RF Individual,0.0937,0.916,0.6921
 RandomForest Multisalida,0.0913,0.9225,0.7064
 XGBoost Multisalida,0.0833,0.9174,0.6836
-Random Forest con RegressorChain,0.0787,0.9174,0.6801
+Random Forest con RegressorChain,0.0795,0.9186,0.6868
 XGBoost Individual,0.068,0.9295,0.7048
 Regresión Individual,-0.0131,0.9656,0.7434
 MLP Estandar,-0.0795,0.9649,0.7091
