@@ -1,35 +1,35 @@
-OK | reg_model.ipynb | 94.8s
+OK | reg_model.ipynb | 111.2s
 ----------------------------------------------------------------------
-OK | rf_model.ipynb | 104.9s
+OK | rf_model.ipynb | 104.8s
 ----------------------------------------------------------------------
-OK | rf_multisalida.ipynb | 182.6s
+OK | rf_multisalida.ipynb | 182.9s
 ----------------------------------------------------------------------
-FALLO | regressorchain.ipynb | 32.9s
-Analisis del efecto del orden en la cadena...
-  Posicion en cadena -> target -> R2 (train):
+FALLO | regressorchain.ipynb | 32.7s
+top10_shap.sort_values().plot(kind='barh', ax=axes_shap[0], color=PALETTE['blue'], edgecolor='white')
+axes_shap[0].set_title('Top 10 MÁS relevantes - Modelo base (SHAP)', fontsize=12)
+axes_shap[0].set_xlabel('Mean |SHAP value|')
+bottom10_shap.sort_values(ascending=False).plot(kind='barh', ax=axes_shap[1], color=PALETTE['blue'], edgecolor='white')
+axes_shap[1].set_title('Top 10 MENOS relevantes - Modelo base (SHAP)', fontsize=12)
+axes_shap[1].set_xlabel('Mean |SHAP value|')
+plt.tight_layout()
+plt.show()
+print(f"Datos exportados correctamente para revisión en : {ruta_top_shap}")
+print(f"Datos exportados correctamente para revisión en : {ruta_bottom_shap}")
 ------------------
-[31m---------------------------------------------------------------------------[39m
-[31mNameError[39m                                 Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[6][39m[32m, line 6[39m
-[32m      2[39m 
-[32m      3[39m [38;5;66;03m# 1. Evaluación por posición en la cadena[39;00m
-[32m      4[39m print([33m'  Posicion en cadena -> target -> R2 (train):'[39m)
-[32m      5[39m [38;5;28;01mfor[39;00m i, t [38;5;28;01min[39;00m enumerate(TARGETS):
-[32m----> [39m[32m6[39m     r2 = r2_score(y_train.iloc[:, i], y_pred_train[:, i])
-[32m      7[39m     print(f'    Posicion {i+[32m1[39m:2d} | {t:30} R2: {r2:.4f}')
-[32m      8[39m 
-[32m      9[39m [38;5;66;03m# 2. Importancia MDI del modelo base (primer target)[39;00m
-[31mNameError[39m: name 'y_pred_train' is not defined
+  [36mCell[39m[36m [39m[32mIn[6][39m[32m, line 43[39m
+[31m    [39m[31mshap_arr = np.abs(shap_values).mean(axis=2)print('Analisis del efecto del orden en la cadena...\n')[39m
+                                               ^
+[31mSyntaxError[39m[31m:[39m invalid syntax
 ----------------------------------------------------------------------
-OK | xgb_multisalida.ipynb | 2010.8s
+OK | xgb_multisalida.ipynb | 2015.5s
 ----------------------------------------------------------------------
-OK | xgboost_model.ipynb | 945.5s
+OK | xgboost_model.ipynb | 943.3s
 ----------------------------------------------------------------------
-OK | mlp_custom_loss.ipynb | 89.2s
+OK | mlp_custom_loss.ipynb | 80.8s
 ----------------------------------------------------------------------
-OK | mlp_multisalida.ipynb | 39.0s
+OK | mlp_multisalida.ipynb | 37.9s
 ----------------------------------------------------------------------
-OK | comparador_modelos.ipynb | 57.2s
+OK | comparador_modelos.ipynb | 57.4s
 ----------------------------------------------------------------------
 OK | comparador_clasificacion.ipynb | 32.9s
 ----------------------------------------------------------------------
