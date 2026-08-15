@@ -7,7 +7,7 @@ coll_shannon_z,RandomForest Multisalida,100,99.0,-0.19466253819494247
 coll_species_richness_z,RandomForest Multisalida,101,100.0,-0.2973415644100805
 earthworm_richness_z,XGBoost Multisalida,93,92.1,0.5866378307162865
 earthworm_shannon_z,XGBoost Multisalida,101,100.0,0.5342828793930174
-euk_asv_richness_z,Random Forest con RegressorChain,48,47.5,0.2547393475590699
+euk_asv_richness_z,Random Forest con RegressorChain,48,47.5,0.25473934755906996
 euk_shannon_z,RF Individual,75,74.3,0.1684169089243549
 fun_asv_richness_z,MLP Estandar,50,49.5,0.010112744782123859
 fun_shannon_z,Regresión Individual,40,39.6,-0.0161081349245613
