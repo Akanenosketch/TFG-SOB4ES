@@ -1,0 +1,9 @@
+Notebook,N_Vars (model-prep),Shape (model-prep),R2_Global (model-prep),N_Vars (model-prep-rs),Shape (model-prep-rs),R2_Global (model-prep-rs),Delta_R2_Global (model-prep-rs),N_Vars (model-prep-rs-1),Shape (model-prep-rs-1),R2_Global (model-prep-rs-1),Delta_R2_Global (model-prep-rs-1),RMSE_Global (model-prep),MAE_Global (model-prep),RMSE_Global (model-prep-rs),MAE_Global (model-prep-rs),RMSE_Global (model-prep-rs-1),MAE_Global (model-prep-rs-1)
+reg_model.ipynb,34,299x34,-0.0164,34,299x34,-0.0164,0.0,34,299x34,-0.0164,0.0,,,,,,
+rf_model.ipynb,34,299x34,0.0904,34,299x34,0.089,-0.0014,34,299x34,0.0933,0.0029,,,,,,
+rf_multisalida.ipynb,34,299x34,0.0964,34,299x34,0.1205,0.0241,34,299x34,0.1176,0.0212,0.9198,0.7026,0.9066,0.6875,0.9066,0.6883
+regressorchain.ipynb,34,299x34,0.0809,34,299x34,0.0549,-0.026,34,299x34,0.0769,-0.004,0.9184,0.686,0.9277,0.6915,0.9205,0.6888
+xgboost_model.ipynb,34,299x34,0.067,34,299x34,0.0591,-0.0079,34,299x34,0.068,0.001,,,,,,
+xgb_multisalida.ipynb,34,299x34,0.0835,34,299x34,0.0872,0.0037,34,299x34,0.0874,0.0039,,,,,,
+mlp_multisalida.ipynb,34,299x34,-0.038,34,299x34,-0.0235,0.0145,34,299x34,-0.0401,-0.0021,0.9597,0.7042,0.9535,0.7207,0.9556,0.7074
+mlp_custom_loss.ipynb,34,299x34,-0.1316,34,299x34,-0.0978,0.0338,34,299x34,-0.0023,0.1293,0.9861,0.7187,0.9714,0.7222,0.9495,0.7129
