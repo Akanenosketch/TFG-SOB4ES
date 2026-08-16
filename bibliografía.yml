@@ -437,3 +437,188 @@ bergmannMachineLearningIBM:
   date: 2025-08
   url: "https://www.ibm.com/es-es/think/topics/machine-learning"
   note: "Última visita: 08/08/2026"
+
+projectJupyter:
+  type: web
+  title: "Project Jupyter"
+  parent:
+    title: "Home"
+  url: "https://jupyter.org/"
+  note: "Última visita: 12/08/2026"
+
+ganttWeb:
+  type: web
+  title: "gantt-web"
+  author:
+    - name: "Akanenosketch"
+  parent:
+    title: "GitHub repository"
+  date: 2026
+  url: "https://github.com/Akanenosketch/gantt-web"
+  note: "Última visita: 12/08/2026"
+
+hoerlRidgeRegression:
+  type: article
+  title: "Ridge Regression: Biased Estimation for Nonorthogonal Problems"
+  author:
+    - name: "A. E. Hoerl"
+    - name: "R. W. Kennard"
+  parent:
+    title: "Technometrics"
+  volume: 12
+  issue: 1
+  page-range: "55-67"
+  date: 1970
+
+breimanRandomForests:
+  type: article
+  title: "Random Forests"
+  author:
+    - name: "L. Breiman"
+  parent:
+    title: "Machine Learning"
+  volume: 45
+  issue: 1
+  page-range: "5-32"
+  date: 2001
+
+chenXGBoost:
+  type: article
+  title: "XGBoost: A Scalable Tree Boosting System"
+  author:
+    - name: "T. Chen"
+    - name: "C. Guestrin"
+  parent:
+    title: "Proc. 22nd ACM SIGKDD Int. Conf. Knowledge Discovery and Data Mining"
+  page-range: "785-794"
+  location: "San Francisco, CA, USA"
+  date: 2016
+
+readClassifierChains:
+  type: article
+  title: "Classifier Chains for Multi-label Classification"
+  author:
+    - name: "J. Read"
+    - name: "B. Pfahringer"
+    - name: "G. Holmes"
+    - name: "E. Frank"
+  parent:
+    title: "Machine Learning"
+  volume: 85
+  issue: 3
+  page-range: "333-359"
+  date: 2011
+
+rumelhartBackprop:
+  type: article
+  title: "Learning representations by back-propagating errors"
+  author:
+    - name: "D. E. Rumelhart"
+    - name: "G. E. Hinton"
+    - name: "R. J. Williams"
+  parent:
+    title: "Nature"
+  volume: 323
+  issue: 6088
+  page-range: "533-536"
+  date: 1986
+
+kingmaAdam:
+  type: article
+  title: "Adam: A Method for Stochastic Optimization"
+  author:
+    - name: "D. P. Kingma"
+    - name: "J. Ba"
+  parent:
+    title: "Proc. 3rd Int. Conf. Learning Representations (ICLR)"
+  location: "San Diego, CA, USA"
+  date: 2015
+
+suttonReinforcementLearning:
+  type: book
+  title: "Reinforcement Learning: An Introduction"
+  author:
+    - name: "R. S. Sutton"
+    - name: "A. G. Barto"
+  edition: "2"
+  publisher: "MIT Press"
+  location: "Cambridge, MA"
+  date: 2018
+
+tibshiraniLasso:
+  type: article
+  title: "Regression Shrinkage and Selection via the Lasso"
+  author:
+    - name: "R. Tibshirani"
+  parent:
+    title: "Journal of the Royal Statistical Society: Series B"
+  volume: 58
+  issue: 1
+  page-range: "267-288"
+  date: 1996
+
+phillipsEarthwormDiversity:
+  type: article
+  title: "Global distribution of earthworm diversity"
+  author:
+    - name: "H. R. P. Phillips"
+    - name: "et al."
+  parent:
+    title: "Science"
+  volume: 366
+  issue: 6464
+  page-range: "480-485"
+  date: 2019
+  doi: "10.1126/science.aax4851"
+
+tianSpatiotemporalSOC:
+  type: article
+  title: "Spatiotemporal prediction of soil organic carbon density in Europe (2000–2022) using earth observation and machine learning"
+  author:
+    - name: "X. Tian"
+    - name: "S. de Bruin"
+    - name: "R. Simoes"
+    - name: "M. S. Isik"
+    - name: "R. Minarik"
+    - name: "Y.-F. Ho"
+    - name: "M. Şahin"
+    - name: "M. Herold"
+    - name: "D. Consoli"
+    - name: "T. Hengl"
+  parent:
+    title: "PeerJ"
+  volume: 13
+  issue: "e19605"
+  date: 2025
+  doi: "10.7717/peerj.19605"
+
+rodriguezRandomForest:
+  type: article
+  title: "An assessment of the effectiveness of a random forest classifier for land-cover classification"
+  author:
+    - name: "V. F. Rodríguez-Galiano"
+    - name: "B. Ghimire"
+    - name: "J. Rogan"
+    - name: "M. Chica-Olmo"
+    - name: "J. P. Rigol-Sánchez"
+  parent:
+    title: "ISPRS Journal of Photogrammetry and Remote Sensing"
+  volume: 67
+  page-range: "93-104"
+  date: 2012
+
+shawonCropYield:
+  type: article
+  title: "Crop yield prediction using machine learning: An extensive and systematic literature review"
+  author:
+    - name: "S. M. Shawon"
+    - name: "F. B. Ema"
+    - name: "A. K. Mahi"
+    - name: "F. L. Niha"
+    - name: "H. T. Zubair"
+  parent:
+    title: "Smart Agricultural Technology"
+  volume: 10
+  issue: "100718"
+  date: 2025
+  doi: "10.1016/j.atech.2024.100718"
