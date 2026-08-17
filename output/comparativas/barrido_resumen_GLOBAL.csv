@@ -1,0 +1,17 @@
+Notebook,branch,media,desviacion,minimo,maximo,n
+rf_multisalida.ipynb,model-prep-rs-group,0.0953,0.003,0.0869,0.1032,101
+rf_multisalida.ipynb,model-prep-rs-group-1,0.0949,0.0032,0.0889,0.1053,90
+rf_model.ipynb,model-prep-rs-group,0.089,0.004,0.0796,0.0996,101
+rf_model.ipynb,model-prep-rs-group-1,0.0792,0.0036,0.0707,0.0865,90
+xgb_multisalida.ipynb,model-prep-rs-group-1,0.0781,0.0045,0.0639,0.0895,90
+xgb_multisalida.ipynb,model-prep-rs-group,0.078,0.0055,0.0635,0.088,101
+regressorchain.ipynb,model-prep-rs-group-1,0.0643,0.0116,0.0341,0.0988,491
+regressorchain.ipynb,model-prep-rs-group,0.0635,0.0104,0.0402,0.0976,101
+reg_model.ipynb,model-prep-rs-group-1,-0.0164,0.0,-0.0164,-0.0164,90
+reg_model.ipynb,model-prep-rs-group,-0.0164,0.0,-0.0164,-0.0164,101
+mlp_multisalida.ipynb,model-prep-rs-group-1,-0.021,0.045,-0.1438,0.0867,90
+mlp_multisalida.ipynb,model-prep-rs-group,-0.0271,0.0342,-0.1196,0.0606,101
+mlp_custom_loss.ipynb,model-prep-rs-group,-0.0495,0.0312,-0.1351,0.0185,101
+xgboost_model.ipynb,model-prep-rs-group,-0.0636,0.0,-0.0636,-0.0636,101
+xgboost_model.ipynb,model-prep-rs-group-1,-0.0636,0.0,-0.0636,-0.0636,90
+mlp_custom_loss.ipynb,model-prep-rs-group-1,-0.1172,0.058,-0.279,0.003,90

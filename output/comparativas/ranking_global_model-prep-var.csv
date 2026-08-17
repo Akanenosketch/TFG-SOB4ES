@@ -1,0 +1,9 @@
+Notebook,model-prep-var
+reg_model.ipynb,7.0
+rf_model.ipynb,2.0
+rf_multisalida.ipynb,1.0
+regressorchain.ipynb,4.0
+xgboost_model.ipynb,5.0
+xgb_multisalida.ipynb,3.0
+mlp_multisalida.ipynb,6.0
+mlp_custom_loss.ipynb,8.0

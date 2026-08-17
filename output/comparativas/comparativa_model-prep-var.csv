@@ -1,0 +1,9 @@
+Notebook,earthworm_shannon_z_R2 (model-prep-var),earthworm_richness_z_R2 (model-prep-var)
+reg_model.ipynb,0.2395,0.2789
+rf_model.ipynb,0.5041,0.5722
+rf_multisalida.ipynb,0.416,0.4509
+regressorchain.ipynb,0.4876,0.5359
+xgboost_model.ipynb,0.4946,0.5171
+xgb_multisalida.ipynb,0.5375,0.5893
+mlp_multisalida.ipynb,0.3583,0.4539
+mlp_custom_loss.ipynb,0.3438,0.4543

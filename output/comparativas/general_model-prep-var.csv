@@ -1,0 +1,9 @@
+Notebook,N_Vars (model-prep-var),Shape (model-prep-var),R2_Global (model-prep-var),RMSE_Global (model-prep-var),MAE_Global (model-prep-var)
+reg_model.ipynb,34,299x34,-0.0164,,
+rf_model.ipynb,34,299x34,0.0904,,
+rf_multisalida.ipynb,34,299x34,0.0964,0.9198,0.7026
+regressorchain.ipynb,34,299x34,0.0809,0.9184,0.686
+xgboost_model.ipynb,34,299x34,0.067,,
+xgb_multisalida.ipynb,34,299x34,0.0835,,
+mlp_multisalida.ipynb,34,299x34,0.0017,0.942,0.7063
+mlp_custom_loss.ipynb,34,299x34,-0.0978,0.9714,0.7222
