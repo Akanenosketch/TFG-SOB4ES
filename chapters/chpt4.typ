@@ -14,11 +14,17 @@ Para dotar a este proceso de un marco de ingeniería robusto y estricto, CRISP-M
 )
 
 En el diagrama anterior, podemos distinguir las siguientes fases:
+
 + *Comprensión del negocio y de los datos:* Definición del problema predictivo y auditoría inicial de la viabilidad de las fuentes proporcionadas.
+
 + *Preparación de los datos:* Fase de ingeniería de características y de datos, limpieza, unificación y estandarización de los datos de las fuentes base. Junto también con la obtención de datos externos.
+
 + *Ingeniería del modelo:* Selección de algoritmos/tipos de modelo, entrenamiento formal, ajuste de hiperparámetros y su consecuente desarrollo de los modelos necesarios.
+
 + *Evaluación del modelo:* Validación metrológica, es decir con los correspondientes parámetros de evaluación, del rendimiento estadístico frente a datos de control ciegos (nunca empleados en entrenamiento ni en otras pruebas anteriores a la evaluación). 
+
 + *Despliegue:* Entrega o integración del modelo o _pipeline_ reproducible en el entorno operativo.
+
 + *Monitoreo y mantenimiento:* Control continuo para mitigar la degradación de las predicciones en el tiempo y aplicar las correspondientes medidas de mantenimiento.
 
 Además, tal como se indica anteriormente con CRISP-ML(Q), al ser incremental, también se aplican técnicas de desarrollo iterativo incremental. 
@@ -33,12 +39,15 @@ La aplicación de ambas metodologías nos permite lo siguiente:
 
 + *Adquisición e Integración de Datos:* 
   Para alimentar los modelos, no solo se utilizarán los datos propios del proyecto SOB4ES (disponibles en archivos y carpetas como `EARTHWORMS_RAW/`), sino que se complementarán y completarán con bases de datos y mapas europeos de resolución variable. Las fuentes externas empleadas son las siguientes:
-  - Bases de datos geoespaciales como la _European Soil Database_ (ESDAC) y _CORINE Land Cover_ para clasificar el tipo de suelo, uso de la tierra, propiedades físicas (arena, arcilla, densidad) y propiedades químicas (pH, metales pesados, carbono orgánico) de las parcelas.
-  - Uso de APIs como _Google Earth Engine_ (`earthengine-api`) para extraer medias de temperatura diaria, humedad relativa e índices de vegetación (NDVI).
-  - Uso de _Copernicus Climate Data Store_ (`cdsapi`) para registrar precipitaciones mensuales acumuladas y modelos de elevación digital (DEM).
+  
+  - Bases de datos geoespaciales como la *_European Soil Database_* (ESDAC) y *_CORINE Land Cover_* para clasificar el tipo de suelo, uso de la tierra, propiedades físicas (arena, arcilla, densidad) y propiedades químicas (pH, metales pesados, carbono orgánico) de las parcelas.
+  
+  - Uso de APIs como *_Google Earth Engine_* (`earthengine-api`) para extraer medias de temperatura diaria, humedad relativa e índices de vegetación (NDVI).
+  
+  - Uso de *_Copernicus Climate Data Store_* (`cdsapi`) para registrar precipitaciones mensuales acumuladas y modelos de elevación digital (DEM).
 
 + *Procesamiento de la Información:* 
-  El tratamiento masivo de estos datos ambientales se realizará utilizando diversas bibliotecas de Python. Se utilizarán `pandas`, `numpy` y múltiples otras librerías para la limpieza, manipulación eficiente de variables tabulares y escritura de archivos CSV/XLSX. Para el manejo de datos geoespaciales y archivos multidimensionales provistos por Copernicus y bases europeas, se implementarán herramientas específicas como `rasterio`, `xarray` y `dbfread`.
+  El tratamiento masivo de estos datos ambientales se realizará utilizando diversas bibliotecas de Python. Se utilizarán `pandas`, `numpy` y múltiples otras librerías para la limpieza, manipulación eficiente de variables tabulares y escritura de archivos CSV/XLSX. Para el manejo de datos geoespaciales y archivos multidimensionales provistos por Copernicus y bases europeas, se implementarán herramientas específicas como `rasterio`, `xarray` y `dbfread`. Dichas librerías se mencionan con más detalle en @
 
 + *Modelado y Evaluación:* 
   Una vez consolidado el conjunto de datos definitivo, la solución final consistirá en el diseño, entrenamiento e implementación de diferentes algoritmos de aprendizaje automático, aplicando en cada uno de los diferentes modelos la metodología explicada previamente y cuyas fases/etapas se encuentran en las secciones de Planificación y seguimiento y Arquitectura. Estos algoritmos mapearán las complejas relaciones entre las variables ambientales y la biodiversidad del suelo. 

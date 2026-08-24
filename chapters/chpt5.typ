@@ -1,27 +1,36 @@
+//Config
+
+#set rect(
+  inset: 8pt,
+  fill: rgb("#d6e3da"),
+  width: 100%
+)
+
 = Marco teórico o práctico
 
 En esta sección se describe el marco teórico y práctico en el que se apoya y fundamenta nuestras conclusiones: la arquitectura del pipeline de datos y modelado, las tecnologías y herramientas de tercero empleadas, como también los fundamentos teóricos que nos permite crear, desarrollar, entender e interpretar los resultados que nos proporcionan los diferentes modelos seleccionados.
 
 == Fundamentos del aprendizaje automático <fundamentos-del-aprendizaje-automatico>
 
-El término de aprendizaje automático, también conocido como Machine Learning (ML) fue acuñado por primera vez por el informático Arthur Samuel[32][31] en 1959, conocido por su trabajo en la implementación de un ajedrez que aprendiera de forma autónoma y por dar soporte y colaborar en lo que hoy se conoce como LaTEX[34]. 
+El término de aprendizaje automático, también conocido como Machine Learning (ML) fue acuñado por primera vez por el informático Arthur Samuel#sub([@arthurSamuelWikipedia,@geronHandsOnML]) en 1959, conocido por su trabajo en la implementación de un ajedrez que aprendiera de forma autónoma y por dar soporte y colaborar en lo que hoy se conoce como LaTEX#sub([@latexProject]). 
 
-Él acuñó el término de ML por primera vez en el artículo “Some Studies in Machine Learning Using the Game of Checkers” publicado en el IBM Journal of research and development[33], definiéndolo de la siguiente forma: 
+Él acuñó el término de ML por primera vez en el artículo “Some Studies in Machine Learning Using the Game of Checkers” publicado en el IBM Journal of research and development#sub([@samuelCheckers]), definiéndolo de la siguiente forma: 
 
- “Machine Learning es el campo de estudio que permite le otorga a las computadoras la capacidad de aprender sin explícitamente programarlo.”
+#rect[ “Machine Learning es el campo de estudio que permite le otorga a las computadoras la capacidad de aprender sin explícitamente programarlo.”]
 
-Otro personaje relevante dentro del campo de la inteligencia artificial es Tom Mitchell[35][31], creador del ordenador que es capaz de “leer la mente humana” a partir de imágenes del cerebro humano[36]. Él lo define de una forma más técnica, siendo esta una de las definiciones más citadas dentro de la literatura académica[37], la cual es la siguiente:
+Otro personaje relevante dentro del campo de la inteligencia artificial es Tom Mitchell#sub([@geronHandsOnML, @tomMitchellWikipedia]), creador del ordenador que es capaz de “leer la mente humana” a partir de imágenes del cerebro humano#sub([@reutersMindImages]). Él lo define de una forma más técnica, siendo esta una de las definiciones más citadas dentro de la literatura académica#sub([@mitchellMachineLearning]), la cual es la siguiente:
 
-“Se dice que un programa de ordenador aprende de una experiencia E con respecto a una tarea T y una media de rendimiento P, si su rendimiento en T, medido por P, mejore con la experiencia E”
+#rect[“Se dice que un programa de ordenador aprende de una experiencia E con respecto a una tarea T y una media de rendimiento P, si su rendimiento en T, medido por P, mejore con la experiencia E”]
 
 Esta definición es la adoptada como referencia en este trabajo, al descomponer con claridad los tres elementos presentes del proyecto:
+
 - *Tarea (T):* predecir los indicadores de biodiversidad del suelo a partir de las diferentes variables ambientales.
 - *Experiencia (E):* El conjunto de datos de campo del proyecto SOB4ES, combinado con variables climáticas y geoespaciales de fuentes remotas.
-- *Medida de rendimiento (P):* las métricas descritas en [poner zona], la cual se encuentra un poco más adelante en este documento.
+- *Medida de rendimiento (P):* las métricas descritas en la @metricas-de-evaluacion-y-validacion, la cual se encuentra un poco más adelante en este documento.
 
-Estas dos definiciones se pueden resumir de la siguiente forma:
+Estas dos definiciones se pueden resumir de la siguiente forma #sub([@bergmannMachineLearningIBM]):
 
-“El Machine Learning es una rama o subconjunto de la Inteligencia Artificial que se centra en dotar a los algoritmos la capacidad de “aprender”. Este aprendizaje es a partir de la detección de patrones en los datos de entrenamiento para, posteriormente, hacer predicciones o inferencias sobre nuevos datos.”[40]
+#rect[“El Machine Learning es una rama o subconjunto de la Inteligencia Artificial que se centra en dotar a los algoritmos la capacidad de “aprender”. Este aprendizaje es a partir de la detección de patrones en los datos de entrenamiento para, posteriormente, hacer predicciones o inferencias sobre nuevos datos.”]
 
 Esta capacidad de aprender, permite a los modelos de ML realizar predicciones, tomar decisiones y hacer acciones variadas sin que lo tengan estrictamente indicado dentro de su código. También lo permite diferenciarse de los sistemas expertos tradicionales, en los que el conocimiento se codifica explícitamente, y lo acerca a la estadística de la que toma buena parte de su base matemática.
 
@@ -33,28 +42,54 @@ Dentro del aprendizaje automático, existen muchos algoritmos y múltiples forma
 
 Dichas formas de aprendizaje se clasifican en cuatro tipos generales, los cuales se explican a continuación.
 
-
 ==== Aprendizaje supervisado <aprendizaje-supervisado>
 
 
 
-==== Aprendizaje no supervisado <aprendizaje-no-supervisado>
 
-==== Aprendizaje semi-supervisado <aprendizaje-semi-supervisado>
+// 5.2.- Selección de variables
 
-==== Aprendizaje por refuerzo <aprendizaje-por-refuerzo>
+== Selección de variables <seleccion-de-variables>
 
-== Herramientas empleadas <herramientas-empleadas>
+=== Métodos de filtrado <metodos-de-filtrado>
 
-=== Lenguaje de programación, control de versiones y librerías <lenguaje-de-programacion-control-de-versiones-y-librerias>
 
-=== Servicios de obtención de datos remotos <servicios-de-obtencion-de-datos-remotos>
 
-=== Programas de redacción y documentación <programas-de-redaccion-y-documentacion>
+=== Métodos de envoltura <metodos-de-envoltura>
 
-=== Programas de desarrollo de código <programas-de-desarrollo-de-codigo>
+=== Métodos de embebido <metodos-de-embebido>
 
-=== Programas de creación de diagramas e ilustraciones <programas-de-creacion-de-diagramas-e-ilustraciones>
+// 5.3.- Modelos empelados
+
+== Modelos de aprendizaje automático empleados <modelos-de-aprendizaje-automatico-empleados>
+
+=== Regresión Ridge <regresion-ridge>
+
+=== Random Forest <random-forest>
+
+==== Random Forest multisalida <random-forest-multisalida>
+
+=== XGBoost <xgboost>
+
+==== XGBoost multisalida <xgboost-multisalida>
+
+=== Redes neuronales <redes-neuronales>
+
+==== MLP multisalida <mlp-multisalida>
+
+==== MLP con función de pérdida personalizada <mlp-con-funcion-de-perdida-personalizada>
+
+// 5.4.- Métricas empleadas
+
+== Métricas de evaluación y validación <metricas-de-evaluacion-y-validacion>
+
+=== Métricas de regresión <metricas-regresion>
+
+==== Coeficiente de determinación <coeficiente-determinacion>
+
+=== Métricas de clasificación <metricas-clasificacion>
+
+// 5.5.- Arquitectura empleadda
 
   #colbreak()
 
@@ -277,30 +312,6 @@ A lo largo del desarrollo de esta capa, se hacen uso de las siguientes librería
 - *matplotlib:* Librería creada para la generación de visualizaciones de diferentes tipos en Python, permitiendo mostrar datos de forma gráfica y crear ilustraciones gráficas complejas de forma intuitiva y sencilla. También funciona como motor subyacente para otras librerías como shap y seaborn.
 - *seaborn:* Librería basada en matplotlib, permitiendo la creación de gráficas de datos con una interfaz de mayor nivel en comparación con matplotlib y está integrado de forma más cercana con otras librerías empleadas en este trabajo como pandas. 
 
-== Modelos de aprendizaje automático empleados <modelos-de-aprendizaje-automatico-empleados>
 
-=== Regresión Ridge <regresion-ridge>
 
-=== Random Forest <random-forest>
-
-==== Random Forest multisalida <random-forest-multisalida>
-
-=== XGBoost <xgboost>
-
-==== XGBoost multisalida <xgboost-multisalida>
-
-=== Redes neuronales <redes-neuronales>
-
-==== MLP multisalida <mlp-multisalida>
-
-==== MLP con función de pérdida personalizada <mlp-con-funcion-de-perdida-personalizada>
-
-=== Comparativa de modelos <comparativa-de-modelos>
-
-== Selección de variables <seleccion-de-variables>
-
-=== Métodos de filtrado <metodos-de-filtrado>
-
-=== Métodos de envoltura <metodos-de-envoltura>
-
-=== Métodos de embebido <metodos-de-embebido>
+//5.6.- Herramientas empleadas

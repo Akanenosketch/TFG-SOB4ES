@@ -38,7 +38,9 @@ La planificación de este trabajo ha empezado a partir del inicio del mismo, en 
 
 Dentro de la planificación no se tiene en cuenta los elementos relacionados con la documentación, debido a que este es un elemento que se ha planificado realizar a lo largo de toda la duración de este trabajo de fin de grado. Esto permite tener todos datos y todos los progresos realizados ya redactados para facilitar las actividades de pulido y mejora de la documentación de la memoria del TFG. 
 
-También como se puede ver en la planificación, la aplicación de CRISP-ML(Q) se ha adaptado a las necesidades de este trabajo, motivo por el cual los nombres de las fases no coinciden completamente con lo indicado en la correspondiente documentación sobre la metodología de desarrollo.       
+También como se puede ver en la planificación, la aplicación de CRISP-ML(Q) se ha adaptado a las necesidades de este trabajo, motivo por el cual los nombres de las fases no coinciden completamente con lo indicado en la correspondiente documentación sobre la metodología de desarrollo.     
+
+  #colbreak()
 
 En el siguiente Diagrama de Gantt, podemos ver de forma más gráfica la planificación que se ha realizado para la elaboración de este trabajo.         
 
@@ -79,13 +81,14 @@ Además del diagrama de Gantt mostrado en el diagrama  anterior, en la siguiente
      kind: table,
 )
 
+  #colbreak()
+
 == Puntos críticos <puntos-criticos>
 
 Dentro de un proyecto, especialmente dentro del ciclo de vida del mismo, los *puntos críticos* se definen como aquellos componentes, fases o tareas, que debido a la complejidad técnica o al desconocimiento inicial al empezar el proyecto, presentan un riesgo más elevado de poder provocar desviaciones en el cronograma establecido inicialmente. También pueden afectar en mayor o menor medida a la calidad del producto final.
 
 Dentro del marco de este TFG, los principales puntos críticos se concentran en el desarrollo de modelos y la evaluación formal de los mismos. A continuación, se describirán los diferentes puntos críticos y sus riesgos de forma más detallada y las estrategias de mitigación aplicadas.
 
-  #colbreak()
 === Desarrollo y parametrización de los modelos predictivos
 
 El desarrollo y parametrización de los modelos predictivos se considera como un punto crítico debido a que el rendimiento final del sistema va a depender de las decisiones tomadas al inicio del desarrollo. Entre esas decisiones se destacan las siguientes:
@@ -111,9 +114,8 @@ Para reducir, en la medida de lo posible, los riesgos provenientes de los puntos
 - Separación estricta del dataset original en tres subconjuntos (entrenamiento, validación y evaluación) desde la fase inicial de modelos de modelos. Esto permite evitar que el set de evaluación se use en ningún momento en otros procesos para los cuales no fue creado, como puede ser la búsqueda de hiperparámetros.
 - Registro de los campos sin datos de los datasets originales mediante un archivo de banderas de imputación. Esto permite tener un mayor conocimiento y control sobre los datos que se poseen o que siguen carentes en todo momento, además, permite la determinación sobre qué datos son mediciones reales y cuáles son estimaciones. 
 - Revisiones periódicas del proceso de desarrollo en forma de reuniones semanales (véase *@seguimiento*), permitiendo así detectar errores o desviaciones en el desarrollo y parametrización de los modelos antes de que afecten a fases posteriores.
-- Realización de pruebas complementarias para la simplificación y mejor selección de los modelos finales (véase PONER SECCIÖN). Dichas pruebas también sirven para medir la robustez actual de los modelos.
+- Realización de pruebas complementarias para la simplificación y mejor selección de los modelos finales (véase @anexos). Dichas pruebas también sirven para medir la robustez actual de los modelos.
 
-  #colbreak()
 == Seguimiento <seguimiento>
 
 El seguimiento del progreso del presente TFG se realiza mediante la celebración de reuniones periódicas, generalmente semanales, entre el alumnado, el tutor y el co-tutor del proyecto. Estas reuniones constituyen el mecanismo principal de control y coordinación a lo largo de todo el desarrollo del trabajo.

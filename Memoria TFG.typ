@@ -47,8 +47,8 @@
   
 // Alineamniento párrafo
 #set par(
-          leading: 2.5mm, // Interlineado
-          spacing: 5mm    // Espacio entre párrafgos
+          leading: 1.5mm, // Interlineado
+          spacing: 4mm    // Espacio entre párrafgos
         )
     
 #set outline(indent: 6mm) // Sangría
