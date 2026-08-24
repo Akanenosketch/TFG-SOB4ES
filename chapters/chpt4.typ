@@ -9,7 +9,7 @@ CRISP-ML(Q) (_Cross-Industry Standard Process of Machine Learning with Quality A
 Para dotar a este proceso de un marco de ingeniería robusto y estricto, CRISP-ML(Q) organiza el flujo de trabajo en seis fases cíclicas interconectadas entre sí, integrando así, de forma transversal, los diversos controles de QA (_Quality Assurance_) en cada una de las transiciones. 
 
 #figure(
-  image("../media/crisp-ml-process.jpg", height: 25%),
+  image("../media/crisp-ml-process.jpg", height: 17%),
   caption: [Diagrama con las diferentes fases de CRISP-ML(Q)],
 )
 
@@ -29,13 +29,27 @@ En el diagrama anterior, podemos distinguir las siguientes fases:
 
 Además, tal como se indica anteriormente con CRISP-ML(Q), al ser incremental, también se aplican técnicas de desarrollo iterativo incremental. 
 
-El *desarrollo iterativo incremental* se basa en la capacidad de poder dividir un proyecto en diversos bloques reducidos y asignarlos a bloques temporales generalmente fijos, los cuales pueden ser adaptados a futuro. Estos bloques reducidos se denominan como _iteraciones_.
+El *desarrollo iterativo incremental* se basa en la capacidad de poder dividir un proyecto en diversos bloques reducidos y asignarlos a bloques temporales generalmente fijos, los cuales pueden ser adaptados a futuro. Estos bloques reducidos se denominan como *iteraciones*.
 
 De forma más específica, las iteraciones se pueden definir como miniproyectos o como un set de tareas en las cuales "_en todas ellas se repite un proceso de trabajo similar para proporcionar un resultado completo sobre el producto final_" #sub([@desarrolloIterativoIncremental]). Cada iteración tiene como resultado una parte del producto final funcional, el cual se va integrando a lo largo de las iteraciones hasta crear el producto final.
 
-Todos los detalles relacionados con las fases, hitos y los tiempos de realización de todo el proyecto se pueden encontrar en la siguiente sección.
+Todos los detalles relacionados con las fases, hitos y los tiempos de realización de todo el proyecto se pueden encontrar en la *@planificacion-y-seguimiento*.
 
-La aplicación de ambas metodologías nos permite lo siguiente:
+La aplicación conjunta de ambas metodologías (CRISP-ML(Q), junto con desarrollo iterativo incremental) se justifica por los siguientes motivos:
+
++ *Permite acortar en el tiempo las fases de mayor incertidumbre de CRISP-ML(Q).*
+  - Las fases de Ingeniería del modelo y Evaluación del modelo son, por su propia naturaleza, las que más ciclos de prueba-error requieren en un proyecto de aprendizaje automático. Tratarlas como un bloque monolítico dificultaría la estimación de tiempos y la detección de desviaciones en el tiempo; al dividirlas en iteraciones concretas, cada una entrega un resultado evaluable en el plazo acotado.
+
++ *Cada iteración produce un incremento funcional y evaluable.*
+  - En este caso, un modelo entrenado junto con sus métricas de rendimiento, en lugar de posponer cualquier resultado tangible hasta el final del proyecto. Esto permite detectar pronto problemas transversales, como el rendimiento inesperado de un modelo o la necesidad de revisar alguna variable predictora, sin tener que esperar a que todo el pipeline esté terminado.
+
++ *Facilita adaptar el alcance y las decisiones de modelado a medida que se dispone de más información.*
+  - En lugar de fijar de antemano qué algoritmos, variables o hiperparámetros se van a emplear. Esto es especialmente relevante en un trabajo que parte de datos ambientales heterogéneos y en evolución dentro de un proyecto europeo en curso (SOB4ES), donde el conocimiento sobre qué variables resultan realmente predictivas se afina en cada iteración.
+
++ *Mantiene el control de calidad transversal propio de CRISP-ML(Q).*
+  - Mantener dicho control en cada iteración nos permite evitar que la naturaleza iterativa del desarrollo derive en una pérdida de rigor a nivel metodológico: cada incremento pasa por las mismas comprobaciones de validación y evaluación antes de darse por válido, en lugar de acumular deuda técnica o metodológica de una iteración a la siguiente.
+
+A continuación se da un pequeño desglose de las partes en las que se divide esta solución que se propone, la división detallada, como también los elementos que se van a emplear se encuentran en la siguiente sección (véase *@marco-teorico-o-practico*).
 
 + *Adquisición e Integración de Datos:* 
   Para alimentar los modelos, no solo se utilizarán los datos propios del proyecto SOB4ES (disponibles en archivos y carpetas como `EARTHWORMS_RAW/`), sino que se complementarán y completarán con bases de datos y mapas europeos de resolución variable. Las fuentes externas empleadas son las siguientes:
@@ -47,7 +61,7 @@ La aplicación de ambas metodologías nos permite lo siguiente:
   - Uso de *_Copernicus Climate Data Store_* (`cdsapi`) para registrar precipitaciones mensuales acumuladas y modelos de elevación digital (DEM).
 
 + *Procesamiento de la Información:* 
-  El tratamiento masivo de estos datos ambientales se realizará utilizando diversas bibliotecas de Python. Se utilizarán `pandas`, `numpy` y múltiples otras librerías para la limpieza, manipulación eficiente de variables tabulares y escritura de archivos CSV/XLSX. Para el manejo de datos geoespaciales y archivos multidimensionales provistos por Copernicus y bases europeas, se implementarán herramientas específicas como `rasterio`, `xarray` y `dbfread`. Dichas librerías se mencionan con más detalle en @
+  El tratamiento masivo de estos datos ambientales se realizará utilizando diversas bibliotecas de Python. Se utilizarán `pandas`, `numpy` y múltiples otras librerías para la limpieza, manipulación eficiente de variables tabulares y escritura de archivos CSV/XLSX. Para el manejo de datos geoespaciales y archivos multidimensionales provistos por Copernicus y bases europeas, se implementarán herramientas específicas como `rasterio`, `xarray` y `dbfread`. Dichas librerías se mencionan con más detalle en la *@arquitectura*.
 
 + *Modelado y Evaluación:* 
   Una vez consolidado el conjunto de datos definitivo, la solución final consistirá en el diseño, entrenamiento e implementación de diferentes algoritmos de aprendizaje automático, aplicando en cada uno de los diferentes modelos la metodología explicada previamente y cuyas fases/etapas se encuentran en las secciones de Planificación y seguimiento y Arquitectura. Estos algoritmos mapearán las complejas relaciones entre las variables ambientales y la biodiversidad del suelo. 

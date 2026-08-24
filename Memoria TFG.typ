@@ -53,6 +53,14 @@
     
 #set outline(indent: 6mm) // Sangría
 
+#set list(
+  spacing: 3mm,   // espacio entre ítems
+)
+
+#set enum(
+  spacing: 3mm,
+)
+
 // Ajustes para las formulas matemáticas
 #show math.equation: set text(
       font: "New Computer Modern Math",

@@ -23,8 +23,6 @@ Varios trabajos han abordado directamente el modelado de biodiversidad del suelo
 + Un estudio de modelado conjunto multiespecie #sub([@diggingDeeperEarthworms]) entrenó una red *neuronal profunda multi-tarea* para predecir la distribución de 77 especies de lombrices en Francia a partir de variables climáticas, edáficas y de cobertura del terreno, empleando SHAP para identificar los principales factores ambientales. El modelo conjunto alcanzó un TSS $>= 0.7$ y mejoró notablemente las predicciones para especies raras frente a los modelos de distribución de especies tradicionales (de una sola especie).
 
 + Un estudio sobre biodiversidad multi-trófica del suelo mediante metabarcoding de ADN ambiental #sub([@limitsPromisesEOFoundationModels]) comparó sistemáticamente *_LightGBM_, _Random Forest_ y una red neuronal (ANN)* para predecir la abundancia relativa de 51 grupos tróficos (bacterias, hongos, protistas, oligoquetos, insectos, colémbolos y otros metazoos), usando cuatro configuraciones de variables predictoras: datos ambientales de baja resolución, datos _in situ_ de alta calidad, _embeddings_ de imágenes satelitales, y una combinación de ambos. 
-  
-    #colbreak()
 
   _Random Forest_ obtuvo consistentemente el mejor rendimiento, ligeramente por encima de _LightGBM_, y los datos _in situ_ de alta calidad superaron sistemáticamente tanto a los datos de baja resolución como a los derivados de imágenes satelitales. Un resultado directamente relevante para este TFG, que también combina variables _in situ_ (SOB4ES) con variables remotas de menor resolución (Google Earth Engine, Copernicus).
 
@@ -48,7 +46,6 @@ La disponibilidad reciente de catálogos satelitales abiertos de alta resolució
 Frente a estos antecedentes, la aportación diferencial que puede proporcionar este TFG es doble: 
 
 + Por un lado, la integración de múltiples fuentes de orígenes heterogéneos en un mismo _pipeline_ reproducible y versionado.
-
 + Por otro lado, la comparación de múltiples algoritmos de aprendizaje supervisado bajo un mismo marco de validación, en lugar de limitarse a un único modelo, lo que permite discutir con evidencia empírica cuál generaliza mejor ante un conjunto de datos comparativamente reducido. 
 
 A esto se suma el hecho de que trabajos como el de Phillips et al. #sub([@phillipsEarthwormDiversity]) ni el estudio multitrófico #sub([@limitsPromisesEOFoundationModels]) emplean fuentes de acceso de uso extendido como Google Earth Engine o Copernicus, ni combinan múltiples grupos biológicos del suelo de forma simultánea, como se hace en este TFG, haciendo uso de los datos del proyecto SOB4ES #sub([@sob4es2023]).
