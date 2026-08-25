@@ -13,3 +13,5 @@ A partir del trabajo realizado, se han identificado las siguientes líneas de co
 + *Exponer los modelos finales a través de un servicio API* que permita obtener una predicción de biodiversidad para un nuevo punto geográfico a partir de sus variables ambientales, facilitando así el uso por parte de terceros ajenos al desarrollo de este TFG.
 
 + *Crear un sistema multi-modelo* que permita realizar las predicciones de todos los targets teniendo en cuenta qué modelos funcionan mejor para cada target. Esto permite que todos los targets que se empleen en un futuro puedan ser empleados sin que un modelo en específico los haga inutilizables como target.
+
++ *Desarrollar un índice* que facilite el entrenamiento de los modelos teniendo en cuenta el coste de obtención/procesamiento del dato. Esto permite tener un índice que permita una mayor facilidad a la hora de entrenar modelos similares y tener como resultado mejores predicciones.

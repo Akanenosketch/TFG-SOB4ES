@@ -622,3 +622,135 @@ shawonCropYield:
   issue: "100718"
   date: 2025
   doi: "10.1016/j.atech.2024.100718"
+
+drawio:
+  type: web
+  title: "draw.io - Free Flowchart Maker and Diagrams Online"
+  author:
+    - name: "diagrams.net"
+  URL: "https://app.diagrams.net/"
+  accessed: 2026-08-18
+
+vscode:
+  type: web
+  title: "Visual Studio Code - Code Editing. Redefined."
+  author:
+    - name: "Microsoft"
+  URL: "https://code.visualstudio.com/"
+  accessed: 2026-08-18
+
+vscodeOSS:
+  type: web
+  title: "Code - OSS"
+  author:
+    - name: "Microsoft"
+  parent:
+    title: "GitHub repository"
+  URL: "https://github.com/microsoft/vscode"
+  accessed: 2026-08-18
+
+githubTFGRepo:
+  type: web
+  title: "TFG-SOB4ES"
+  author:
+    - name: "Akanenosketch"
+  parent:
+    title: "GitHub"
+  URL: "https://github.com/Akanenosketch/TFG-SOB4ES"
+  accessed: 2026-08-18
+
+cohenWeightedKappa:
+  type: article
+  title: "Weighted Kappa: Nominal Scale Agreement with Provision for Scaled Disagreement or Partial Credit"
+  author:
+    - name: "J. Cohen"
+  parent:
+    title: "Psychological Bulletin"
+  volume: 70
+  issue: 4
+  page-range: "213-220"
+  date: 1968
+
+sokolovaLapalme:
+  type: article
+  title: "A Systematic Analysis of Performance Measures for Classification Tasks"
+  author:
+    - name: "M. Sokolova"
+    - name: "G. Lapalme"
+  parent:
+    title: "Information Processing & Management"
+  volume: 45
+  issue: 4
+  page-range: "427-437"
+  date: 2009
+
+readMartino2020:
+  type: article
+  title: "Probabilistic regressor chains with Monte-Carlo methods"
+  author:
+    - name: "J. Read"
+    - name: "L. Martino"
+  parent:
+    title: "Neurocomputing"
+  volume: 413
+  page-range: "471-486"
+  date: 2020
+
+readPfahringerReview2021:
+  type: article
+  title: "Classifier chains: A review and perspectives"
+  author:
+    - name: "J. Read"
+    - name: "B. Pfahringer"
+    - name: "G. Holmes"
+    - name: "E. Frank"
+  parent:
+    title: "Journal of Artificial Intelligence Research"
+  volume: 70
+  page-range: "683-718"
+  date: 2021
+
+sucarBayesianChains:
+  type: article
+  title: "Multi-label classification with Bayesian network-based chain classifiers"
+  author:
+    - name: "L. E. Sucar"
+    - name: "C. Bielza"
+    - name: "E. F. Morales"
+    - name: "P. Hernandez-Leal"
+    - name: "J. H. Zaragoza"
+    - name: "P. Larrañaga"
+  parent:
+    title: "Pattern Recognition Letters"
+  volume: 41
+  page-range: "14-22"
+  date: 2014
+
+git:
+  type: web
+  title: "Git"
+  author:
+    - name: "Software Freedom Conservancy"
+  URL: "https://git-scm.com/"
+  accessed: 2026-08-18
+ 
+github:
+  type: web
+  title: "GitHub · Build and ship software on a single, collaborative platform"
+  author:
+    - name: "GitHub, Inc."
+  URL: "https://github.com/"
+  accessed: 2026-08-18
+
+wadoux2025:
+  type: article
+  title: Artificial intelligence in soil science
+  author: Wadoux, Alexandre M. J.-C.
+  date: 2025
+  page-range: e70080
+  volume: 76
+  issue: 2
+  parent:
+    type: periodical
+    title: European Journal of Soil Science
+  doi: 10.1111/ejss.70080

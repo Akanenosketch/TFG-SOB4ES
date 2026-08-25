@@ -61,11 +61,15 @@
   spacing: 3mm,
 )
 
+#show figure.where(kind: table): set block(breakable: true)
+
 // Ajustes para las formulas matemáticas
 #show math.equation: set text(
       font: "New Computer Modern Math",
-      size: 10.5pt
+      size: 10pt
 )
+
+#set math.equation(numbering: none)
 
   //Alinear texto
 #set align(top+left)
