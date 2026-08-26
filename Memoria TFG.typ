@@ -2,7 +2,7 @@
 
 // Portada     
 
-#image("media/Portada.pdf", page: 1, width: 100%, height: 100%)
+#image("./media/Portada.pdf", page: 1, width: 100%, height: 100%)
 
 // Fin portada
 
