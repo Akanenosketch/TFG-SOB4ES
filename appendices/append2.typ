@@ -1,1 +1,3 @@
-== ANEXO II: Informe EDA <informe-eda>
+== Informe EDA <informe-eda>
+
+En este anexo se presenta el análisis exploratorio de datos (EDA, Exploratory Data Analysis) realizado sobre el dataset final obtenido tras la Capa de procesamiento de datos, previo al desarrollo de los modelos predictivos descritos en la Capa de modelado predictivo. El objetivo de este análisis es doble: por un lado, caracterizar la calidad y la estructura de los datos disponibles (valores faltantes, distribución de las variables, escalas); por otro, justificar empíricamente algunas de las decisiones metodológicas tomadas en la sección Marco teórico o práctico, en particular la normalización de las variables predictoras (véase Regresión Ridge) y el uso de modelos robustos frente a la colinealidad (véase Selección de variables).

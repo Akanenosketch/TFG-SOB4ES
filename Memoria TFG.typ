@@ -61,6 +61,12 @@
   spacing: 3mm,
 )
 
+#set rect(
+  inset: 8pt,
+  fill: rgb("#d6e3da"),
+  width: 100%,
+)
+
 #show figure.where(kind: table): set block(breakable: true)
 
 // Ajustes para las formulas matemáticas
@@ -202,6 +208,26 @@ En los siguientes apartados se introducirán elementos que serán de utilidad pa
 // Anexo 1: Glosario de Términos
 
 #include "appendices/append1.typ"
+
+#pagebreak()
+
+#include "appendices/append2.typ"
+
+#pagebreak()
+
+#include "appendices/append3.typ"
+
+#pagebreak()
+
+#include "appendices/append4.typ"
+
+#pagebreak()
+
+#include "appendices/append5.typ"
+
+#pagebreak()
+
+#include "appendices/append6.typ"
 
 /* Para la bibliografía.yml usar esta plantilla
   Nombre:
