@@ -31,11 +31,15 @@
   size: 14pt
 )
 
+#show heading.where(level: 5): set text(
+  size: 12pt
+)
+
   //Contador de paginas <- 0
 #counter(page).update(0)
 
 //Espacio entre párrafos
-#v(90pt)
+#v(60pt)
         
 
 // Tipografía normal    
@@ -130,11 +134,15 @@ target: figure.where(kind: table))
 
 // Ajuste de enumeración de los capitulos, para que inicie en introduccion
 
-#set heading(numbering: "1.1.1.")
+#pagebreak()
+        
+//Contador de paginas <- 0
+#include "appendices/append1.typ"
 
-// fin de ajustes, inicio del documento (Introducción)
+#pagebreak()
 
   //Ajustes de página
+
 #set page(
         numbering: "1",
         header: [  // Cabezado de página 
@@ -151,11 +159,12 @@ la biodiversidad del suelo_
                    #counter(page).display("1")
                    ]
         )  
-        
-//Contador de paginas <- 0
+
+#set heading(numbering: "1.1.1.")
+
 #counter(page).update(1)
 
-#pagebreak()
+// fin de ajustes, inicio del documento (Introducción)
 
 #include "chapters/chpt1.typ"
 
@@ -207,9 +216,7 @@ En los siguientes apartados se introducirán elementos que serán de utilidad pa
 
 // Anexo 1: Glosario de Términos
 
-#include "appendices/append1.typ"
 
-#pagebreak()
 
 #include "appendices/append2.typ"
 

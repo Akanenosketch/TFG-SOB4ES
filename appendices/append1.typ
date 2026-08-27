@@ -1,5 +1,4 @@
-== Glosario de Términos
-<glosario-de-terminos>
+#heading(outlined: false, bookmarked: false)[Glosario de Términos]
 
 En este glosario se incluyen definiciones que puedan ser de utilidad y aclaraciones sobre las diferentes abreviaturas empleadas a lo largo de esta memoria.
 
@@ -33,7 +32,7 @@ En este glosario se incluyen definiciones que puedan ser de utilidad y aclaracio
     [*VC*], [Dimensión Vapnik-Chervonenkis, medida de la capacidad de un espacio de hipótesis.],
     [*VIF*], [Factor de Inflación de la Varianza (_Variance Inflation Factor_).],
   )],
-    caption: [Glosario de términos y acrónimos],
+    caption: [Glosario de abreviaturas.],
     kind: table,
 )
 
@@ -60,6 +59,6 @@ En este glosario se incluyen definiciones que puedan ser de utilidad y aclaracio
     [*Regularización*], [Método estadístico empleado para reducir los errores causados por el sobreajuste de los datos de entrenamiento, penalizando la complejidad del modelo (p. ej. L2 en Ridge, L1 en Lasso).],
     [*Underfitting*], [Fenómeno opuesto al sobreajuste: el modelo carece de capacidad suficiente para capturar las relaciones reales presentes en los datos, presentando un rendimiento pobre incluso sobre el propio conjunto de entrenamiento.],
   )],
-     caption: [Glosario de términos y acrónimos],
+     caption: [Glosario de términos.],
      kind: table,
 )
