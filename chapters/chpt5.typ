@@ -12,22 +12,20 @@ En esta sección se describe el marco teórico y práctico en el que se apoya y 
 
 == Fundamentos del aprendizaje automático <fundamentos-del-aprendizaje-automatico>
 
-El término de aprendizaje automático, también conocido como Machine Learning (ML) fue acuñado por primera vez por el informático Arthur Samuel#sub([@arthurSamuelWikipedia,@geronHandsOnML]) en 1959, conocido por su trabajo en la implementación de un damas que aprendiera de forma autónoma y por dar soporte y colaborar en lo que hoy se conoce como LaTEX#sub([@latexProject]). 
+El término de aprendizaje automático, también conocido como *_Machine Learning_* (ML) fue acuñado por primera vez por el informático *Arthur Samuel*#sub([@arthurSamuelWikipedia,@geronHandsOnML]) en 1959, conocido por su trabajo en la implementación de un damas que aprendiera de forma autónoma y por dar soporte y colaborar en lo que hoy se conoce como LaTEX#sub([@latexProject]). 
 
 Él acuñó el término de ML por primera vez en el artículo “_Some Studies in Machine Learning Using the Game of Checkers_” publicado en el IBM Journal of research and development#sub([@samuelCheckers]), definiéndolo de la siguiente forma: 
 
 #rect[ “Machine Learning es el campo de estudio que permite le otorga a las computadoras la capacidad de aprender sin explícitamente programarlo.”]
 
-Otro personaje relevante dentro del campo de la inteligencia artificial es Tom Mitchell#sub([@geronHandsOnML, @tomMitchellWikipedia]), creador del ordenador que es capaz de “leer la mente humana” a partir de imágenes del cerebro humano#sub([@reutersMindImages]). Él lo define de una forma más técnica, siendo esta una de las definiciones más citadas dentro de la literatura académica#sub([@mitchellMachineLearning]), la cual es la siguiente:
+Otro personaje relevante dentro del campo de la inteligencia artificial es *Tom Mitchell*#sub([@geronHandsOnML, @tomMitchellWikipedia]), creador del ordenador que es capaz de “leer la mente humana” a partir de imágenes del cerebro humano#sub([@reutersMindImages]). Él lo define de una forma más técnica, siendo esta una de las definiciones más citadas dentro de la literatura académica#sub([@mitchellMachineLearning]), la cual es la siguiente:
 
 #rect[“Se dice que un programa de ordenador aprende de una experiencia E con respecto a una tarea T y una media de rendimiento P, si su rendimiento en T, medido por P, mejore con la experiencia E”]
 
 Esta definición es la adoptada como referencia en este trabajo, al descomponer con claridad los tres elementos presentes del proyecto:
 
 - *Tarea (T):* predecir los indicadores de biodiversidad del suelo a partir de las diferentes variables ambientales.
-
 - *Experiencia (E):* El conjunto de datos de campo del proyecto SOB4ES, combinado con variables climáticas y geoespaciales de fuentes remotas.
-
 - *Medida de rendimiento (P):* las métricas descritas en la @metricas-de-evaluacion-y-validacion, la cual se encuentra un poco más adelante en este documento.
 
 Estas dos definiciones se pueden resumir de la siguiente forma #sub([@bergmannMachineLearningIBM]):
@@ -36,7 +34,7 @@ Estas dos definiciones se pueden resumir de la siguiente forma #sub([@bergmannMa
 
 Esta capacidad de aprender, permite a los modelos de ML realizar predicciones, tomar decisiones y hacer acciones variadas sin que lo tengan estrictamente indicado dentro de su código. También lo permite diferenciarse de los sistemas expertos tradicionales, en los que el conocimiento se codifica explícitamente, y lo acerca a la estadística de la que toma buena parte de su base matemática.
 
-  #colbreak()
+#colbreak()
 
 === Tipos de aprendizaje automático <tipos-de-aprendizaje-automatico>
 
@@ -70,7 +68,6 @@ A cambio, es el paradigma que permite una evaluación más objetiva del modelo, 
 Algunos algoritmos representativos de este paradigma son la regresión lineal, los árboles de decisión, los métodos de ensamblado (Random Forest, XGBoost) y las redes neuronales entrenadas con ejemplos etiquetados, varios de los cuales se emplean en este propio trabajo (véase #link(<modelos-de-aprendizaje-automatico-empleados>)[*Modelos empleados*]).
 
 ===== Minimización del riesgo empírico y capacidad del modelo <riesgo-y-capacidad>
-
 
 La expresión anterior es un caso particular del *principio de minimización del riesgo empírico* (_Empirical Risk Minimization_, ERM)#sub([@mitchellMachineLearning]): como no se conoce la distribución real que generan los datos se aproxima el riesgo empírico.
 
@@ -218,6 +215,8 @@ Dicho dilema consiste en decidir en cada paso entre explotar la acción que, seg
 Algoritmos como Q-learning aprenden directamente una función de valor *$Q(s,a)$* que estima el retorno esperado de tomar la acción $a$ en el estado $s$ y seguir después la política óptima, sin necesidad de conocer explícitamente $P$ ni $R$.
 
 Es el paradigma más cercano al programa original de Samuel de 1959 que dio nombre al campo#sub([@russellNorvigAIMA]). No se ha empleado en este trabajo, ya que no existe un entorno con el que el modelo interactúe de forma secuencial ni una noción de recompensa: se trata de un problema de predicción sobre datos ya recogidos, no de una secuencia de decisiones.
+
+#colbreak()
 
 ===== Formalización mediante una función objetivo interna <aprendizaje-refuerzo-formalizacion>
 

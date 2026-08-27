@@ -19,10 +19,12 @@ Varios trabajos han abordado directamente el modelado de biodiversidad del suelo
   - Se incluye en estos antecedentes por ser, con diferencia, el estudio de mayor escala sobre biodiversidad de lombrices de tierra revisado, y porque se compara explícitamente el error de un modelo que combina propiedades de suelo medidas en campo con variables de SoilGrids frente a un modelo que usa únicamente SoilGrids (una capa global derivada, no medida _in situ_). 
   
   - La comparación _in situ_ + remoto vs. solo remoto es la más directamente equiparable, dentro de la literatura revisada, a la que plantea este TFG (SOB4ES + Google Earth Engine/Copernicus). 
-  
+
   - Encuentran que las variables climáticas resultan más determinantes que las edáficas o la cobertura del hábitat, y que la riqueza y abundancia locales tienden a ser mayores en latitudes altas, lo cual es un patrón inverso al de la biodiversidad aérea. 
 
 + Un estudio de modelado conjunto multiespecie #sub([@diggingDeeperEarthworms]) entrenó una red *neuronal profunda multi-tarea* para predecir la distribución de 77 especies de lombrices en Francia a partir de variables climáticas, edáficas y de cobertura del terreno, empleando SHAP para identificar los principales factores ambientales. El modelo conjunto alcanzó un TSS $>= 0.7$ y mejoró notablemente las predicciones para especies raras frente a los modelos de distribución de especies tradicionales (de una sola especie).
+
+  #colbreak()
 
 + Un estudio sobre biodiversidad multi-trófica del suelo mediante metabarcoding de ADN ambiental #sub([@limitsPromisesEOFoundationModels]) comparó sistemáticamente *_LightGBM_, _Random Forest_ y una red neuronal (ANN)* para predecir la abundancia relativa de 51 grupos tróficos (bacterias, hongos, protistas, oligoquetos, insectos, colémbolos y otros metazoos), usando cuatro configuraciones de variables predictoras: datos ambientales de baja resolución, datos _in situ_ de alta calidad, _embeddings_ de imágenes satelitales, y una combinación de ambos. 
 
@@ -45,11 +47,13 @@ Este enfoque indirecto no es exclusivo de la biodiversidad del suelo. El uso de 
 
 La disponibilidad reciente de catálogos satelitales abiertos de alta resolución y de reanálisis climáticos globales ha reducido significativamente la barrera de entrada para poder aplicar estas técnicas a nuevos problemas ecológicos, entre los cuales se encuentra el que aborda este TFG.
 
+#colbreak()
+
 Frente a estos antecedentes, la aportación diferencial que puede proporcionar este TFG es doble: 
 
 + Por un lado, la integración de múltiples fuentes de orígenes heterogéneos en un mismo _pipeline_ reproducible y versionado.
 + Por otro lado, la comparación de múltiples algoritmos de aprendizaje supervisado bajo un mismo marco de validación, en lugar de limitarse a un único modelo, lo que permite discutir con evidencia empírica cuál generaliza mejor ante un conjunto de datos comparativamente reducido. 
 
-A esto se suma el hecho de que trabajos como el de Phillips et al. #sub([@phillipsEarthwormDiversity]) ni el estudio multitrófico #sub([@limitsPromisesEOFoundationModels]) emplean fuentes de acceso de uso extendido como Google Earth Engine o Copernicus, ni combinan múltiples grupos biológicos del suelo de forma simultánea, como se hace en este TFG, haciendo uso de los datos del proyecto SOB4ES #sub([@sob4es2023]).
+A esto se suma el hecho de que trabajos como el de Phillips et al. #sub([@phillipsEarthwormDiversity]) ni el estudio multitrófico #sub([@limitsPromisesEOFoundationModels]) emplean fuentes de acceso de uso extendido como Google Earth Engine o Copernicus, ni combinan múltiples grupos biológicos del suelo de forma simultánea, como se hace en este TFG, haciendo uso de los datos del *proyecto SOB4ES* #sub([@sob4es2023]).
 
 Este TFG se sitúa bajo el contexto siguiente: parte de los datos previamente recolectados por el proyecto SOB4ES en más de 400 puntos geográficos europeos, y los complementa con fuentes de datos remotas de acceso abierto, con el objetivo de evaluar hasta qué punto los modelos de aprendizaje automático supervisado pueden aproximar la biodiversidad del suelo a partir de variables indirectas, relativamente más baratas y escalables que las obtenidas mediante el muestreo directo.
