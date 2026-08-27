@@ -306,7 +306,16 @@ El script cuenta con las siguentes capacidades:
 
 === Notebook para la comparación de variables (Prueba I) <notebook-p1>
 
-
+#let file = "../media/anexos/comparador_variables.pdf"
+#let total_pages = 6 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
 
 === Notebook para la comparación de barrido de rs (Prueba III) <notebook-p3>
 
