@@ -108,13 +108,13 @@
 
 //Índice de imagenes ##########################################################
 
-#outline(title: [Índice de imágenes],
+#outline(title: [Índice de figuras],
         target: figure.where(kind: image))
 #show heading.where(level: 1): set text(
   size: 0pt
 ) 
 
-#heading(outlined: false, bookmarked: true)[Índice de imágenes]
+#heading(outlined: false, bookmarked: true)[Índice de figuras]
 #show heading.where(level: 1): set text(
   size: 20pt
 )
