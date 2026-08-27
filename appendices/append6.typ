@@ -193,6 +193,12 @@ Una vez entrenados todos los modelos anteriores, los siguientes notebooks se enc
   table.cell()[*comparador_clasificación*], 
     table.cell()[Carga de todos los modelos entrenados (`.pkl`) y generación de métricas comparativas desde el punto de vista ordinal (clasificación), las cuales se han descrito ya en la Capa de evaluación de modelos.], 
   table.cell()[*comparador_variables*], 
+    table.cell()[Carga todos los archivos de variables menos relevantes (.csv) y genera a partir de los datos el ranking de variables a eliminar para la #link(<prueba-1>)[*Prueba de eliminación de variables*]],
+  table.cell()[*comparador_barrido_rs*], 
+    table.cell()[Carga todos los archivos de variables menos relevantes (.csv) y genera a partir de los datos el ranking de variables a eliminar para la #link(<prueba-1>)[*Prueba de eliminación de variables*]],
+  table.cell()[*comparador_variables*], 
+    table.cell()[Carga todos los archivos de variables menos relevantes (.csv) y genera a partir de los datos el ranking de variables a eliminar para la #link(<prueba-1>)[*Prueba de eliminación de variables*]],
+  table.cell()[*comparador_variables*], 
     table.cell()[Carga todos los archivos de variables menos relevantes (.csv) y genera a partir de los datos el ranking de variables a eliminar para la #link(<prueba-1>)[*Prueba de eliminación de variables*]]
   )], 
   caption: [Notebooks de comparación de resultados.], 

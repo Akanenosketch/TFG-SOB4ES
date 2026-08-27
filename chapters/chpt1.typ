@@ -7,7 +7,7 @@ Por estos motivos, resulta fundamental poder controlar y monitorizar el estado d
 + El número elevado de especies. 
 + Las dificultades metodológicas según el grupo de especies estudiado. 
 + La falta de procesos estandarizados.
-+ El elevado coste de los divresos análisis a realizar#sub[@fao2020state].
++ El elevado coste de los diversos análisis a realizar#sub[@fao2020state].
 
 Debido a dichos desafíos y limitaciones, surge la necesidad de desarrollar nuevas técnicas que permitan y faciliten el conocimiento de los niveles de biodiversidad en el suelo, asegurando también la fiabilidad y la calidad de los resultados.
 
