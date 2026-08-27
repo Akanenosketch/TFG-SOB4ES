@@ -293,6 +293,58 @@ El script cuenta con las siguentes capacidades:
 
 ==== Comparador entre ramas <branch-comp>
 
+#let file = "../media/anexos/extractor_resultados.pdf"
+#let total_pages = 15
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
+
 === Notebook para la comparación de variables (Prueba I) <notebook-p1>
 
-=== Notebook para la comparación de barrido de rs (Prueba III) <notebook-p1>
+
+
+=== Notebook para la comparación de barrido de rs (Prueba III) <notebook-p3>
+
+#let file = "../media/anexos/comparador_barrido_rs.pdf"
+#let total_pages = 7 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
+
+=== Notebooks para la prueba de ensamblado (Prueba IV) <notebooks-p4>
+
+==== Notebook de ensamblado de predicciones sin meta-modelos (Prueba IV.I) <notebook-p4-1>
+
+#let file = "../media/anexos/prueba_ensamblado.pdf"
+#let total_pages = 15 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
+
+==== Notebook de ensamblado de predicciones con meta-modelos (Prueba IV.II) <notebook-p4-2>
+
+#let file = "../media/anexos/prueba_ensamblado_con_modelos.pdf"
+#let total_pages = 16 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
