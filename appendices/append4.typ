@@ -1,12 +1,10 @@
-== Scripts y notebooks auxiliares (Anexo III) <elementos-auxiliares>
+== Scripts y notebooks auxiliares (Anexo IV) <elementos-auxiliares>
 
 En este anexo se muestra el código de todos los scripts y notebooks auxiliares empleados para la facilitación de las tareas de ejecución y comparación de resultados.
 
 === Script de automatización de notebooks <autom-notebooks>
 
 #show raw.where(block: true): set text(size: 7.5pt)
-
-
 
 ```python
 """
@@ -251,6 +249,29 @@ El script cuenta con las siguentes capacidades:
 ]
 
 === Notebook de división de datos <data-div-notebook>
+
+==== Fundamento y configuración
+
+Una vez data-prep, data-prep-online y data-prep-combination (véase #link(<notebooks-empleados>)[*Anexo III*]) generan el dataset final armonizado (sob4es_final_model_ready.csv), este notebook es responsable de dividirlo en los tres subconjuntos empleados por el resto del proyecto: entrenamiento, test y evaluación. Es, por tanto, el último eslabón de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] antes de entrar en la Capa de modelado predictivo.
+
+El dataset de entrada contiene 428 filas y 71 columnas, sin ningún valor nulo. La partición se configura con TEST_SIZE=0.30 (fracción reservada para test+eval conjuntamente), EVAL_FRAC=0.50 (mitad de esa reserva para eval, mitad para test) y RANDOM_SEED=42.
+
+==== Metodología
+
+La partición se realiza en dos pasos sucesivos con train_test_split de scikit-learn, estratificando por país de origen de la muestra (extraído del prefijo de site_id, por ejemplo BE, IL, RO) para asegurar que los tres subconjuntos mantengan una representación proporcional de cada país. Italia (IT), con solo 2 filas en todo el dataset, se agrupa con Alemania (DE) únicamente a efectos de estratificación, al no ser posible estratificar un país con menos de 2 muestras por split.
+
+Primera partición: train (70%) frente a un conjunto temporal (temp, 30%).
+Segunda partición: temp se divide a su vez al 50% entre test y eval.
+
+Tras la partición se verifica que la proporción de outlier_flag (una bandera de calidad de dato ya calculada en fases anteriores) se mantiene similar entre los tres subconjuntos, como comprobación adicional de que la partición no ha introducido un sesgo de calidad entre splits.
+
+==== Resultados
+
+#table( columns: (auto, auto, auto), align: (left, center, center), fill: (col, row) => if row == 0 { rgb("d6e3da") }, table.header([Subconjunto], [Filas], [% del total]), [train.csv], [299], [69.9%], [test.csv], [64], [15.0%], [eval.csv], [65], [15.2%], )
+
+La distribución de outlier_flag se mantiene prácticamente idéntica entre subconjuntos (81.3% / 81.2% / 80.0% de True en train/test/eval respectivamente, frente al 81.1% del dataset completo), confirmando que la estratificación por país no ha desequilibrado esta variable de calidad. De igual forma, la proporción de muestras por país se mantiene estable en los tres splits (por ejemplo, Rumanía mantiene un 70.6% de sus muestras en train, muy cercano al 69.9% global), con la única excepción esperable de Italia, cuyas 2 únicas muestras se reparten una a test y otra a eval, sin ninguna en train.
+
+// TODO: insertar aquí el gráfico de tarta (distribución de splits) y el gráfico de barras (muestras por país y split) generados en data-prep-div.ipynb
 
 #let file = "../media/anexos/data-prep-div.pdf"
 #let total_pages = 4 

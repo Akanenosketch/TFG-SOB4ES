@@ -1,452 +1,763 @@
-== Informe EDA (Anexo I) <informe-eda>
+== Modelos empleados (Anexo II) <modelos-empleados>
 
-En este anexo se presenta el análisis exploratorio de datos (EDA, *Exploratory Data Analysis*) realizado sobre el dataset final obtenido tras la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*], previo al desarrollo de los modelos predictivos descritos en la #link(<capa-modelado>)[*Capa de modelado predictivo*]. 
+En esta sección de los anexos se detalla, para cada uno de los ocho modelos desarrollados en este TFG, su configuración concreta y los resultados numéricos obtenidos sobre `eval.csv`, el subconjunto de evaluación final que ningún modelo ha visto durante el _tuning_ ni durante la validación cruzada (véase #link(<capa-modelado>)[*Capa de modelado predictivo*]).
 
-El objetivo de este análisis es doble: por un lado, caracterizar la calidad y la estructura de los datos disponibles (valores faltantes, distribución de las variables, escalas)y, por otro, justificar empíricamente algunas de las decisiones metodológicas tomadas en la sección de #link(<marco-teorico-o-practico>)[*Marco teórico y práctico*], en particular la normalización de las variables predictoras (véase #link(<regresion-ridge>)[*Regresión Ridge*]) y el uso de modelos robustos frente a la colinealidad (véase #link(<seleccion-de-variables>)[*Selección de variables*]).
+Los 21 targets predichos corresponden a los índices de biodiversidad (Shannon) y de riqueza de especies de 11 grupos taxonómicos distintos, los cuales se encuentran mencionados en el #link(<informe-eda>)[*Anexo II*] y en #link(<variables>)[*Variables empleadas*], todos ellos normalizados a la *escala z* antes del entrenamiento. Por ello un $R²$ de 0 no implica que no prediga nada, sino que su rendimiento es equivalente al de predecir siempre la media del conjunto de entrenamiento, mientras que un valor negativo indica que el modelo predice peor que dicha media.
 
-Antes de entrenar un modelo predictivo conviene entender qué hay realmente en los datos: cuántas observaciones hay, cómo se distribuyen entre países y usos de suelo, si faltan valores, si hay variables que presentan colinealidad (se mueven juntas), si existen valores atípicos y si las relaciones entre variables predictoras y variables objetivo son lineales o no. 
+A lo largo de todos los modelos, `earthworm_shannon_z` y `earthworm_richness_z` se tratan como los dos targets prioritaios, por lo que en los siguientes subapartados se hará referencia explicita a los rendimientos obtenidos a la hora de predecir dichos targets.
 
-Estas preguntas requieren calcular estadísticos y visualizar los datos directamente, que es lo que se hace en este anexo. Las conclusiones aquí obtenidas condicionan decisiones concretas del cuerpo principal del TFG, como qué algoritmo de regularización usar (véase #link(<regresion-ridge>)[*Regresión Ridge*]), si tiene sentido un enfoque de modelado multisalida o qué limitaciones de generalización hay que declarar en las conclusiones.
+También a lo largo de los siguientes subapartados, se tendrá una explicación de los modelos y de los resultados obtenidos, como también el notebook base de dcho modelo exportado.
 
-El anexo se organiza en nueve bloques: 
-+ Descripción general del dataset. 
-+ Distribución geográfica.
-+ Variables descartadas de la selección.
-+ Valores faltantes e imputación.
-  + El indicador de calidad `outlier_flag`. 
-+ Análisis univariante variable a variable.
-+ Variables por uso de suelo.
-+ Valores atípicos.
-+ Análisis bivariante y multivariante de correlaciones y consistencia externa. 
-+ Conclusiones.
+=== Modelo de Regresión Ridge <ridge-model>
+
+==== Fundamento y configuración
+
+Ridge (véase #link(<regresion-ridge>)[*Modelo de Regresión Ridge*]) se emplea como modelo baseline del trabajo: al ser un modelo lineal, permite establecer un suelo mínimo de rendimiento frente al que comparar el resto de modelos, más complejos y con mayor capacidad de capturar relaciones no lineales.
+
+Al tratarse de un modelo determinista (no depende de una semilla aleatoria de entrenamiento), se entrena un único modelo por target, sin necesidad de recurrir a un ensamblado de varias semillas para reducir la varianza.
+
+La búsqueda de hiperparámetros se realiza mediante `GridSearchCV (validación cruzada de 5 pliegues, scoring='r2')` sobre `X_train`, para cada uno de los 21 targets de forma independiente, explorando:
+- *`alpha`:* 120 valores en escala logarítmica entre $10^(-1)$ y $10^8$, para cubrir desde una regularización casi nula hasta una regularización extrema (necesaria para los targets con menor señal predictiva, donde el modelo tiende a sobreajustar si `alpha` es bajo).
+- *`fit_intercept`:* True / False.
+- *`solver`:* auto, cholesky, lsqr.
+
+Para evitar seleccionar una combinación que sobreajuste, se aplica además un filtro de estabilidad: de entre todas las combinaciones evaluadas, solo se consideran válidas aquellas cuya diferencia entre el R² de entrenamiento y el R² de validación cruzada (gap) sea igual o inferior a 0.10; si ninguna combinación cumple ese criterio para un target concreto, se selecciona la de menor gap con seguridad. El alpha óptimo encontrado varía considerablemente entre targets (de 105.98 a 719.69), lo que confirma que la señal predictiva disponible es distinta para cada grupo taxonómico y que un único valor de regularización global no sería adecuado.
+
+==== Entrenamiento
+
+Al tratarse de un modelo determinista, no se recurre a un ensamblado de semillas: se entrena un único modelo por target con los hiperparámetros seleccionados en el tuning.
+
+La validación cruzada repetida `(RepeatedKFold, 5 pliegues × 3 repeticiones = 15 evaluaciones)` sobre `X_train` no mostró señales relevantes de sobreajuste: de los 21 targets, únicamente `bac_shannon_z` superó el umbral de aviso (diferencia Train-CV > 0.15, concretamente 0.161). 
+
+El resto se mantuvo en un rango de diferencia razonable (entre 0.054 y 0.161), coherente con la baja capacidad de un modelo lineal para memorizar el conjunto de entrenamiento.
 
 #colbreak()
 
-=== Descripción general del dataset
+==== Explicabilidad y variables más relevantes
 
-El análisis se ha realizado sobre clean.csv, la versión armonizada y sin escalar del dataset obtenido tras la Capa de procesamiento de datos, de forma que las cifras conserven su interpretación agronómica y ecológica directa antes de la normalización aplicada en la Capa de modelado predictivo.
+A partir del valor absoluto de los coeficientes del modelo (interpretables directamente al estar las variables normalizadas), las variables más relevantes a nivel global fueron, por este orden: `soil_ph_z`, `gee_temp_media_C_z`, `eu_p_z`, `dem_elevacion_m_z`, `zn_z`, `gee_humedad_rel_pct_z`, `clay_content_z`, `eu_ph_z`, `pb_z` y `soil_moisture_z`. 
 
-#figure(
-  align(center)[
-    #table(
-      columns: (35%, 35%),
-      align: (left+horizon, center+horizon),
-      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da")},
-      table.header(
-        table.cell(align: center)[*Característica*],
-        table.cell(align: center)[*Valor*],
-      ),
-      table.cell(align: center)[*Nº total de observaciones \ (parcelas)*],
-        table.cell()[428],
-      table.cell(align: center)[*Nº de países representados*],
-        table.cell()[12],
-      table.cell(align: center)[*Nº de variables en el dataset limpio*],
-        table.cell()[84],
-      table.cell(align: center)[*Nº de variables predictoras finales seleccionads*],
-        table.cell()[34 \ (véase #link(<seleccion-de-variables>)[*Selección de variables*])],
-      table.cell(align: center)[*Valores nulos detectados en el dataset limpio*],
-        table.cell()[0],
-      table.cell(align: center)[*Filas con site_id duplicado*],
-        table.cell()[0],
+El pH del suelo y la temperatura media (variable climática remota de GEE) destacan de forma consistente como los predictores más influyentes del conjunto.
+
+La gráfica que muestra las variables más importantes se puede ver más adelante en el notebook exportado en la sección *5.- Importancia de variables*.
+
+==== Resultados sobre eval.csv
+
+El R² medio sobre los 21 targets es de *-0.016*, es decir, en promedio Ridge se comporta ligeramente peor que predecir la media del conjunto de entrenamiento.
+
+Sobre los dos targets prioritarios obtiene *R²=0.2395* (`earthworm_shannon_z`) y *R²=0.2789* (`earthworm_richness_z`), sus dos mejores resultados junto con `macro_shannon_z` (0.1257). 
+
+En el extremo opuesto, `coll_species_richness_z` (-0.7341) y `meso_shannon_z` (-0.2499) muestran el peor ajuste, indicando que la relación lineal simple no captura la variabilidad de estos grupos.
+
+#figure( 
+  align(center)[ 
+    #table( 
+      columns: (auto, auto, auto, auto, auto), 
+      align: (left, left, center, center, center), 
+      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
+      table.header([*Variable*], [*Target*], [*$R^2$*], [*RMSE*], [*MAE*]), 
+      [*Shannon nemátodos*], [nematode_shannon_z], [0.0112], [0.9821], [0.7929], 
+      [*Shannon macrofauna*], [macro_shannon_z], [0.1257], [0.9391], [0.8177], 
+      [*Shannon lombrices*], [earthworm_shannon_z], [0.2395], [0.8704], [0.7094], 
+      [*Shannon oribátidos*], [orib_shannon_z], [0.1137], [1.0766], [0.9075], 
+      [*Shannon mesostigmátidos*], [meso_shannon_z], [-0.2499], [1.0918], [0.9023], 
+      [*Shannon colémbolos*], [coll_shannon_z], [-0.4998], [0.7758], [0.6426], 
+      [*Shannon bacterias*], [bac_shannon_z], [-0.0812], [1.0413], [0.7158], 
+      [*Shannon hongos*], [fun_shannon_z], [-0.0161], [1.1533], [0.9503], 
+      [*Shannon eucariotas*], [euk_shannon_z], [0.0407], [0.9499], [0.7011], 
+      [*Shannon oomicetos*], [oomy_shannon_z], [0.0857], [0.9996], [0.7418], 
+      [*Shannon cercozoos*], [cerc_shannon_z], [0.0155], [0.8886], [0.6332], 
+      [*Riqueza macrofauna*], [macro_order_richness_z], [0.1521], [0.8433], [0.7105], 
+      [*Riqueza lombrices*], [earthworm_richness_z], [0.2789], [0.7754], [0.6143], 
+      [*Riqueza oribátidos*], [orib_species_richness_z], [0.0921], [1.1400], [0.7670], 
+      [*Riqueza mesostigmátidos*], [meso_species_richness_z], [-0.0959], [1.0097], [0.7693], 
+      [*Riqueza colémbolos*], [coll_species_richness_z], [-0.7341], [0.6780], [0.5409], 
+      [*Riqueza bacterias (ASV)*], [bac_asv_richness_z], [-0.0761], [1.1398], [0.8335], 
+      [*Riqueza hongos (ASV)*], [fun_asv_richness_z], [0.0087], [1.0731], [0.8114], 
+      [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z], [0.0400], [0.7955], [0.5775], 
+      [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [0.1035], [0.9510], [0.7711], 
+      [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1019], [0.9350], [0.7211], )], 
+      caption: [Resultados de Ridge sobre eval.csv, por target.], 
+      kind: table, 
     )
-  ],
-  caption: [Descripción general del dataset.]
-)
 
-Comparando directamente el dataset limpio (84 columnas) con el dataset escalado usado en el modelado (71 columnas), se reconstruye con precisión qué ocurre con esas 84 variables:
+#let file = "../media/anexos/reg_model.pdf"
+#let total_pages = 10 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
 
-- *13 columnas se eliminan por completo al pasar a la versión escalada, por ser identificadores o metadatos categóricos no normalizables:* `country`, `pedoclimatic_region`, `site_locality`, `sampling_date`, `soil_type`, `land_use_type`, `land_use_intensity`, `dominant_vegetation`, `eu_soil_texture_class`, `eu_env_zone`, `eu_land_cover`, `eu_soil_type_wrb`, `eu_uso_suelo_nombre`.
-- *4 columnas se conservan sin escalar:* `site_id`, `latitude`, `longitude`, `outlier_flag`.
-- *67 columnas numéricas se conservan normalizadas con sufijo `_z`:* variables físico-químicas, tróficas y de biodiversidad, más covariables ambientales `gee_*/dem_*` y capas de referencia `eu_*`.
+=== Modelo Random Forest <rf-model>
 
-Es decir, 84 = 13 (descartadas) + 4 (sin escalar) + 67 (normalizadas `_z`). El conjunto de 67 variables numéricas normalizadas es el universo real desde el que se seleccionan, en una fase posterior de la sección 5.2.4, las 33 predictoras y 21 targets finales. La diferencia entre 67 y 54 (=33+21) corresponde a variables numéricas descartadas por el proceso de selección de variables (colinealidad, varianza casi nula, etc.), no a identificadores.
+==== Fundamento y configuración
 
-De acuerdo con la partición final descrita en la #link(<capa-modelado>)[*Fase de partición de datos*], el conjunto se divide en 299 observaciones de entrenamiento (70%), 64 de test (15%) y 65 de evaluación (15%), sobre el total de 428 parcelas.
+Random Forest (véase #link(<random-forest>)[*Modelo Random Forest*]) se entrena, en esta primera variante, en su forma de salida única: un conjunto de árboles independiente por cada uno de los 21 targets, cada uno con su propia búsqueda de hiperparámetros.
 
-Las variables predictoras (33) son las covariables edáficas, ambientales y de teledetección (pH, textura, elementos traza, temperatura media, NDVI, elevación, etc.) que el modelo recibe como entrada para hacer una predicción. Las variables objetivo o targets (21) son, en su mayoría, los índices de biodiversidad edáfica (Shannon, abundancias, riquezas) que el modelo intenta predecir a partir de esas covariables. Esta distinción es la que justifica por qué identificadores como site_id o country no entran en ninguno de los dos grupos: no aportan información edáfica ni son el fenómeno biológico que se quiere predecir, solo sirven para trazabilidad o para particionar los datos de forma estratificada (ver sección II.2).
+La búsqueda se realiza mediante `RandomizedSearchCV (50 combinaciones, validación cruzada de 5 pliegues)` sobre `X_train`, explorando:
+- *n_estimators:* 100, 150, 200.
+- *max_depth:* 3, 4, 5, 10, 15, 20.
+- *min_samples_leaf:* 2, 4, 8, 12, 16.
+- *min_samples_split:* 15, 20, 25.
+- *max_features:* sqrt, 0.2, 0.3.
+- *ccp_alpha:* 0.005, 0.01, 0.02.
+- *bootstrap:* True.
 
-Dividir los datos en tres subconjuntos (train/test/eval), y no en los dos habituales (train/test), permite separar dos usos distintos de los datos no vistos por el modelo durante el entrenamiento: el conjunto de test se puede usar repetidamente mientras se ajustan hiperparámetros o se comparan arquitecturas (XGBoost, Random Forest, Ridge), mientras que el conjunto de evaluación (hold-out final) se reserva y se consulta una única vez, al final, para dar una estimación honesta del rendimiento del modelo ya elegido. Si solo se usara train/test y el conjunto de test se consultara muchas veces durante la selección de modelo, existe el riesgo de que las decisiones de diseño se ajusten indirectamente a ese conjunto de test, inflando artificialmente el rendimiento reportado.
+Algunos de dichos parámetros se han capado a un mínimo o máximo específico por los siguientes motivos:
++ *max_depth:* Limitado a un máximo de 20 para reducir el riesgo de sobreajuste a causa del tamaño reducido de los datos.
++ *min_samples_leaf:* Limitado a un mínimo de 2 hojas para evitar la creación de hojas triviales.
 
+==== Entrenamiento
 
-=== Distribución geográfica de las muestras
+La validación cruzada repetida sobre `X_train` muestra señales de sobreajuste (diferencia `Train-CV > 0.15`) en la práctica totalidad de los 21 targets, algo esperable dada la combinación de un modelo con alta capacidad (`max_depth` hasta 20) y un conjunto de entrenamiento reducido (~300 muestras).
 
-La distribución de parcelas por país es la siguiente (de mayor a menor):
+Este comportamiento es muy distinto al observado en Ridge, y es coherente con la mayor capacidad de un ensamblado de árboles para memorizar el conjunto de entrenamiento frente a un modelo lineal.
+
+Además, a diferencia de Ridge, Random Forest sí depende de la semilla aleatoria (tanto en el _bootstrap_ de las muestras como en la selección aleatoria de variables en cada división). 
+Para reducir la varianza de las predicciones finales, se entrena un ensamblado de 5 modelos por target (semillas `RANDOM_STATE, RANDOM_STATE+1, ..., RANDOM_STATE+4`), cuyas predicciones se promedian en el momento de la inferencia. 
+
+En total se generan y almacenan *$21 times 5 = 105$ modelos `.pkl`*.
+
+==== Explicabilidad y variables más relevantes
+
+Se calculan valores *SHAP* sobre `X_train` para todos los targets conjuntamente.
+
+El top-10 de variables más relevantes a nivel global por importancia SHAP media es: `soil_ph_z`, `gee_temp_media_C_z`, `eu_ph_z`, `eu_as_z`, `eu_cn_ratio_z`, `gee_humedad_rel_pct_z`, `eu_p_z`, `eu_clay_content_z`, `silt_content_z` y `eu_silt_content_z`. 
+
+Este resultado es consistente con el obtenido por los coeficientes de Ridge (soil_ph_z y gee_temp_media_C_z en primer y segundo lugar en ambos casos), lo que refuerza la fiabilidad de ambas variables como predictores robustos, independientemente del tipo de modelo empleado.
+
+La gráfica que muestra las variables más importantes se puede ver más adelante en el notebook exportado en la sección *5.- Explicabilidad del modelo (SHAP)*.
+
+#colbreak()
+
+==== Resultados sobre eval.csv
+
+El R² medio sobre los 21 targets es de *0.090*, una mejora sustancial frente al -0.016 de Ridge. 
+
+Random Forest es, de hecho, el modelo de salida única con mejor rendimiento global de todo el trabajo. 
+
+Sobre los targets prioritarios: *R²=0.5041* (`earthworm_shannon_z`) y *R²=0.5722* (`earthworm_richness_z`), los mejores resultados obtenidos para ambos targets entre todos los modelos de salida única evaluados. 
+
+Por otro lado, `coll_species_richness_z` (-0.5484) vuelve a ser, como en Ridge, el target con peor ajuste.
+
+#figure( 
+  align(center)[ 
+    #table( 
+      columns: (auto, auto, auto, auto, auto), 
+      align: (left, left, center, center, center), 
+      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
+    table.header([*Variable*], [*Target*], [*$R^2$*], [*RMSE*], [*MAE*]), 
+      [*Shannon nemátodos*], [nematode_shannon_z], [0.1693], [0.9001], [0.7070], 
+      [*Shannon macrofauna*], [macro_shannon_z], [0.3199], [0.8283], [0.6935], 
+      [*Shannon lombrices*], [earthworm_shannon_z], [0.5041], [0.7029], [0.5055], 
+      [*Shannon oribátidos*], [orib_shannon_z], [0.1794], [1.0359], [0.8803], 
+      [*Shannon mesostigmátidos*], [meso_shannon_z], [-0.1731], [1.0577], [0.8816], 
+      [*Shannon colémbolos*], [coll_shannon_z], [-0.3489], [0.7358], [0.6129], 
+      [*Shannon bacterias*], [bac_shannon_z], [0.0077], [0.9975], [0.6701], 
+      [*Shannon hongos*], [fun_shannon_z], [-0.0455], [1.1698], [0.9399], 
+      [*Shannon eucariotas*], [euk_shannon_z], [0.1683], [0.8844], [0.6227], 
+      [*Shannon oomicetos*], [oomy_shannon_z], [0.0832], [1.0010], [0.7279], 
+      [*Shannon cercozoos*], [cerc_shannon_z], [-0.0318], [0.9096], [0.6274], 
+      [*Riqueza macrofauna*], [macro_order_richness_z], [0.3417], [0.7431], [0.6316], 
+      [*Riqueza lombrices*], [earthworm_richness_z], [0.5722], [0.5973], [0.4324], 
+      [*Riqueza oribátidos*], [orib_species_richness_z], [0.2034], [1.0679], [0.7166], 
+      [*Riqueza mesostigmátidos*], [meso_species_richness_z], [-0.0438], [0.9854], [0.7472], 
+      [*Riqueza colémbolos*], [coll_species_richness_z], [-0.5484], [0.6407], [0.5033], 
+      [*Riqueza bacterias (ASV*)], [bac_asv_richness_z], [0.0042], [1.0965], [0.8126], 
+      [*Riqueza hongos (ASV*)], [fun_asv_richness_z], [-0.0256], [1.0915], [0.8189], 
+      [*Riqueza eucariotas (ASV*)], [euk_asv_richness_z], [0.2520], [0.7022], [0.5142], 
+      [*Riqueza oomicetos (ASV*)], [oomy_asv_richness_z], [0.1843], [0.9071], [0.7446], 
+      [*Riqueza cercozoos (ASV*)], [cerc_asv_richness_z], [0.1250], [0.9229], [0.7550], )], 
+      caption: [Resultados de Random Forest (salida única) sobre eval.csv, por target.], 
+      kind: table 
+    )
+
+#let file = "../media/anexos/rf_model.pdf"
+#let total_pages = 10 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
+
+=== Modelo Random Forest Multisalida <rf-multi-model>
+
+==== Fundamento y configuración
+
+Esta variante entrena un único `RandomForestRegressor` que predice los 21 targets de forma simultánea, aprovechando el soporte nativo de `scikit-learn` para `y` multivariante: cada división de cada árbol se decide considerando conjuntamente los 21 targets, lo que permite capturar correlaciones entre grupos biológicos directamente en la estructura del árbol, sin necesidad de un mecanismo explícito de encadenamiento.
+
+Al no poder tener hiperparámetros distintos por target (un único bosque sirve a los 21 a la vez), la búsqueda de hiperparámetros se realiza igualmente por target mediante `RandomizedSearchCV`, pero el resultado final se resuelve mediante un consenso ponderado por R²: cada target "vota" su combinación óptima con un peso proporcional a su propio R² de validación cruzada, esto implica que los targets con mayor R² influirán más que los que tenga un valor más pequeño.  
+
+El consenso resultante se puede ver en la siguentes tabla:
 
 #figure(
   align(center)[
-    #table(
-      columns: (33%, 33%),
-      align: (left+horizon, center+horizon),
-      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da")},
-      table.header(
-        table.cell(align: center)[*País*],
-        table.cell(align: center)[*Nº parcelas*],
-      ),
-        [*Israel (IL)*],      [51],
-        [*Rumanía (RO)*],     [51],
-        [*Suiza (CH)*],       [50],
-        [*Irlanda (IE)*],     [45],
-        [*Eslovenia (SI)*],   [45],
-        [*Bélgica (BE)*],     [36],
-        [*España (ES)*],      [36],
-        [*Países Bajos (NL)*],[33],
-        [*Francia (FR)*],     [29],
-        [*Suecia (SE)*],      [27],
-        [*Alemania (DE)*],    [23],
-        [*Italia (IT)*],      [2],
-      )
+    #table( 
+      columns: (auto, auto), 
+      align: (left, center), 
+      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
+      table.header( [*Hiperparámetro*], [*Valor de consenso*]), 
+      [*n_estimators*], [292], 
+      [*max_depth*], [6], 
+      [*min_samples_split*], [14], 
+      [*min_samples_leaf*], [5], 
+      [*max_features*], [log2], 
+      [*ccp_alpha*], [≈ 0.00125], )
   ],
-  caption: [Distribución de datos entre países.],
+  caption: [Consenso de hiperparámetros en Random Forest multisalida.],
   kind: table
 )
 
-#figure(
-  align(center)[
-    #image("../media/eda/01_paises.png", height: 35%)
-  ],
-  caption: [Gráfica de distribución de datos entre países.],
-  kind: image
-)
+Resulta interesante que el consenso limite la profundidad a solo 6 niveles (frente al máximo de 20 permitido en la búsqueda), lo que sugiere que, al tener que servir a los 21 targets simultáneamente, el modelo prioriza una estructura de árbol menos profunda y más generalista, en vez de sobreajustar a las particularidades de un target concreto.
 
-Como se puede ver en la primera imagen y en la tabla mostrada previamente, la distribución de datos está desbalanceada, destacando el caso de Italia, que solo tiene datos de *2 parcelas*. 
+Cabe destacar que la matriz de parámetros empleado para realizar la búsqueda de hiperparámetros es idéntico al empleado en #link(<rf-model>)[*Random Forest*].
 
-#figure(
-  align(center)[
-    #image("../media/eda/02_usos_tipos.png", height: 35%)
-  ],
-  caption: [Gráfica de usos y tipos de suelo.],
-  kind: image
-)
+==== Entrenamiento
 
+Al igual que Random Forest de salida única, esta variante depende de la semilla aleatoria del _bootstrap_ y de la selección de variables en cada división. Se entrena un ensamblado de 5 modelos con semillas `RANDOM_STATE` a `RANDOM_STATE+4`, cuyas predicciones se promedian en la inferencia. Al tratarse de un único bosque multisalida por semilla (no uno por target), el ensamblado completo requiere solo 5 modelos `.pkl`, frente a los 105 de la variante de salida única.
 
-Esto es relevante para las #link(<vias-de-trabajo-futuro>)[*Vías de trabajo futuro*], en la cual figura la recolección de más datos como una de las posibles vías de trabajo futuro, ya que la falta de datos es una limitación grande cuando se trata de entrenar modelos de aprendizaje automático.
+La validación cruzada repetida sobre `X_train`, evaluada de forma global sobre los 21 targets conjuntamente, muestra una diferencia Train-CV de 0.166 (R² train 0.307 frente a R² CV 0.142), por encima del umbral de aviso de 0.15. 
 
-Con solo 2 parcelas italianas sobre 428 (0.5% del dataset), el modelo apenas tiene información para aprender las particularidades edafoclimáticas de Italia, y cualquier métrica de error agregada (calculada sobre todo el conjunto de test) estará dominada por los países mejor representados (Israel, Rumanía, Suiza), enmascarando un posible mal desempeño en los países minoritarios. 
+A diferencia de Random Forest de salida única, donde prácticamente todos los targets mostraban aviso individual, aquí el consenso de hiperparámetros (con una profundidad más conservadora) modera algo el sobreajuste, aunque no lo elimina del todo.
 
 #colbreak()
 
-=== Variables descartadas durante la selección
+==== Explicabilidad y variables más relevantes
 
-A partir de la comparación directa entre el dataset limpio y el dataset escalado (sección II.1), las variables que no se usan directamente como predictoras (33) ni como targets (21) corresponden a las siguientes familias:
+Se calculan valores *SHAP* sobre `X_train`, promediando el valor absoluto sobre los 21 targets. El top-10 de variables más relevantes es: `soil_ph_z`, `gee_temp_media_C_z`, `eu_as_z`, `eu_ph_z`, `p_z`, `gee_humedad_rel_pct_z`, `eu_cn_ratio_z`, `eu_p_z`, `eu_clay_content_z` y `dem_elevacion_m_z`. 
+
+Este ranking es prácticamente idéntico al obtenido por Random Forest de salida única, con las dos mismas variables en primer y segundo lugar, lo que confirma que la relevancia de `soil_ph_z` y `gee_temp_media_C_z` es una propiedad del conjunto de datos y no un artefacto de una configuración de modelo concreta.
+
+La gráfica que muestra las variables más importantes se puede ver más adelante en el notebook exportado en la sección *5.- Explicabilidad del modelo (SHAP)*.
+
+==== Resultados sobre eval.csv
+
+Con un R² medio de *0.0964*, Random Forest multisalida es, de los ocho modelos evaluados en este trabajo, el que obtiene el *mejor promedio global* de R² sobre `eval.csv`, ligeramente por encima incluso de su propia variante de salida única (0.090). 
+
+Sobre los targets prioritarios obtiene *R²=0.4160* (`earthworm_shannon_z`) y *R²=0.4509* (`earthworm_richness_z`), algo por debajo de lo logrado por Random Forest de salida única para estos dos targets concretos. 
+
+Esto sugiere que, si bien compartir la estructura del árbol entre los 21 targets mejora el promedio global, probablemente porque ayuda a los targets con menos señal individual, puede hacerlo a costa de una ligera pérdida de precisión específica en los dos targets con más señal predictiva propia del conjunto de datos.
+
+#figure( 
+  align(center)[ 
+    #table( 
+      columns: (auto, auto, auto), 
+      align: (left, left, center, center, center) , 
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da") }, 
+      table.header([*Variable*], [*Target*], [*$R^2$*]), 
+      [*Shannon nemátodos*], [nematode_shannon_z], [0.1545], 
+      [*Shannon macrofauna*], [macro_shannon_z], [0.2000], 
+      [*Shannon lombrices*], [earthworm_shannon_z], [0.4160], 
+      [*Shannon oribátidos*], [orib_shannon_z], [0.1693], 
+      [*Shannon mesostigmátidos*], [meso_shannon_z], [-0.1178], 
+      [*Shannon colémbolos*], [coll_shannon_z], [-0.1953], 
+      [*Shannon bacterias*], [bac_shannon_z], [0.0290], 
+      [*Shannon hongos*], [fun_shannon_z], [-0.0127], 
+      [*Shannon eucariotas*], [euk_shannon_z], [0.1378], 
+      [*Shannon oomicetos*], [oomy_shannon_z], [0.1252], 
+      [*Shannon cercozoos*], [cerc_shannon_z], [-0.0041], 
+      [*Riqueza macrofauna*], [macro_order_richness_z], [0.2532], 
+      [*Riqueza lombrices*], [earthworm_richness_z], [0.4509], 
+      [*Riqueza oribátidos*], [orib_species_richness_z], [0.2386], 
+      [*Riqueza mesostigmátidos*], [meso_species_richness_z], [-0.0255], 
+      [*Riqueza colémbolos*], [coll_species_richness_z], [-0.2920], 
+      [*Riqueza bacterias (ASV)*], [bac_asv_richness_z], [0.0044], 
+      [*Riqueza hongos (ASV)*], [fun_asv_richness_z], [-0.0068], 
+      [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z], [0.1903], 
+      [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [0.1917], 
+      [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1171], )], 
+      caption: [R² de Random Forest multisalida sobre eval.csv, por target.], kind: table 
+  )
+
+#let file = "../media/anexos/rf_multisalida.pdf"
+#let total_pages = 9
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
+
+=== Modelo RegressorChain con Random Forest <reg-chain-model>
+
+==== Fundamento y configuración
+
+RegressorChain (véase #link(<regressorchain>)[*RegressorChain*]) encadena las predicciones de los 21 targets: el modelo predice primero un target, y usa esa predicción, junto con las variables originales, como entrada adicional para predecir el siguiente, y así sucesivamente. 
+
+A diferencia de Random Forest multisalida, donde la relación entre targets se aprende de forma implícita dentro de la estructura del árbol, aquí la correlación entre targets se introduce de forma explícita, como una variable de entrada más para los targets posteriores de la cadena.
+
+El modelo base de cada eslabón de la cadena es un `RandomForestRegressor`. Sus hiperparámetros se afinan una única vez mediante RandomizedSearchCV, empleando como métrica el R² promedio de los 21 targets simultáneamente. 
+
+El mejor R² promedio de validación cruzada obtenido en esta búsqueda fue de 0.1521, con los siguientes hiperparámetros:
 
 #figure(
   align(center)[
-    #table(
-      columns: (auto, auto),
-      align: (left+horizon, left+horizon),
-      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da")},
-      table.header(
-        table.cell(align: center)[*Variable(s)*],
-        table.cell(align: center)[*Motivo de exclusión como predictora*]
-      ),
-        [*site_id*],[Identificador único, sin valor predictivo.],
-        [*country, \ pedoclimatic_region, \ site_locality*],[Identificadores geográficos categóricos; se usan para estratificación/validación cruzada, no como predictoras directas del modelo final (aunque podrían codificarse como covariable categórica en trabajo futuro).],
-        [*latitude, \ longitude, \ sampling_date*],[Usadas para la extracción de variables remotas (GEE, DEM) y para el control de estacionalidad, no como predictoras directas.],
-        [*soil_type, \ land_use_type, \ land_use_intensity, \ dominant_vegetation, \ eu_soil_texture_class, \ eu_env_zone, \ eu_land_cover, \ eu_soil_type_wrb, \ eu_uso_suelo_nombre*],[Variables categóricas de tipo/uso de suelo; ninguna se conserva en el dataset escalado (sección II.1). No aparecen en la tabla de predictoras de la sección 5.2.4; dado que el propio EDA (sección II.6) muestra diferencias claras de pH y carbono orgánico según land_use_type, se recomienda documentar si la exclusión es intencionada o valorar su inclusión codificada (one-hot / target encoding) en trabajo futuro.],
-        [*outlier_flag*],[Variable de control de calidad, no un predictor ecológico; se usa como posible filtro de filas, no de columnas (véase sección II.4bis).],
-
-    )
+    #table( 
+      columns: (auto, auto), 
+      align: (left, center), 
+      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
+      table.header([*Hiperparámetro*], [*Valor*]), 
+      [*n_estimators*], [200], 
+      [*min_samples_split*], [15], 
+      [*min_samples_leaf*], [4], 
+      [*max_samples*], [0.7], 
+      [*max_features*], [0.2], )
   ],
-  caption: [Variables excluidas.],
+  caption: [Consenso de hiperparámetros en RegressorChain.],
   kind: table
 )
 
+==== Ensemble of Chains (ECC)
 
-No existen en el dataset limpio columnas `macro_Order` desagregadas por orden individual (por ejemplo macro_Coleoptera, macro_Diptera); las únicas variables de macrofauna presentes son las ya agregadas macro_total_abundance, macro_order_richness y macro_shannon. 
+El principal problema del encadenamiento simple es que los targets al principio de la cadena disponen de menos información (solo las variables originales) que los del final, los que además cuentan con las predicciones de todos los targets anteriores, por lo que el orden elegido condiciona el rendimiento de cada target concreto. 
 
-Para incorporar una variable categórica como land_use_type (6 categorías tras la limpieza) existen dos estrategias habituales: one-hot encoding, que crea una columna binaria por categoría (por ejemplo is_forest, is_wetland) y es la opción más simple y transparente, aunque añade dimensionalidad; y target encoding, que sustituye cada categoría por un estadístico (por ejemplo la media del target) calculado sobre las observaciones de esa categoría en el conjunto de entrenamiento, más compacto pero con mayor riesgo de fuga de información si no se calcula exclusivamente sobre train. Dado que los modelos de árboles (XGBoost, Random Forest) ya empleados en este TFG manejan de forma nativa variables categóricas codificadas como one-hot sin apenas coste adicional, esta sería la opción más directa de explorar en trabajo futuro.
+Para compensar este efecto, se entrena un ensamble de 10 cadenas `(N_CHAINS=10)`, cada una con un orden aleatorio distinto de los 21 targets (permutación generada con semilla RANDOM_STATE + chain_id) y su propio modelo base con semilla también distinta. 
 
-La columna land_use_type contiene una inconsistencia de formato: el valor "Arable" aparece tanto sin espacio (120 filas) como con un espacio final "Arable " (12 filas), es decir, dos categorías distintas a nivel de cadena de texto que representan el mismo uso de suelo. Si esta columna se llegara a incluir como predictora categórica, o se usa en cualquier agrupación o codificación posterior sin normalizar espacios en blanco, estas 12 filas quedarían separadas indebidamente de las 120 restantes. Se recomienda aplicar una limpieza de espacios en blanco a todas las columnas de texto en la Capa de procesamiento de datos como paso estándar. Las medianas de pH y carbono orgánico de la sección II.6 de este anexo ya se han recalculado tras corregir este problema.
+Las predicciones finales se obtienen promediando las 10 cadenas, de forma que los efectos de orden favorables y desfavorables para cada target tienden a cancelarse entre sí.
 
-=== Valores faltantes e imputación
+==== Entrenamiento
 
-El dataset limpio no presenta valores nulos tras el proceso de imputación (0 nulos confirmados en las 84 columnas × 428 filas): la ausencia original de datos queda registrada aparte en un archivo de flags (imputation_flags.csv), con una columna binaria `[variable]_was_missing` por cada variable imputable.
+La validación cruzada del modelo base muestra avisos de sobreajuste (diferencia `Train-CV > 0.15`) en varios de los targets situados en la segunda mitad de la cadena por defecto, por ejemplo, `coll_species_richness_z` (0.416), `cerc_asv_richness_z` (0.433) u `oomy_asv_richness_z` (0.421), un patrón distinto al de Random Forest de salida única, donde los avisos aparecían de forma más homogénea en casi todos los targets.
 
-Entre los métodos de imputación habituales, la imputación por media/mediana (global o por grupo, por ejemplo por país o por uso de suelo) sustituye cada valor faltante por el promedio de los valores observados; es simple pero reduce artificialmente la varianza de la variable y puede distorsionar las correlaciones calculadas en la sección II.8. La imputación KNN (k vecinos más próximos) busca las parcelas más similares en el resto de variables y usa su valor como estimación, preservando mejor la estructura de covarianza pero siendo más costosa computacionalmente y sensible a la escala de las variables usadas para medir similitud. La interpolación espacial (por ejemplo kriging o vecino más próximo geográfico) usa la proximidad geográfica (latitude/longitude) para estimar el valor faltante, un enfoque razonable para variables edafoclimáticas con autocorrelación espacial, aunque puede introducir sesgos si dos parcelas cercanas en el mapa pertenecen a usos de suelo muy distintos.
-
-==== El indicador outlier_flag
-
-outlier_flag presenta la siguiente distribución en el dataset: 347 parcelas marcadas como True frente a 81 como False.
-
-#figure(
-  align(center)[
-    #image("../media/eda/13_outlierflag_pais.png", height: 35%)
-  ],
-  caption: [Gráfica de distribución de datos entre países.],
-  kind: image
-)
-
-El patrón de `outlier_flag` por país (tabla siguiente) confirma que no es un indicador de outlier estadístico fila a fila homogéneo, sino un control de calidad que varía sistemáticamente según el origen de los datos:
-
-#figure(
-  align(center)[
-    #table(
-      columns: (auto, auto, auto, auto),
-      align: (center+horizon),
-      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da")},
-      table.header(
-        [*País*],[*False*],[*True*],[*% False*]
-      ),
-        [*RO*],[26],[25],[51.0%],
-        [*IE*],[16],[29],[35.6%],
-        [*BE*],[10],[26],[27.8%],
-        [*ES*],[9], [27],[25.0%],
-        [*NL*],[6], [27],[18.2%],
-        [*SE*],[7], [20],[25.9%],
-        [*DE*],[5], [18],[21.7%],
-        [*FR*],[2], [27],[6.9%],
-        [*CH*],[0], [50],[0.0%],
-        [*IL*],[0], [51],[0.0%],
-        [*SI*],[0], [45],[0.0%],
-        [*IT*],[0], [0], [0.0%],
-    )
-  ],
-  caption:[Tabla de distribución de los `outlier_flag`],
-  kind: table  
-)
-
-Cuatro países (Suiza, Israel, Eslovenia e Italia, el 45% de las parcelas del dataset) no presentan ni un solo caso False, mientras que Rumanía tiene una proporción casi equilibrada (51% False). Esta discrepancia tan marcada entre países es evidencia empírica directa de que outlier_flag no debe usarse como filtro de outliers estadístico genérico sin condicionar por país u origen de los datos: para los cuatro países sin ningún False, la columna no aporta ninguna capacidad discriminativa fila a fila.
-
-outlier_flag se genera, según el diccionario de datos, combinando un criterio de Isolation Forest con umbrales de tipo Z-score, precisamente para evitar el sesgo que produciría un filtro IQR simple aplicado directamente sobre columnas binarias muy desbalanceadas como los propios flags de imputación (donde el valor "1" es un evento raro y el IQR lo marcaría erróneamente como atípico).
-
-El Isolation Forest es un algoritmo de detección de anomalías no supervisado que construye múltiples árboles de decisión aleatorios y mide cuántas particiones hacen falta para aislar cada observación del resto: los puntos atípicos, al ser diferentes de la mayoría, tienden a aislarse con muy pocas particiones, mientras que los puntos típicos necesitan muchas más particiones para separarse del grueso de los datos. A diferencia del método IQR (sección II.7), que evalúa cada variable de forma aislada, el Isolation Forest puede considerar varias variables a la vez, detectando combinaciones inusuales de valores que individualmente no serían atípicos. El umbral de tipo Z-score mide a cuántas desviaciones estándar se encuentra un valor respecto a la media de su variable (Z = (x menos la media) dividido entre la desviación estándar); un Z-score alto en valor absoluto (típicamente por encima de 3) se interpreta como indicio de valor atípico. Combinar ambos criterios permite capturar tanto anomalías multivariantes como anomalías univariantes extremas.
-
-=== Análisis univariante
-
-==== Propiedades físicas del suelo
-
-La textura del suelo se describe habitualmente mediante *tres fracciones granulométricas* que, por definición, suman aproximadamente el 100% de la masa mineral de una muestra: 
-+ *Arena:* partículas de mayor tamaño, 0.05 a 2 mm. 
-+ *Limo:* partículas intermedias, 0.002 a 0.05 mm.
-+ *Arcilla:* partículas más finas, menores de 0.002 mm. 
-
-Esta composición condiciona propiedades agronómicas clave como la *capacidad de retención de agua* (mayor en suelos arcillosos), el *drenaje* (mayor en suelos arenosos) y la *aireación*, todas ellas relevantes para explicar la biodiversidad edáfica que se modela en este TFG. 
-
-El siguiente gráfico resume la dispersión de las tres fracciones en el conjunto de 428 parcelas:
-
-#figure(
-  align(center)[
-    #image("../media/eda/03_textura.png", height: 30%)
-  ],
-  caption: [Gráfica de la textura del suelo.],
-  kind: image
-)
-
-La segunda figura de esta sección resume la distribución univariante de seis variables físico-químicas centrales: pH (acidez/alcalinidad del suelo, escala 0 a 14), estabilidad de agregados (cohesión de las partículas del suelo, relevante frente a la erosión), densidad aparente (masa de suelo por unidad de volumen, indicador de compactación), humedad del suelo, y carbono/nitrógeno total del plot (indicadores de fertilidad y actividad biológica):
-
-#figure(
-  align(center)[
-    #image("../media/eda/04_fisicoquimicas.png", height: 50%)
-  ],
-  caption: [Gráfica de los datos físico-químicos.],
-  kind: image
-)
-
-==== Elementos traza y nutrientes
-
-Las concentraciones de elementos traza (As, Cu, K, Mo, Ni, P, Pb, Zn) presentan distribuciones muy asimétricas, con una minoría de parcelas concentrando valores muy superiores al resto, comportamiento esperable en variables de contaminación/toxicidad de suelo. Se visualizan en escala logarítmica para poder compararlas en un mismo gráfico.
-
-Cuando una variable tiene una distribución muy asimétrica (con una cola larga de valores altos, como suele ocurrir con metales pesados o contaminantes), representarla en escala lineal hace que la mayoría de las parcelas (con valores bajos, cercanos entre sí) queden aplastadas visualmente contra el eje, mientras unas pocas parcelas extremas dominan el rango del gráfico. Aplicar una transformación logarítmica comprime los valores altos y expande los valores bajos, permitiendo comparar de un vistazo la forma de la distribución de As, Cu, K, Mo, Ni, P, Pb y Zn en un mismo gráfico, algo que sería ilegible en escala lineal dado que algunos metales (por ejemplo K) tienen concentraciones órdenes de magnitud mayores que otros (por ejemplo As). De cara al modelado, algunos algoritmos (en particular la Regresión Ridge, que asume relaciones lineales) se benefician de trabajar con variables cuya distribución se aproxime más a la normal, por lo que aplicar una transformación logarítmica de tipo log1p a estas variables antes de entrenar es una opción a considerar, más allá de la visualización de este EDA.
-
-#figure(
-  align(center)[
-    #image("../media/eda/05_metales.png", height: 27.5%)
-  ],
-  caption: [Gráfica de los datos de metales.],
-  kind: image
-)
-
-La siguiente figura muestra las distribuciones univariantes de las tres variables de carbono/nitrógeno del plot (plot_total_c, plot_total_organic_c, plot_total_n), cuya fuerte correlación mutua se analiza en detalle en la sección II.8.1:
-
-#figure(
-  align(center)[
-    #image("../media/eda/06_c_n.png", height: 27.5%)
-  ],
-  caption: [Gráfica de los datos físico-químicos.],
-  kind: image
-)
+En una cadena de referencia con orden por defecto, el R² de entrenamiento del primer target de la cadena (nematode_shannon_z, 0.5475) es notablemente inferior al de un target situado en una posición más avanzada como earthworm_richness_z en la posición 13 (0.7338).
 
 #colbreak()
 
-==== Biodiversidad edáfica
+==== Explicabilidad y variables más relevantes
 
-Los 11 índices de Shannon presentes en el dataset (uno por grupo taxonómico: nematodos, macrofauna, lombrices, oribátidos, mesofauna, colémbolos, bacterias, hongos, eucariotas, oomicetos y cercozoos) son la medida de biodiversidad más habitual en ecología y constituyen la mayoría de los targets del modelo. Se calculan como H' = menos la suma de pᵢ por el logaritmo natural de pᵢ, donde pᵢ es la proporción de individuos (o de lecturas genéticas, en el caso de los grupos microbianos) que pertenecen a la especie o taxón i dentro de la comunidad muestreada en una parcela. Un valor de Shannon bajo indica una comunidad dominada por pocas especies (baja diversidad); un valor alto indica una comunidad más equitativa entre muchas especies (alta diversidad). A diferencia de un simple recuento de especies (riqueza), el índice de Shannon también penaliza la dominancia de unas pocas especies sobre las demás, por lo que dos parcelas con el mismo número de especies pueden tener índices de Shannon muy distintos si en una de ellas una sola especie domina abrumadoramente. El siguiente boxplot compara la distribución de estos 11 índices entre sí:
+Se calcula la importancia de variables (SHAP y MDI) del modelo base únicamente para el primer target de la cadena, al ser la posición de mayor dificultad. El top-10 por MDI para esta posición es: `sand_content_z`, `silt_content_z`, `soil_ph_z`, `gee_humedad_rel_pct_z`, `gee_temp_media_C_z`, `aggregate_stability_z`, `pb_z`, `eu_water_holding_capacity_z`, `k_z` y `ni_z`. 
 
-#figure(
-  align(center)[
-    #image("../media/eda/07_shannon.png", height: 30%)
-  ],
-  caption: [Gráfica de Shannon por grupo taxonómico.],
-  kind: image
-)
+A diferencia del resto de modelos, aquí `sand_content_z` (contenido de arena) desplaza a `soil_ph_z` al tercer puesto, lo que resulta coherente con la ausencia de cualquier información de targets relacionados en esta posición de la cadena: el modelo depende en mayor medida de las variables edáficas más básicas.
 
-Se observa que los distintos grupos taxonómicos ocupan rangos de Shannon bastante diferentes entre sí (por ejemplo, los grupos microbianos, bacterias y hongos, tienden a mostrar valores más altos y menos dispersos que la fauna macroscópica), lo cual es coherente con la altísima riqueza de especies típica de las comunidades microbianas del suelo frente a grupos de fauna con menos taxones potenciales por parcela. Esta heterogeneidad entre grupos es uno de los argumentos a favor de modelar cada índice por separado en lugar de asumir que se comportan de forma equivalente; véase la discusión sobre correlación entre targets en la sección II.8.2.
+La gráfica que muestra las variables más importantes se puede ver más adelante en el notebook exportado en la sección *5.- Análisis de la cadena*.
 
-#colbreak()
+==== Resultados sobre eval.csv
 
-=== Variables por uso de suelo
+Con un R² medio de *0.0809*, RegressorChain queda por debajo de Random Forest multisalida (0.0964) pero, en cambio, obtiene los mejores resultados de todo el trabajo sobre los dos targets prioritarios: *R²=0.4876* (`earthworm_shannon_z`) y *R²=0.5359* (`earthworm_richness_z`), superando incluso a Random Forest de salida única. 
 
-Medianas recalculadas tras normalizar el espacio en blanco de land_use_type (véase la sección II.3):
+Esto es coherente con la hipótesis de partida del modelo: al encadenar explícitamente las predicciones, los targets con mayor señal individual (como los de lombrices) pueden beneficiarse de la información aportada por targets relacionados situados antes en la cadena, algo que Random Forest multisalida solo captura de forma indirecta. Esto se ve reflejado en las #link(<conclusiones>)[*Conclusiones*].
 
-*Mediana de pH por uso de suelo:*
+#figure( 
+  align(center)[ 
+    #table( 
+      columns: (auto, auto, auto), 
+      align: (left, left, center, center, center), 
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da") }, 
+      table.header([*Variable*], [*Target*], [*$R^2$*]), 
+      [*Shannon nemátodos*], [nematode_shannon_z], [0.1467], 
+      [*Shannon macrofauna*], [macro_shannon_z], [0.2804], 
+      [*Shannon lombrices*], [earthworm_shannon_z], [0.4876], 
+      [*Shannon oribátidos*], [orib_shannon_z], [0.2069], 
+      [*Shannon mesostigmátidos*], [meso_shannon_z], [-0.1640], 
+      [*Shannon colémbolos*], [coll_shannon_z], [-0.6087], 
+      [*Shannon bacterias*], [bac_shannon_z], [0.0288], 
+      [*Shannon hongos*], [fun_shannon_z], [-0.0219], 
+      [*Shannon eucariotas*], [euk_shannon_z], [0.1624], 
+      [*Shannon oomicetos*], [oomy_shannon_z], [0.0913], 
+      [*Shannon cercozoos*], [cerc_shannon_z], [-0.0006], 
+      [*Riqueza macrofauna*], [macro_order_richness_z], [0.4069], 
+      [*Riqueza lombrices*], [earthworm_richness_z], [0.5359], 
+      [*Riqueza oribátidos*], [orib_species_richness_z], [0.2026], 
+      [*Riqueza mesostigmátidos*], [meso_species_richness_z], [-0.0400], 
+      [*Riqueza colémbolos*], [coll_species_richness_z], [-0.5799], 
+      [*Riqueza bacterias (ASV)*], [bac_asv_richness_z], [-0.0052], 
+      [*Riqueza hongos (ASV)*], [fun_asv_richness_z], [-0.0186], 
+      [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z], [0.2690], 
+      [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [0.2019], 
+      [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1171], )], caption: [R² de RegressorChain (ensamble de 10 cadenas) sobre eval.csv, por target.], kind: table, )
 
-| Uso de suelo | pH mediana |
-| ----- | :---: |
-| Forest | 4.33 |
-| Grassland | 5.80 |
-| Orchard | 6.24 |
-| Arable | 6.34 |
-| Wetland | 6.55 |
-| Urban | 6.89 |
+#let file = "../media/anexos/regressorchain.pdf"
+#let total_pages = 10 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
 
-*Mediana de carbono orgánico por uso de suelo:*
+=== Modelo XGBoost <xgboost-model>
 
-| Uso de suelo | C. orgánico mediana |
-| ----- | :---: |
-| Arable | 2.51 |
-| Orchard | 3.25 |
-| Urban | 3.93 |
-| Grassland | 4.23 |
-| Forest | 4.49 |
-| Wetland | 10.23 |
+==== Fundamento y configuración
 
-![pH y carbono orgánico por uso de suelo](figures/08_uso_suelo_ph_c.png)
+XGBoost (véase #link(<xgboost>)[*Modelo XGBoost*]) se entrena, igual que en el caso de Random Forest, en su variante de salida única: un modelo independiente por target, cada uno con su propia búsqueda de hiperparámetros mediante `RandomizedSearchCV` sobre `X_train`.
 
-#figure(
-  align(center)[
-    #image("../media/eda/08_uso_suelo_ph_c.png", height: 30%)
-  ],
-  caption: [Gráfica de los datos físico-químicos.],
-  kind: image
-)
+El notebook incorpora una celda de detección automática de *GPU/CUDA*: si el sistema dispone de una GPU NVIDIA con drivers CUDA, XGBoost se configura para usar *`tree_method='hist'`* junto con *`device='cuda'`*. En caso contrario, se utiliza *`tree_method='hist'`* sobre *CPU*. 
 
-Estas diferencias claras por land_use_type (Wetland más que duplica el carbono orgánico mediano de Arable) refuerzan la duda señalada en la sección II.3: si land_use_type no se está incluyendo como predictor, ni siquiera codificado, podría estar dejándose fuera una variable con señal real.
+La versión del notebook exportado se puede ver que se detectó CUDA sin problemas.
 
-Los suelos de Forest presentan el pH mediano más bajo (4.33, moderadamente ácido) porque la descomposición de hojarasca y acículas libera ácidos orgánicos y porque no reciben encalado agrícola; en el otro extremo, Urban (6.89) y Wetland (6.55) tienden a valores más neutros, en el caso urbano por la influencia de materiales de construcción alcalinos en el entorno edáfico, y en el caso de los humedales por procesos de acumulación de bases en condiciones de saturación hídrica. En cuanto al carbono orgánico, que Wetland (10.23) más que duplique al resto de usos es un patrón clásico en ciencia del suelo: la saturación de agua limita la disponibilidad de oxígeno, ralentizando drásticamente la descomposición microbiana de la materia orgánica y provocando su acumulación a largo plazo, el mismo proceso que da lugar a las turberas. Por contraste, Arable presenta el carbono orgánico más bajo (2.51) porque el laboreo agrícola repetido airea el suelo, acelera la descomposición de la materia orgánica y habitualmente exporta biomasa (cosechas) que no vuelve al sistema. Este contraste, tan marcado y ecológicamente bien fundamentado, es el argumento más fuerte para reconsiderar la exclusión de land_use_type como predictor del modelo.
+El espacio de búsqueda de hiperparámetros se restringe deliberadamente hacia modelos conservadores, dado el tamaño reducido del dataset:
 
-=== Valores atípicos (outliers, método IQR)
+- *n_estimators:* 50, 100, 150.
+- *max_depth:* 2, 3.
+- *learning_rate:* 0.01, 0.05.
+- *subsample / colsample_bytree:* 0.4-0.6 / 0.3-0.5.
+- *gamma:* 1.0, 5.0, 10.0.
+- *min_child_weight:* 10, 20, 30.
+- *reg_alpha / reg_lambda:* regularización L1 y L2, con valores 5-20 y 10-50 respectivamente.
+- *grow_policy:* depthwise.
 
-El rango intercuartílico (IQR) es una medida de dispersión robusta frente a valores extremos, definida como IQR = Q3 menos Q1, donde Q1 y Q3 son el primer y tercer cuartil (percentiles 25 y 75) de la variable. El criterio estándar de Tukey marca como atípico cualquier valor por debajo de Q1 menos 1.5 veces el IQR o por encima de Q3 más 1.5 veces el IQR: el multiplicador 1.5 es una convención (no un umbral estadístico con una probabilidad asociada) que, para una distribución aproximadamente normal, marcaría como atípico en torno al 0.7% de los datos, pero que puede marcar un porcentaje mucho mayor en variables muy asimétricas como los metales o las abundancias biológicas de este dataset (sección II.5.2). De ahí la recomendación de valorar una transformación logarítmica antes de aplicar este criterio.
+Esta combinación de árboles poco profundos, submuestreo agresivo y regularización fuerte responde directamente a la limitación de tener solo ~300 muestras de entrenamiento: sin estas restricciones, XGBoost tiende a sobreajustar con rapidez.
 
-Variables continuas con más outliers detectados mediante el método IQR estándar (excluyendo códigos categóricos numéricos):
+==== Entrenamiento 
 
-| Variable | Outliers |
-| ----- | :---: |
-| gee_temp_media_C | 63 |
-| coll_nymphs_abundance | 62 |
-| total_plant_cover | 61 |
-| aggregate_stability | 58 |
-| latitude | 51 |
-| eu_organic_carbon_octop | 50 |
-| eu_water_holding_capacity | 49 |
-| orib_total_abundance | 48 |
+Al igual que Random Forest, XGBoost depende de la semilla aleatoria, por lo que se entrena un ensamblado de 5 modelos por target `(NUM_EXPERTOS=5)`, variando únicamente la semilla, y promediando sus predicciones en la inferencia.
 
-Las variables de concentración de metales y de abundancia biológica suelen estar sesgadas de forma natural; se recomienda evaluar una transformación logarítmica antes de tratar estos valores como errores de medición. Se confirma que eu_organic_carbon_octop (sin sufijo _z) es efectivamente el nombre de la variable en el dataset limpio; el sufijo _z solo aparece en la versión escalada (eu_organic_carbon_octop_z), por lo que no se trata de un error de transcripción sino de las dos versiones (sin escalar y escalada) de la misma variable.
+La validación cruzada repetida sobre `X_train` muestra avisos de sobreajuste en 19 de los 21 targets, un patrón similar al de Random Forest de salida única aunque con diferencias `Train-CV` algo menores en varios targets, lo que sugiere que la regularización fuerte aplicada en el espacio de búsqueda modera ligeramente el sobreajuste sin llegar a eliminarlo.
 
-=== Análisis bivariante y multivariante
+==== Explicabilidad y variables más relevantes
 
-==== Correlaciones entre propiedades físico-químicas
+A diferencia de Random Forest, en este notebook SHAP se calcula únicamente sobre los dos targets prioritarios (`earthworm_shannon_z` y `earthworm_richness_z`), en vez de sobre el conjunto completo de 21 targets, por lo que no se dispone de un ranking de variables a nivel global comparable al del resto de modelos.
 
-El coeficiente de correlación de Pearson (r) mide la fuerza y dirección de la relación lineal entre dos variables continuas, y varía entre -1 (relación lineal negativa perfecta) y +1 (relación lineal positiva perfecta), con 0 indicando ausencia de relación lineal, aunque podría existir una relación no lineal no capturada por este coeficiente. Cuando dos o más variables predictoras están altamente correlacionadas entre sí (colinealidad), un modelo de regresión lineal como Ridge tiene dificultades para atribuir el efecto sobre el target a una u otra variable de forma estable: pequeños cambios en los datos de entrenamiento pueden hacer que los coeficientes estimados oscilen mucho, aunque la predicción global del modelo siga siendo razonable. La regularización Ridge reparte el peso entre variables correlacionadas en lugar de concentrarlo arbitrariamente en una sola, lo que estabiliza la estimación a costa de introducir un sesgo controlado.
-
-Pares de variables con mayor correlación (valor absoluto):
-
-| Par de variables | Correlación (abs.) |
-| ----- | :---: |
-| plot_total_c / plot_total_organic_c | 0.976 |
-| plot_total_n / plot_total_c | 0.954 |
-| plot_total_n / plot_total_organic_c | 0.952 |
-| sand_content / silt_content | 0.841 |
-| sand_content / clay_content | 0.810 |
-| mo / ni | 0.770 |
-
-#figure(
-  align(center)[
-    #image("../media/eda/09_corr_physchem.png", height: 30%)
-  ],
-  caption: [Gráfica de correlación físico-química.],
-  kind: image
-)
-
-Estas correlaciones muy altas (0.95 a 0.98 entre las tres variables de carbono/nitrógeno del plot) son la evidencia empírica directa que justifica el uso de Ridge y la necesidad de regularización mencionada en la sección [*Regresión Ridge*](#5.3.1.--regresión-ridge). La matriz de correlación completa muestra además que sand_content correlaciona negativamente y con fuerza tanto con silt_content como con clay_content, una relación mecánica esperable ya que las tres fracciones granulométricas suman aproximadamente el 100%, lo que añade un tercer bloque de colinealidad relevante más allá de C/N y Mo/Ni.
-
-==== Correlación entre targets (índices Shannon)
-
-Un modelo multisalida predice varios targets a la vez compartiendo una representación interna común, en lugar de entrenar un modelo independiente por cada target. La justificación teórica habitual para preferir el enfoque multisalida es que, si los targets están correlacionados entre sí, aprender a predecir uno aporta información útil para predecir los demás, reduciendo la varianza del modelo con el mismo número de datos de entrenamiento. Esta es la lógica que motivaba la hipótesis de partida del TFG. El análisis que sigue pone a prueba esa hipótesis midiendo empíricamente cuán correlacionados están realmente los 21 targets entre sí.
-
-| Par de targets | Correlación (abs.) |
-| ----- | :---: |
-| orib_shannon / meso_shannon | 0.383 |
-| meso_shannon / coll_shannon | 0.312 |
-| macro_shannon / nematode_shannon | 0.227 |
-| cerc_shannon / oomy_shannon | 0.208 |
-
-#figure(
-  align(center)[
-    #image("../media/eda/10_corr_shannon.png", height: 30%)
-  ],
-  caption: [Gráfica de correlación de los índices Shannon.],
-  kind: image
-)
-
-Este es probablemente el resultado más relevante de todo el EDA para la discusión del TFG: las correlaciones entre targets son modestas (máximo 0.38), no altas. La matriz completa confirma que este patrón se extiende al resto de pares: ningún par de los 11 índices Shannon supera r=0.4, y la mayoría se sitúan por debajo de 0.2. Esto matiza la hipótesis de partida de las secciones 5.1.1.1.2, 5.3.2.1 y 5.3.4 sobre las ventajas esperables del modelado multisalida: si los targets no están fuertemente correlacionados entre sí, el argumento teórico de que compartir representación reduce varianza es más débil de lo que el marco teórico sugiere.
+La gráfica que muestra las variables más importantes se puede ver más adelante en el notebook exportado en la sección *5.- Explicabilidad del modelo (SHAP)*.
 
 #colbreak()
 
-==== Relación suelo-biodiversidad
+==== Resultados sobre eval.csv
 
-![Suelo vs biodiversidad](figures/11_suelo_vs_biodiv.png)
+El R² medio sobre los 21 targets es de *0.067*, ligeramente por debajo de Random Forest de salida única (0.090) pero muy por encima de Ridge. 
 
-#figure(
-  align(center)[
-    #image("../media/eda/11_suelo_vs_biodiv.png")
-  ],
-  caption: [Gráfica de suelo vs. diversidad.],
-  kind: image
-)
+Sobre los targets prioritarios: *R²=0.4946* (`earthworm_shannon_z`) y *R²=0.5171* (`earthworm_richness_z`).
 
-Se muestra la relación entre cuatro variables edáficas representativas (pH, carbono orgánico, contenido en arcilla y estabilidad de agregados) y cuatro índices de biodiversidad de distintos grupos taxonómicos (oribátidos, macrofauna, bacterias y nematodos), con el coeficiente de correlación de Pearson indicado en cada panel. En línea con lo observado en la sección II.8.2 para los targets entre sí, las relaciones directas entre variables edáficas individuales y los índices de biodiversidad son en general débiles, con la mayoría de los coeficientes por debajo de 0.3 en valor absoluto, sin que ningún par destaque con una relación claramente fuerte. Esto es coherente con la naturaleza ecológica del problema: la biodiversidad edáfica rara vez responde de forma lineal a una única covariable, sino a combinaciones de factores (textura, pH, disponibilidad de nutrientes, uso del suelo, clima), lo que refuerza la necesidad de modelos no lineales y multivariantes, como los árboles de decisión y ensembles ya empleados en la Capa de modelado predictivo, frente a un enfoque de regresión lineal simple variable a variable.
+#figure( 
+  align(center)[ 
+    #table( 
+      columns: (auto, auto, auto, auto, auto), 
+      align: (left, left, center, center, center), 
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da") }, 
+      table.header([*Variable*], [*Target*], [*$R^2$*], [*RMSE*], [*MAE*]), 
+      [*Shannon nemátodos*], [nematode_shannon_z], [0.1637], [0.9032], [0.7152], 
+      [*Shannon macrofauna*], [macro_shannon_z], [0.2601], [0.8639], [0.7383], 
+      [*Shannon lombrices*], [earthworm_shannon_z], [0.4946], [0.7096], [0.5336], 
+      [*Shannon oribátidos*], [orib_shannon_z], [0.1147], [1.0760], [0.9105], 
+      [*Shannon mesostigmátidos*], [meso_shannon_z], [-0.1868], [1.0639], [0.8782], 
+      [*Shannon colémbolos*], [coll_shannon_z], [-0.3312], [0.7309], [0.5941], 
+      [*Shannon bacterias*], [bac_shannon_z], [0.0092], [0.9968], [0.6707], 
+      [*Shannon hongos*], [fun_shannon_z], [-0.0206], [1.1559], [0.9385], 
+      [*Shannon eucariotas*], [euk_shannon_z], [0.0912], [0.9245], [0.6622], 
+      [*Shannon oomicetos*], [oomy_shannon_z], [0.0965], [0.9937], [0.7411], 
+      [*Shannon cercozoos*], [cerc_shannon_z], [-0.0414], [0.9138], [0.6353], 
+      [*Riqueza macrofauna*], [macro_order_richness_z], [0.3082], [0.7617], [0.6447], 
+      [*Riqueza lombrices*], [earthworm_richness_z], [0.5171], [0.6346], [0.4842], 
+      [*Riqueza oribátidos*], [orib_species_richness_z], [0.1259], [1.1186], [0.7501], 
+      [*Riqueza mesostigmátidos*], [meso_species_richness_z], [-0.0592], [0.9927], [0.7503], 
+      [*Riqueza colémbolos*], [coll_species_richness_z], [-0.5803], [0.6472], [0.5071], 
+      [*Riqueza bacterias (ASV)*], [bac_asv_richness_z], [0.0014], [1.0980], [0.8196], 
+      [*Riqueza hongos (ASV)*], [fun_asv_richness_z], [-0.0242], [1.0907], [0.8221], 
+      [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z], [0.1671], [0.7409], [0.5285], 
+      [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [0.1776], [0.9108], [0.7459], 
+      [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1227], [0.9241], [0.7506], )], 
+      caption: [Resultados de XGBoost (salida única, ensamble de 5 modelos) sobre eval.csv, por target.], 
+      kind: table     
+  )
+
+#let file = "../media/anexos/xgboost_model.pdf"
+#let total_pages = 9
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
+
+=== Modelos XGBoost multisalida <xgb-multi-model>
+
+==== Fundamento y configuración
+
+Disponible desde la versión 1.7 de XGBoost mediante el parámetro `multi_strategy='multi_output_tree'`, esta variante construye, en cada iteración del _boosting_, un único árbol que predice los 21 targets a la vez, en lugar del comportamiento por defecto de XGBoost. Al igual que en Random Forest multisalida, esto permite que las divisiones del árbol capturen relaciones compartidas entre targets directamente en su estructura.
+
+Comparte la misma celda de detección de GPU/CUDA que la variante de salida única, y al no poder tener un espacio de hiperparámetros distinto por target, sigue la misma estrategia de consenso descrita para Random Forest multisalida: búsqueda por target seguida de una combinación ponderada por R².
+
+Al igual que en las variantes de salida única, se entrena un ensamblado de varios modelos (5 expertos) para reducir la varianza de las predicciones.
+
+==== Entrenamiento
+
+La validación cruzada global sobre `X_train` muestra una diferencia Train-CV de 0.5423, muy por encima del umbral de aviso de 0.15 y notablemente mayor que la obtenida por Random Forest multisalida (0.166) para el mismo tipo de evaluación global. 
+
+Esto indica que, a pesar de la regularización aplicada en el espacio de búsqueda, el mecanismo de boosting de XGBoost combinado con la estrategia `multi_output_tree` tiende a memorizar con más facilidad el conjunto de entrenamiento cuando debe servir a los 21 targets a la vez, en comparación con un bosque de Random Forest equivalente.
+
+==== Explicabilidad y variables más relevantes
+
+A diferencia de la variante de salida única, donde SHAP solo se calculaba sobre los dos targets prioritarios, aquí sí se dispone de un ranking de importancia global. 
+
+El top-10 por importancia de permutación es: `soil_ph_z`, `p_z`, `gee_temp_media_C_z`, `dem_elevacion_m_z`, `soil_moisture_z`, `eu_as_z`, `eu_p_z`, `k_z`, `gee_humedad_rel_pct_z` y `dem_orientacion_deg_z`. 
+
+El ranking por ganancia intrínseca de XGBoost (XGBoost gain) coincide en gran medida con el de permutación para las primeras posiciones, situando también a `soil_ph_z` en primer lugar, lo que refuerza, junto con el resto de modelos de este anexo, la robustez de esta variable como el predictor individual más influyente de todo el trabajo.
+
+La gráfica que muestra las variables más importantes se puede ver más adelante en el notebook exportado en la sección *5.- Importancia de variables (SHAP)*.
 
 #colbreak()
 
-==== Consistencia entre mediciones propias y capas de referencia externas
+==== Resultados sobre eval.csv
 
-ESDAC (European Soil Data Centre) y CORINE (Coordination of Information on the Environment) son bases de datos europeas de referencia que ofrecen mapas de variables edáficas y de cobertura del suelo a escala continental, generados a partir de modelos estadísticos que interpolan un número limitado de puntos de muestreo real sobre una malla regular. Su ventaja es la cobertura espacial completa y homogénea de toda Europa sin necesidad de muestrear cada punto; su limitación inherente es que, al ser un valor interpolado y no una medición directa, no capturan la variabilidad edáfica real a escala de parcela, que puede ser muy alta especialmente en variables con patrones de distribución muy localizados como los micronutrientes o los contaminantes.
+Con un R² medio de *0.0835*, XGBoost multisalida queda en segunda posición del ranking global de R² medio de este trabajo, por detrás de Random Forest multisalida (0.0964) pero por delante de RegressorChain (0.0809) y de XGBoost de salida única (0.067).
 
-Correlación entre la medición propia (in situ) y la capa de referencia externa equivalente (ESDAC/CORINE), por variable:
+Sobre los targets prioritarios obtiene sus mejores resultados dentro de la familia XGBoost: *R²=0.5375* (`earthworm_shannon_z`) y *R²=0.5893* (`earthworm_richness_z`), este último el segundo mejor resultado de todo el trabajo para `earthworm_richness_z`, solo por detrás de RegressorChain (0.5359).
 
-| Variable | Correlación (r) |
-| ----- | :---: |
-| pH | 0.53 |
-| Fósforo | 0.19 |
-| Arsénico | 0.22 |
-| Zinc | 0.36 |
-| Arcilla | 0.55 |
-| Arena | 0.61 |
+#figure( 
+  align(center)[ 
+    #table( 
+      columns: (auto, auto, auto, auto, auto), 
+      align: (left, left, center, center, center), 
+      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
+      table.header([*Variable*], [*Target*], [*$R^2$*], [*RMSE*], [*MAE*]), 
+        [*Shannon nemátodos*], [nematode_shannon_z], [0.2228], [0.8707], [0.6737], 
+        [*Shannon macrofauna*], [macro_shannon_z], [0.3771], [0.7927], [0.6529], 
+        [*Shannon lombrices*], [earthworm_shannon_z], [0.5375], [0.6788], [0.4725], 
+        [*Shannon oribátidos*], [orib_shannon_z], [0.2275], [1.0051], [0.8385], 
+        [*Shannon mesostigmátidos*], [meso_shannon_z], [-0.2861], [1.1075], [0.8883], 
+        [*Shannon colémbolos*], [coll_shannon_z], [-0.3229], [0.7286], [0.5647], 
+        [*Shannon bacterias*], [bac_shannon_z], [-0.0151], [1.0089], [0.6857], 
+        [*Shannon hongos*], [fun_shannon_z], [-0.0502], [1.1725], [0.9306], 
+        [*Shannon eucariotas*], [euk_shannon_z], [0.0886], [0.9259], [0.6549], 
+        [*Shannon oomicetos*], [oomy_shannon_z], [0.0620], [1.0124], [0.7385], 
+        [*Shannon cercozoos*], [cerc_shannon_z], [-0.0330], [0.9101], [0.6371], 
+        [*Riqueza macrofauna*], [macro_order_richness_z], [0.4013], [0.7086], [0.5880], 
+        [*Riqueza lombrices*], [earthworm_richness_z], [0.5893], [0.5852], [0.4240], 
+        [*Riqueza oribátidos*], [orib_species_richness_z], [0.2800], [1.0152], [0.6813], 
+        [*Riqueza mesostigmátidos*], [meso_species_richness_z], [-0.1146], [1.0183], [0.7689], 
+        [*Riqueza colémbolos*], [coll_species_richness_z], [-0.6465], [0.6606], [0.4997], 
+        [*Riqueza bacterias (ASV)*], [bac_asv_richness_z], [0.0155], [1.0902], [0.8042], 
+        [*Riqueza hongos (ASV)*], [fun_asv_richness_z], [-0.0662], [1.1129], [0.8448], 
+        [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z], [0.2233], [0.7155], [0.5091], 
+        [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [0.1650], [0.9178], [0.7293], 
+        [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.0983], [0.9369], [0.7733], )], 
+    caption: [Resultados de XGBoost multisalida (ensamble) sobre eval.csv, por target.], 
+    kind: table 
+  )
 
-![Consistencia con capas externas](figures/12_consistencia_eu.png)
+#let file = "../media/anexos/xgb_multisalida.pdf"
+#let total_pages = 11 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
+
+=== Modelos MLP mutlisalida <mlp-multi>
+
+==== Fundamento y configuración
+
+El perceptrón multicapa (véase #link(<redes-neuronales>)[*Redes neuronales*]), implementado sobre PyTorch, representa el único enfoque de aprendizaje profundo de este trabajo. 
+
+La arquitectura (*MLPMultiSalida*) es una red densa totalmente conectada: cada capa oculta combina una transformación lineal, una activación no lineal y una capa de Dropout para regularización. La capa de salida es lineal y tiene 21 neuronas, una por target, compartiendo todas ellas las mismas capas ocultas. 
+
+Se entrena con el *optimizador Adam* y la *función de pérdida MSE estándar*, calculada conjuntamente sobre los 21 targets.
+
+A diferencia de los modelos basados en árboles, aquí el tuning no busca solo hiperparámetros de entrenamiento sino también la propia arquitectura de la red.
+
+Se evaluaron 6 configuraciones distintas, variando el tamaño de las capas ocultas (de [32, 16] a [64, 16, 8]), la tasa de dropout (0.2-0.4), la tasa de aprendizaje, el número de épocas y el weight_decay (regularización L2 del propio optimizador Adam). 
+
+La mejor configuración fue la siguiente:
 
 #figure(
   align(center)[
-    #image("../media/eda/12_consistencia_eu.png", height: 50%)
+    #table( 
+      columns: (auto, auto), 
+      align: (left, center), 
+      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
+      table.header([*Hiperparámetro*], [*Valor*]), 
+        [*Capas ocultas*], [[128, 32]], 
+        [*dropout*], [0.3], 
+        [*lr*], [0.0005], 
+        [*epochs*], [250], 
+        [*batch_size*], [16], 
+        [*weight_decay*], [0.001], )
   ],
-  caption: [Gráficas de consistencia con capas externas.],
-  kind: image
+  caption: [Consenso de hiperparámetros en MLP Multisalida.],
+  kind: table
 )
 
-Estas correlaciones son, en el mejor de los casos, moderadas (arena, arcilla) y en el peor claramente débiles (fósforo, arsénico). Este es un resultado con conexión directa a los [*Antecedentes y contexto*](#3.--antecedentes-y-contexto) del TFG: apoya empíricamente, con datos propios, la conclusión de Phillips et al. [56] de que los datos in situ de alta calidad aportan información que las capas globales derivadas no capturan.
+==== Entrenamiento
 
-La figura de dispersión confirma además que, para fósforo y arsénico en particular, la nube de puntos se aleja considerablemente de la diagonal 1:1, lo que indica que la capa externa tiene menor resolución y precisión que la medición directa y debe tratarse como covariable de contexto y no como validación independiente de la medición in situ.
+A diferencia de los modelos basados en árboles, este notebook no aplica una validación cruzada explícita tipo `RepeatedKFold`: dado el coste computacional de reentrenar una red neuronal por cada pliegue y cada una de las 6 configuraciones evaluadas, la selección de la arquitectura se apoya en la partición fija de `train.csv/test.csv`, monitorizando la curva de pérdida (entrenamiento frente a validación) por época para detectar sobreajuste. 
 
-=== Conclusiones del EDA
+Al ser un modelo determinista una vez fijada la semilla de inicialización de pesos, no se entrena un ensamblado de varias semillas como en Random Forest o XGBoost, sino un único modelo con la configuración ganadora.
 
-- El dataset limpio no presenta valores nulos remanentes (imputación ya aplicada, 0 nulos confirmados), aunque el método concreto de imputación sigue sin documentarse explícitamente.
-- La distribución geográfica está desbalanceada por país (Italia con solo 2 parcelas frente a las 45-51 de otros países), lo que condiciona la interpretación de la capacidad de generalización del modelo y debería mencionarse como limitación.
-- Existe colinealidad fuerte y confirmada entre variables de carbono/nitrógeno (r > 0.95), entre fracciones granulométricas (r > 0.8, con relación mecánica esperable entre arena, limo y arcilla) y entre Mo y Ni (r = 0.77), lo que justifica empíricamente el uso de regularización (Ridge) y la tolerancia a colinealidad exigida a los modelos de árboles.
-- La correlación entre los índices Shannon es, en general, baja (máximo 0.38 entre oribátidos y mesofauna, la mayoría por debajo de 0.2), lo que matiza, sin invalidar necesariamente, la hipótesis de partida sobre las ventajas del modelado multisalida; conviene comentarlo explícitamente al interpretar los resultados del Anexo V. Las relaciones bivariadas suelo-biodiversidad son igualmente débiles, lo que refuerza la necesidad de modelos no lineales y multivariantes.
-- La consistencia entre mediciones in situ y capas de referencia europeas es de moderada a baja según la variable (0.19-0.61), aportando evidencia propia a favor de la ventaja informativa de los datos in situ ya discutida en Antecedentes.
-- outlier_flag (347 True / 81 False) se confirma empíricamente como un indicador no homogéneo entre países: Suiza, Israel, Eslovenia e Italia no presentan ningún caso False, mientras que Rumanía tiene una proporción casi equilibrada (51% False). No debe usarse como filtro de outliers sin condicionar por país. Su método de construcción (Isolation Forest + Z-score) no se ha podido verificar contra el notebook original.
-- land_use_type muestra diferencias claras de pH y carbono orgánico entre categorías, pero se confirma que ninguna variable categórica de tipo/uso de suelo se conserva en el dataset escalado; conviene verificar si es una exclusión deliberada y, si no lo es, valorar incluirla codificada.
-- land_use_type contiene la categoría "Arable" duplicada por un espacio en blanco final ("Arable ", 12 filas frente a 120), lo que debería corregirse en la Capa de procesamiento de datos.
-- No existen en el dataset limpio columnas `macro_[Order]` desagregadas por orden individual; las variables de macrofauna disponibles son solo las ya agregadas (macro_total_abundance, macro_order_richness, macro_shannon).
-- De las 84 columnas del dataset limpio, 13 son identificadores/metadatos categóricos descartados, 4 se conservan sin escalar (`site_id`, `latitude`, `longitude`, `outlier_flag`) y 67 son variables numéricas normalizadas (`_z`) en el dataset escalado. El subconjunto final de 33 predictoras + 21 targets (54 variables) se selecciona a partir de estas 67, no directamente de las 84; la diferencia (13 variables numéricas adicionales descartadas) debería documentarse en la sección 5.2.
+==== Explicabilidad y variables más relevantes
+
+Al no disponer las redes neuronales de una medida de importancia intrínseca como los árboles, se recurre a permutation importance sobre un modelo de referencia entrenado sobre todo `X_train`. 
+
+El top-10 resultante es el siguiente: `soil_ph_z`, `gee_temp_media_C_z`, `dem_elevacion_m_z`, `eu_p_z`, `eu_ph_z`, `gee_humedad_rel_pct_z`, `gee_ndvi_verano_z`, `silt_content_z`, `bulk_density_z`, `clay_content_z`. 
+
+Vuelve a situar a `soil_ph_z` y `gee_temp_media_C_z` en primer y segundo lugar, exactamente igual que en Ridge y en Random Forest, lo que refuerza aún más la robustez de ambas variables como predictores del problema, con independencia del tipo de modelo empleado.
+
+La gráfica que muestra las variables más importantes se puede ver más adelante en el notebook exportado en la sección *5.- Importancia de variables*.
+
+==== Resultados sobre eval.csv
+
+Con un R² medio de *-0.038*, el MLP multisalida se sitúa por debajo de los tres modelos basados en árboles y también por debajo del modelo Ridge. 
+
+Sobre los targets prioritarios obtiene *R²=0.4264* (`earthworm_shannon_z`) y *R²=0.5176* (`earthworm_richness_z`), resultados razonables a pesar de que el rendimiento global se ve penalizado por un desempeño muy negativo en varios targets minoritarios, en particular `coll_species_richness_z` (R²=-1.4628), con diferencia el peor resultado individual obtenido por ningún modelo sobre ningún target en todo este trabajo. 
+
+Este comportamiento es coherente con la limitación señalada en la introducción del propio notebook: las redes neuronales necesitan, en general, más datos de entrenamiento para generalizar bien, especialmente en los targets con menos señal predictiva.
+
+#figure( 
+  align(center)[ 
+    #table( 
+      columns: (auto, auto, auto), 
+      align: (left, left, center, center, center), 
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da") }, 
+      table.header([*Variable*], [*Target*], [*$R^2$*]), 
+        [*Shannon nemátodos*], [nematode_shannon_z], [0.1180], 
+        [*Shannon macrofauna*], [macro_shannon_z], [0.2571], 
+        [*Shannon lombrices*], [earthworm_shannon_z], [0.4264], 
+        [*Shannon oribátidos*], [orib_shannon_z], [0.2356], 
+        [*Shannon mesostigmátidos*], [meso_shannon_z], [-0.4898], 
+        [*Shannon colémbolos*], [coll_shannon_z], [-0.8227], 
+        [*Shannon bacterias*], [bac_shannon_z], [-0.0854], 
+        [*Shannon hongos*], [fun_shannon_z], [-0.0757], 
+        [*Shannon eucariotas*], [euk_shannon_z], [0.1453], 
+        [*Shannon oomicetos*], [oomy_shannon_z], [0.1534], 
+        [*Shannon cercozoos*], [cerc_shannon_z], [-0.1361], 
+        [*Riqueza macrofauna*], [macro_order_richness_z], [0.3525], 
+        [*Riqueza lombrices*], [earthworm_richness_z], [0.5176], 
+        [*Riqueza oribátidos*], [orib_species_richness_z], [0.2596], 
+        [*Riqueza mesostigmátidos*], [meso_species_richness_z], [-0.2753], 
+        [*Riqueza colémbolos*], [coll_species_richness_z], [-1.4628], 
+        [*Riqueza bacterias (ASV)*], [bac_asv_richness_z], [-0.1464], 
+        [*Riqueza hongos (ASV)*], [fun_asv_richness_z], [0.0145], 
+        [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z], [0.2164], 
+        [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [0.0113], 
+        [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [-0.0120], 
+        )], 
+    caption: [R² del MLP multisalida sobre eval.csv, por target.], 
+    kind: table 
+  )
+
+#let file = "../media/anexos/mlp_multisalida.pdf"
+#let total_pages = 8 
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}
+
+=== Modelos MLP con función de pérdida personalizada <mlp-custom-loss>
+
+==== Fundamento y configuración
+
+Esta variante extiende el MLP multisalida anterior con una función de pérdida personalizada (`CorrelationAwareLoss`) que combina dos componentes:
+
+$ L(y,hat(y)) = "MSE"(y,hat(y)) + lambda_"corr" parallel "Corr"(y) - "Corr"(hat(y)) parallel_F $
+
+El primer término es el *MSE estándar*, que minimiza el error de predicción de cada target por separado. El segundo penaliza la diferencia (*norma de Frobenius*) entre la matriz de correlación de las predicciones del lote actual y la matriz de correlación de los valores reales del mismo lote: si el modelo predice, por ejemplo, una diversidad alta de lombrices junto con una diversidad muy baja de colémbolos cuando ambas normalmente co-varían en los datos reales, este término penaliza esa incoherencia, aunque el error individual (MSE) de cada target por separado sea bajo. 
+
+El parámetro `lambda_corr` controla el peso relativo de esta penalización frente al MSE (`lambda_corr=0` equivale a MSE puro).
+
+El tuning explora 10 configuraciones que combinan arquitectura, hiperparámetros de entrenamiento y distintos valores de lambda_corr (de 0.0 a 0.5). El resultado del tuning es, en sí mismo, uno de los hallazgos más relevantes de este notebook:
+
+#figure(
+  align(center)[
+    #table( 
+      columns: (auto, auto, auto, auto), 
+      align: (center, center, center, center), 
+      fill: (col, row) => if row == 0 { rgb("d6e3da") }, 
+      table.header([*Capas ocultas*], [*lambda_corr*], [*weight_decay*], [*R² validación*]), 
+        [[32, 16]], [0.0], [0.01], [0.1151], 
+        [[64, 32]], [0.0], [0.01], [0.1495 (mejor)], 
+        [[64, 32]], [0.05], [0.005], [0.1202], 
+        [[64, 32]], [0.1], [0.005], [0.1321], 
+        [[128, 64]], [0.05], [0.002], [0.1375], 
+        [[128, 64]], [0.2], [0.002], [0.1185], 
+        [[128, 32]], [0.1], [0.001], [0.1419], 
+        [[128, 32]], [0.3], [0.002], [0.1092], 
+        [[64, 16, 8]], [0.1], [0.001], [0.1186], 
+        [[64, 16, 8]], [0.5], [0.005], [0.0071], 
+        [[128, 64, 32]], [0.2], [0.005], [0.0304], )
+  ],
+  caption: [Combinaciones de arquitecturas para MLP Custom Loss],
+  kind: table
+)
+
+La configuración ganadora del tuning fue `hidden=[64, 32]` con `lambda_corr=0.0`, es decir: de entre todas las combinaciones probadas, la que mejor R² de validación obtuvo fue la que equivale a MSE puro, sin ninguna penalización de correlación activa. 
+
+Esto indica que, con el tamaño de dataset disponible en este trabajo, el término adicional de coherencia de correlaciones no aportó una mejora medible frente al MSE estándar e incluso empeoró el resultado en la mayoría de las configuraciones donde se activó.
+
+==== Entrenamiento
+
+Al igual que en el MLP multisalida estándar, no se aplica una validación cruzada explícita: la arquitectura se selecciona mediante la comparación directa de las 10 configuraciones del tuning sobre la partición fija de entrenamiento/validación, y se entrena un único modelo final con la configuración ganadora (sin ensamblado de semillas).
+
+Además de las métricas de error habituales, este notebook calcula la diferencia media entre la matriz de correlación real y la matriz de correlación predicha como indicador directo de si la función de pérdida personalizada está cumpliendo su objetivo. Sobre `X_train`, esta diferencia media es de *0.1131*.
+
+==== Explicabilidad y variables más relevantes
+
+Al igual que en el MLP multisalida estándar, se recurre a permutation importance sobre `X_train`, esta vez calculada de forma global sobre los 21 targets. 
+
+El top-10 resultante es: `soil_ph_z`, `gee_humedad_rel_pct_z`, `eu_ph_z`, `dem_elevacion_m_z`, `eu_p_z`, `gee_ndvi_verano_z`, `gee_temp_media_C_z`, `eu_cn_ratio_z`, `eu_zn_z` y `silt_content_z`. 
+
+`soil_ph_z` mantiene su primer puesto respecto al MLP multisalida estándar, aunque con una importancia relativa considerablemente mayor (0.165 frente a 0.135), lo que sugiere que, al reforzar la coherencia entre targets, el modelo termina apoyándose todavía más en la variable individual con mayor poder predictivo del conjunto.
+
+La gráfica que muestra las variables más importantes se puede ver más adelante en el notebook exportado en la sección *5.- Importancia de variables*.
+
+==== Resultados sobre eval.csv
+
+Con un R² medio de *-0.1316*, este es el modelo con *peor rendimiento global* de los ocho evaluados en este trabajo, por debajo incluso del MLP multisalida estándar (-0.038) del que parte. 
+
+Esto es consistente con el resultado del propio tuning: al haberse seleccionado `lambda_corr=0.0` como configuración óptima, el modelo final es, en la práctica, equivalente a un MLP multisalida con una arquitectura ligeramente distinta ([64,32] en vez de [128,32]) y menos épocas de entrenamiento (150 en vez de 250), sin que la penalización de correlación llegue a aplicarse de forma efectiva. 
+
+Sobre los targets prioritarios obtiene *R²=0.3750* (`earthworm_shannon_z`) y *R²=0.4671* (`earthworm_richness_z`), ambos por debajo de los conseguidos por el MLP multisalida estándar. El target `coll_species_richness_z` vuelve a ser el más problemático, con un *R²=-2.2411*, el peor resultado individual de todo este trabajo.
+
+#colbreak()
+
+#figure( 
+  align(center)[ 
+    #table( 
+      columns: (auto, auto, auto), 
+      align: (left, left, center, center, center), 
+      fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
+      table.header([*Variable*], [*Target*], [*$R^2$*]), 
+        [*Shannon nemátodos*], [nematode_shannon_z], [0.0903], 
+        [*Shannon macrofauna*], [macro_shannon_z], [0.2676], 
+        [*Shannon lombrices*], [earthworm_shannon_z], [0.3750], 
+        [*Shannon oribátidos*], [orib_shannon_z], [0.2216], 
+        [*Shannon mesostigmátidos*], [meso_shannon_z], [-0.6189], 
+        [*Shannon colémbolos*], [coll_shannon_z], [-1.3439], 
+        [*Shannon bacterias*], [bac_shannon_z], [-0.1004], 
+        [*Shannon hongos*], [fun_shannon_z], [-0.0842], 
+        [*Shannon eucariotas*], [euk_shannon_z], [0.0868], 
+        [*Shannon oomicetos*], [oomy_shannon_z], [0.0588], 
+        [*Shannon cercozoos*], [cerc_shannon_z], [-0.1194], 
+        [*Riqueza macrofauna*], [macro_order_richness_z], [0.3759], 
+        [*Riqueza lombrices*], [earthworm_richness_z], [0.4671], 
+        [*Riqueza oribátidos*], [orib_species_richness_z], [0.2542], 
+        [*Riqueza mesostigmátidos*], [meso_species_richness_z], [-0.3462], 
+        [*Riqueza colémbolos*], [coll_species_richness_z], [-2.2411], 
+        [*Riqueza bacterias (ASV)*], [bac_asv_richness_z], [-0.1680], 
+        [*Riqueza hongos (ASV)*], [fun_asv_richness_z], [0.0027], 
+        [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z], [0.1902], 
+        [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [-0.0546], 
+        [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [-0.0770], 
+      )], 
+    caption: [R² del MLP con pérdida personalizada sobre eval.csv, por target.], 
+    kind: table 
+  )
+
+#let file = "../media/anexos/mlp_custom_loss.pdf"
+#let total_pages = 9
+#set page(number-align: right)
+#for p in range(1, total_pages + 1) {
+  page(
+    margin: (top: 2.5cm, left: 2.5cm, right: 2.5cm, bottom: 2.5cm),
+    background: image(file, page: p, width: 90%, height: 90%, fit: "cover"),
+    footer: auto 
+  )[]
+}

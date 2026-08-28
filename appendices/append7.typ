@@ -1,4 +1,4 @@
-== Guía de configuración y reproducibilidad \ (Anexo VI)<reproducibilidad-y-configuracion>
+== Guía de configuración y reproducibilidad \ (Anexo VII)<reproducibilidad-y-configuracion>
 
 Este anexo recoge las instrucciones necesarias para reproducir de principio a fin el pipeline descrito en la #link(<arquitectura>)[*Arquitectura general*]: desde la configuración del entorno y las credenciales de los servicios externos, hasta la ejecución de los notebooks de ingesta, procesamiento, modelado y evaluación. 
 

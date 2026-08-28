@@ -1,4 +1,4 @@
-== Distribución de ramas y notebooks (Anexo V)<dist-ramas-y-notebooks>
+== Distribución de ramas y notebooks (Anexo VI) <dist-ramas-y-notebooks>
 
 Como se indica en #link(<lenguaje-de-programacion-control-de-versiones-y-librerias>
 )[*Lenguajes de programación, control de versiones y librerías*], este TFG ha empleado git como sistema de control de versiones, alojado en un repositorio de GitHub#sub([@githubTFGRepo]).
