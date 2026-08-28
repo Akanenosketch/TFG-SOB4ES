@@ -48,7 +48,7 @@ También como se puede ver en la planificación, la aplicación de CRISP-ML(Q) s
 En el siguiente Diagrama de Gantt, podemos ver de forma más gráfica la planificación que se ha realizado para la elaboración de este trabajo.         
 
 #figure(
-  image("../media/diagrama-gantt.png", height: 25%),
+  image("../media/diagrama-gantt.png"),
   caption: [Diagrama de Gantt con la planificación del TFG.],
 )
 
