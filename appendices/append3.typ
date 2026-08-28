@@ -1,4 +1,4 @@
-== Modelos empleados <modelos-empleados>
+== Modelos empleados (Anexo II) <modelos-empleados>
 
 En esta sección de los anexos se detalla, para cada uno de los ocho modelos desarrollados en este TFG, su configuración concreta y los resultados numéricos obtenidos sobre `eval.csv`, el subconjunto de evaluación final que ningún modelo ha visto durante el _tuning_ ni durante la validación cruzada (véase #link(<capa-modelado>)[*Capa de modelado predictivo*]).
 

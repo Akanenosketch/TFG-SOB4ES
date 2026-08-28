@@ -1,4 +1,4 @@
-== Guía de configuración y reproducibilidad <reproducibilidad-y-configuracion>
+== Guía de configuración y reproducibilidad \ (Anexo VI)<reproducibilidad-y-configuracion>
 
 Este anexo recoge las instrucciones necesarias para reproducir de principio a fin el pipeline descrito en la #link(<arquitectura>)[*Arquitectura general*]: desde la configuración del entorno y las credenciales de los servicios externos, hasta la ejecución de los notebooks de ingesta, procesamiento, modelado y evaluación. 
 
@@ -17,7 +17,7 @@ Antes de clonar el repositorio, es necesario disponer de lo siguiente:
 - *Jupyter* y *nbconvert*, necesarios para ejecutar y automatizar los notebooks (véase #link(<elementos-auxiliares>)[*Anexo III*]).
 - Una cuenta de *Google Earth Engine* habilitada para uso no comercial/investigación, necesaria para hacer uso de `earthengine-api`.
 - Una cuenta en el *Copernicus Climate Data Store* con un token de acceso personal, necesaria para hacer uso de `cdsapi`.
-- Opcionalmente, una *GPU* compatible con PyTorch/CUDA si se quiere reproducir el entrenamiento con CUDA de los modelos compatibles con dicha tecnología. //(véase [*VII.7.- Hardware recomendado*](#vii-7-hardware)); no es estrictamente necesaria para el resto de modelos (Ridge, Random Forest, XGBoost).
+- Opcionalmente, una *GPU* compatible con PyTorch/CUDA si se quiere reproducir el entrenamiento con CUDA de los modelos compatibles con dicha tecnología (véase #link(<hardware-recomendado>)[*Hardware recomendado*]).
 
 === Clonar el repositorio <clonar-repo>
 
@@ -93,7 +93,7 @@ uv run jupyter nbconvert --to notebook --execute --inplace notebook.ipynb
 ```
 
 #rect[
-  *Nota:* \ \  Si se va a reproducir el entrenamiento de los modelos MLP (`torch`), instala la variante de PyTorch adecuada a tu hardware (CPU o CUDA) siguiendo las instrucciones oficiales de *pytorch.org#sub([@pytorchDocs])* antes de instalar el resto de `requirements.txt` (con `pip install` o con `uv pip install`, según la opción elegida), ya que la versión genérica instalada por defecto puede no aprovechar la GPU disponible.
+  *Nota:* \   Si se va a reproducir el entrenamiento de los modelos MLP (`torch`), instala la variante de PyTorch adecuada a tu hardware (CPU o CUDA) siguiendo las instrucciones oficiales de *pytorch.org#sub([@pytorchDocs])* antes de instalar el resto de `requirements.txt` (con `pip install` o con `uv pip install`, según la opción elegida), ya que la versión genérica instalada por defecto puede no aprovechar la GPU disponible.
 ]
 
 #colbreak()
@@ -110,7 +110,7 @@ import ee
 # abre el navegador para vincular la cuenta de Google (solo hace falta la primera vez)
 ee.Authenticate()  
 
-ee.Initialize(project="<nombre-del-proyecto-en-GCloud>")
+ee.Initialize(project="<id-del-proyecto-en-GCloud>")
 ```
 
 *`ee.Authenticate()`* guarda un token de credenciales localmente (en `~/.config/earthengine/credentials` en Linux/macOS), de forma que en próximas ejecuciones, incluidas las de los propios notebooks del pipeline, basta con llamar a *`ee.Initialize(project=...)`*, sin repetir *`ee.Authenticate()`*. 
@@ -228,13 +228,14 @@ Para GEE, la comprobación debe hacerse desde una celda de notebook (o desde una
 import ee
 
 ee.Authenticate()  # solo la primera vez. Si ya se autenticó antes, se puede omitir esta línea
-ee.Initialize(project="[COMPLETAR: id del proyecto]")
+ee.Initialize(project="<id-del-proyecto-en-GCloud>")
 print(ee.String("GEE OK").getInfo())
 ```
 
-Si alguno de estos comandos falla, revisa primero la sección correspondiente de este anexo (VII.3 para librerías, VII.4 para credenciales) antes de continuar con la ejecución de los notebooks.
+Si alguno de estos comandos falla, revisa primero la sección correspondiente de este anexo (#link(<configuracion-entorno>)[*Configuración del entorno Python*] para librerías, #link(<credenciales-externas>)[*Configuración de credenciales de servicios externos*] para credenciales) antes de continuar con la ejecución de los notebooks.
 
 === Limitaciones de la reproducibilidad <limitaciones-reproducibilidad>
 
-- Los datos de SOB4ES son de acceso restringido (véase la nota al inicio de este anexo); sin ellos, solo puede reproducirse la parte del pipeline que depende de fuentes públicas.
+- *Los datos de SOB4ES son de acceso restringido* (véase la nota al inicio de este anexo). Sin ellos, solo puede reproducirse la parte del pipeline que depende de fuentes públicas.
+  - En caso de querer comprobar la completa reproducibilidad con los datos, estos se deben de solicitar al *tutor de este TFG* (`Javier Rodeiro Iglesias`).
 - Las capas remotas de GEE y Copernicus pueden actualizarse o reprocesarse con el tiempo (nuevas versiones de los productos Sentinel-2, revisiones del reanálisis ERA5, etc.), por lo que una nueva extracción en una fecha distinta a la original podría no devolver exactamente los mismos valores, aunque se usen las mismas coordenadas y el mismo rango temporal.

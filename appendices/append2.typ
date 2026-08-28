@@ -1,4 +1,4 @@
-== Informe EDA <informe-eda>
+== Informe EDA (Anexo I) <informe-eda>
 
 En este anexo se presenta el análisis exploratorio de datos (EDA, *Exploratory Data Analysis*) realizado sobre el dataset final obtenido tras la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*], previo al desarrollo de los modelos predictivos descritos en la #link(<capa-modelado>)[*Capa de modelado predictivo*]. 
 
