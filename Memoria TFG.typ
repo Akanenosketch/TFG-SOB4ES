@@ -236,6 +236,10 @@ En los siguientes apartados se introducirán elementos que serán de utilidad pa
 
 #include "appendices/append6.typ"
 
+#pagebreak()
+
+#include "appendices/append7.typ"
+
 /* Para la bibliografía.yml usar esta plantilla
   Nombre:
     type: 

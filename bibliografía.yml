@@ -197,14 +197,6 @@ dbfread:
   url: "https://dbfread.readthedocs.io/en/latest/"
   note: "Última visita: 05/07/2026"
 
-googleColab:
-  type: web
-  title: "CoLAB"
-  parent:
-    title: "Google for Developers"
-  url: "https://developers.google.com/colab"
-  note: "Última visita: 05/07/2026"
-
 netcdf4:
   type: web
   title: "netCDF4 API documentation"
@@ -754,3 +746,43 @@ wadoux2025:
     type: periodical
     title: European Journal of Soil Science
   doi: 10.1111/ejss.70080
+
+gee-auth:
+  type: Web
+  title: "Authentication and Initialization"
+  author: "Google for Developers"
+  url:
+    value: https://developers.google.com/earth-engine/guides/auth
+    date: 2026-08-28
+ 
+gee-python-install:
+  type: Web
+  title: "Python Installation"
+  author: "Google for Developers"
+  url:
+    value: https://developers.google.com/earth-engine/guides/python_install
+    date: 2026-08-28
+ 
+cds-how-to-api:
+  type: Web
+  title: "CDSAPI setup"
+  author: "Copernicus Climate Data Store"
+  url:
+    value: https://cds.climate.copernicus.eu/how-to-api
+    date: 2026-08-28
+ 
+copernicus-dem-aws:
+  type: Web
+  title: "Copernicus DEM — Registry of Open Data on AWS"
+  author: "Amazon Web Services"
+  url:
+    value: https://registry.opendata.aws/copernicus-dem/
+    date: 2026-08-28
+ 
+uv-docs:
+  type: Web
+  title: "uv Documentation"
+  author: "Astral"
+  url:
+    value: https://docs.astral.sh/uv/
+    date: 2026-08-28
