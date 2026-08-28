@@ -6,7 +6,7 @@
   width: 100%,
 )
 
-= Marco teórico o práctico <marco-teorico-o-practico>
+= Marco teórico y práctico <marco-teorico-o-practico>
 
 En esta sección se describe el marco teórico y práctico en el que se apoya y fundamenta nuestras conclusiones: la arquitectura del pipeline de datos y modelado, las tecnologías y herramientas de tercero empleadas, como también los fundamentos teóricos que nos permite crear, desarrollar, entender e interpretar los resultados que nos proporcionan los diferentes modelos seleccionados.
 
