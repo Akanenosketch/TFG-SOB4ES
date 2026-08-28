@@ -137,7 +137,7 @@ target: figure.where(kind: table))
 #pagebreak()
         
 //Contador de paginas <- 0
-#include "appendices/append1.typ"
+#include "appendices/glosario.typ"
 
 #pagebreak()
 
@@ -214,9 +214,10 @@ la biodiversidad del suelo_
 
 En los siguientes apartados se introducirán elementos que serán de utilidad par tener un mayor entendimiento sobre las diferentes partes de este TFG.
 
-// Anexo 1: Glosario de Términos
 
+#include "appendices/append1.typ"
 
+#pagebreak()
 
 #include "appendices/append2.typ"
 
