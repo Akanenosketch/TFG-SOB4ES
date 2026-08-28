@@ -289,56 +289,95 @@ Medianas recalculadas tras normalizar el espacio en blanco de land_use_type (vé
 
 *Mediana de pH por uso de suelo:*
 
-| Uso de suelo | pH mediana |
-| ----- | :---: |
-| Forest | 4.33 |
-| Grassland | 5.80 |
-| Orchard | 6.24 |
-| Arable | 6.34 |
-| Wetland | 6.55 |
-| Urban | 6.89 |
+#figure(
+  align(center)[
+    #table(
+      columns: (25%,25%),
+      align:(left+horizon, center+horizon),
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da")},
+      table.header(
+        table.cell(align: center)[*Uso del suelo*],
+        table.cell(align: center)[*pH mediana*],
+      ),
+        [*Forest*],   [4.33],
+        [*Grassland*],[5.80],
+        [*Orchard*],  [6.24],
+        [*Arable*],   [6.34],
+        [*Wetland*],  [6.55],
+        [*Urban*],    [6.89],
+    )
+  ],
+  caption: [Mediana de pH por uso de suelo],
+  kind: table
+)
 
 *Mediana de carbono orgánico por uso de suelo:*
 
-| Uso de suelo | C. orgánico mediana |
-| ----- | :---: |
-| Arable | 2.51 |
-| Orchard | 3.25 |
-| Urban | 3.93 |
-| Grassland | 4.23 |
-| Forest | 4.49 |
-| Wetland | 10.23 |
-
-![pH y carbono orgánico por uso de suelo](figures/08_uso_suelo_ph_c.png)
+#figure(
+  align(center)[
+    #table(
+      columns: (25%,25%),
+      align:(left+horizon, center+horizon),
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da")},
+      table.header(
+        table.cell(align: center)[*Uso del suelo*],
+        table.cell(align: center)[*Carbono orgánico*],
+      ),
+        [*Arable*],   [2.51],
+        [*Orchard*],  [3.25],
+        [*Urban*],    [3.93],
+        [*Grassland*],[4.23],
+        [*Forest*],   [4.49],
+        [*Wetland*],  [10.23],
+    )
+  ],
+  caption: [Mediana de carbono orgánico por uso de suelo],
+  kind: table
+)
 
 #figure(
   align(center)[
     #image("../media/eda/08_uso_suelo_ph_c.png", height: 30%)
   ],
-  caption: [Gráfica de los datos físico-químicos.],
+  caption: [pH y carbono orgánico por uso de suelo.],
   kind: image
 )
 
-Estas diferencias claras por land_use_type (Wetland más que duplica el carbono orgánico mediano de Arable) refuerzan la duda señalada en la sección II.3: si land_use_type no se está incluyendo como predictor, ni siquiera codificado, podría estar dejándose fuera una variable con señal real.
+Los suelos de *`Forest`* presentan el pH mediano más bajo (4.33, moderadamente ácido) porque la descomposición de hojarasca y acículas libera ácidos orgánicos y porque no reciben encalado agrícola. Mientras que, en el otro extremo, *`Urban`* (6.89) y *`Wetland`* (6.55) tienden a valores más neutros, en el caso urbano por la influencia de materiales de construcción alcalinos en el entorno edáfico, y en el caso de los humedales por procesos de acumulación de bases en condiciones de saturación hídrica. 
 
-Los suelos de Forest presentan el pH mediano más bajo (4.33, moderadamente ácido) porque la descomposición de hojarasca y acículas libera ácidos orgánicos y porque no reciben encalado agrícola; en el otro extremo, Urban (6.89) y Wetland (6.55) tienden a valores más neutros, en el caso urbano por la influencia de materiales de construcción alcalinos en el entorno edáfico, y en el caso de los humedales por procesos de acumulación de bases en condiciones de saturación hídrica. En cuanto al carbono orgánico, que Wetland (10.23) más que duplique al resto de usos es un patrón clásico en ciencia del suelo: la saturación de agua limita la disponibilidad de oxígeno, ralentizando drásticamente la descomposición microbiana de la materia orgánica y provocando su acumulación a largo plazo, el mismo proceso que da lugar a las turberas. Por contraste, Arable presenta el carbono orgánico más bajo (2.51) porque el laboreo agrícola repetido airea el suelo, acelera la descomposición de la materia orgánica y habitualmente exporta biomasa (cosechas) que no vuelve al sistema. Este contraste, tan marcado y ecológicamente bien fundamentado, es el argumento más fuerte para reconsiderar la exclusión de land_use_type como predictor del modelo.
+En cuanto al carbono orgánico, que *`Wetland`* (10.23) más que duplique al resto de usos es un patrón clásico en ciencia del suelo: la saturación de agua limita la disponibilidad de oxígeno, ralentizando drásticamente la descomposición microbiana de la materia orgánica y provocando su acumulación a largo plazo, el mismo proceso que da lugar a las turberas. Por contraste, Arable presenta el carbono orgánico más bajo (2.51) porque el laboreo agrícola repetido airea el suelo, acelera la descomposición de la materia orgánica y habitualmente exporta biomasa (cosechas) que no vuelve al sistema. 
 
 === Valores atípicos (outliers, método IQR)
 
-El rango intercuartílico (IQR) es una medida de dispersión robusta frente a valores extremos, definida como IQR = Q3 menos Q1, donde Q1 y Q3 son el primer y tercer cuartil (percentiles 25 y 75) de la variable. El criterio estándar de Tukey marca como atípico cualquier valor por debajo de Q1 menos 1.5 veces el IQR o por encima de Q3 más 1.5 veces el IQR: el multiplicador 1.5 es una convención (no un umbral estadístico con una probabilidad asociada) que, para una distribución aproximadamente normal, marcaría como atípico en torno al 0.7% de los datos, pero que puede marcar un porcentaje mucho mayor en variables muy asimétricas como los metales o las abundancias biológicas de este dataset (sección II.5.2). De ahí la recomendación de valorar una transformación logarítmica antes de aplicar este criterio.
+El rango *intercuartílico (IQR)* es una medida de dispersión robusta frente a valores extremos, definida como $"IQR" = "Q3" minus "Q1"$, donde Q1 y Q3 son el primer y tercer cuartil (percentiles 25 y 75) de la variable. 
+
+El *criterio estándar de Tukey* marca como atípico cualquier valor por debajo de Q1 menos 1.5 veces el IQR o por encima de Q3 más 1.5 veces el IQR: el multiplicador 1.5 es una convención (no un umbral estadístico con una probabilidad asociada) que, para una distribución aproximadamente normal, marcaría como atípico en torno al 0.7% de los datos, pero que puede marcar un porcentaje mucho mayor en variables muy asimétricas como los metales o las abundancias biológicas de este dataset (sección II.5.2). De ahí la recomendación de valorar una transformación logarítmica antes de aplicar este criterio.
 
 Variables continuas con más outliers detectados mediante el método IQR estándar (excluyendo códigos categóricos numéricos):
 
-| Variable | Outliers |
-| ----- | :---: |
-| gee_temp_media_C | 63 |
-| coll_nymphs_abundance | 62 |
-| total_plant_cover | 61 |
-| aggregate_stability | 58 |
-| latitude | 51 |
-| eu_organic_carbon_octop | 50 |
-| eu_water_holding_capacity | 49 |
-| orib_total_abundance | 48 |
+#figure(
+  align(center)[
+    #table(
+      columns: (30%,25%),
+      align:(left+horizon, center+horizon),
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da")},
+      table.header(
+        table.cell(align: center)[*Variable*],
+        table.cell(align: center)[*Outliers*],
+      ),
+        [*gee_temp_media_C*],           [63],
+        [*coll_nymphs_abundance*],      [62],
+        [*total_plant_cover*],          [61],
+        [*aggregate_stability*],        [58],
+        [*latitude*],                   [51],
+        [*eu_organic_carbon_octop*],    [50],
+        [*au_water_holding_capacity*],  [49],
+        [*orib_total_abundance*],       [48],
+    )
+  ],
+  caption: [Variables con mayor cantidad de outliers],
+  kind: table
+)
 
 Las variables de concentración de metales y de abundancia biológica suelen estar sesgadas de forma natural; se recomienda evaluar una transformación logarítmica antes de tratar estos valores como errores de medición. Se confirma que eu_organic_carbon_octop (sin sufijo _z) es efectivamente el nombre de la variable en el dataset limpio; el sufijo _z solo aparece en la versión escalada (eu_organic_carbon_octop_z), por lo que no se trata de un error de transcripción sino de las dos versiones (sin escalar y escalada) de la misma variable.
 
@@ -350,18 +389,31 @@ El coeficiente de correlación de Pearson (r) mide la fuerza y dirección de la 
 
 Pares de variables con mayor correlación (valor absoluto):
 
-| Par de variables | Correlación (abs.) |
-| ----- | :---: |
-| plot_total_c / plot_total_organic_c | 0.976 |
-| plot_total_n / plot_total_c | 0.954 |
-| plot_total_n / plot_total_organic_c | 0.952 |
-| sand_content / silt_content | 0.841 |
-| sand_content / clay_content | 0.810 |
-| mo / ni | 0.770 |
+#figure(
+  align(center)[
+    #table(
+      columns: (auto,25%),
+      align:(left+horizon, center+horizon),
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da")},
+      table.header(
+        table.cell(align: center)[*Par de variables*],
+        table.cell(align: center)[*Correlación (abs)*],
+      ),
+        [*plot_total_c / plot_total_organic_c*],  [0.976],
+        [*plot_total_n / plot_total_c*],          [0.954],
+        [*plot_total_n / plot_total_organic_c*],  [0.952],
+        [*sand_content / silt_content*],          [0.841],
+        [*sand_content / clay_content*],          [0.810],
+        [*mo / ni*],                              [0.770],
+    )
+  ],
+  caption: [Variables fisico-químicas con mayor nivel de correlación absoluto.],
+  kind: table
+)
 
 #figure(
   align(center)[
-    #image("../media/eda/09_corr_physchem.png", height: 30%)
+    #image("../media/eda/09_corr_physchem.png", height: 40%)
   ],
   caption: [Gráfica de correlación físico-química.],
   kind: image
@@ -369,20 +421,35 @@ Pares de variables con mayor correlación (valor absoluto):
 
 Estas correlaciones muy altas (0.95 a 0.98 entre las tres variables de carbono/nitrógeno del plot) son la evidencia empírica directa que justifica el uso de Ridge y la necesidad de regularización mencionada en la sección [*Regresión Ridge*](#5.3.1.--regresión-ridge). La matriz de correlación completa muestra además que sand_content correlaciona negativamente y con fuerza tanto con silt_content como con clay_content, una relación mecánica esperable ya que las tres fracciones granulométricas suman aproximadamente el 100%, lo que añade un tercer bloque de colinealidad relevante más allá de C/N y Mo/Ni.
 
+#colbreak()
+
 ==== Correlación entre targets (índices Shannon)
 
 Un modelo multisalida predice varios targets a la vez compartiendo una representación interna común, en lugar de entrenar un modelo independiente por cada target. La justificación teórica habitual para preferir el enfoque multisalida es que, si los targets están correlacionados entre sí, aprender a predecir uno aporta información útil para predecir los demás, reduciendo la varianza del modelo con el mismo número de datos de entrenamiento. Esta es la lógica que motivaba la hipótesis de partida del TFG. El análisis que sigue pone a prueba esa hipótesis midiendo empíricamente cuán correlacionados están realmente los 21 targets entre sí.
 
-| Par de targets | Correlación (abs.) |
-| ----- | :---: |
-| orib_shannon / meso_shannon | 0.383 |
-| meso_shannon / coll_shannon | 0.312 |
-| macro_shannon / nematode_shannon | 0.227 |
-| cerc_shannon / oomy_shannon | 0.208 |
+#figure(
+  align(center)[
+    #table(
+      columns: (auto,25%),
+      align:(left+horizon, center+horizon),
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da")},
+      table.header(
+        table.cell(align: center)[*Par de targets*],
+        table.cell(align: center)[*Correlación (abs)*],
+      ),
+        [*orib_shannon / meso_shannon*],       [0.383],
+        [*meso_shannon / coll_shannon*],       [0.312],
+        [*macro_shannon / nematode_shannon*],  [0.227],
+        [*cerc_shannon / oomy_shannon*],       [0.208],
+    )
+  ],
+  caption: [Targets con mayor nivel de correlación absoluto.],
+  kind: table
+)
 
 #figure(
   align(center)[
-    #image("../media/eda/10_corr_shannon.png", height: 30%)
+    #image("../media/eda/10_corr_shannon.png", height: 40%)
   ],
   caption: [Gráfica de correlación de los índices Shannon.],
   kind: image
@@ -393,8 +460,6 @@ Este es probablemente el resultado más relevante de todo el EDA para la discusi
 #colbreak()
 
 ==== Relación suelo-biodiversidad
-
-![Suelo vs biodiversidad](figures/11_suelo_vs_biodiv.png)
 
 #figure(
   align(center)[
@@ -414,20 +479,31 @@ ESDAC (European Soil Data Centre) y CORINE (Coordination of Information on the E
 
 Correlación entre la medición propia (in situ) y la capa de referencia externa equivalente (ESDAC/CORINE), por variable:
 
-| Variable | Correlación (r) |
-| ----- | :---: |
-| pH | 0.53 |
-| Fósforo | 0.19 |
-| Arsénico | 0.22 |
-| Zinc | 0.36 |
-| Arcilla | 0.55 |
-| Arena | 0.61 |
-
-![Consistencia con capas externas](figures/12_consistencia_eu.png)
+#figure(
+  align(center)[
+    #table(
+      columns: (auto,25%),
+      align:(left+horizon, center+horizon),
+      fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da")},
+      table.header(
+        table.cell(align: center)[*Variable*],
+        table.cell(align: center)[*Correlación (r)*],
+      ),
+        [*pH*],       [0.53],
+        [*Fósforo*],  [0.19],
+        [*Arsénico*], [0.22],
+        [*Zinc*],     [0.36],
+        [*Arcilla*],  [0.55],
+        [*Arena*],    [0.61],
+    )
+  ],
+  caption: [Correlaciones entre variables del proyecto SOB4ES \ con las correspondientes variables ESDAC/CORINE.],
+  kind: table
+)
 
 #figure(
   align(center)[
-    #image("../media/eda/12_consistencia_eu.png", height: 50%)
+    #image("../media/eda/12_consistencia_eu.png", )
   ],
   caption: [Gráficas de consistencia con capas externas.],
   kind: image
