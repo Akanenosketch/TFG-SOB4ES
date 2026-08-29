@@ -786,3 +786,13 @@ uv-docs:
   url:
     value: https://docs.astral.sh/uv/
     date: 2026-08-28
+    
+googleDeepMindAlphaGo:
+  type: web
+  title: "AlphaGo — Google DeepMind"
+  author:
+    - name: "Google DeepMind"
+  parent:
+    title: "Google DeepMind"
+  URL: "https://deepmind.google/research/alphago/"
+  accessed: 2026-08-29

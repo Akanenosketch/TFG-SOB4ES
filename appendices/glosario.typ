@@ -54,7 +54,7 @@ En este glosario se incluyen definiciones que puedan ser de utilidad y aclaracio
     [*Matriz de confusión*], [Tabla que contrasta las clases predichas frente a las clases reales, permitiendo identificar en qué niveles de biodiversidad concreta se equivoca más el modelo.],
     [*Minimización del riesgo empírico* \ (ERM)], [Principio que aproxima el riesgo teórico, desconocido, de un modelo mediante el error medio calculado sobre el conjunto de entrenamiento disponible.],
     [*Overfitting*\ (Sobreajuste)], [Fenómeno por el cual un modelo aprende patrones específicos del conjunto de entrenamiento, incluido su ruido, en lugar de la relación subyacente, perjudicando su capacidad de generalización a datos nuevos.],
-    [*Precisión*], [Proporción de muestras etiquetadas por el modelo como pertenecientes a una clase que realmente lo eran.],
+    [*Precisión*], [Proporción de muestras etiquetadas por el modelo como pertenecientes a una clase a la que realmente pertenecen.],
     [*Recall*], [Proporción de casos realmente pertenecientes a una clase que el modelo logra detectar correctamente. Especialmente informativo cuando las clases están desbalanceadas.],
     [*Regularización*], [Método estadístico empleado para reducir los errores causados por el sobreajuste de los datos de entrenamiento, penalizando la complejidad del modelo (p. ej. L2 en Ridge, L1 en Lasso).],
     [*Underfitting*], [Fenómeno opuesto al sobreajuste: el modelo carece de capacidad suficiente para capturar las relaciones reales presentes en los datos, presentando un rendimiento pobre incluso sobre el propio conjunto de entrenamiento.],
