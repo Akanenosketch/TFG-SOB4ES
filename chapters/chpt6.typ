@@ -1,7 +1,7 @@
 = Planificación y seguimiento <planificacion-y-seguimiento>
 == Planificación <planificacion>
 
-La planificación de este trabajo ha empezado a partir del inicio del mismo, en mayo de 2026, a partir de ahí se planifica su desarrollo de la forma en la que se indica en la siguiente tabla:
+La planificación de este trabajo se inició en mayo de 2026, momento en el que se formaliza el plan de desarrollo tal y como se indica en la #ref(<tab-8>):
 
 #figure(
   align(center)[
@@ -23,8 +23,8 @@ La planificación de este trabajo ha empezado a partir del inicio del mismo, en 
       table.cell(align: left)[Correcciones de los notebooks de ingesta y procesamiento de datos. Búsquedas iniciales sobre modelos predictivos.], 
       table.cell(align: left)[Datasets de datos finales. Lista de posibles modelos predictivos a probar.], 
     table.cell(align: center)[*16 jun - 1 jul*], 
-      table.cell(align: left)[Modelado de modelos], 
-      table.cell(align: left)[Desarrollo de los modelos para entrenar.Entrenar los diferentes modelos y experimentar con las diferentes variables posibles.], 
+      table.cell(align: left)[Desarrollo y entrenamiento de modelos], 
+      table.cell(align: left)[Preparación de los modelos para entrenarlos y experimentar con las diferentes variables posibles.], 
       table.cell(align: left)[Modelos entrenados. Documentación aparte sobre los diferentes modelos desarrollados.],
     table.cell(align: center)[*2 jul -15 ago*], 
       table.cell(align: left)[Evaluación de modelos y mejoras],
@@ -37,11 +37,11 @@ La planificación de este trabajo ha empezado a partir del inicio del mismo, en 
     )],
      caption: [Planificación del TFG.],
      kind: table,
-)
+)<tab-8>
 
-Dentro de la planificación no se tiene en cuenta los elementos relacionados con la documentación, debido a que este es un elemento que se ha planificado realizar a lo largo de toda la duración de este trabajo de fin de grado. Esto permite tener todos datos y todos los progresos realizados ya redactados para facilitar las actividades de pulido y mejora de la documentación de la memoria del TFG. 
+Dentro de la planificación no se detallan los elementos relacionados con la documentación, debido a que este es un elemento que se ha planificado realizar a lo largo de toda la duración de este trabajo de fin de grado. Esto permite tener todos los datos y progresos realizados ya redactados para facilitar las actividades de pulido y mejora de la documentación de la memoria del TFG. 
 
-También como se puede ver en la planificación, la aplicación de CRISP-ML(Q) se ha adaptado a las necesidades de este trabajo, motivo por el cual los nombres de las fases no coinciden completamente con lo indicado en la correspondiente documentación sobre la metodología de desarrollo.     
+También, como se puede ver en la planificación (véase #ref(<tab-8>)), la aplicación de CRISP-ML(Q) se ha adaptado a las necesidades de este trabajo, motivo por el cual los nombres de las fases no coinciden completamente con lo indicado en la correspondiente documentación sobre la metodología de desarrollo.     
 
 #colbreak()
 
@@ -50,9 +50,9 @@ En el siguiente Diagrama de Gantt, podemos ver de forma más gráfica la planifi
 #figure(
   image("../media/diagrama-gantt.png"),
   caption: [Diagrama de Gantt con la planificación del TFG.],
-)
+)<fig-3>
 
-Además del diagrama de Gantt mostrado en el diagrama  anterior, en la siguiente tabla se muestra la distribución de horas y porcentaje de esfuerzo estimado para cada una de las correspondientes fases de desarrollo de este trabajo.
+Además del diagrama de Gantt mostrado en la #ref(<fig-3>), en la #ref(<tab-9>) se muestra la distribución de horas y porcentaje de esfuerzo estimado para cada una de las correspondientes fases de desarrollo de este trabajo.
 
 #figure(
   align(center)[
@@ -85,7 +85,7 @@ Además del diagrama de Gantt mostrado en el diagrama  anterior, en la siguiente
     )],
      caption: [Distribución de horas y porcentajes de esfuerzo estimados.],
      kind: table,
-)
+)<tab-9>
 
 
 == Puntos críticos <puntos-criticos>
@@ -106,7 +106,7 @@ La selección de modelos debe de contar con el hecho de que se dispone de un set
 
 Además, aún escogiendo modelos capaces de operar con pocos datos, siempre va a haber cierta cantidad de modelos que presenten sobreajuste ya por defecto. Esto mismo se podrá ver a lo largo del desarrollo de la memoria y en el *Anexo III*.
 
-Un ajuste deficiente de hiperparámetros o una mala elección del espacio de búsqueda inicial puede provocar un sobreajuste mucho mayor al ya predispuesto por el hecho de la falta de datos.
+Un ajuste deficiente de hiperparámetros o una mala elección del espacio de búsqueda inicial puede provocar un sobreajuste mucho mayor al ya predispuesto por la falta de datos.
 
 === Evaluación de modelos y control de calidad (QA)
 
@@ -118,10 +118,10 @@ Además, la calidad de los datos de entrada, condiciona directamente a la fiabil
 
 Para reducir, en la medida de lo posible, los riesgos provenientes de los puntos anteriores se han aplicado las siguientes medidas de mitigación:
 - Uso sistemático de validación cruzada repetida en todos los modelos desarrollados, en lugar de hacer uso de una única partición de validación, para obtener estimaciones más robustas y precisas sobre el rendimiento real.
-- Separación estricta del dataset original en tres subconjuntos (entrenamiento, validación y evaluación) desde la fase inicial de modelos de modelos. Esto permite evitar que el set de evaluación se use en ningún momento en otros procesos para los cuales no fue creado, como puede ser la búsqueda de hiperparámetros.
+- Separación estricta del _dataset_ original en tres subconjuntos (entrenamiento, validación y evaluación) desde la fase inicial de modelos de modelos. Esto permite evitar que el set de evaluación se use en ningún momento en otros procesos para los cuales no fue creado, como puede ser la búsqueda de hiperparámetros.
 - Registro de los campos sin datos de los datasets originales mediante un archivo de banderas de imputación. Esto permite tener un mayor conocimiento y control sobre los datos que se poseen o que siguen carentes en todo momento, además, permite la determinación sobre qué datos son mediciones reales y cuáles son estimaciones. 
 - Revisiones periódicas del proceso de desarrollo en forma de reuniones semanales (véase #link(<seguimiento>)[*Seguimiento*]), permitiendo así detectar errores o desviaciones en el desarrollo y parametrización de los modelos antes de que afecten a fases posteriores.
-- Realización de pruebas complementarias para la simplificación y mejor selección de los modelos finales (véase #link(<anexos>)[*Anexos*]). Dichas pruebas también sirven para medir la robustez actual de los modelos.
+- Realización de pruebas complementarias para la simplificación y mejor selección de los modelos finales (véase #link(<pruebas-llevadas-a-cabo>)[*Anexo V*]). Dichas pruebas también sirven para medir la robustez actual de los modelos.
 
 #colbreak()
 
@@ -130,8 +130,11 @@ Para reducir, en la medida de lo posible, los riesgos provenientes de los puntos
 El seguimiento del progreso del presente TFG se realiza mediante la celebración de reuniones periódicas, generalmente semanales, entre el alumnado, el tutor y el co-tutor del proyecto. Estas reuniones constituyen el mecanismo principal de control y coordinación a lo largo de todo el desarrollo del trabajo.
 
 Estas reuniones tienen los siguientes objetivos:
-+ *Comunicación de avances:* exponer el trabajo realizado durante el período transcurrido desde la anterior reunión, incluyendo los resultados obtenidos así como las dificultades o problemas encontrados.
-+ *Resolución de dudas:* plantear y aclarar todas las cuestiones técnicas, metodológicas o de alcance que hayan surgido durante el desarrollo de las tareas.
+
++ *Comunicación de avances:* Exponer el trabajo realizado durante el período transcurrido desde la anterior reunión, incluyendo los resultados obtenidos así como las dificultades o problemas encontrados.
+
++ *Resolución de dudas:* Plantear y aclarar todas las cuestiones técnicas, metodológicas o de alcance que hayan surgido durante el desarrollo de las tareas.
+
 + *Definición de próximos pasos:* Establecer y acordar las tareas a abordar durante el siguiente intervalo temporal, ajustando la planificación en función del estado real del proyecto.
 
 Este esquema de seguimiento continuo permite mantener una supervisión constante sobre la evolución del proyecto, facilitando la detección temprana de desviaciones respecto a la planificación inicial y posibilitando la adopción de medidas correctoras cuando resulta necesario. Asimismo, la periodicidad semanal proporciona un marco de trabajo estructurado que favorece la organización del esfuerzo en tiempos cortos y bien definidos, contribuyendo a un desarrollo incremental y controlado del trabajo.
