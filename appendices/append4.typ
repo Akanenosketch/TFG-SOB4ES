@@ -598,11 +598,11 @@ Nótese que Ridge y XGBoost Individual muestran una desviación estándar de 0.0
 
 ==== Notebook de ensamblado de predicciones sin meta-modelos (Prueba IV.I) <notebook-p4-1>
 
-==== Fundamento y configuración
+===== Fundamento y configuración
 
 Este notebook explora si combinar las predicciones de los ocho modelos base, mediante métodos de combinación fijos y predefinidos (sin entrenar ningún modelo adicional sobre ellas), mejora el resultado obtenido por el mejor modelo individual. Corresponde a la rama model-prep-mixin (véase Anexo VI).
 
-==== Metodología
+===== Metodología
 
 Sobre las 65 filas de eval.csv, se reserva un subconjunto de calibración (meta-train, 45 filas) para calcular los pesos de las combinaciones que los necesitan, y un subconjunto de holdout (20 filas) sobre el que se evalúa el resultado final, evitando así que la propia combinación se beneficie de haber "visto" los datos con los que se evalúa. Se prueban cinco métodos de combinación, por cada uno de los 21 targets:
 
@@ -624,7 +624,7 @@ i
 
 =1 que minimizan el MSE en meta-train, obtenidos mediante optimización numérica (scipy.optimize.minimize, método SLSQP).
 
-==== Resultados
+===== Resultados
 
 #table( columns: (auto, auto), align: (left, center), fill: (col, row) => if row == 0 { rgb("d6e3da") }, table.header([Métrica], [Valor]), [Targets evaluados], [21], [Targets donde alguna combinación supera al mejor modelo individual], [4/21 (19%)], [Targets con señal predictiva real (mejor R² > 0)], [15/21 (71%)], [Targets sin señal predictiva en ningún método], [6/21], )
 
@@ -643,15 +643,15 @@ El resultado es mayoritariamente negativo para este enfoque: en 4 de cada 5 targ
 
 ==== Notebook de ensamblado de predicciones con meta-modelos (Prueba IV.II) <notebook-p4-2>
 
-==== Fundamento y configuración
+===== Fundamento y configuración
 
 Extiende la idea del notebook anterior sustituyendo los métodos de combinación fijos por meta-modelos entrenados: en vez de calcular unos pesos con una fórmula cerrada, se entrena un modelo de regresión adicional cuya entrada son las predicciones de los 8 modelos base, y cuya salida es la predicción combinada final. Corresponde a la rama model-prep-mixin-1 (véase Anexo VI), en la que -- a diferencia de model-prep-mixin -- se prueba con la totalidad de los 21 targets.
 
-==== Metodología
+===== Metodología
 
 Se emplea la misma partición meta-train (45 filas) / holdout (20 filas) que en el notebook anterior. Sobre meta-train se entrenan cinco meta-modelos candidatos por cada target: Ridge, Lasso, ElasticNet, Regresión Lineal y Random Forest, todos ellos de scikit-learn con su configuración por defecto salvo la regularización. Antes de evaluar cada meta-modelo sobre el holdout, se ejecuta una comprobación automática ("smoke test") que descarta cualquier predicción con valores NaN o infinitos.
 
-==== Resultados
+===== Resultados
 
 #table( columns: (auto, auto), align: (left, center), fill: (col, row) => if row == 0 { rgb("d6e3da") }, table.header([Métrica], [Valor]), [Targets evaluados], [21], [Targets donde algún meta-modelo/ensamblado supera al mejor individual], [9/21 (43%)], [Targets con señal predictiva real (mejor R² > 0)], [18/21 (86%)], [Targets sin señal predictiva en ningún método], [3/21], )
 
