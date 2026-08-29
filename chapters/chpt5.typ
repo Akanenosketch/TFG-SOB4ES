@@ -444,7 +444,6 @@ Además de la tabla de variables predictoras cuyas definiciones se pueden ver en
 ) <tab-2>
 
 #colbreak()
-// 5.3.- Modelos empelados
 
 == Modelos de aprendizaje automático empleados <modelos-de-aprendizaje-automatico-empleados>
 
@@ -658,16 +657,16 @@ En la #ref(<tab-3>) se muestra una comparativa rápida de los modelos descritos 
 
 #figure(
   table( 
-    columns: (auto, auto, auto, auto, auto, auto),
+    columns: (20%, auto, auto, auto, auto, 20%),
     align: horizon, 
     fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
-    table.header([Criterio], [Ridge], [_Random Forest_], [XGBoost], [Regressor Chain], [MLP]), 
-      [Relaciones no lineales], [No], [Sí], [Sí], [Sí (según modelo base)], [Sí], 
-      [Interpretabilidad nativa], [Alta], [Media], [Media], [Media (heredada del modelo base)], [Baja], 
-      [Robustez a colinealidad], [Requiere regularización], [Alta], [Alta], [Alta (según modelo base)], [Media], 
-      [Relaciona los _targets_ entre sí], [No], [Sí (simétrico)], [Sí (simétrico)], [Sí (direccional)], [Sí (representación compartida)], 
-      [Sensibilidad a hiperparámetros], [Baja], [Baja-media], [Media-alta], [Media (según modelo base)], [Alta], 
-      [Riesgo de sobreajuste], [Bajo], [Bajo], [Medio], [Medio (según modelo base)], [Alto], 
+    table.header([*Criterio*], [*Ridge*], [*_Random Forest_*], [*XGBoost*], [*Regressor Chain*], [*MLP*]), 
+      [*Relaciones no \ lineales*], [No], [Sí], [Sí], [Sí (según\  modelo base)], [Sí], 
+      [*Interpretabilidad nativa*], [Alta], [Media], [Media], [Media \ (heredada del modelo base)], [Baja], 
+      [*Robustez a \ colinealidad*], [Requiere \ regularización], [Alta], [Alta], [Alta (según \ modelo base)], [Media], 
+      [*Relaciona los \ _targets_ entre sí*], [No], [Sí (simétrico)], [Sí (simétrico)], [Sí \ (direccional)], [Sí (representación compartida)], 
+      [*Sensibilidad a \ hiperparámetros*], [Baja], [Baja-media], [Media-alta], [Media (según \ modelo base)], [Alta], 
+      [*Riesgo de \ sobreajuste*], [Bajo], [Bajo], [Medio], [Medio (según \ modelo base)], [Alto], 
     ),
     caption: [Comparativa de modelos base.],
     kind: table
