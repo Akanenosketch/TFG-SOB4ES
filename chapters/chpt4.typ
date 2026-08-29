@@ -11,9 +11,9 @@ Para dotar a este proceso de un marco de ingeniería robusto y estricto, CRISP-M
 #figure(
   image("../media/crisp-ml-process.jpg", height: 17%),
   caption: [Diagrama con las diferentes fases de CRISP-ML(Q)],
-)
+) <fig-1>
 
-En el diagrama anterior, podemos distinguir las siguientes fases:
+En el diagrama que se muestra en la #ref(<fig-1>), podemos distinguir las siguientes fases:
 
 + *Comprensión del negocio y de los datos:* Definición del problema predictivo y auditoría inicial de la viabilidad de las fuentes proporcionadas.
 
