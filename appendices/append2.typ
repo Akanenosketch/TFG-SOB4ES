@@ -82,7 +82,7 @@ En el extremo opuesto, `coll_species_richness_z` (-0.7341) y `meso_shannon_z` (-
     )
 
 #let file = "../media/anexos/reg_model.pdf"
-#let total_pages = 8 
+#let total_pages = 10 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -177,7 +177,7 @@ Por otro lado, `coll_species_richness_z` (-0.5484) vuelve a ser, como en Ridge, 
     )
 
 #let file = "../media/anexos/rf_model.pdf"
-#let total_pages = 7 
+#let total_pages = 10 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -277,7 +277,7 @@ Esto sugiere que, si bien compartir la estructura del árbol entre los 21 target
   )
 
 #let file = "../media/anexos/rf_multisalida.pdf"
-#let total_pages = 7
+#let total_pages = 9
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -376,7 +376,7 @@ Esto es coherente con la hipótesis de partida del modelo: al encadenar explíci
       [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1171], )], caption: [R² de RegressorChain (ensamble de 10 cadenas) sobre eval.csv, por target.], kind: table, )
 
 #let file = "../media/anexos/regressorchain.pdf"
-#let total_pages = 7 
+#let total_pages = 10 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -462,7 +462,7 @@ Sobre los targets prioritarios: *R²=0.4946* (`earthworm_shannon_z`) y *R²=0.51
   )
 
 #let file = "../media/anexos/xgboost_model.pdf"
-#let total_pages = 8
+#let total_pages = 9
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -539,7 +539,7 @@ Sobre los targets prioritarios obtiene sus mejores resultados dentro de la famil
   )
 
 #let file = "../media/anexos/xgb_multisalida.pdf"
-#let total_pages = 9 
+#let total_pages = 11 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -641,7 +641,7 @@ Este comportamiento es coherente con la limitación señalada en la introducció
   )
 
 #let file = "../media/anexos/mlp_multisalida.pdf"
-#let total_pages = 7 
+#let total_pages = 8 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -752,7 +752,7 @@ Sobre los targets prioritarios obtiene *R²=0.3750* (`earthworm_shannon_z`) y *R
   )
 
 #let file = "../media/anexos/mlp_custom_loss.pdf"
-#let total_pages = 8
+#let total_pages = 9
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
