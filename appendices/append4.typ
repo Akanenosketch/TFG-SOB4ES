@@ -296,7 +296,7 @@ La distribución de `outlier_flag` se mantiene prácticamente idéntica entre su
 )
 
 #let file = "../media/anexos/data-prep-div.pdf"
-#let total_pages = 4 
+#let total_pages = 3 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -355,7 +355,7 @@ El R² se recorta a 0 en caso de ser negativo (max(0, R²)) para evitar que los 
 )
 
 #let file = "../media/anexos/comparador_modelos.pdf"
-#let total_pages = 16 
+#let total_pages = 14 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -418,7 +418,7 @@ Sobre el desglose por target destaca que, incluso para el target más problemát
 )
 
 #let file = "../media/anexos/comparador_clasificacion.pdf"
-#let total_pages = 13 
+#let total_pages = 10 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -584,7 +584,7 @@ Nótese que Ridge y XGBoost Individual muestran una desviación estándar de 0.0
 // TODO: insertar aquí los 4 gráficos (boxplot de dispersión y barras de frecuencia top-1/2/3/5) generados en comparador_barrido_rs.ipynb
 
 #let file = "../media/anexos/comparador_barrido_rs.pdf"
-#let total_pages = 7 
+#let total_pages = 6 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
