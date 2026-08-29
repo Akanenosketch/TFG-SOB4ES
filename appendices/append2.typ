@@ -2,7 +2,7 @@
 
 En esta sección de los anexos se detalla, para cada uno de los ocho modelos desarrollados en este TFG, su configuración concreta y los resultados numéricos obtenidos sobre `eval.csv`, el subconjunto de evaluación final que ningún modelo ha visto durante el _tuning_ ni durante la validación cruzada (véase #link(<capa-modelado>)[*Capa de modelado predictivo*]).
 
-Los 21 targets predichos corresponden a los índices de biodiversidad (Shannon) y de riqueza de especies de 11 grupos taxonómicos distintos, los cuales se encuentran mencionados en el #link(<informe-eda>)[*Anexo II*] y en #link(<variables>)[*Variables empleadas*], todos ellos normalizados a la *escala z* antes del entrenamiento. Por ello un $R²$ de 0 no implica que no prediga nada, sino que su rendimiento es equivalente al de predecir siempre la media del conjunto de entrenamiento, mientras que un valor negativo indica que el modelo predice peor que dicha media.
+Los 21 targets predichos corresponden a los índices de biodiversidad (Shannon) y de riqueza de especies de 11 grupos taxonómicos distintos, los cuales se encuentran mencionados en el #link(<informe-eda>)[*Anexo I*] y en #link(<variables>)[*Variables empleadas*], todos ellos normalizados a la *escala z* antes del entrenamiento. Por ello un $R²$ de 0 no implica que no prediga nada, sino que su rendimiento es equivalente al de predecir siempre la media del conjunto de entrenamiento, mientras que un valor negativo indica que el modelo predice peor que dicha media.
 
 A lo largo de todos los modelos, `earthworm_shannon_z` y `earthworm_richness_z` se tratan como los dos targets prioritaios, por lo que en los siguientes subapartados se hará referencia explicita a los rendimientos obtenidos a la hora de predecir dichos targets.
 
@@ -79,7 +79,7 @@ En el extremo opuesto, `coll_species_richness_z` (-0.7341) y `meso_shannon_z` (-
       [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1019], [0.9350], [0.7211], )], 
       caption: [Resultados de Ridge sobre eval.csv, por target.], 
       kind: table, 
-    )
+    )<tab-20>
 
 #let file = "../media/anexos/reg_model.pdf"
 #let total_pages = 10 
@@ -174,7 +174,7 @@ Por otro lado, `coll_species_richness_z` (-0.5484) vuelve a ser, como en Ridge, 
       [*Riqueza cercozoos (ASV*)], [cerc_asv_richness_z], [0.1250], [0.9229], [0.7550], )], 
       caption: [Resultados de Random Forest (salida única) sobre eval.csv, por target.], 
       kind: table 
-    )
+    )<tab-21>
 
 #let file = "../media/anexos/rf_model.pdf"
 #let total_pages = 10 
@@ -213,7 +213,7 @@ El consenso resultante se puede ver en la siguentes tabla:
   ],
   caption: [Consenso de hiperparámetros en Random Forest multisalida.],
   kind: table
-)
+)<tab-22>
 
 Resulta interesante que el consenso limite la profundidad a solo 6 niveles (frente al máximo de 20 permitido en la búsqueda), lo que sugiere que, al tener que servir a los 21 targets simultáneamente, el modelo prioriza una estructura de árbol menos profunda y más generalista, en vez de sobreajustar a las particularidades de un target concreto.
 
@@ -274,7 +274,7 @@ Esto sugiere que, si bien compartir la estructura del árbol entre los 21 target
       [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [0.1917], 
       [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1171], )], 
       caption: [R² de Random Forest multisalida sobre eval.csv, por target.], kind: table 
-  )
+  )<tab-23>
 
 #let file = "../media/anexos/rf_multisalida.pdf"
 #let total_pages = 9
@@ -314,7 +314,7 @@ El mejor R² promedio de validación cruzada obtenido en esta búsqueda fue de 0
   ],
   caption: [Consenso de hiperparámetros en RegressorChain.],
   kind: table
-)
+)<tab-24>
 
 ==== Ensemble of Chains (ECC)
 
@@ -373,7 +373,10 @@ Esto es coherente con la hipótesis de partida del modelo: al encadenar explíci
       [*Riqueza hongos (ASV)*], [fun_asv_richness_z], [-0.0186], 
       [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z], [0.2690], 
       [*Riqueza oomicetos (ASV)*], [oomy_asv_richness_z], [0.2019], 
-      [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1171], )], caption: [R² de RegressorChain (ensamble de 10 cadenas) sobre eval.csv, por target.], kind: table, )
+      [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1171], )], 
+    caption: [R² de RegressorChain (ensamble de 10 cadenas) sobre eval.csv, por target.], 
+    kind: table, 
+  )<tab-25>
 
 #let file = "../media/anexos/regressorchain.pdf"
 #let total_pages = 10 
@@ -459,7 +462,7 @@ Sobre los targets prioritarios: *R²=0.4946* (`earthworm_shannon_z`) y *R²=0.51
       [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.1227], [0.9241], [0.7506], )], 
       caption: [Resultados de XGBoost (salida única, ensamble de 5 modelos) sobre eval.csv, por target.], 
       kind: table     
-  )
+  )<tab-26>
 
 #let file = "../media/anexos/xgboost_model.pdf"
 #let total_pages = 9
@@ -536,7 +539,7 @@ Sobre los targets prioritarios obtiene sus mejores resultados dentro de la famil
         [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z], [0.0983], [0.9369], [0.7733], )], 
     caption: [Resultados de XGBoost multisalida (ensamble) sobre eval.csv, por target.], 
     kind: table 
-  )
+  )<tab-27>
 
 #let file = "../media/anexos/xgb_multisalida.pdf"
 #let total_pages = 11 
@@ -581,7 +584,7 @@ La mejor configuración fue la siguiente:
   ],
   caption: [Consenso de hiperparámetros en MLP Multisalida.],
   kind: table
-)
+)<tab-28>
 
 ==== Entrenamiento
 
@@ -638,7 +641,7 @@ Este comportamiento es coherente con la limitación señalada en la introducció
         )], 
     caption: [R² del MLP multisalida sobre eval.csv, por target.], 
     kind: table 
-  )
+  )<tab-29>
 
 #let file = "../media/anexos/mlp_multisalida.pdf"
 #let total_pages = 8 
@@ -686,7 +689,7 @@ El tuning explora 10 configuraciones que combinan arquitectura, hiperparámetros
   ],
   caption: [Combinaciones de arquitecturas para MLP Custom Loss],
   kind: table
-)
+)<tab-30>
 
 La configuración ganadora del tuning fue `hidden=[64, 32]` con `lambda_corr=0.0`, es decir: de entre todas las combinaciones probadas, la que mejor R² de validación obtuvo fue la que equivale a MSE puro, sin ninguna penalización de correlación activa. 
 
@@ -749,7 +752,7 @@ Sobre los targets prioritarios obtiene *R²=0.3750* (`earthworm_shannon_z`) y *R
       )], 
     caption: [R² del MLP con pérdida personalizada sobre eval.csv, por target.], 
     kind: table 
-  )
+  )<tab-31>
 
 #let file = "../media/anexos/mlp_custom_loss.pdf"
 #let total_pages = 9
