@@ -51,7 +51,7 @@ El análisis se ha realizado sobre clean.csv, la versión armonizada y sin escal
     )
   ],
   caption: [Descripción general del dataset.]
-)
+)<tab-10>
 
 Comparando directamente el dataset limpio (84 columnas) con el dataset escalado usado en el modelado (71 columnas), los cambios principales que hay entre uno y otro son los siguientes:
 
@@ -109,7 +109,7 @@ La distribución de parcelas por país es la siguiente (de mayor a menor):
   ],
   caption: [Distribución de datos entre países.],
   kind: table
-)
+)<tab-11>
 
 #figure(
   align(center)[
@@ -117,7 +117,7 @@ La distribución de parcelas por país es la siguiente (de mayor a menor):
   ],
   caption: [Gráfica de distribución de datos entre países.],
   kind: image
-)
+)<fig-4>
 
 Como se puede ver en la primera imagen y en la tabla mostrada previamente, la distribución de datos está desbalanceada, destacando el caso de Italia, que solo tiene datos de *2 parcelas*. 
 
@@ -127,7 +127,7 @@ Como se puede ver en la primera imagen y en la tabla mostrada previamente, la di
   ],
   caption: [Gráfica de usos y tipos de suelo.],
   kind: image
-)
+)<fig-5>
 
 
 Esto es relevante para las #link(<vias-de-trabajo-futuro>)[*Vías de trabajo futuro*], en la cual figura la recolección de más datos como una de las posibles vías de trabajo futuro, ya que la falta de datos es una limitación grande cuando se trata de entrenar modelos de aprendizaje automático.
@@ -159,7 +159,7 @@ A partir de la comparación directa entre el dataset limpio y el dataset escalad
   ],
   caption: [Variables excluidas.],
   kind: table
-) 
+)<tab-12>
 
 === Valores faltantes e imputación <missing-vals>
 
@@ -187,7 +187,7 @@ Es decir, la imputación es una *mediana global simple* (no condicionada por pa�
   ],
   caption: [Gráfica de distribución de datos entre países.],
   kind: image
-)
+)<fig-6>
 
 El patrón de `outlier_flag` por país (tabla siguiente) confirma que no es un indicador de outlier estadístico fila a fila homogéneo, sino un control de calidad que varía sistemáticamente según el origen de los datos:
 
@@ -216,7 +216,7 @@ El patrón de `outlier_flag` por país (tabla siguiente) confirma que no es un i
   ],
   caption:[Tabla de distribución de los `outlier_flag`],
   kind: table  
-)
+)<tab-13>
 
 Cuatro países (Suiza, Israel, Eslovenia e Italia, el 45% de las parcelas del dataset) no presentan ni un solo caso False, mientras que Rumanía tiene una proporción casi equilibrada (51% False). Esta discrepancia tan marcada entre países es evidencia empírica directa de que `outlier_flag` no debe usarse como filtro de outliers estadístico genérico sin condicionar por país u origen de los datos: para los cuatro países sin ningún False, la columna no aporta ninguna capacidad discriminativa fila a fila.
 
@@ -245,7 +245,7 @@ El siguiente gráfico resume la dispersión de las tres fracciones en el conjunt
   ],
   caption: [Gráfica de la textura del suelo.],
   kind: image
-)
+)<fig-7>
 
 La segunda figura de esta sección resume la distribución univariante de seis variables físico-químicas centrales: pH (acidez/alcalinidad del suelo, escala 0 a 14), estabilidad de agregados (cohesión de las partículas del suelo, relevante frente a la erosión), densidad aparente (masa de suelo por unidad de volumen, indicador de compactación), humedad del suelo, y carbono/nitrógeno total del plot (indicadores de fertilidad y actividad biológica):
 
@@ -255,7 +255,7 @@ La segunda figura de esta sección resume la distribución univariante de seis v
   ],
   caption: [Gráfica de los datos físico-químicos.],
   kind: image
-)
+)<fig-8>
 
 ==== Elementos traza y nutrientes <elementos-traza>
 
@@ -273,7 +273,7 @@ De cara al modelado, algunos algoritmos (en particular la Regresión Ridge, que 
   ],
   caption: [Gráfica de los datos de metales.],
   kind: image
-)
+)<fig-9>
 
 La siguiente figura muestra las distribuciones univariantes de las tres variables de carbono/nitrógeno del plot (`plot_total_c`, `plot_total_organic_c`, `plot_total_n`), cuya fuerte correlación mutua se analiza en detalle en la sección #link(<analisis-bivariante-multivariante>)[*Análisis bivariante y multivariante*]:
 
@@ -283,7 +283,7 @@ La siguiente figura muestra las distribuciones univariantes de las tres variable
   ],
   caption: [Gráfica de los datos físico-químicos.],
   kind: image
-)
+)<fig-10>
 
 #colbreak()
 
@@ -303,7 +303,7 @@ La siguiente gráfica compara la distribución de estos 11 índices entre sí:
   ],
   caption: [Gráfica de Shannon por grupo taxonómico.],
   kind: image
-)
+)<fig-11>
 
 Se observa que los distintos grupos taxonómicos ocupan rangos de Shannon bastante diferentes entre sí, lo cual es coherente con la altísima riqueza de especies típica de las comunidades microbianas del suelo frente a grupos de fauna con menos taxones potenciales por parcela. 
 
@@ -337,7 +337,7 @@ Medianas recalculadas tras normalizar el espacio en blanco de `land_use_type` (v
   ],
   caption: [Mediana de pH por uso de suelo.],
   kind: table
-)
+)<tab-14>
 
 *Mediana de carbono orgánico por uso de suelo:*
 
@@ -361,7 +361,7 @@ Medianas recalculadas tras normalizar el espacio en blanco de `land_use_type` (v
   ],
   caption: [Mediana de carbono orgánico por uso de suelo.],
   kind: table
-)
+)<tab-15>
 
 #figure(
   align(center)[
@@ -369,7 +369,7 @@ Medianas recalculadas tras normalizar el espacio en blanco de `land_use_type` (v
   ],
   caption: [pH y carbono orgánico por uso de suelo.],
   kind: image
-)
+)<fig-12>
 
 Los suelos de *`Forest`* presentan el pH mediano más bajo (4.33, moderadamente ácido) porque la descomposición de hojarasca y acículas libera ácidos orgánicos y porque no reciben encalado agrícola. Mientras que, en el otro extremo, *`Urban`* (6.89) y *`Wetland`* (6.55) tienden a valores más neutros, en el caso urbano por la influencia de materiales de construcción alcalinos en el entorno edáfico, y en el caso de los humedales por procesos de acumulación de bases en condiciones de saturación hídrica. 
 
@@ -405,7 +405,7 @@ El *criterio estándar de Tukey* marca como atípico cualquier valor por debajo 
   ],
   caption: [Variables con mayor cantidad de outliers.],
   kind: table
-)
+)<tab-16>
 
 Las variables de concentración de metales y de abundancia biológica suelen estar sesgadas de forma natural, se recomienda evaluar una transformación logarítmica antes de tratar estos valores como errores de medición. 
 
@@ -445,7 +445,7 @@ Pares de variables con mayor correlación (valor absoluto):
   ],
   caption: [Variables fisico-químicas con mayor nivel de correlación absoluto.],
   kind: table
-)
+)<tab-17>
 
 #figure(
   align(center)[
@@ -453,7 +453,7 @@ Pares de variables con mayor correlación (valor absoluto):
   ],
   caption: [Gráfica de correlación físico-química.],
   kind: image
-)
+)<fig-13>
 
 Estas correlaciones muy altas (0.95 a 0.98 entre las tres variables de carbono/nitrógeno del plot) son la evidencia empírica directa que justifica el uso de Ridge y la necesidad de regularización mencionada en la sección Regresión Ridge. 
 
@@ -486,7 +486,7 @@ Esta es la lógica que motivaba la hipótesis de partida del TFG. El análisis q
   ],
   caption: [Targets con mayor nivel de correlación absoluto.],
   kind: table
-)
+)<tab-18>
 
 #figure(
   align(center)[
@@ -494,7 +494,7 @@ Esta es la lógica que motivaba la hipótesis de partida del TFG. El análisis q
   ],
   caption: [Gráfica de correlación de los índices Shannon.],
   kind: image
-)
+)<fig-14>
 
 #colbreak()
 
@@ -506,7 +506,7 @@ Esta es la lógica que motivaba la hipótesis de partida del TFG. El análisis q
   ],
   caption: [Gráfica de suelo vs. diversidad.],
   kind: image
-)
+)<fig-15>
 
 Se muestra la relación entre cuatro variables edáficas representativas (pH, carbono orgánico, contenido en arcilla y estabilidad de agregados) y cuatro índices de biodiversidad de distintos grupos taxonómicos (oribátidos, macrofauna, bacterias y nematodos), con el coeficiente de correlación de Pearson indicado en cada panel. 
 
@@ -539,7 +539,7 @@ Correlación entre la medición propia (_in situ_) y la capa de referencia exter
   ],
   caption: [Correlaciones entre variables del proyecto SOB4ES \ con las correspondientes variables ESDAC/CORINE.],
   kind: table
-)
+)<tab-19>
 
 #figure(
   align(center)[
@@ -547,7 +547,7 @@ Correlación entre la medición propia (_in situ_) y la capa de referencia exter
   ],
   caption: [Gráficas de consistencia con capas externas.],
   kind: image
-)
+)<fig-16>
 
 Estas correlaciones son, en el mejor de los casos, moderadas (arena, arcilla) y en el peor claramente débiles (fósforo, arsénico). Este es un resultado con conexión directa a los #link(<antecedentes-y-contexto>)[*Antecedentes y contexto*] del TFG: apoya empíricamente, con datos propios, la conclusión de Phillips et al.#sub([@phillipsEarthwormDiversity]) de que los datos _in situ_ de alta calidad aportan información que las capas globales derivadas no capturan.
 
