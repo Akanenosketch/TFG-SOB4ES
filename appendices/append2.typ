@@ -340,9 +340,7 @@ El mejor R² promedio de validación cruzada obtenido en esta búsqueda fue de 0
 
 El principal problema del encadenamiento simple es que los _targets_ al principio de la cadena disponen de menos información (solo las variables originales) que los del final, los que además cuentan con las predicciones de todos los _targets_ anteriores, por lo que el orden elegido condiciona el rendimiento de cada _target_ concreto. 
 
-Para compensar este efecto, se entrena un ensamble de 10 cadenas `(N_CHAINS=10)`, cada una con un orden aleatorio distinto de los 21 _targets_ (permutación generada con semilla `RANDOM_STATE + chain_id`) y su propio modelo base con semilla también distinta. 
-
-Las predicciones finales se obtienen promediando las 10 cadenas, de forma que los efectos de orden favorables y desfavorables para cada _target_ tienden a cancelarse entre sí.
+Para compensar este efecto, se entrena un ensamble de 10 cadenas `(N_CHAINS=10)`, cada una con un orden aleatorio distinto de los 21 _targets_ (permutación generada con semilla `RANDOM_STATE + chain_id`) y su propio modelo base con semilla también distinta. Las predicciones finales se obtienen promediando las 10 cadenas, de forma que los efectos de orden favorables y desfavorables para cada _target_ tienden a cancelarse entre sí.
 
 ==== Entrenamiento
 
@@ -364,9 +362,7 @@ La gráfica que muestra las variables más importantes se puede ver más adelant
 
 Con un R² medio de *0.0809*, RegressorChain queda por debajo de _Random Forest_ multisalida (0.0964) pero, en cambio, obtiene los mejores resultados de todo el trabajo sobre los dos _targets_ prioritarios: *R²=0.4876* (`earthworm_shannon_z`) y *R²=0.5359* (`earthworm_richness_z`), superando incluso a _Random Forest_ de salida única. 
 
-Esto es coherente con la hipótesis de partida del modelo: al encadenar explícitamente las predicciones, los _targets_ con mayor señal individual (como los de lombrices) pueden beneficiarse de la información aportada por _targets_ relacionados situados antes en la cadena, algo que _Random Forest_ multisalida solo captura de forma indirecta. Esto se ve reflejado en las #link(<conclusiones>)[*Conclusiones*].
-
-En la #ref(<tab-25>) se pueden ver los resultados por _target_ obtenidos tras entrenar el modelo.
+Esto es coherente con la hipótesis de partida del modelo: al encadenar explícitamente las predicciones, los _targets_ con mayor señal individual (como los de lombrices) pueden beneficiarse de la información aportada por _targets_ relacionados situados antes en la cadena, algo que _Random Forest_ multisalida solo captura de forma indirecta. Esto se ve reflejado en las #link(<conclusiones>)[*Conclusiones*].En la #ref(<tab-25>) se pueden ver los resultados por _target_ obtenidos tras entrenar el modelo.
 
 #figure( 
   align(center)[ 
