@@ -85,10 +85,9 @@
 #set align(top+left)
 // Fin ajustes
 
-
-#heading(outlined: false, bookmarked: true)[Dedicatoria] <dedicatoria>
-
 #pagebreak()
+
+#include "chapters/dedicatoria.typ"  
 
 
 // Índice general #############################################################
