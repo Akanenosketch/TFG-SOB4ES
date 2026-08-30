@@ -474,7 +474,7 @@ Este resultado, centrado en el R² medio de los *21 targets*, es coherente con e
 
 
 #let file = "../media/anexos/extractor_resultados.pdf"
-#let total_pages = 15
+#let total_pages = 24
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -547,7 +547,7 @@ En la #ref(<fig-20>) se pueden ver varias gráficas que muestran de diferentes f
 
 
 #let file = "../media/anexos/comparador_variables.pdf"
-#let total_pages = 6 
+#let total_pages = 8 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -626,7 +626,7 @@ En la #ref(<fig-21>) se pueden ver las gráficas de porcentaje de veces en la qu
 
 
 #let file = "../media/anexos/comparador_barrido_rs.pdf"
-#let total_pages = 6 
+#let total_pages = 8 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -683,7 +683,7 @@ El resultado es mayoritariamente negativo para este enfoque: en 4 de cada 5 _tar
 Esto sugiere que, con el tamaño de _holdout_ disponible (20 filas), los pesos calculados en `meta-train` no generalizan lo suficientemente bien como para superar de forma consistente a simplemente elegir el mejor modelo individual, un resultado que motiva directamente la variante explorada en el siguiente _notebook_, que sustituye estos métodos fijos por `meta-modelos` entrenados.
 
 #let file = "../media/anexos/prueba_ensamblado.pdf"
-#let total_pages = 15 
+#let total_pages = 19 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -738,7 +738,7 @@ El caso más llamativo es `coll_species_richness_z`, el _target_ con peor R² in
 También destaca `earthworm_richness_z`, uno de los _targets_ prioritarios, donde un `meta-modelo` Ridge (R²=0.523) supera ligeramente al mejor modelo individual, XGBoost multisalida (R²=0.509).
 
 #let file = "../media/anexos/prueba_ensamblado_con_modelos.pdf"
-#let total_pages = 16 
+#let total_pages = 19 
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
