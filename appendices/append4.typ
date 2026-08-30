@@ -1,4 +1,4 @@
-== _Scripts_ y notebooks auxiliares (Anexo IV) <elementos-auxiliares>
+== _Scripts_ y _notebooks_ auxiliares (Anexo IV) <elementos-auxiliares>
 
 En este anexo se muestra el código de todos los _scripts_ y _notebooks_ auxiliares empleados para la facilitación de las tareas de ejecución y comparación de resultados.
 

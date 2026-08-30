@@ -10,7 +10,7 @@ También a lo largo de los siguientes subapartados, se tendrá una explicación 
 
 === Modelo de Regresión Ridge <ridge-model>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
 Ridge (véase #link(<regresion-ridge>)[*Modelo de Regresión Ridge*]) se emplea como modelo baseline del trabajo: al ser un modelo lineal, permite establecer un suelo mínimo de rendimiento frente al que comparar el resto de modelos, más complejos y con mayor capacidad de capturar relaciones no lineales.
 
@@ -101,7 +101,7 @@ En el extremo opuesto, `coll_species_richness_z` (-0.7341) y `meso_shannon_z` (-
 
 === Modelo _Random Forest_ <rf-model>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
 _Random Forest_ (véase #link(<random-forest>)[*Modelo _Random Forest_*]) se entrena, en esta primera variante, en su forma de salida única: un conjunto de árboles independiente por cada uno de los 21 _targets_, cada uno con su propia búsqueda de hiperparámetros.
 
@@ -202,7 +202,7 @@ En la #ref(<tab-21>) se pueden ver los resultados por cada _target_ de forma má
 
 === Modelo _Random Forest_ Multisalida <rf-multi-model>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
 Esta variante entrena un único `RandomForestRegressor` que predice los 21 _targets_ de forma simultánea, aprovechando el soporte nativo de `scikit-learn` para `y` multivariante: cada división de cada árbol se decide considerando conjuntamente los 21 _targets_, lo que permite capturar correlaciones entre grupos biológicos directamente en la estructura del árbol, sin necesidad de un mecanismo explícito de encadenamiento.
 
@@ -309,7 +309,7 @@ En la #ref(<tab-23>) se pueden ver los resultados por _target_ tras el entrenami
 
 === Modelo RegressorChain con _Random Forest_ <reg-chain-model>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
 RegressorChain (véase #link(<regressorchain>)[*RegressorChain*]) encadena las predicciones de los 21 _targets_: el modelo predice primero un _target_, y usa esa predicción, junto con las variables originales, como entrada adicional para predecir el siguiente, y así sucesivamente. 
 
@@ -417,7 +417,7 @@ En la #ref(<tab-25>) se pueden ver los resultados por _target_ obtenidos tras en
 
 === Modelo XGBoost <xgboost-model>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
 XGBoost (véase #link(<xgboost>)[*Modelo XGBoost*]) se entrena, igual que en el caso de _Random Forest_, en su variante de salida única: un modelo independiente por _target_, cada uno con su propia búsqueda de hiperparámetros mediante `RandomizedSearchCV` sobre `X_train`.
 
@@ -509,7 +509,7 @@ En la #ref(<tab-26>) se pueden ver los resultador por _target_ obtenidos tras en
 
 === Modelos XGBoost multisalida <xgb-multi-model>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
 Disponible desde la versión 1.7 de XGBoost mediante el parámetro `multi_strategy='multi_output_tree'`, esta variante construye, en cada iteración del _boosting_, un único árbol que predice los 21 _targets_ a la vez, en lugar del comportamiento por defecto de XGBoost. Al igual que en _Random Forest_ multisalida, esto permite que las divisiones del árbol capturen relaciones compartidas entre _targets_ directamente en su estructura.
 
@@ -591,7 +591,7 @@ En la #ref(<tab-27>) se pueden ver los resultados por _target_ del modelo entren
 
 === Modelos MLP mutlisalida <mlp-multi>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
 El perceptrón multicapa (véase #link(<redes-neuronales>)[*Redes neuronales*]), implementado sobre PyTorch, representa el único enfoque de aprendizaje profundo de este trabajo. 
 
@@ -701,7 +701,7 @@ En la #ref(<tab-29>) se pueden ver los resultados por _target_ obtenidos tras en
 
 === Modelos MLP con función de pérdida personalizada <mlp-custom-loss>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
 Esta variante extiende el MLP multisalida anterior con una función de pérdida personalizada (`CorrelationAwareLoss`) que combina dos componentes:
 

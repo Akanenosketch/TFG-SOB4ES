@@ -1,8 +1,8 @@
-== Notebooks de preparación de datos (Anexo III) <preparacion-de-datos>
+== _Notebooks_ de preparación de datos (Anexo III) <preparacion-de-datos>
 
 === _Notebook_ de ingesta de datos en ficheros <ficheros-locales>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
  
 Es el primer _notebook_ de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*]: integra las 428 muestras del proyecto SOB4ES (12 países europeos) a partir de más de una decena de ficheros Excel independientes los cuales contienen, entre otros, metadatos de sitio, propiedades físicas y químicas del suelo, comunidades biológicas de 10 grupos taxonómicos distintos (nemátodos, macrofauna, lombrices, oribátidos, mesostigmátidos, colémbolos, bacterias, hongos, eucariotas, oomycetes y cercozoa) y una capa de variables raster europeas (`eu_*`) ya extraídas. 
  
@@ -80,7 +80,7 @@ El elevado porcentaje de filas marcadas como outlier (79.7%) no implica que se d
 
 === _Notebook_ de ingesta de datos de fuentes remotas <ficheros-remotos>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
  
 Complementa a `data-prep` con variables que no forman parte de los ficheros locales del proyecto SOB4ES, obtenidas en el momento de la ejecución desde tres servicios remotos descritos en la #link(<capa-ingesta>)[*Capa de ingesta de datos*]: *Google Earth Engine* (clima y vegetación), *Copernicus Climate Data Store* (precipitación) y *Copernicus DEM* (elevación y topografía, vía tiles públicos en AWS, sin autenticación).
  
@@ -136,7 +136,7 @@ El resto de variables _online_ (GEE y DEM) sí superaron ampliamente el umbral d
 
 === _Notebook_ de integración de fuentes <mixin-de-datos>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
  
 Cierra la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] combinando la salida de `data-prep` (datos locales limpios) con la de `data-prep-online` (variables remotas), y reorganiza el resultado en un orden lógico por bloques temáticos antes de producir los dos ficheros finales que consume el resto del proyecto.
  
@@ -172,7 +172,7 @@ La imputación de las variables _online_ no necesitó generar ningún indicador 
 
 El NaN total en ambos ficheros de salida es 0. 
 
-El desglose final por fuente confirma la composición del dataset que efectivamente llega a los notebooks de modelado: 
+El desglose final por fuente confirma la composición del dataset que efectivamente llega a los _notebooks_ de modelado: 
 - 15 columnas de rasters EU. 
 - 12 de metadatos de sitio. 
 - 9 abióticas químicas. 
@@ -195,9 +195,9 @@ Este `sob4es_final_model_ready.csv` es, precisamente, el fichero del que parte e
 
 === _Notebook_ de división de datos <data-div-notebook>
 
-==== Fundamento y configuración
+==== Fundamentos y configuración
 
-Una vez `data-prep`, `data-prep-online` y `data-prep-combination` (véase #link(<notebooks-empleados>)[*Anexo III*]) generan el dataset final armonizado (`sob4es_final_model_ready.csv`), este _notebook_ es responsable de dividirlo en los tres subconjuntos empleados por el resto del proyecto: *entrenamiento, test y evaluación*. Es, por tanto, el último eslabón de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] antes de entrar en la #link(<capa-modelado>)[*Capa de modelado predictivo*].
+Una vez `data-prep`, `data-prep-online` y `data-prep-combination` (véase #link(<notebooks-empleados>)[*Anexo V*]) generan el dataset final armonizado (`sob4es_final_model_ready.csv`), este _notebook_ es responsable de dividirlo en los tres subconjuntos empleados por el resto del proyecto: *entrenamiento, test y evaluación*. Es, por tanto, el último eslabón de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] antes de entrar en la #link(<capa-modelado>)[*Capa de modelado predictivo*].
 
 El dataset de entrada contiene 428 filas y 71 columnas, sin ningún valor nulo. La partición se configura con `TEST_SIZE=0.30` (fracción reservada para test+eval conjuntamente), `EVAL_FRAC=0.50` (mitad de esa reserva para eval, mitad para test) y `RANDOM_SEED=42`.
 
