@@ -90,9 +90,6 @@
 
 #pagebreak()
 
-#heading(outlined: false, bookmarked: true)[Agradecimientos] <agradecimientos>
-
-#pagebreak()
 
 // Índice general #############################################################
 
