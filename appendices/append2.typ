@@ -362,7 +362,7 @@ La gráfica que muestra las variables más importantes se puede ver más adelant
 
 Con un R² medio de *0.0809*, RegressorChain queda por debajo de _Random Forest_ multisalida (0.0964) pero, en cambio, obtiene los mejores resultados de todo el trabajo sobre los dos _targets_ prioritarios: *R²=0.4876* (`earthworm_shannon_z`) y *R²=0.5359* (`earthworm_richness_z`), superando incluso a _Random Forest_ de salida única. 
 
-Esto es coherente con la hipótesis de partida del modelo: al encadenar explícitamente las predicciones, los _targets_ con mayor señal individual (como los de lombrices) pueden beneficiarse de la información aportada por _targets_ relacionados situados antes en la cadena, algo que _Random Forest_ multisalida solo captura de forma indirecta. Esto se ve reflejado en las #link(<conclusiones>)[*Conclusiones*].En la #ref(<tab-25>) se pueden ver los resultados por _target_ obtenidos tras entrenar el modelo.
+Esto es coherente con la hipótesis de partida del modelo: al encadenar explícitamente las predicciones, los _targets_ con mayor señal individual (como los de lombrices) pueden beneficiarse de la información aportada por _targets_ relacionados situados antes en la cadena, algo que _Random Forest_ multisalida solo captura de forma indirecta. Esto se ve reflejado en las #link(<conclusiones>)[*Conclusiones*]. En la #ref(<tab-25>) se pueden ver los resultados por _target_ obtenidos tras entrenar el modelo.
 
 #figure( 
   align(center)[ 
