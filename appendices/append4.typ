@@ -273,18 +273,18 @@ En la #ref(<tab-36>) se pueden ver los resultados obtenidos por modelo tras la e
 #figure(
     align(center)[
         #table( 
-            columns: (auto, auto, auto, auto, auto, auto), 
-            align: (center, center, center, center, center, center), 
+            columns: (auto, auto, auto, auto, auto, auto, auto), 
+            align: (center, center, center, center, center, center, center), 
             fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
-            table.header([*Puesto*], [*Modelo*], [*Score compuesto*], [*R²*], [*Precisión*], [*Recall*]), 
-                [*1*], [*XGBoost multisalida*],  [0.3549], [0.0835],  [0.4664], [0.4598], 
-                [*2*], [*RegressorChain*],       [0.3263], [0.0809],  [0.4433], [0.4246], 
-                [*3*], [*MLP Custom*],           [0.3248], [-0.1316], [0.4911], [0.4292], 
-                [*4*], [*RF Individual*],        [0.3169], [0.0904],  [0.4125], [0.4203], 
-                [*5*], [*XGBoost*],              [0.3044], [0.0670],  [0.3894], [0.4198], 
-                [*6*], [*MLP multisalida*],      [0.3017], [-0.0380], [0.4213], [0.4253], 
-                [*7*], [*RF multisalida*],       [0.2968], [0.0964],  [0.3834], [0.4073], 
-                [*8*], [*Ridge*],                [0.2706], [-0.0164], [0.3839], [0.3952], )
+            table.header([*Puesto*], [*Modelo*], [*Score compuesto*], [*R²*], [*Precisión*], [*Recall*], [*F1*]), 
+                [*1*], [*XGBoost multisalida*],  [0.3549], [0.0835],  [0.4664], [0.4598], [0.4101], 
+                [*2*], [*RegressorChain*],       [0.3263], [0.0809],  [0.4433], [0.4246], [0.3564], 
+                [*3*], [*MLP Custom*],           [0.3248], [-0.1316], [0.4911], [0.4292], [0.3789], 
+                [*4*], [*RF Individual*],        [0.3169], [0.0904],  [0.4125], [0.4203], [0.3443], 
+                [*5*], [*XGBoost*],              [0.3044], [0.0670],  [0.3894], [0.4198], [0.3413], 
+                [*6*], [*MLP multisalida*],      [0.3017], [-0.0380], [0.4213], [0.4253], [0.3603], 
+                [*7*], [*RF multisalida*],       [0.2968], [0.0964],  [0.3834], [0.4073], [0.3002], 
+                [*8*], [*Ridge*],                [0.2706], [-0.0164], [0.3839], [0.3952], [0.3034], )
     ],
     caption: [Ranking final del comparador de modelos de regresión.],
     kind: table
@@ -574,7 +574,7 @@ Para cada semilla y modelo se calcula `r2_medio_prioritarios`, la media del R² 
 
 ==== Resultados
 
-En la #ref(<tab-40>) se pueden ver los resultados obtenidos tras ejecutar el _notebook_ comparador creado para la prueba de barrido de rs (véase #link(<prueba-3>)[*Prueba de barrido de `random_state`*])
+En la #ref(<tab-40>) se pueden ver, para cada modelo, el R² medio y las dos estadísticas de estabilidad más representativas (`top-1` y `top-3`) obtenidas tras ejecutar el _notebook_ comparador creado para la prueba de barrido de rs (véase #link(<prueba-3>)[*Prueba de barrido de `random_state`*]); las cuatro estadísticas completas (`top-1`, `top-2`, `top-3` y `top-5`) se muestran de forma gráfica en la #ref(<fig-21>).
 
 #figure(
     align(center)[
@@ -733,7 +733,7 @@ En la #ref(<tab-42>) se puede ver un resumen de los resultados obtenidos tras ej
 
 A diferencia de los métodos de combinación fijos del _notebook_ anterior (19% de mejora), entrenar un `meta-modelo` mejora sobre el mejor individual en más del doble de _targets_ (43%), lo que sugiere que, aunque el _holdout_ es pequeño, un `meta-modelo` simple (Ridge, Lasso...) consigue capturar patrones de complementariedad entre los modelos base que un método de combinación fijo no puede aprovechar. 
 
-El caso más llamativo es `coll_species_richness_z`, el _target_ con peor R² individual de todo este trabajo (-0.069 incluso para su mejor modelo individual, _Random Forest_ multisalida), donde un `meta-modelo` _Random Forest_ alcanza un *R²=0.523* sobre el _holdout_, la mejora más drástica de todo el análisis. 
+El caso más llamativo es `coll_species_richness_z`, el _target_ sin señal predictiva real en ningún modelo individual sobre este _holdout_ (-0.069 incluso para su mejor modelo individual, _Random Forest_ multisalida; nótese que esta cifra corresponde al _holdout_ de 20 filas de esta prueba, no al `eval.csv` completo del #link(<modelos-empleados>)[*Anexo II*], donde el mismo _target_ llega a valores bastante más bajos), donde un `meta-modelo` _Random Forest_ alcanza un *R²=0.523* sobre el _holdout_, la mejora más drástica de todo el análisis. 
 
 También destaca `earthworm_richness_z`, uno de los _targets_ prioritarios, donde un `meta-modelo` Ridge (R²=0.523) supera ligeramente al mejor modelo individual, XGBoost multisalida (R²=0.509).
 

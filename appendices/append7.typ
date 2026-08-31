@@ -14,7 +14,7 @@ Antes de clonar el repositorio, comprueba que dispones de lo siguiente:
 
 - *Python* `3.14.x`, con `pip` disponible.
 - *Git*, para clonar el repositorio y poder cambiar entre las ramas descritas en el #link(<dist-ramas-y-notebooks>)[*Anexo VI*].
-- *Jupyter* y *nbconvert*, necesarios para ejecutar y automatizar los notebooks (véase #link(<elementos-auxiliares>)[*Anexo VI*]).
+- *Jupyter* y *nbconvert*, necesarios para ejecutar y automatizar los notebooks (véase #link(<elementos-auxiliares>)[*Anexo IV*]).
 - Una cuenta de *Google Earth Engine* habilitada para uso no comercial/investigación, necesaria para hacer uso de `earthengine-api`.
 - Una cuenta en el *Copernicus Climate Data Store* con un token de acceso personal, necesaria para hacer uso de `cdsapi`.
 - Opcionalmente, una *GPU* compatible con PyTorch/CUDA si se quiere reproducir el entrenamiento con CUDA de los modelos compatibles con dicha tecnología (véase #link(<hardware-recomendado>)[*Hardware recomendado*]).
@@ -26,7 +26,7 @@ git clone https://github.com/Akanenosketch/TFG-SOB4ES.git
 cd TFG-SOB4ES
 ```
 
-El repositorio sigue la distribución de ramas documentada en el #link(<dist-ramas-y-notebooks>)[*Anexo V*]. Por defecto, tras clonar, se estará situado en la rama principal (`master`), pensada únicamente para tener una vista general del proyecto.
+El repositorio sigue la distribución de ramas documentada en el #link(<dist-ramas-y-notebooks>)[*Anexo VI*]. Por defecto, tras clonar, se estará situado en la rama principal (`master`), pensada únicamente para tener una vista general del proyecto.
 
 Para reproducir un experimento concreto, cambia a la rama correspondiente, por ejemplo:
 
@@ -74,7 +74,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 Crear el entorno e instalar las dependencias:
 
 ```bash
-uv venv --python [COMPLETAR: versión exacta, p. ej. 3.11]
+uv venv --python 3.14
 source .venv/bin/activate   # En Windows: .venv\Scripts\activate
 
 uv pip install -r requirements.txt

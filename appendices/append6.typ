@@ -96,8 +96,8 @@ Esta distribución de ramas, a lo largo de la realización de todas las pruebas,
         align: (center + horizon, left + horizon),      
         fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
       table.header(
-        table.cell(align: center)[*Objetivo/Prueba*], 
-        table.cell(align: center)[*Número de ramas*]),  
+        table.cell(align: center)[*Rama*], 
+        table.cell(align: center)[*Descripción*]),  
       table.cell(align: center)[*documentation*], 
         table.cell(align: center)[Rama en la que se encuentra toda la documentación realizada para este TFG, en formato Typst.],
       table.cell(align: center)[*data-prep*], 
@@ -135,7 +135,7 @@ Esta distribución de ramas, a lo largo de la realización de todas las pruebas,
       )],
       caption: [Resumen de las ramas creadas.],
       kind: table,
-  )
+  )<tab-ramas-detalle>
 
 #colbreak()
 
@@ -242,12 +242,12 @@ La diferencia entre ambos enfoques es la siguiente:
 
 - *prueba_ensamblado* prueba distintos métodos de combinación fijos y predefinidos (por ejemplo, un promedio simple o ponderado de las predicciones), sin entrenar ningún modelo adicional sobre ellas.
 
-Los detalles sobre esta prueba y sus resultados se pueden ver en el #link(<prueba-4>)[*Anexo IV*].
+Los detalles sobre esta prueba y sus resultados se pueden ver en el #link(<prueba-4>)[*Anexo V*].
 
 Los _notebooks_ correspondientes al resto de las pruebas adicionales (eliminación de variables, sensibilidad y barrido de `random_state`) reutilizan la misma estructura y el mismo código base que los _notebooks_ de entrenamiento de modelos descritos anteriormente, variando únicamente los parámetros o las variables de entrada propias de cada prueba (por ejemplo, eliminando `cu_z`, `ni_z` y/o `mo_z` del conjunto de variables predictoras, o cambiando el valor de `random_state`). 
 
 Esta reutilización deliberada del mismo código, en vez de crear _notebooks_ nuevos y no relacionados por cada prueba, es la que permite que las diferencias observadas entre ramas se deban únicamente al cambio introducido en cada prueba, y no a diferencias accidentales en la implementación.
 
-Cada _notebook_, una vez ejecutado, deja constancia de sus resultados de dos formas complementarias: por un lado, las propias celdas de salida del _notebook_ quedan guardadas junto con el código tras la ejecución (véase el script de automatización del #link(<elementos-auxiliares>)[*Anexo V*], que realiza esta ejecución modificando los propios _notebooks_). 
+Cada _notebook_, una vez ejecutado, deja constancia de sus resultados de dos formas complementarias: por un lado, las propias celdas de salida del _notebook_ quedan guardadas junto con el código tras la ejecución (véase el script de automatización del #link(<elementos-auxiliares>)[*Anexo IV*], que realiza esta ejecución modificando los propios _notebooks_). 
 
 Por otro, los archivos `.pkl` de los modelos entrenados y los archivos de resultados exportados por los _notebooks_ de comparación quedan disponibles para su análisis posterior sin necesidad de reejecutar ningún _notebook_.
