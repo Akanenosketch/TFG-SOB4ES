@@ -92,6 +92,27 @@
 
 // Índice general #############################################################
 
+// Resaltado (negrita) en el índice de los puntos de la memoria donde se
+// realiza discusión de resultados, para que sean fáciles de localizar.
+#let discusion-labels = (
+  <conclusiones-EDA>,
+  <prueba-1>,
+  <prueba-2>,
+  <prueba-3>,
+  <prueba-4>,
+  <discusion-general>,
+)
+#show outline.entry: it => {
+  let el = it.element
+  if el != none and el.func() == heading and el.location() != none {
+    let matches = discusion-labels.any(lbl => {
+      let q = query(selector(heading).and(selector(lbl)))
+      q.any(h => h.location() == el.location())
+    })
+    if matches { strong(it) } else { it }
+  } else { it }
+}
+
 #outline(title: [Índice])
 #show heading.where(level: 1): set text(
   size: 0pt

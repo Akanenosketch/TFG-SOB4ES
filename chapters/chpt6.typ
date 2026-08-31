@@ -17,11 +17,11 @@ La planificación de este trabajo se inició en mayo de 2026, momento en el que 
     table.cell(align: center)[*Mayo*], 
       table.cell(align: left)[Comprensión y preparación inicial de los datos.], 
       table.cell(align: left )[Ingesta, limpieza, armonización e integración de los datos (ficheros y fuentes remotas).], 
-      table.cell(align: left)[Datasets intermedios de los datos en ficheros como de los datos de solicitudes remotas.], 
+      table.cell(align: left)[_Datasets_ intermedios de los datos en ficheros como de los datos de solicitudes remotas.], 
     table.cell(align: center)[*1 jun - 15 jun*], 
       table.cell(align: left)[Cierre de la preparación de los datos.], 
-      table.cell(align: left)[Correcciones de los notebooks de ingesta y procesamiento de datos. Búsquedas iniciales sobre modelos predictivos.], 
-      table.cell(align: left)[Datasets de datos finales. Lista de posibles modelos predictivos a probar.], 
+      table.cell(align: left)[Correcciones de los _notebooks_ de ingesta y procesamiento de datos. Búsquedas iniciales sobre modelos predictivos.], 
+      table.cell(align: left)[_Datasets_ de datos finales. Lista de posibles modelos predictivos a probar.], 
     table.cell(align: center)[*16 jun - 1 jul*], 
       table.cell(align: left)[Desarrollo y entrenamiento de modelos], 
       table.cell(align: left)[Preparación de los modelos para entrenarlos y experimentar con las diferentes variables posibles.], 
@@ -118,8 +118,8 @@ Además, la calidad de los datos de entrada, condiciona directamente a la fiabil
 
 Para reducir, en la medida de lo posible, los riesgos provenientes de los puntos anteriores se han aplicado las siguientes medidas de mitigación:
 - Uso sistemático de validación cruzada repetida en todos los modelos desarrollados, en lugar de hacer uso de una única partición de validación, para obtener estimaciones más robustas y precisas sobre el rendimiento real.
-- Separación estricta del _dataset_ original en tres subconjuntos (entrenamiento, validación y evaluación) desde la fase inicial de modelos de modelos. Esto permite evitar que el set de evaluación se use en ningún momento en otros procesos para los cuales no fue creado, como puede ser la búsqueda de hiperparámetros.
-- Registro de los campos sin datos de los datasets originales mediante un archivo de banderas de imputación. Esto permite tener un mayor conocimiento y control sobre los datos que se poseen o que siguen carentes en todo momento, además, permite la determinación sobre qué datos son mediciones reales y cuáles son estimaciones. 
+- Separación estricta del _dataset_ original en tres subconjuntos (entrenamiento, validación y evaluación) desde la fase inicial de modelado. Esto permite evitar que el set de evaluación se use en ningún momento en otros procesos para los cuales no fue creado, como puede ser la búsqueda de hiperparámetros.
+- Registro de los campos sin datos de los _datasets_ originales mediante un archivo de banderas de imputación. Esto permite tener un mayor conocimiento y control sobre los datos que se poseen o que siguen carentes en todo momento, además, permite la determinación sobre qué datos son mediciones reales y cuáles son estimaciones. 
 - Revisiones periódicas del proceso de desarrollo en forma de reuniones semanales (véase #link(<seguimiento>)[*Seguimiento*]), permitiendo así detectar errores o desviaciones en el desarrollo y parametrización de los modelos antes de que afecten a fases posteriores.
 - Realización de pruebas complementarias para la simplificación y mejor selección de los modelos finales (véase #link(<pruebas-llevadas-a-cabo>)[*Anexo V*]). Dichas pruebas también sirven para medir la robustez actual de los modelos.
 
@@ -139,7 +139,7 @@ Estas reuniones tienen los siguientes objetivos:
 
 Este esquema de seguimiento continuo permite mantener una supervisión constante sobre la evolución del proyecto, facilitando la detección temprana de desviaciones respecto a la planificación inicial y posibilitando la adopción de medidas correctoras cuando resulta necesario. Asimismo, la periodicidad semanal proporciona un marco de trabajo estructurado que favorece la organización del esfuerzo en tiempos cortos y bien definidos, contribuyendo a un desarrollo incremental y controlado del trabajo.
 
-En casos en los que las circunstancias del proyecto lo requiera, por ejemplo, antes hitos relevantes o la necesidad de abordar decisiones de mayor importancia, la frecuencia de las reuniones puede ajustarse, intensificando o espaciando su frecuencia en función de las necesidades puntuales del desarrollo.
+En casos en los que las circunstancias del proyecto lo requieran, por ejemplo, ante hitos relevantes o la necesidad de abordar decisiones de mayor importancia, la frecuencia de las reuniones puede ajustarse, intensificando o espaciando su frecuencia en función de las necesidades puntuales del desarrollo.
 
 == Justificación de desviaciones <justificacion-de-desviaciones>
 

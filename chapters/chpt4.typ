@@ -27,9 +27,9 @@ En el diagrama que se muestra en la #ref(<fig-1>), podemos distinguir las siguie
 
 + *Monitoreo y mantenimiento:* Control continuo para mitigar la degradación de las predicciones en el tiempo y aplicar las correspondientes medidas de mantenimiento.
 
-Además, el proyecto también cuenta con un componente metodológico iterative incremental, descrito a continuación.
+Además, el proyecto también cuenta con un componente metodológico iterativo incremental, descrito a continuación.
 
-El *desarrollo iterativo incremental* se basa en la capacidad de poder dividir un proyecto en diversos bloques reducidos y asignarlos a flanjas temporales generalmente fijos, los cuales pueden ser adaptados a futuro. Estos bloques reducidos se denominan como *iteraciones*.
+El *desarrollo iterativo incremental* se basa en la capacidad de poder dividir un proyecto en diversos bloques reducidos y asignarlos a franjas temporales generalmente fijas, las cuales pueden ser adaptadas a futuro. Estos bloques reducidos se denominan como *iteraciones*.
 
 De forma más específica, las iteraciones se pueden definir como miniproyectos o como un set de tareas en las cuales "_se repite un proceso de trabajo similar para proporcionar un resultado completo sobre el producto final_" #sub([@desarrolloIterativoIncremental]). Cada iteración tiene como resultado una parte del producto final funcional, el cual se va integrando a lo largo de las iteraciones hasta crear el producto final.
 
@@ -41,7 +41,7 @@ La aplicación conjunta de ambas metodologías (CRISP-ML(Q), junto con desarroll
   - Las fases de Ingeniería del modelo y Evaluación del modelo son, por su propia naturaleza, las que más ciclos de prueba-error requieren en un proyecto de aprendizaje automático. Tratarlas como un bloque monolítico dificultaría la estimación de tiempos y la detección de desviaciones en el tiempo; al dividirlas en iteraciones concretas, cada una entrega un resultado evaluable en el plazo acotado.
 
 + *Cada iteración produce un incremento funcional y evaluable.*
-  - En este caso, un modelo entrenado junto con sus métricas de rendimiento, en lugar de posponer cualquier resultado tangible hasta el final del proyecto. Esto permite detectar pronto problemas transversales, como el rendimiento inesperado de un modelo o la necesidad de revisar alguna variable predictora, sin tener que esperar a que todo el pipeline esté terminado.
+  - En este caso, un modelo entrenado junto con sus métricas de rendimiento, en lugar de posponer cualquier resultado tangible hasta el final del proyecto. Esto permite detectar pronto problemas transversales, como el rendimiento inesperado de un modelo o la necesidad de revisar alguna variable predictora, sin tener que esperar a que todo el _pipeline_ esté terminado.
 
 + *Facilita adaptar el alcance y las decisiones de modelado a medida que se dispone de más información.*
   - En lugar de fijar de antemano qué algoritmos, variables o hiperparámetros se van a emplear. Esto es especialmente relevante en un trabajo que parte de datos ambientales heterogéneos y en evolución dentro de un proyecto europeo en curso (SOB4ES), donde el conocimiento sobre qué variables resultan realmente predictivas se afina en cada iteración.
@@ -49,7 +49,7 @@ La aplicación conjunta de ambas metodologías (CRISP-ML(Q), junto con desarroll
 + *Mantiene el control de calidad transversal propio de CRISP-ML(Q).*
   - Mantener dicho control en cada iteración nos permite evitar que la naturaleza iterativa del desarrollo derive en una pérdida de rigor a nivel metodológico: cada incremento pasa por las mismas comprobaciones de validación y evaluación antes de darse por válido, en lugar de acumular deuda técnica o metodológica de una iteración a la siguiente.
 
-A continuación se da un pequeño desglose de las partes en las que se divide esta solución que se propone. La división detallada, como también los elementos que se van a emplear, se encuentran en la siguiente sección (véase #link(<marco-teorico-o-practico>)[*Marco teórico o pŕactico*]).
+A continuación se da un pequeño desglose de las partes en las que se divide esta solución que se propone. La división detallada, como también los elementos que se van a emplear, se encuentran en la siguiente sección (véase #link(<marco-teorico-o-practico>)[*Marco teórico y práctico*]).
 
 + *Adquisición e Integración de Datos:* 
   Para alimentar los modelos, no solo se utilizarán los datos propios del proyecto SOB4ES (disponibles en archivos y carpetas como `EARTHWORMS_RAW/`), sino que se complementarán y completarán con bases de datos y mapas europeos de resolución variable. Las fuentes externas empleadas son las siguientes:

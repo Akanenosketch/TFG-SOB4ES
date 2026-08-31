@@ -8,11 +8,11 @@
 
 = Marco teórico y práctico <marco-teorico-o-practico>
 
-En esta sección se describe el marco teórico y práctico en el que se apoya y fundamenta nuestras conclusiones: la arquitectura del _pipeline_ de datos y modelado, las tecnologías y herramientas de tercero empleadas, como también los fundamentos teóricos que nos permiten crear, desarrollar, entender e interpretar los resultados que nos proporcionan los diferentes modelos seleccionados.
+En esta sección se describe el marco teórico y práctico en el que se apoyan y fundamentan nuestras conclusiones: la arquitectura del _pipeline_ de datos y modelado, las tecnologías y herramientas de terceros empleadas, como también los fundamentos teóricos que nos permiten crear, desarrollar, entender e interpretar los resultados que nos proporcionan los diferentes modelos seleccionados.
 
 == Fundamentos del aprendizaje automático <fundamentos-del-aprendizaje-automatico>
 
-El término de aprendizaje automático, también conocido como *_Machine Learning_* (ML) fue acuñado por primera vez por el informático *Arthur Samuel*#sub([@arthurSamuelWikipedia,@geronHandsOnML]) en 1959, conocido por su trabajo en la implementación de un juego de damas que aprendiera de forma autónoma y por dar soporte y colaborar en lo que hoy se conoce como LaTEX#sub([@latexProject]). 
+El término de aprendizaje automático, también conocido como *_Machine Learning_* (ML) fue acuñado por primera vez por el informático *Arthur Samuel*#sub([@arthurSamuelWikipedia,@geronHandsOnML]) en 1959, conocido por su trabajo en la implementación de un juego de damas que aprendiera de forma autónoma y por dar soporte y colaborar en lo que hoy se conoce como LaTeX#sub([@latexProject]). 
 
 Él acuñó el término de ML por primera vez en el artículo “_Some Studies in _Machine Learning_ Using the Game of Checkers_” publicado en el IBM Journal of research and development#sub([@samuelCheckers]), definiéndolo de la siguiente forma: 
 
@@ -32,7 +32,7 @@ Estas dos definiciones de _Machine Learning_ se pueden resumir de la siguiente f
 
 #rect[“El _Machine Learning_ es una rama o subconjunto de la Inteligencia Artificial que se centra en dotar a los algoritmos de la capacidad de “aprender”. Este aprendizaje utiliza como base la detección de patrones en los datos de entrenamiento para, posteriormente, hacer predicciones o inferencias sobre nuevos datos.”]
 
-Esta capacidad de aprender permite a los modelos de ML realizar predicciones, tomar decisiones y realizar acciones variadas sin que lo tengan estrictamente indicado dentro de su código. También les permite diferenciarse de los sistemas expertos tradicionales, en los que el conocimiento se codifica explícitamente, y los acerca a la estadística de, la que toma buena parte de su base matemática.
+Esta capacidad de aprender permite a los modelos de ML realizar predicciones, tomar decisiones y realizar acciones variadas sin que lo tengan estrictamente indicado dentro de su código. También les permite diferenciarse de los sistemas expertos tradicionales, en los que el conocimiento se codifica explícitamente, y los acerca a la estadística, de la que toma buena parte de su base matemática.
 
 #colbreak()
 
@@ -284,7 +284,7 @@ Los tipos de modelos embebidos más relevantes son los siguientes:
 
 === Variables empleadas <variables>
 
-A lo largo de la elaboración de los diferentes modelos, los cuales se pueden ver en el repositorio de GitHub del proyecto#sub([@githubTFGRepo]) y también se pueden ver en el #link(<modelos-empleados>)[*Anexo II*]. 
+A lo largo de la elaboración de los diferentes modelos, los cuales se pueden ver en el repositorio de GitHub del proyecto#sub([@githubTFGRepo]) y también en el #link(<modelos-empleados>)[*Anexo II*], se ha empleado un mismo conjunto de variables predictoras y objetivo, común a todos ellos. 
 
 Dentro de todas las posibles variables dentro del _dataset_ final, las variables seleccionadas como predictoras han sido las siguientes, las cuales se pueden ver en la #ref(<tab-1>), el resto de las variables existentes dentro del _dataset_ empleado en la #link(<capa-modelado>)[*Capa de modelado*] se encuentran indicadas en el #link(<informe-eda>)[*Anexo I*].
 
@@ -343,7 +343,7 @@ Dentro de todas las posibles variables dentro del _dataset_ final, las variables
           gee_humedad_rel_pct_z\
         ],
         [        
-          gee_nvdi_verano_z\ 
+          gee_ndvi_verano_z\ 
         ]
       ),
     table.cell(align: center)[*Topografía (de DEM)*], 
@@ -423,9 +423,9 @@ Además de la tabla de variables predictoras cuyas definiciones se pueden ver en
     table.cell(align: center)[*earthworm_richness_z*], 
       table.cell(align: left)[Riqueza de especies de lombrices de tierra.], 
     table.cell(align: center)[*orib_species_richness_z*], 
-      table.cell(align: left)[Riqueza de especies de mesofauna del suelo.],
+      table.cell(align: left)[Riqueza de especies de ácaros oribáticos.],
     table.cell(align: center)[*meso_species_richness_z*], 
-      table.cell(align: left)[Riqueza de especies de colémbolos.], 
+      table.cell(align: left)[Riqueza de especies de mesofauna del suelo.], 
     table.cell(align: center)[*coll_species_richness_z*], 
       table.cell(align: left)[Riqueza de especies de colémbolos.], 
     table.cell(align: center)[*bac_asv_richness_z*], 
@@ -511,7 +511,7 @@ Para una tarea de regresión como la de este TFG, la predicción final es la med
 
 $ hat(y) = 1/N sum_(i=1)^N hat(y)_i $
 
-Al promediar los árboles que comenten errores distintos entre sí, gracias a la doble aleatoriedad que se introdujo, la varianza del conjunto se reduce sin apenas aumentar el sesgo, lo que hace _Random Forest_ especialmente robusto frente al sobreajuste en comparación con un árbol de decisión individual.
+Al promediar los árboles que cometen errores distintos entre sí, gracias a la doble aleatoriedad que se introdujo, la varianza del conjunto se reduce sin apenas aumentar el sesgo, lo que hace _Random Forest_ especialmente robusto frente al sobreajuste en comparación con un árbol de decisión individual.
 
 #colbreak()
 
@@ -796,7 +796,7 @@ La arquitectura explicada previamente se compone de cuatro capas, las cuales tra
 
 === Capa de ingesta de datos <capa-ingesta>
 
-Esta capa se encarga de la adquisición de datos con las diferentes APIs a emplear, así como de cargar los diferentes archivos de los datasets almacenados en el propio dispositivo. 
+Esta capa se encarga de la adquisición de datos con las diferentes APIs a emplear, así como de cargar los diferentes archivos de los _datasets_ almacenados en el propio dispositivo. 
 
 La adquisición de datos se realiza en dos fases, las cuales están basadas en el origen de los datos que se van a recolectar:
 + *Ingesta de datos locales:*
@@ -811,7 +811,7 @@ La adquisición de datos se realiza en dos fases, las cuales están basadas en e
     + *Copernicus DEM (vía AWS)#sub([@copernicusDEM]):* Descarga del DEM (_Digital Elevation Model_), empleado para la obtención de altitudes, pendientes y orientaciones del terreno.
 Además de las fases de la adquisición de datos, destacamos las siguientes bibliotecas empleadas para ello:
 - *pandas#sub([@pandas]):* Librería empleada para la manipulación e ingeniería de datos tabulares. Permite la lectura y la escritura de archivos .csv y .xlsx (Excel). También puede gestionar uniones, filtrados y operaciones vectorizadas sobre múltiples filas de forma no muy compleja y eficaz.
-- *earthengine-api#sub([@googleEarthEngine]):* Librería de desarrollo oficial de Google que permite la conexión remota, la autenticación y la orquestación de scripts de procesamiento geoespacial sobre la API de Google Earth Engine.
+- *earthengine-api#sub([@googleEarthEngine]):* Librería de desarrollo oficial de Google que permite la conexión remota, la autenticación y la orquestación de _scripts_ de procesamiento geoespacial sobre la API de Google Earth Engine.
 - *cdsapi#sub([@copernicusHomepage]):* Librería que habilita un enlace directo y oficial a la API de CCDS, para el envío de solicitudes de extracción de datos parametrizadas y para la descarga automática de los datos meteorológicos solicitados.
 
 Al final de todo el procesamiento de esta capa se crea un archivo requirements.txt cuyo objetivo es almacenar todas las dependencias de Python para que lo realizado pueda ser reproducido en nuevos entornos.
@@ -827,7 +827,7 @@ Al final de todo el procesamiento de esta capa se crea un archivo requirements.t
 Esta capa tiene como objetivo unificar las diferentes fuentes de datos bajo un marco de coordenadas común y resolver las diferentes discrepancias entre los datos, estandarizándolos y armonizándolos para poder emplearlos en futuras capas.
 
 Este proceso se hace dividiéndolo en tres subprocesos o fases:
-+ *Procesado de datos de ficheros:* En este subproceso nos centramos en los datos que se tienen ya tanto del proyecto SOB4ES, como de otros datasets ya existentes, tanto a nivel UVIGO, como a nivel europeo.
++ *Procesado de datos de ficheros:* En este subproceso nos centramos en los datos que se tienen ya tanto del proyecto SOB4ES, como de otros _datasets_ ya existentes, tanto a nivel UVIGO, como a nivel europeo.
 
   Este procesamiento de datos da como resultado varios elementos, que serán utilizados en el tercer subproceso. Dichos elementos son los siguientes:
   + *Datasets:*
@@ -836,16 +836,16 @@ Este proceso se hace dividiéndolo en tres subprocesos o fases:
       - *imputation_flags.csv:* _Dataset_ que contiene únicamente flags que indican en qué celdas faltan datos de cada tipo de dato introducido en clean.csv.
   + *scaler.pkl:* Archivo pickle que guarda la media y la desviación estándar calculadas en la preparación de los datos y usadas para la normalización de cualquier otro dato nuevo de forma idéntica a como se normalizaron los datos originales.
   + *label_encoders.pkl:* Archivo pickle que guarda el mapeo de categorías a números aprendido durante la preparación de datos, para codificar de la misma forma cualquier otro dato nuevo.
-+ *Procesado de datos de consultas remotas a bases de datos:* En este subproceso nos centramos en los datos obtenidos a partir de la realización de solicitudes en remoto para obtener datasets o datos provenientes de los diferentes servicios web que se emplean dentro de este trabajo.\ 
-  Como consecuencia, este procesamiento de datos da como resultado un segundo _dataset_ y un scaler.pkl intermedios con todos los datos relevantes obtenidos de datasets online, que será usado en el tercer subproceso.
-+ *Combinación y armonización de ambas fuentes:* En este último subproceso, hacemos uso de los datasets intermedios comentados previamente para combinarlos y armonizar sus datos.\
++ *Procesado de datos de consultas remotas a bases de datos:* En este subproceso nos centramos en los datos obtenidos a partir de la realización de solicitudes en remoto para obtener _datasets_ o datos provenientes de los diferentes servicios web que se emplean dentro de este trabajo.\ 
+  Como consecuencia, este procesamiento de datos da como resultado un segundo _dataset_ y un scaler.pkl intermedios con todos los datos relevantes obtenidos de _datasets_ online, que será usado en el tercer subproceso.
++ *Combinación y armonización de ambas fuentes:* En este último subproceso, hacemos uso de los _datasets_ intermedios comentados previamente para combinarlos y armonizar sus datos.\
   Como resultado de este último subproceso, obtendremos un _dataset_ final con todos los datos preparados para ser usados en los diferentes modelos que se desarrollen en la siguiente capa.
 Además de los subprocesos, a lo largo de procesamiento de esta datos se hace uso de las siguientes bibliotecas:
 - *pandas#sub([@pandas]):* #link(<capa-ingesta>)[Véase el punto anterior].
 - *numpy#sub([@numpy]):* Librería especializada en computación numérica que es generalmente empleada para el manejo de datos numéricos complejos, así como para dar soporte matemático a otras bibliotecas como pandas.
 - *rasterio#sub([@rasterio]):* Herramienta geoespacial destinada a la lectura de archivos matriciales con formato GeoTIFF, procedentes de las diferentes fuentes de datos europeas. También sirven para la realización de consultas directamente a las URLs correspondientes al DEM de Copernicus.
 - *xarray#sub([@xarrayDocs]):* Librería diseñada para la manipulación de conjuntos de datos multidimensionales, los cuales se encuentran distribuidos en múltiples archivos .nc (NetCDF).
-- *dbfread#sub([@dbfread]):* Librería ligera de bajo nivel capaz de leer de forma nativa y eficiente archivos con formato .bdf, facilitando la extracción de la información tabular contenida en ciertos conjuntos de datos vectoriales del catálogo europeo.
+- *dbfread#sub([@dbfread]):* Librería ligera de bajo nivel capaz de leer de forma nativa y eficiente archivos con formato .dbf, facilitando la extracción de la información tabular contenida en ciertos conjuntos de datos vectoriales del catálogo europeo.
 - *netCDF4#sub([@netcdf4]):* Librería que permite la lectura, escritura y manipulación de archivos con formatos netCDF y HDF5.
 
 #colbreak()
@@ -862,7 +862,7 @@ De la misma forma que las capas anteriores, esta capa va a estar dividida en var
   + *Set de Entrenamiento:* Conjunto inicial, el cual será empleado para que los modelos que se desarrollen aprendan los patrones que haya ocultos entre los datos mediante el ajuste de los parámetros de los modelos.
   + *Set de Validación:* Conjunto usado para el ajuste de los hiperparámetros de los modelos y seleccionar cuáles funcionan mejor de forma objetiva sin contaminar en proceso. En esta parte también se hará uso del _feedback_ obtenido de la #link(<capa-evaluacion>)[*Capa de evaluación de modelos*].
   + *Set de Evaluación:* Conjunto de datos no incluídos en ninguno de los sets mencionados previamente, se usa para estimar la eficacia del modelo en condiciones reales y con datos con los cuales nunca ha trabajo.
-  La división de los datos se ha hecho teniendo en cuenta el origen de las muestras tomadas y a partir de la realización de esta fase obtenemos los datasets indicados en la #ref(<tab-4>):
+  La división de los datos se ha hecho teniendo en cuenta el origen de las muestras tomadas y a partir de la realización de esta fase obtenemos los _datasets_ indicados en la #ref(<tab-4>):
 
   #figure(
     align(center)[
@@ -882,7 +882,7 @@ De la misma forma que las capas anteriores, esta capa va a estar dividida en var
         table.cell(align: center)[15%],
         table.cell(align: center)[65], 
       )],
-      caption: [Tabla de los datasets resultantes de la fase 1.],
+      caption: [Tabla de los _datasets_ resultantes de la fase 1.],
       kind: table,
   )<tab-4>
 
@@ -897,7 +897,7 @@ De la misma forma que las capas anteriores, esta capa va a estar dividida en var
 
 + *Fase de desarrollo de modelos:* El objetivo de esta fase es disponer una cantidad reducida inicial de modelos desarrollados y contenidos dentro de múltiples Jupyter Notebooks. De este modo, los procesos de pueden efectuar dentro de un entorno cerrado y seguro.
 
-  El resultado de esta fase son múltiples notebooks con cada uno de los modelos desarrollados para su futuro entrenamiento.
+  El resultado de esta fase son múltiples _notebooks_ con cada uno de los modelos desarrollados para su futuro entrenamiento.
 
 + *Fase de entrenamiento de los modelos:* El objetivo de esta fase es, una vez creados los diferentes modelos a emplear, ejecutarlos uno a uno y entrenarlos para posteriormente evaluarlos y realizar las correcciones correspondientes.
 
@@ -957,7 +957,7 @@ A lo largo del desarrollo de esta capa, se hace uso de las siguientes biblioteca
       table.cell(align: center)[*torch.nn*], 
         table.cell(align: left)[Módulo de torch encargado de la definición y construcción de redes neuronales. En términos de definición se pueden definir las capas, el modo de activación, la regularización y la función de pérdida, entre otros elementos.],
       table.cell(align: center)[*torch.utils.data.\ DataLoader*], 
-        table.cell(align: left, rowspan: 2)[Se encargan de gestionar la división del conjunto de entrenamiento en lotes de trabajo (batches) y su iteración aleatoria durante cada período de entrenamiento.],
+        table.cell(align: left, rowspan: 2)[Se encargan de gestionar la división del conjunto de entrenamiento en lotes de trabajo (_batches_) y su iteración aleatoria durante cada período de entrenamiento.],
       table.cell(align: center)[*torch.utils.data.\ TensorDataset*], 
       )],
       caption: [Tabla de submódulos empleados de la librería PyTorch.],
@@ -982,9 +982,9 @@ Una vez más, de forma similar a las capas anteriores, esta capa se divide en la
 
   Esto se realiza para comprobar ya en la construcción de los modelos si los parámetros escogidos son los más efectivos o si estos, por otro lado, están provocando un sobreajuste en el modelo. También permite prevenir la fuga de datos originada por un entrenamiento deficiente o mal preparado.
 
-  De esta fase se obtienen datos que figuran en los _outputs_ de los notebooks de cada uno de los modelos diseñados, además de los modelos resultantes que serán usados en la siguiente fase.
+  De esta fase se obtienen datos que figuran en los _outputs_ de los _notebooks_ de cada uno de los modelos diseñados, además de los modelos resultantes que serán usados en la siguiente fase.
 
-+ *Fase de validación en conjunto de los modelos generados:* Para el correcto desarrollo de esta fase se van a crear dos notebooks más que se van a encargar de realizar la evaluación y validación de los modelos con dos puntos de vista distintos, los cuales son:
++ *Fase de validación en conjunto de los modelos generados:* Para el correcto desarrollo de esta fase se van a crear dos _notebooks_ más que se van a encargar de realizar la evaluación y validación de los modelos con dos puntos de vista distintos, los cuales son:
 
   - *Punto de vista numérico:* En este _notebook_ nos centramos en cargar todos los modelos desarrollados y evaluar el rendimiento de cada uno de los modelos contra el _dataset_ creado para las pruebas.\
     Dentro de este punto de vista nos centramos en las siguientes métricas, cuyas definiciones se pueden encontrar en #link(<metricas-de-evaluacion-y-validacion>)[*Métricas de evaluación y validación*]:
@@ -1054,7 +1054,7 @@ Aquí se explica, para cada uno, por qué se ha elegido frente a las alternativa
 
 Como lenguaje principal de desarrollo de los modelos se ha empleado *Python*#sub([@pythonOrg]). Su elección se justifica por su amplia adopción dentro de los campos de la ciencia de datos y del aprendizaje automático, así como por la disponibilidad de un ecosistema maduro y consolidado de bibliotecas específicas y especializadas en estas tareas, lo que le ha permitido cubrir todas las necesidades del proyecto sin recurrir a herramientas externas al lenguaje.
 
-Dentro de este mismo lenguaje, el desarrollo de todos los modelos y los distintos notebooks de pruebas se han realizado principalmente sobre *Jupyter Notebook*#sub([@projectJupyter]), dado que el formato encaja de forma natural con el flujo de trabajo experimental e iterativo descrito en #link(<resumen-de-la-solucion-propuesta>)[*Resumen de la solución propuesta*]. 
+Dentro de este mismo lenguaje, el desarrollo de todos los modelos y los distintos _notebooks_ de pruebas se han realizado principalmente sobre *Jupyter Notebook*#sub([@projectJupyter]), dado que el formato encaja de forma natural con el flujo de trabajo experimental e iterativo descrito en #link(<resumen-de-la-solucion-propuesta>)[*Resumen de la solución propuesta*]. 
   
 El entrenamiento, incluido el de los modelos que se benefician y pueden hacer uso de aceleración por GPU, se ha realizado en local, en un equipo con GPU dedicado facilitado por el tutor de este trabajo.
 
@@ -1076,7 +1076,7 @@ A pesar de existir una gran cantidad de fuentes de datos abiertas disponibles, s
 
   - Su acceso es gratuito para actividades de investigación y uso no comercial.
 
-  - Presenta un catálogo de más de 900 datasets públicos, entre ellos Sentinel-2 ya en formato Level-2A (reflectancia de superficie, con corrección atmosférica aplicada), listo para el análisis sin necesidad de descargar los archivos ni de realizar preprocesamiento en local.
+  - Presenta un catálogo de más de 900 _datasets_ públicos, entre ellos Sentinel-2 ya en formato Level-2A (reflectancia de superficie, con corrección atmosférica aplicada), listo para el análisis sin necesidad de descargar los archivos ni de realizar preprocesamiento en local.
 
   - Tiene integración con la API oficial de Python a través de la librería earthengine-api, que permite ejecutar el procesamiento geoespacial directamente sobre la infraestructura de Google en vez de tener que hacerlo en local.
   
@@ -1086,7 +1086,7 @@ A pesar de existir una gran cantidad de fuentes de datos abiertas disponibles, s
 
   - Su cobertura europea es consistente con el ámbito del proyecto SOB4ES.
 
-  - Dispone de un cliente oficial en Python mediante la librería cdsapi, que se configura con un token de acceso personal y permite la automatización de las descargas directamente desde los scripts de Python.
+  - Dispone de un cliente oficial en Python mediante la librería cdsapi, que se configura con un _token_ de acceso personal y permite la automatización de las descargas directamente desde los _scripts_ de Python.
 
   - Es un servicio gratuito tras el registro en la plataforma y proporciona los datos en formatos estándar (NetCDF/GRIB), que cuentan con bibliotecas maduras para procesarlos con facilidad dentro de Python.
 
@@ -1094,7 +1094,7 @@ A pesar de existir una gran cantidad de fuentes de datos abiertas disponibles, s
 
   - Ofrece resolución de 30 metros a escala global (GLO-30), distribuida como _Cloud Optimized GeoTIFF_ y disponible de forma gratuita al público general.
 
-  - Conexión mediante un bucket público de AWS S3, sin necesidad de autenticación ni registro previo.
+  - Conexión mediante un _bucket_ público de AWS S3, sin necesidad de autenticación ni registro previo.
 
   - La estructura del servidor de AWS S3 simplifica notablemente la integración en el flujo de trabajo, en comparación con otras fuentes de DEM que exigen credenciales o portales de descarga manual.
 
@@ -1110,7 +1110,7 @@ Para la redacción de la memoria y la gestión de las referencias bibliográfica
 
 === Programas de desarrollo de código <programas-de-desarrollo-de-codigo>
 
-Para el desarrollo de los notebooks, como también de script de automatización para la ejecución de los mismos (véase #link(<elementos-auxiliares>)[*Anexo IV*]) se ha trabajado alternando entre *Visual Studio Code (VSCode)#sub([@vscode])* y *OpenCode#sub([@vscodeOSS])* según la máquina empleada.
+Para el desarrollo de los _notebooks_, como también de _script_ de automatización para la ejecución de los mismos (véase #link(<elementos-auxiliares>)[*Anexo IV*]) se ha trabajado alternando entre *Visual Studio Code (VSCode)#sub([@vscode])* y *OpenCode#sub([@vscodeOSS])* según la máquina empleada.
 
 Esta alternancia responde a haber trabajo desde distintos equipos a lo largo del desarrollo del TFG, para lo cual ambos IDEs ofrecen una experiencia equivalente y compatible con el resto del entorno (Python, terminal y git), permitiendo continuar el trabajo indistintamente desde cualquiera de las máquinas empleadas.
 

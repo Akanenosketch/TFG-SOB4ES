@@ -4,7 +4,7 @@
 
 ==== Fundamentos y configuración
  
-Es el primer _notebook_ de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*]: integra las 428 muestras del proyecto SOB4ES (12 países europeos) a partir de más de una decena de ficheros Excel independientes los cuales contienen, entre otros, metadatos de sitio, propiedades físicas y químicas del suelo, comunidades biológicas de 10 grupos taxonómicos distintos (nemátodos, macrofauna, lombrices, oribátidos, mesostigmátidos, colémbolos, bacterias, hongos, eucariotas, oomycetes y cercozoa) y una capa de variables raster europeas (`eu_*`) ya extraídas. 
+Es el primer _notebook_ de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*]: integra las 428 muestras del proyecto SOB4ES (12 países europeos) a partir de más de una decena de ficheros Excel independientes los cuales contienen, entre otros, metadatos de sitio, propiedades físicas y químicas del suelo, comunidades biológicas de 10 grupos taxonómicos distintos (nemátodos, macrofauna, lombrices, oribátidos, mesostigmátidos, colémbolos, bacterias, hongos, eucariotas, oomicetos y cercozoos) y una capa de variables raster europeas (`eu_*`) ya extraídas. 
  
 ==== Metodología
  
@@ -20,7 +20,9 @@ Para uno de los _targets_ prioritarios, `earthworm_shannon_z`, el _notebook_ rea
 Para los valores perdidos se sigue una estrategia diferenciada: los conteos ecológicos (prefijos `ew_`, `macro_`, `orib_`, `meso_`, `coll_`) se rellenan con 0, las variables continuas con menos de un 5% de `NaN` se imputan con la mediana sin más y las que tienen entre un 5% y un 50% de `NaN` se imputan con la mediana pero además generan una columna indicadora `_was_missing` (0/1), de forma que el modelo pueda aprender que la propia ausencia del dato ya es informativa. 
 
 Los valores fuera de los límites físicos plausibles (por ejemplo, un pH fuera de \[0, 14\] o un porcentaje de textura fuera de \[0, 100\]) se recortan (`clip`) a su límite válido más cercano.
- 
+
+#colbreak()
+
 ==== Resultados
  
 *Hallazgo de calidad de datos:* la verificación cruzada de lombrices detectó que el archivo oficial combinado (`DD2.2.7`) estaba *inflado o mal calculado en 268 de los 298 sitios comparables (90%)*, con desfases de hasta +3.227 individuos en un mismo sitio (`ES_013`). 
@@ -28,8 +30,6 @@ Los valores fuera de los límites físicos plausibles (por ejemplo, un pH fuera 
 Ante esta discrepancia, se optó por *descartar el archivo oficial combinado* y quedarse con la matriz de abundancias reconstruida directamente desde los ficheros crudos de `NUID` (218 sitios) y `UVIGO` (162 sitios), consolidados en 380 sitios únicos tras eliminar duplicados. 
 
 En la #ref(<tab-32>) se pueden ver de forma resumida los resultados obtenidos tras la ejecución de este _notebook_ de preparación de datos.
-
-#colbreak()
 
 #figure(
   align(center)[
@@ -64,7 +64,7 @@ La exportación final produce tres ficheros:
 
 #rect[*Nota:*\ La *x* en `nombre_archivo_vx` hace referencia al *número de versión del archivo*, al haber probado con varias iteraciones del procesamiento antes de proceder a la siguiente fase de la preparación de datos.]
 
-El elevado porcentaje de filas marcadas como outlier (79.7%) no implica que se descarten. Se conserva como una columna informativa (`outlier_flag`) para que los propios modelos, o un análisis posterior, puedan tenerlo en cuenta, en vez de eliminar automáticamente cuatro de cada cinco muestras de un dataset ya de por sí reducido.
+El elevado porcentaje de filas marcadas como _outlier_ (79.7%) no implica que se descarten. Se conserva como una columna informativa (`outlier_flag`) para que los propios modelos, o un análisis posterior, puedan tenerlo en cuenta, en vez de eliminar automáticamente cuatro de cada cinco muestras de un _dataset_ ya de por sí reducido.
 
 #let file = "../media/anexos/data-prep.pdf"
 #let total_pages = 19 
@@ -82,15 +82,15 @@ El elevado porcentaje de filas marcadas como outlier (79.7%) no implica que se d
 
 ==== Fundamentos y configuración
  
-Complementa a `data-prep` con variables que no forman parte de los ficheros locales del proyecto SOB4ES, obtenidas en el momento de la ejecución desde tres servicios remotos descritos en la #link(<capa-ingesta>)[*Capa de ingesta de datos*]: *Google Earth Engine* (clima y vegetación), *Copernicus Climate Data Store* (precipitación) y *Copernicus DEM* (elevación y topografía, vía tiles públicos en AWS, sin autenticación).
+Complementa a `data-prep` con variables que no forman parte de los ficheros locales del proyecto SOB4ES, obtenidas en el momento de la ejecución desde tres servicios remotos descritos en la #link(<capa-ingesta>)[*Capa de ingesta de datos*]: *Google Earth Engine* (clima y vegetación), *Copernicus Climate Data Store* (precipitación) y *Copernicus DEM* (elevación y topografía, vía _tiles_ públicos en AWS, sin autenticación).
  
-Cada fuente se define de forma declarativa mediante un diccionario de registro (`GEE_LAYERS`, `CDS_LAYERS`, `DEM_LAYERS`) que especifica, por variable: la colección o dataset de origen, las bandas necesarias, la unidad y el rango físico válido, de forma que añadir una nueva variable remota en el futuro solo requiera añadir una entrada al diccionario correspondiente, sin tocar el resto del código de extracción.
+Cada fuente se define de forma declarativa mediante un diccionario de registro (`GEE_LAYERS`, `CDS_LAYERS`, `DEM_LAYERS`) que especifica, por variable: la colección o _dataset_ de origen, las bandas necesarias, la unidad y el rango físico válido, de forma que añadir una nueva variable remota en el futuro solo requiera añadir una entrada al diccionario correspondiente, sin tocar el resto del código de extracción.
  
 ==== Metodología
  
 De *Google Earth Engine* se extraen 3 variables sobre los 428 puntos de muestreo: *temperatura media anual* y *humedad relativa media anual* (ambas de `ECMWF/ERA5_LAND/DAILY_AGGR`, periodo 2015-2020), y el *NDVI medio de verano* (de `COPERNICUS/S2_SR_HARMONIZED`, filtrando imágenes Sentinel-2 con menos de un 20% de nubosidad). 
 
-De *Copernicus DEM* se extraen *elevación*, *pendiente* y *orientación*, leyendo directamente el tile COG correspondiente a cada punto vía `/vsicurl/` (sin descarga previa) y calculando pendiente/orientación mediante el método de diferencias centrales de Horn (1981) sobre una ventana $3 times 3$ alrededor del punto. 
+De *Copernicus DEM* se extraen *elevación*, *pendiente* y *orientación*, leyendo directamente el _tile_ COG correspondiente a cada punto vía `/vsicurl/` (sin descarga previa) y calculando pendiente/orientación mediante el método de diferencias centrales de Horn (1981) sobre una ventana $3 times 3$ alrededor del punto. 
 
 De *Copernicus CDS* se intenta extraer la precipitación mensual media (`reanalysis-era5-land-monthly-means`, 2015-2020).
  
@@ -119,7 +119,7 @@ De *Copernicus CDS* se intenta extraer la precipitación mensual media (`reanaly
   kind:table
 ) <tab-33>
  
-Como de puede ver en la #ref(<tab-33>), variable de precipitación (`cds_precip_mm_mes`) obtuvo una cobertura del 0% sobre los 428 sitios, por lo que el propio proceso de limpieza (`_drop_empty_cols`) la descarta antes de exportar: no llega a incorporarse al dataset final ni a `FEATURES_AUTORIZADAS`, de ahí que ninguno de los modelos entrenados use ninguna variable con prefijo `cds_`. 
+Como se puede ver en la #ref(<tab-33>), la variable de precipitación (`cds_precip_mm_mes`) obtuvo una cobertura del 0% sobre los 428 sitios, por lo que el propio proceso de limpieza (`_drop_empty_cols`) la descarta antes de exportar: no llega a incorporarse al _dataset_ final ni a `FEATURES_AUTORIZADAS`, de ahí que ninguno de los modelos entrenados use ninguna variable con prefijo `cds_`. 
 
 El resto de variables _online_ (GEE y DEM) sí superaron ampliamente el umbral del 80% de cobertura. El archivo exportado, `online_features_vx.csv`, contiene finalmente 428 filas × 7 columnas (`site_id` + 3 GEE + 3 DEM).
 
@@ -148,7 +148,7 @@ Las variables _online_ numéricas siguen la misma política de imputación por t
  
 ==== Resultados
 
-En la #ref(<tab-34>) se pueden ver los datasets resultantes tras ejecutar el _notebook_.
+En la #ref(<tab-34>) se pueden ver los _datasets_ resultantes tras ejecutar el _notebook_.
  
 #figure(
   align(center)[
@@ -172,7 +172,7 @@ La imputación de las variables _online_ no necesitó generar ningún indicador 
 
 El NaN total en ambos ficheros de salida es 0. 
 
-El desglose final por fuente confirma la composición del dataset que efectivamente llega a los _notebooks_ de modelado: 
+El desglose final por fuente confirma la composición del _dataset_ que efectivamente llega a los _notebooks_ de modelado: 
 - 15 columnas de rasters EU. 
 - 12 de metadatos de sitio. 
 - 9 abióticas químicas. 
@@ -197,21 +197,21 @@ Este `sob4es_final_model_ready.csv` es, precisamente, el fichero del que parte e
 
 ==== Fundamentos y configuración
 
-Una vez `data-prep`, `data-prep-online` y `data-prep-combination` (véase #link(<notebooks-empleados>)[*Anexo V*]) generan el dataset final armonizado (`sob4es_final_model_ready.csv`), este _notebook_ es responsable de dividirlo en los tres subconjuntos empleados por el resto del proyecto: *entrenamiento, test y evaluación*. Es, por tanto, el último eslabón de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] antes de entrar en la #link(<capa-modelado>)[*Capa de modelado predictivo*].
+Una vez `data-prep`, `data-prep-online` y `data-prep-combination` (véase #link(<notebooks-empleados>)[*Anexo V*]) generan el _dataset_ final armonizado (`sob4es_final_model_ready.csv`), este _notebook_ es responsable de dividirlo en los tres subconjuntos empleados por el resto del proyecto: *entrenamiento, test y evaluación*. Es, por tanto, el último eslabón de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] antes de entrar en la #link(<capa-modelado>)[*Capa de modelado predictivo*].
 
-El dataset de entrada contiene 428 filas y 71 columnas, sin ningún valor nulo. La partición se configura con `TEST_SIZE=0.30` (fracción reservada para test+eval conjuntamente), `EVAL_FRAC=0.50` (mitad de esa reserva para eval, mitad para test) y `RANDOM_SEED=42`.
+El _dataset_ de entrada contiene 428 filas y 71 columnas, sin ningún valor nulo. La partición se configura con `TEST_SIZE=0.30` (fracción reservada para test+eval conjuntamente), `EVAL_FRAC=0.50` (mitad de esa reserva para eval, mitad para test) y `RANDOM_SEED=42`.
 
 ==== Metodología
 
 La partición se realiza en dos pasos sucesivos con `train_test_split` de `scikit-learn`, estratificando por país de origen de la muestra (extraído del prefijo de `site_id`, por ejemplo BE, IL, RO) para asegurar que los tres subconjuntos mantengan una representación proporcional de cada país. 
 
-Italia (IT), con solo 2 filas en todo el dataset, se agrupa con Alemania (DE) únicamente a efectos de estratificación, al no ser posible estratificar un país con menos de 2 muestras por split.
+Italia (IT), con solo 2 filas en todo el _dataset_, se agrupa con Alemania (DE) únicamente a efectos de estratificación, al no ser posible estratificar un país con menos de 2 muestras por _split_.
 
 Las particiones resultantes son las siguientes:
 - *Primera partición:* train (70%) frente a un conjunto temporal (temp, 30%).
 - *Segunda partición:* temp se divide a su vez al 50% entre test y eval.
 
-Tras la partición se verifica que la proporción de `outlier_flag` (una bandera de calidad de dato ya calculada en fases anteriores) se mantiene similar entre los tres subconjuntos, como comprobación adicional de que la partición no ha introducido un sesgo de calidad entre splits.
+Tras la partición se verifica que la proporción de `outlier_flag` (una bandera de calidad de dato ya calculada en fases anteriores) se mantiene similar entre los tres subconjuntos, como comprobación adicional de que la partición no ha introducido un sesgo de calidad entre _splits_.
 
 #colbreak()
 
@@ -231,7 +231,7 @@ En la #ref(<tab-35>) y en la #ref(<fig-17>) se pueden ver los subconjuntos resul
                 [*`eval.csv`*],  [65],  [15.2%] 
         )
     ],
-    caption: [Subconjuntos resultantes de la división del dataset original.]
+    caption: [Subconjuntos resultantes de la división del _dataset_ original.]
 )<tab-35>
 
 #figure(
@@ -242,7 +242,7 @@ En la #ref(<tab-35>) y en la #ref(<fig-17>) se pueden ver los subconjuntos resul
     kind: image
 )<fig-17>
 
-La distribución de `outlier_flag` se mantiene prácticamente idéntica entre subconjuntos, confirmando que la estratificación por país no ha desequilibrado esta variable de calidad. De igual forma, la proporción de muestras por país se mantiene estable en los tres splits, con la única excepción esperable de Italia, cuyas 2 únicas muestras se reparten una a test y otra a eval, sin ninguna en train.
+La distribución de `outlier_flag` se mantiene prácticamente idéntica entre subconjuntos, confirmando que la estratificación por país no ha desequilibrado esta variable de calidad. De igual forma, la proporción de muestras por país se mantiene estable en los tres _splits_, con la única excepción esperable de Italia, cuyas 2 únicas muestras se reparten una a test y otra a eval, sin ninguna en train.
 
 #let file = "../media/anexos/data-prep-div.pdf"
 #let total_pages = 3 

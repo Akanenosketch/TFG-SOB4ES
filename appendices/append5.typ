@@ -11,16 +11,16 @@ El objetivo de esta primera prueba es evaluar si todas las variables escogidas, 
 
 Esto se hace evaluando las 21 variables objetivo, no solo sobre los _targets_ de referencia (`earthworm_shannon` y `earthworm_richness`).
 
-Para decidir qué variables son candidatas a eliminarse se parte de los criterios de importancia ya calculados en los propios notebooks de modelado: el coeficiente de Ridge (`|coef_|`, por _target_ y agregado en media global) y, para _Random Forest_/RegressorChain, la importancia MDI y SHAP (`TreeExplainer`) sobre el primer modelo de la cadena. Se descartan las variables que aparecen de forma consistente en el _bottom-10_ de ambos criterios.
+Para decidir qué variables son candidatas a eliminarse se parte de los criterios de importancia ya calculados en los propios _notebooks_ de modelado: el coeficiente de Ridge (`|coef_|`, por _target_ y agregado en media global) y, para _Random Forest_/RegressorChain, la importancia MDI y SHAP (`TreeExplainer`) sobre el primer modelo de la cadena. Se descartan las variables que aparecen de forma consistente en el _bottom-10_ de ambos criterios.
 
-Sobre el conjunto base de 34 variables se prueban varios pasos, reentrenando los 8 modelos del pipeline en cada uno (mismo `random_state=42` e hiperparámetros ya optimizados para la configuración base, sin re-tunear, para aislar el efecto de las variables) y evaluando sobre los 21 _targets_. Las tres candidatas de baja importancia identificadas como _bottom-10_ en el cruce de criterios (`cu_z`, `ni_z` y `mo_z`) se eliminan tanto de forma individual como en combinación (`cu_z`+`ni_z`, `cu_z`+`mo_z`, `mo_z`+`ni_z` y las tres a la vez).
+Sobre el conjunto base de 34 variables se prueban varios pasos, reentrenando los 8 modelos del _pipeline_ en cada uno (mismo `random_state=42` e hiperparámetros ya optimizados para la configuración base, sin re-tunear, para aislar el efecto de las variables) y evaluando sobre los 21 _targets_. Las tres candidatas de baja importancia identificadas como _bottom-10_ en el cruce de criterios (`cu_z`, `ni_z` y `mo_z`) se eliminan tanto de forma individual como en combinación (`cu_z`+`ni_z`, `cu_z`+`mo_z`, `mo_z`+`ni_z` y las tres a la vez).
 
 Como se puede ver en la #ref(<tab-59>) y en la #ref(<fig-23>), se muestran los resultados de la eliminación de variables en todas sus iteraciones.
 
 #figure(
   table(
     columns: 9,
-    align: (left+horizon),
+    align: (left+horizon, center+horizon, center+horizon, center+horizon, center+horizon, center+horizon, center+horizon, center+horizon, center+horizon),
     fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da")},
     table.header(
       [*Modelo*], [*_Baseline_*], [*sin cu_z*], [*sin ni_z*], [*sin cu_z\ +ni_z*], [*sin mo_z*], [*sin cu_z\ +mo_z*], [*sin mo_z\ +ni_z*], [*sin cu_z\ +mo_z\ +ni_z*],
@@ -44,12 +44,12 @@ Como se puede ver en la #ref(<tab-59>) y en la #ref(<fig-23>), se muestran los r
   kind: image
 )<fig-23>
 
-En los dos _targets_ prioritarios los resultados apenas cambian respecto al _baseline_, dichso resultados se pueden ver en la #ref(<tab-60>):
+En los dos _targets_ prioritarios los resultados apenas cambian respecto al _baseline_, dichos resultados se pueden ver en la #ref(<tab-60>):
 
 #figure(
   table(
     columns: 5,
-    align: (left, center, center, center, center),
+    align: (left+horizon, center+horizon, center+horizon, center+horizon, center+horizon),
     fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da")},
     table.header(
       [*Modelo*], [*R² Shannon\ (_Baseline_)*], [*R² Shannon\ (sin cu_z + mo_z + ni_z)*], [*R² Richness\ (_Baseline_)*], [*R² Richness\ (sin cu_z + mo_z + ni_z)*],
@@ -58,7 +58,7 @@ En los dos _targets_ prioritarios los resultados apenas cambian respecto al _bas
     [*_Random Forest_*],     [0.5041], [0.5081], [0.5722], [0.5620],
     [*RF multisalida*],      [0.4160], [0.4178], [0.4509], [0.4581],
     [*XGBoost*],             [0.4946], [0.5012], [0.5171], [0.5124],
-    [*XGBoost multisalida*], [0.5375], [0.5482], [0.5893], [0.5960],
+    [*XGBoost\ multisalida*], [0.5375], [0.5482], [0.5893], [0.5960],
     [*RegressorChain*],      [0.4876], [0.4742], [0.5359], [0.5242],
     [*MLP multisalida*],     [0.3583], [0.4029], [0.4539], [0.4809],
     [*MLP _custom loss_*],     [0.3438], [0.3776], [0.4543], [0.4551],
@@ -77,7 +77,7 @@ El hallazgo más relevante de esta prueba, sin embargo, no es sobre las variable
 
 Es una confirmación empírica del riesgo de _negative transfer_ planteado de forma teórica en el apartado 1.2: al forzar una representación compartida entre 21 indicadores muy heterogéneos, el modelo optimiza bien para los _targets_ dominantes a costa de rendir mal en el resto. Esto lleva a matizar que XGBoost (en ambas variantes) es el modelo que mejor generaliza sobre los dos _targets_ prioritarios, mientras que RF multisalida es el que mejor generaliza al conjunto completo de 21 _targets_.
 
-Como conclusión, se mantienen las 34 variables originales como configuración definitiva del TFG: ninguna variante probada mejora de forma clara y generalizada todos los modelos a la vez, y la ganancia en simplicidad del pipeline de ingesta sería mínima.
+Como conclusión, se mantienen las 34 variables originales como configuración definitiva del TFG: ninguna variante probada mejora de forma clara y generalizada todos los modelos a la vez, y la ganancia en simplicidad del _pipeline_ de ingesta sería mínima.
 
 #colbreak()
 
@@ -118,7 +118,7 @@ Se reentrenan los 8 modelos con tres semillas concretas (`random_state` = 27, 42
 
 #colbreak()
 
-En la #ref(<tab-62>) se puede ver el _ranking_ calulado agregado con `comparador_sensibilidad_rs.py` sobre los 21 _targets_ × 3 semillas (63 evaluaciones por modelo, _rank_ 1 = mejor $R²$ en esa combinación _target_/semilla):
+En la #ref(<tab-62>) se puede ver el _ranking_ calculado agregado con `comparador_sensibilidad_rs.py` sobre los 21 _targets_ × 3 semillas (63 evaluaciones por modelo, _rank_ 1 = mejor $R²$ en esa combinación _target_/semilla):
 
 #figure(
   table(
@@ -146,19 +146,19 @@ En la #ref(<tab-63>) se pueden ver los resultados, pero enfocándolo a los dos _
 #figure(
   table(
     columns: 7,
-    align: (left, center, center, center, center, center, center),
+    align: (left+horizon, center+horizon, center+horizon, center+horizon, center+horizon, center+horizon, center+horizon),
     fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da")},    
     table.header(
       [*Modelo*], [*Shannon (rs=27)*], [*Shannon (rs=42)*], [*Shannon (rs=128)*], [*Richness (rs=27)*], [*Richness (rs=42)*], [*Richness (rs=128)*],
     ),
     [*Ridge*],               [0.2395], [0.2395], [0.2395], [0.2789], [0.2789], [0.2789],
     [*_Random Forest_*],     [0.5068], [0.5041], [0.5067], [0.5636], [0.5722], [0.5672],
-    [*RF multisalida*],      [0.4709], [0.4160], [0.4900], [0.5195], [0.4509], [0.5318],
+    [*RF\ multisalida*],      [0.4709], [0.4160], [0.4900], [0.5195], [0.4509], [0.5318],
     [*XGBoost*],             [0.4722], [0.4946], [0.4992], [0.4923], [0.5171], [0.5219],
     [*XGBoost multisalida*], [0.5433], [0.5375], [0.5395], [0.5947], [0.5893], [0.5977],
     [*RegressorChain*],      [0.4940], [0.4876], [0.4988], [0.5440], [0.5359], [0.5401],
-    [*MLP multisalida*],     [0.3039], [0.4264], [0.3852], [0.4111], [0.5176], [0.4910],
-    [*MLP _custom loss_*],   [0.3438], [0.3750], [0.3804], [0.4543], [0.4671], [0.4899],
+    [*MLP\ multisalida*],     [0.3039], [0.4264], [0.3852], [0.4111], [0.5176], [0.4910],
+    [*MLP\ _custom loss_*],   [0.3438], [0.3750], [0.3804], [0.4543], [0.4671], [0.4899],
   ),
   caption: [$R²$ en los dos _targets_ prioritarios por semilla (`random_state` = 27, 42, 128).],
   kind: table
@@ -180,7 +180,7 @@ Se reentrenan los 8 modelos sobre dos barridos independientes de `random_state`:
 
 Los dos barridos se mantienen como ramas independientes en vez de fusionarse, lo que además permite usar el segundo como comprobación de estabilidad del primero.
 
-En la #ref(<tab-64>) se pueden ver los resultados de ambas iteraciones a nivel global, mientras que en la #ref(<tab-65>) se pueden ver los resultados a nivel de los targets prioritarios. Estos resultados se pueden ver de forma más gráfica en la #ref(<fig-25>).
+En la #ref(<tab-64>) se pueden ver los resultados de ambas iteraciones a nivel global, mientras que en la #ref(<tab-65>) se pueden ver los resultados a nivel de los _targets_ prioritarios. Estos resultados se pueden ver de forma más gráfica en la #ref(<fig-25>).
 
 #figure(
   table(
@@ -251,7 +251,7 @@ En la #ref(<tab-64>) se pueden ver los resultados de ambas iteraciones a nivel g
   kind: table
 )<tab-66>
 
-Ridge y XGBoost (variante single-_target_) tienen desviación típica exactamente 0.0000 en ambos barridos, es decir, son completamente deterministas frente a `random_state` con la configuración de hiperparámetros actual. Para Ridge ya se había confirmado en la @prueba-2; que XGBoost single-_target_ también lo sea es un hallazgo nuevo, que sugiere que `subsample` y `colsample_bytree` no introducen aleatoriedad efectiva o que `random_state` no se está propagando realmente al proceso de entrenamiento. Conviene revisar el notebook `xgboost_model.ipynb` para confirmar cuál de las dos explicaciones es la correcta, ya que en el segundo caso el ensamble de 5 semillas en producción no estaría aportando ninguna diversidad real.
+Ridge y XGBoost (variante single-_target_) tienen desviación típica exactamente 0.0000 en ambos barridos, es decir, son completamente deterministas frente a `random_state` con la configuración de hiperparámetros actual. Para Ridge ya se había confirmado en la @prueba-2; que XGBoost single-_target_ también lo sea es un hallazgo nuevo, que sugiere que `subsample` y `colsample_bytree` no introducen aleatoriedad efectiva o que `random_state` no se está propagando realmente al proceso de entrenamiento. Conviene revisar el _notebook_ `xgboost_model.ipynb` para confirmar cuál de las dos explicaciones es la correcta, ya que en el segundo caso el ensamble de 5 semillas en producción no estaría aportando ninguna diversidad real.
 
 El _ranking_, como se puede ver en la #ref(<tab-66>), es prácticamente idéntico entre los dos barridos pese a que uno tiene casi 5 veces más semillas que el otro, lo que es una fuerte evidencia de que 101 semillas ya son suficientes para estimar el _ranking_ de forma estable. RF multisalida es, con diferencia, el modelo más estable y con mejor _rank_ medio en ambos barridos, sin bajar nunca de la 2ª posición. Esto contrasta con la #link(<prueba-1>)[*Prueba de eliminación de variables*], donde XGBoost destacaba sobre los _targets_ prioritarios: en $R²$ global sobre los 21 _targets_ gana RF multisalida, en $R²$ sobre los dos _targets_ prioritarios gana XGBoost multisalida, son conclusiones distintas según qué métrica se priorice, no contradictorias.
 
@@ -267,7 +267,7 @@ Se cargan los 8 modelos de producción (cada uno como ensamblado interno de sus 
 
 Se prueban cinco formas de combinar los 8 modelos base: media simple, media ponderada por $R²$ (peso proporcional a max($R²$, 0) en `meta-train`), `top-k` (k=4, los mejores en `meta-train`), `mediana`, y `_stacking_ convexo` (pesos $w gt.eq 0$, $sum_i w_i = 1$, optimizados por SLSQP en `meta-train`).
 
-Solo en 4 de 21 _targets_ (19%) alguna combinación supera al mejor modelo individual, y 15 de 21 (71%) muestran señal predictiva real. Cuando la mejor combinación no gana al individual, la mediana es la variante que más veces queda como mejor combinación (8/21), seguida del stacking convexo (7/21), top-4 (4/21), media ponderada (1/21) y media simple (1/21). Estos resultados se pueden ver reflejados en la #ref(<tab-67>).
+Solo en 4 de 21 _targets_ (19%) alguna combinación supera al mejor modelo individual, y 15 de 21 (71%) muestran señal predictiva real. Cuando la mejor combinación no gana al individual, la mediana es la variante que más veces queda como mejor combinación (8/21), seguida del _stacking_ convexo (7/21), top-4 (4/21), media ponderada (1/21) y media simple (1/21). Estos resultados se pueden ver reflejados en la #ref(<tab-67>).
 
 #figure(
   table(
@@ -311,7 +311,7 @@ En los _targets_ con señal fuerte ($R²$ > 0.2) el mejor modelo individual gana
 
 #colbreak()
 
-==== Stacking con `meta-modelo`
+==== _Stacking_ con `meta-modelo`
 
 En vez de combinar a mano, se entrena un `meta-modelo` por _target_ que aprende, a partir de las predicciones de los 8 modelos base sobre el meta-train, cómo combinarlas para acertar el valor real. 
 
@@ -362,7 +362,7 @@ El reparto de victorias entre los "no individuales" está repartido sin un ganad
   kind: table
 )<tab-68>
 
-En la #ref(<tab-69>)se pueden evr los resutlados pero centrados en los dos _targets_ prioritarios:
+En la #ref(<tab-69>) se pueden ver los resultados pero centrados en los dos _targets_ prioritarios:
 
 #figure(
   table(
@@ -396,7 +396,7 @@ El caso más llamativo es `coll_species_richness_z`, donde ningún modelo indivi
 
 #colbreak()
 
-Como conclusión, ninguna de las dos familias de ensamblado justifica sustituir el pipeline de 8 modelos independientes por un único combinador en producción: la ganancia es real pero concentrada en _targets_ que de partida no tenían señal predictiva, y en los _targets_ con señal fuerte, incluidos los dos prioritarios, el mejor modelo individual sigue siendo, en general, más fiable. 
+Como conclusión, ninguna de las dos familias de ensamblado justifica sustituir el _pipeline_ de 8 modelos independientes por un único combinador en producción: la ganancia es real pero concentrada en _targets_ que de partida no tenían señal predictiva, y en los _targets_ con señal fuerte, incluidos los dos prioritarios, el mejor modelo individual sigue siendo, en general, más fiable. 
 
 El _stacking_ con `meta-modelo` es la variante más prometedora si en el futuro se quisiera explorar esta vía más a fondo, pero con un `meta-train` de solo 45 filas el riesgo de sobreajuste recomienda tratarlo como línea de trabajo futura y no como alternativa lista para producción.
 
@@ -419,6 +419,8 @@ Ni ensamblar variables ni ensamblar modelos cambia sustancialmente el panorama. 
 En los _targets_ con señal fuerte, incluidos los dos prioritarios, el mejor modelo individual sigue ganando en la gran mayoría de los casos. La combinación de ambos hallazgos sugiere que el techo de rendimiento actual (~0.50/0.59 en los _targets_ prioritarios, ~0.08/0.10 en el agregado) está limitado más por la relación real entre las 34 variables autorizadas y los 21 _targets_ que por la elección de modelo, arquitectura o combinador.
 
 La inestabilidad del MLP es el segundo hallazgo transversal más relevante. Las pruebas 2 y 3 muestran que los dos MLP tienen una desviación típica entre semillas varias veces superior a la de los modelos de árboles (hasta 0.052 en $R²$ global para MLP multisalida en el barrido de 491 semillas, frente a 0.003/0.005 en _Random Forest_/XGBoost multisalida). Esto refuerza la recomendación ya avanzada en la #link(<prueba-3>)[*Prueba de barrido de `random_state`*] de ampliar el ensamble de producción para los MLP más allá de las 5 redes actuales, o de reportar explícitamente un rango de rendimiento en vez de un valor puntual para estos dos modelos en las conclusiones finales.
+
+#colbreak()
 
 Por último, cabe destacar el determinismo inesperado de Ridge y XGBoost. Las pruebas 2 y 3 muestran que Ridge tiene varianza cero entre semillas comportamiento esperado por tratarse de una solución cerrada) y que XGBoost también la tiene, un hallazgo menos esperado que queda como pregunta abierta: si `random_state` no se está propagando correctamente al entrenamiento de este modelo concreto, el ensamble de 5 semillas de XGBoost en producción no estaría aportando la diversidad que se le presupone. 
 

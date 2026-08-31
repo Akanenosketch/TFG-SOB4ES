@@ -3,9 +3,9 @@
 Como se indica en #link(<lenguaje-de-programacion-control-de-versiones-y-librerias>
 )[*Lenguajes de programación, control de versiones y bibliotecas*], este TFG ha empleado Git como sistema de control de versiones, alojado en un repositorio de GitHub#sub([@githubTFGRepo]).
 
-A diferencia de un flujo de trabajo con una única rama principal, en el que cada modelo y cada prueba adicionale se acumularían de forma secuencial sobre el mimso historial, se optó por un esquema de ramas independientes por prueba. Esto responde al cáracter exploratorio de este TFG.
+A diferencia de un flujo de trabajo con una única rama principal, en el que cada modelo y cada prueba adicional se acumularían de forma secuencial sobre el mismo historial, se optó por un esquema de ramas independientes por prueba. Esto responde al carácter exploratorio de este TFG.
 
-A lo largo del trabajo se han entrenado múltiples variantes de un mismo modelo, en específico las variantes multisalida (véase #link(<xgb-multi-model>)[*Modelo XGBoost multisalida*] para la variante de XGBoost y #link(<rf-multi-model>)[*Modelo _Random Forest_ multisalida*] para la variante de _Random Forest_) y las variantes elaboradas para las pruebas de #link(<prueba-1>)[*Eliminación de variables*], #link(<prueba-1>)[*Sensibilidad de random_state*] y #link(<prueba-3>)[*Barrido de random_states*]. Esto ha sido necesario para poder comparas los resultados de las diferentes variables entre sí, independientemente de que se haya hecho de forma manual o automatizada, sin que los cambios realizados sobrescribiesen los resultados de las demás.
+A lo largo del trabajo se han entrenado múltiples variantes de un mismo modelo, en específico las variantes multisalida (véase #link(<xgb-multi-model>)[*Modelo XGBoost multisalida*] para la variante de XGBoost y #link(<rf-multi-model>)[*Modelo _Random Forest_ multisalida*] para la variante de _Random Forest_) y las variantes elaboradas para las pruebas de #link(<prueba-1>)[*Eliminación de variables*], #link(<prueba-2>)[*Sensibilidad de random_state*] y #link(<prueba-3>)[*Barrido de random_state*]. Esto ha sido necesario para poder comparar los resultados de las diferentes variantes entre sí, independientemente de que se haya hecho de forma manual o automatizada, sin que los cambios realizados sobrescribiesen los resultados de las demás.
 
 Para proporcionar una mayor visibilidad e interpretabilidad al trabajo realizado, se ha decidido aplicar las siguientes medidas:
 + Alojar cada prueba/modificación realizada dentro de ramas independientes para tener una mejor forma de comparar los resultados entre varias ramas. 
@@ -15,7 +15,7 @@ Para proporcionar una mayor visibilidad e interpretabilidad al trabajo realizado
 
 #rect[
   *Nota:*\
-  Los _notebooks_ relacionados con la preparación de datos y los scripts de automatización no se incluyen en este anexo, al este mismo estar más centrado en las #link(<pruebas-llevadas-a-cabo>)[*pruebas adicionales llevadas a cabo*]. Si se quieren consultas estos _notebooks_ y _scripts_ con más detalles, se puede hacer revisando los siguientes anexos:
+  Los _notebooks_ relacionados con la preparación de datos y los _scripts_ de automatización no se incluyen en este anexo, al este mismo estar más centrado en las #link(<pruebas-llevadas-a-cabo>)[*pruebas adicionales llevadas a cabo*]. Si se quieren consultas estos _notebooks_ y _scripts_ con más detalles, se puede hacer revisando los siguientes anexos:
   - #link(<elementos-auxiliares>)[*Anexo IV*] para *_Scripts_ y _notebooks_ auxiliares*.
   - #link(<preparacion-de-datos>)[*Anexo III*] para los *_Notebooks_ de preparación de datos*.
 ]
@@ -84,8 +84,8 @@ Además de la distribución de todas las ramas, en la siguiente tabla se muestra
 Esta distribución de ramas, a lo largo de la realización de todas las pruebas, ha permitido lo siguiente:
 - Iterar sobre configuraciones experimentales concretas de forma aislada sin que esta afectara, combinado con la estrategia empleada en la elaboración de los modelos, al resto de modelos ni a los resultados de los modelos base o los modelos del resto de las pruebas realizadas.
 - Facilitar la comparación en cualquier momento el código y los resultados de dos o varias ramas distintas, independientemente de que dicha revisión sea manual o automatizada.
-- Preservar un historial completo y trabajble de cada decisión experimental: si una prueba concreta produce resultados inesperadosm es posible volver a la rama correspondiente y revisar exactamente qué parámetros o variables se empleadon en ella, sin depender de la memorial del investigador nu de anotaciones externar al propio repositorio.
-- Facilitar la reproducibilidad de cualquier resultado concreto de la memoria: cada figura, cada tabla o métrica reportada puede rastrearse hasta la rama y el notebook exactos que la generaron.
+- Preservar un historial completo y trabajable de cada decisión experimental: si una prueba concreta produce resultados inesperados, es posible volver a la rama correspondiente y revisar exactamente qué parámetros o variables se emplearon en ella, sin depender de la memoria del investigador ni de anotaciones externas al propio repositorio.
+- Facilitar la reproducibilidad de cualquier resultado concreto de la memoria: cada figura, cada tabla o métrica reportada puede rastrearse hasta la rama y el _notebook_ exactos que la generaron.
 
 #colbreak()
 
@@ -125,13 +125,13 @@ Esta distribución de ramas, a lo largo de la realización de todas las pruebas,
       table.cell()[*model-prep-rs-1*], 
         table.cell()[Rama en la que se hace la segunda iteración de la prueba de sensibilidad de random_state. El valor de random_state de esta iteración es de 128.],
       table.cell()[*model-prep-rs-group*], 
-        table.cell()[Rama en la que se hace la primera iteración de la prueba de barrido de random_state. El rango de valores de esta iteración de es 0 a 100 (inclusive). ],
+        table.cell()[Rama en la que se hace la primera iteración de la prueba de barrido de random_state. El rango de valores de esta iteración es 0 a 100 (inclusive). ],
       table.cell()[*model-prep-rs-group-1*], 
-        table.cell()[Rama en la que se hace la segunda iteración de la prueba de barrido de random_state. El rango de valores de esta iteración de es 0 a 100 (inclusive).],
+        table.cell()[Rama en la que se hace la segunda iteración de la prueba de barrido de random_state. El rango de valores de esta iteración es 0 a 490 (inclusive), es decir, 491 semillas.],
       table.cell()[*model-prep-mixin*], 
-        table.cell()[Rama en la que se hace la primera iteración de la prueba de ensamblado de predicciones, en esta se prueba con 8 de los 21 targets.],
+        table.cell()[Rama en la que se hace la primera iteración de la prueba de ensamblado de predicciones, en esta se prueba con 8 de los 21 _targets_.],
       table.cell()[*model-prep-mixin-1*], 
-        table.cell()[Rama en la que se hace la primera iteración de la prueba de ensamblado de predicciones, en esta se prueba con todos los targets.],
+        table.cell()[Rama en la que se hace la segunda iteración de la prueba de ensamblado de predicciones, en esta se prueba con todos los _targets_.],
       )],
       caption: [Resumen de las ramas creadas.],
       kind: table,
@@ -141,18 +141,18 @@ Esta distribución de ramas, a lo largo de la realización de todas las pruebas,
 
 === _Notebooks_ empleados <notebooks-empleados>
 
-Además de la distribución en ramas, cada modelo desarrollados, como también cada prueba adicional realizada, se corresponde con uno o varios _notebooks_ de Jupyter independientes. Esta separación permite ejecutar, depurar y reentrenar cada modelo o prueba de forma aislada sin afectar al resto y facilita de forma aislada sin afecta al resto, y facilita además la ejecución automatizda mediante los scripts auxiliares descritos en #link(<elementos-auxiliares>)[*Anexo IV*].
+Además de la distribución en ramas, cada modelo desarrollado, como también cada prueba adicional realizada, se corresponde con uno o varios _notebooks_ de Jupyter independientes. Esta separación permite ejecutar, depurar y reentrenar cada modelo o prueba de forma aislada sin afectar al resto, y facilita además la ejecución automatizada mediante los _scripts_ auxiliares descritos en #link(<elementos-auxiliares>)[*Anexo IV*].
 
 Todos los _notebooks_ de modelado comparten una misma estructura interna, dividida en las siguientes celdas o bloques, con el objetivo de mantener una experiencia de desarrollo homogénea entre modelos y facilitar así tanto la comparación entre ellos como la incorporación de nuevos modelos en un futuro:
 
-- *Carga de datos y configuración:* lectura de `train.csv`, `test.csv` y `eval.csv`, junto con la carga del `scaler.pkl` correspondiente y la definición de las semillas (`random_state`) y demás parámetros de configuración del notebook.
+- *Carga de datos y configuración:* lectura de `train.csv`, `test.csv` y `eval.csv`, junto con la carga del `scaler.pkl` correspondiente y la definición de las semillas (`random_state`) y demás parámetros de configuración del _notebook_.
 - *Búsqueda de hiperparámetros:* ejecución de `RandomizedSearchCV` sobre el conjunto de entrenamiento y validación cruzada, con el grid de parámetros específico del modelo.
 - *Validación cruzada del modelo final:* ejecución de `cross_validate` con `RepeatedKFold` sobre el mejor conjunto de hiperparámetros encontrado, para comprobar la estabilidad del modelo antes de entrenarlo de forma definitiva.
 - *Entrenamiento final:* ajuste del modelo sobre la totalidad del conjunto de entrenamiento con los hiperparámetros seleccionados.
 - *Evaluación preliminar:* cálculo de las métricas de regresión (R², RMSE, MAE) sobre el conjunto de evaluación, junto con una primera aproximación a la importancia de variables.
 - *Persistencia:* guardado del modelo entrenado en un archivo `.pkl` mediante `joblib`, para su uso posterior en la Capa de evaluación de modelos.
 
-Sobre esta estructura común, cada notebook incorpora las particularidades propias de su modelo (por ejemplo, las celdas de detección de GPU en los _notebooks_ de XGBoost, o la definición de la arquitectura de capas en los _notebooks_ de MLP). 
+Sobre esta estructura común, cada _notebook_ incorpora las particularidades propias de su modelo (por ejemplo, las celdas de detección de GPU en los _notebooks_ de XGBoost, o la definición de la arquitectura de capas en los _notebooks_ de MLP). 
 
 En la #ref(<tab-45>) se resumen todos los _notebooks_ principales empleados a lo largo de este TFG, estos _notebooks_ se pueden ver con más detalle dentro del #link(<modelos-empleados>)[*Anexo II*]:
 
@@ -168,19 +168,19 @@ En la #ref(<tab-45>) se resumen todos los _notebooks_ principales empleados a lo
     table.cell()[*reg_model*], 
       table.cell()[Entrenamiento del modelo de Regresión Ridge. \ Al tratarse del modelo base con menor coste computacional del proyecto, se emplea además como referencia mínima de rendimiento (_baseline_) frente a la que se comparan el resto de modelos.], 
     table.cell()[*rf_model*], 
-      table.cell()[Entrenamiento del modelo _Random Forest_ base (salida simple): un modelo independiente por target. \ Incluye el cálculo de la importancia de variables por impureza media (MDI) y por permutación, ambas empleadas posteriormente como complemento a SHAP.], 
+      table.cell()[Entrenamiento del modelo _Random Forest_ base (salida simple): un modelo independiente por _target_. \ Incluye el cálculo de la importancia de variables por impureza media (MDI) y por permutación, ambas empleadas posteriormente como complemento a SHAP.], 
     table.cell()[*rf_multisalida*], 
-      table.cell()[Entrenamiento del modelo _Random Forest_ con salida múltiple: un mismo conjunto de árboles predice simultáneamente los 21 targets. \ Reutiliza la mayor parte de la estructura de rf_model, adaptando la preparación de los datos para que y sea una matriz en vez de un vector.], 
+      table.cell()[Entrenamiento del modelo _Random Forest_ con salida múltiple: un mismo conjunto de árboles predice simultáneamente los 21 _targets_. \ Reutiliza la mayor parte de la estructura de rf_model, adaptando la preparación de los datos para que y sea una matriz en vez de un vector.], 
     table.cell()[*regressorchain*], 
-      table.cell()[Entrenamiento del modelo _Random Forest_ pero envuelto en RegressorChain para que devuelva cadenas de predicciones. \ Implementa la estrategia de Ensembles of Chains (ECC), entrenando varias cadenas con orden aleatorio de targets y semilla distinta por iteración, y promediando sus predicciones finales.], 
+      table.cell()[Entrenamiento del modelo _Random Forest_ pero envuelto en RegressorChain para que devuelva cadenas de predicciones. \ Implementa la estrategia de Ensemble of Chains (ECC), entrenando varias cadenas con orden aleatorio de _targets_ y semilla distinta por iteración, y promediando sus predicciones finales.], 
     table.cell()[*xgboost_model*], 
       table.cell()[Entrenamiento del modelo XGBoost base (salida simple). \ Incorpora una celda de detección de GPU/CUDA para configurar automáticamente los parámetros de dispositivo según el equipo en el que se ejecute el _notebook_.], 
     table.cell()[*xgb_multisalida*], 
-      table.cell()[Entrenamiento del modelo XGBoost con múltiples salidas y con soporte de predicción multi-target, empleando el parámetro `multi_strategy="multi_output_tree"` para que las divisiones del árbol capturen relaciones compartidas entre targets. \ Comparte la misma lógica de detección de GPU que xgboost_model.], 
+      table.cell()[Entrenamiento del modelo XGBoost con múltiples salidas y con soporte de predicción multi-target, empleando el parámetro `multi_strategy="multi_output_tree"` para que las divisiones del árbol capturen relaciones compartidas entre _targets_. \ Comparte la misma lógica de detección de GPU que xgboost_model.], 
     table.cell()[*mlp_multisalida*], 
-      table.cell()[Entrenamiento de una red neuronal con salida múltiple, con la función de pérdida MSE estándar calculada conjuntamente sobre los 21 targets. \ Implementado sobre PyTorch, incluye la definición de la arquitectura de capas, el bucle de entrenamiento con el optimizador Adam y las celdas de seguimiento de la curva de pérdida por época.], 
+      table.cell()[Entrenamiento de una red neuronal con salida múltiple, con la función de pérdida MSE estándar calculada conjuntamente sobre los 21 _targets_. \ Implementado sobre PyTorch, incluye la definición de la arquitectura de capas, el bucle de entrenamiento con el optimizador Adam y las celdas de seguimiento de la curva de pérdida por época.], 
     table.cell()[*mlp_custom_loss*], 
-     table.cell()[Entrenamiento de una red neuronal con pérdida modificable, que combina el MSE estándar con un término configurable que penaliza la divergencia entre la matriz de correlación de las predicciones y la matriz de correlación real de los targets del lote. \ Reutiliza la arquitectura definida en mlp_multisalida, sustituyendo únicamente la función de pérdida empleada durante el entrenamiento.], )], 
+     table.cell()[Entrenamiento de una red neuronal con pérdida modificable, que combina el MSE estándar con un término configurable que penaliza la divergencia entre la matriz de correlación de las predicciones y la matriz de correlación real de los _targets_ del lote. \ Reutiliza la arquitectura definida en mlp_multisalida, sustituyendo únicamente la función de pérdida empleada durante el entrenamiento.], )], 
     caption: [_Notebooks_ de entrenamiento de modelos.], 
     kind: table, 
     )<tab-45>
@@ -238,7 +238,7 @@ Vinculados a las ramas *`model-prep-mixin`* y *`model-prep-mixin-1`* (véase la 
 
 La diferencia entre ambos enfoques es la siguiente: 
 
-- *prueba_ensamblado_con_modelos* aprende una combinación mediante un meta-modelo entrenado sobre parte del conjunto de evaluación (stacking), 
+- *prueba_ensamblado_con_modelos* aprende una combinación mediante un meta-modelo entrenado sobre parte del conjunto de evaluación (_stacking_), 
 
 - *prueba_ensamblado* prueba distintos métodos de combinación fijos y predefinidos (por ejemplo, un promedio simple o ponderado de las predicciones), sin entrenar ningún modelo adicional sobre ellas.
 
@@ -248,6 +248,6 @@ Los _notebooks_ correspondientes al resto de las pruebas adicionales (eliminaci�
 
 Esta reutilización deliberada del mismo código, en vez de crear _notebooks_ nuevos y no relacionados por cada prueba, es la que permite que las diferencias observadas entre ramas se deban únicamente al cambio introducido en cada prueba, y no a diferencias accidentales en la implementación.
 
-Cada _notebook_, una vez ejecutado, deja constancia de sus resultados de dos formas complementarias: por un lado, las propias celdas de salida del _notebook_ quedan guardadas junto con el código tras la ejecución (véase el script de automatización del #link(<elementos-auxiliares>)[*Anexo IV*], que realiza esta ejecución modificando los propios _notebooks_). 
+Cada _notebook_, una vez ejecutado, deja constancia de sus resultados de dos formas complementarias: por un lado, las propias celdas de salida del _notebook_ quedan guardadas junto con el código tras la ejecución (véase el _script_ de automatización del #link(<elementos-auxiliares>)[*Anexo IV*], que realiza esta ejecución modificando los propios _notebooks_). 
 
 Por otro, los archivos `.pkl` de los modelos entrenados y los archivos de resultados exportados por los _notebooks_ de comparación quedan disponibles para su análisis posterior sin necesidad de reejecutar ningún _notebook_.

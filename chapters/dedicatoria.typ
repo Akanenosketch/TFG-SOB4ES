@@ -14,7 +14,7 @@
       Al resto de mi familia cercana, por su cariño y su interés en cada paso de este camino. \ \
       Al grupo de "Pincho de tortilla", por las risas y por ser un pilar importante a lo largo de esta carrera. \ \
       A Meiporu, por su paciencia infinita, por aguantarme y por apoyarme en los peores momentos de este TFG. \ \
-      A mis tutores de este TFG, por confiar en mi y por haberme dado esta oportunidad a pesar de las circumstancias. \ \
+      A mis tutores de este TFG, por confiar en mí y por haberme dado esta oportunidad a pesar de las circunstancias. \ \
       Y, como no, al lector, por tomarse su tiempo para leerse este TFG. \ \
       Gracias por acompañarme en este camino.
     ]

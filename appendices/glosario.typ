@@ -10,11 +10,11 @@ En este glosario se incluyen definiciones que puedan ser de utilidad y aclaracio
     fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") },   
   table.header([*Sigla*], [*Significado*]),
     [*API*],         [Interfaz de Programación de Aplicaciones (_Application Programming Interface_).],
-    [*ASV*],         [Variante de Secuencia de Amplicón (_Amplicon Sequence Variant_). Unidad taxonómica empleada en los targets de biodiversidad microbiana/molecular (bacterias, hongos, eucariotas, oomicetos, cercozoos) obtenidos por metabarcoding.],
+    [*ASV*],         [Variante de Secuencia de Amplicón (_Amplicon Sequence Variant_). Unidad taxonómica empleada en los _targets_ de biodiversidad microbiana/molecular (bacterias, hongos, eucariotas, oomicetos, cercozoos) obtenidos por metabarcoding.],
     [*CDS*],         [Copernicus Climate Data Store.],
     [*CRISP-ML(Q)*], [_Cross-Industry Standard Process for Machine Learning with Quality Assurance_.],
     [*DEM*],         [Modelo de Elevación Digital.],
-    [*ECC*],         [_Ensembles of Chains_ (Ensamblados de Cadenas), variante de RegressorChain empleada en este TFG.],
+    [*ECC*],         [_Ensemble of Chains_ (Ensamblado de Cadenas), variante de RegressorChain empleada en este TFG.],
     [*GEE*],         [Google Earth Engine.],
     [*MAE*],         [Error Absoluto Medio.],
     [*MDI*],         [_Mean Decrease Impurity_ (Reducción Media de Impureza), medida nativa de importancia de variables en modelos de árboles.],
@@ -34,6 +34,8 @@ En este glosario se incluyen definiciones que puedan ser de utilidad y aclaracio
   )],
     caption: [Glosario de abreviaturas.],
     kind: table,
+    numbering: none,
+    outlined: false,
 )
 
 #colbreak()
@@ -53,7 +55,7 @@ En este glosario se incluyen definiciones que puedan ser de utilidad y aclaracio
     [*_Gradient Boosting_*], [Técnica de ensamblado que construye modelos de forma secuencial, donde cada nuevo modelo corrige los errores cometidos por los anteriores. XGBoost es una implementación de esta técnica.],
     [*Índice de riqueza*],[Indica cuántas especies distintas hay en una muestra. Solo cuenta, no le importa si hay muchos individuos de una y pocos de otra.],
     [*Índice de Shannon*],[Mide la diversidad real de una muestra, combinando dos cosas: cuántas especies hay y cómo de repartidos están los individuos entre ellas. Si una especie domina casi todo y el resto apenas aparece, el índice es bajo aunque técnicamente haya varias especies. Si los individuos están repartidos de forma equilibrada entre muchas especies, el índice es alto. ],
-    [*Jupyter Notebook*],[Entorno de desarrollo interactivo, organizado en celdas de código y texto ejecutables de forma independiente, en el que se han desarrollado la práctica totalidad de los notebooks de este TFG (véase #link(<dist-ramas-y-notebooks>)[*Anexo VI*]).],
+    [*Jupyter Notebook*],[Entorno de desarrollo interactivo, organizado en celdas de código y texto ejecutables de forma independiente, en el que se han desarrollado la práctica totalidad de los _notebooks_ de este TFG (véase #link(<dist-ramas-y-notebooks>)[*Anexo VI*]).],
     [*Kappa de Cohen*], [Métrica de concordancia entre la predicción y el valor real que corrige el nivel de acierto esperable por azar. Más robusta y fiable que el Accuracy, especialmente cuando las clases están desbalanceadas.],
     [*Matriz de confusión*], [Tabla que contrasta las clases predichas frente a las clases reales, permitiendo identificar en qué niveles de biodiversidad concreta se equivoca más el modelo.],
     [*Minimización del riesgo empírico* \ (ERM)], [Principio que aproxima el riesgo teórico, desconocido, de un modelo mediante el error medio calculado sobre el conjunto de entrenamiento disponible.],
@@ -65,6 +67,8 @@ En este glosario se incluyen definiciones que puedan ser de utilidad y aclaracio
     [*Regularización*], [Método estadístico empleado para reducir los errores causados por el sobreajuste de los datos de entrenamiento, penalizando la complejidad del modelo (p. ej. L2 en Ridge, L1 en Lasso).],
     [*_Underfitting_*], [Fenómeno opuesto al sobreajuste: el modelo carece de capacidad suficiente para capturar las relaciones reales presentes en los datos, presentando un rendimiento pobre incluso sobre el propio conjunto de entrenamiento.],
   )],
-     caption: [Glosario de términos.],
-     kind: table,
+    caption: [Glosario de términos.],
+    kind: table,
+    numbering: none,
+    outlined: false,
 )

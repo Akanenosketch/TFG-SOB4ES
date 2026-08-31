@@ -12,7 +12,7 @@ También a lo largo de los siguientes subapartados, se tendrá una explicación 
 
 ==== Fundamentos y configuración
 
-Ridge (véase #link(<regresion-ridge>)[*Modelo de Regresión Ridge*]) se emplea como modelo baseline del trabajo: al ser un modelo lineal, permite establecer un suelo mínimo de rendimiento frente al que comparar el resto de modelos, más complejos y con mayor capacidad de capturar relaciones no lineales.
+Ridge (véase #link(<regresion-ridge>)[*Modelo de Regresión Ridge*]) se emplea como modelo _baseline_ del trabajo: al ser un modelo lineal, permite establecer un suelo mínimo de rendimiento frente al que comparar el resto de modelos, más complejos y con mayor capacidad de capturar relaciones no lineales.
 
 Al tratarse de un modelo determinista (no depende de una semilla aleatoria de entrenamiento), se entrena un único modelo por _target_, sin necesidad de recurrir a un ensamblado de varias semillas para reducir la varianza.
 
@@ -25,7 +25,7 @@ Para evitar seleccionar una combinación que sobreajuste, se aplica además un f
 
 ==== Entrenamiento
 
-Al tratarse de un modelo determinista, no se recurre a un ensamblado de semillas: se entrena un único modelo por _target_ con los hiperparámetros seleccionados en el tuning.
+Al tratarse de un modelo determinista, no se recurre a un ensamblado de semillas: se entrena un único modelo por _target_ con los hiperparámetros seleccionados en el _tuning_.
 
 La validación cruzada repetida `(RepeatedKFold, 5 pliegues × 3 repeticiones = 15 evaluaciones)` sobre `X_train` no mostró señales relevantes de sobreajuste: de los 21 _targets_, únicamente `bac_shannon_z` superó el umbral de aviso (diferencia Train-CV > 0.15, concretamente 0.161). 
 
@@ -156,13 +156,13 @@ En la #ref(<tab-21>) se pueden ver los resultados por cada _target_ de forma má
 #figure( 
   align(center)[ 
     #table( 
-      columns: (auto, auto, auto), 
+      columns: (auto, auto, auto, auto, auto), 
       align: (left, left, center) , 
       fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da") }, 
       table.header(
         table.cell(align: center)[*Variable*], 
         table.cell(align: center)[*_Target_*], 
-        [*$R^2$*]), 
+        [*$R^2$*], [*RSME*], [*MAE*]), 
       [*Shannon nemátodos*],        [nematode_shannon_z],      [0.1693],  [0.9001], [0.7070], 
       [*Shannon macrofauna*],       [macro_shannon_z],         [0.3199],  [0.8283], [0.6935], 
       [*Shannon lombrices*],        [earthworm_shannon_z],     [0.5041],  [0.7029], [0.5055], 
@@ -252,9 +252,7 @@ La gráfica que muestra las variables más importantes se puede ver más adelant
 
 ==== Resultados sobre eval.csv
 
-Con un R² medio de *0.0964*, _Random Forest_ multisalida es, de los ocho modelos evaluados en este trabajo, el que obtiene el *mejor promedio global* de R² sobre `eval.csv`, ligeramente por encima incluso de su propia variante de salida única (0.090). 
-
-Sobre los _targets_ prioritarios obtiene *R²=0.4160* (`earthworm_shannon_z`) y *R²=0.4509* (`earthworm_richness_z`), algo por debajo de lo logrado por _Random Forest_ de salida única para estos dos _targets_ concretos. 
+Con un R² medio de *0.0964*, _Random Forest_ multisalida es, de los ocho modelos evaluados en este trabajo, el que obtiene el *mejor promedio global* de R² sobre `eval.csv`, ligeramente por encima incluso de su propia variante de salida única (0.090). Sobre los _targets_ prioritarios obtiene *R²=0.4160* (`earthworm_shannon_z`) y *R²=0.4509* (`earthworm_richness_z`), algo por debajo de lo logrado por _Random Forest_ de salida única para estos dos _targets_ concretos. 
 
 Esto sugiere que, si bien compartir la estructura del árbol entre los 21 _targets_ mejora el promedio global, probablemente porque ayuda a los _targets_ con menos señal individual, puede hacerlo a costa de una ligera pérdida de precisión específica en los dos _targets_ con más señal predictiva propia del conjunto de datos.
 
@@ -421,7 +419,7 @@ El _notebook_ incorpora una celda de detección automática de *GPU/CUDA*: si el
 
 La versión del _notebook_ exportado se puede ver que se detectó CUDA sin problemas.
 
-El espacio de búsqueda de hiperparámetros se restringe deliberadamente hacia modelos conservadores, dado el tamaño reducido del dataset:
+El espacio de búsqueda de hiperparámetros se restringe deliberadamente hacia modelos conservadores, dado el tamaño reducido del _dataset_:
 
 - *n_estimators:* 50, 100, 150.
 - *max_depth:* 2, 3.
@@ -595,7 +593,7 @@ La arquitectura (*MLPMultiSalida*) es una red densa totalmente conectada: cada c
 
 Se entrena con el *optimizador Adam* y la *función de pérdida MSE estándar*, calculada conjuntamente sobre los 21 _targets_.
 
-A diferencia de los modelos basados en árboles, aquí el tuning no busca solo hiperparámetros de entrenamiento sino también la propia arquitectura de la red.
+A diferencia de los modelos basados en árboles, aquí el _tuning_ no busca solo hiperparámetros de entrenamiento sino también la propia arquitectura de la red.
 
 Se evaluaron 6 configuraciones distintas, variando el tamaño de las capas ocultas (de [32, 16] a [64, 16, 8]), la tasa de dropout (0.2-0.4), la tasa de aprendizaje, el número de épocas y el weight_decay (regularización L2 del propio optimizador Adam). 
 
@@ -707,7 +705,7 @@ El primer término es el *MSE estándar*, que minimiza el error de predicción d
 
 El parámetro `lambda_corr` controla el peso relativo de esta penalización frente al MSE (`lambda_corr=0` equivale a MSE puro).
 
-El tuning explora 10 configuraciones que combinan arquitectura, hiperparámetros de entrenamiento y distintos valores de `lambda_corr` (de 0.0 a 0.5). El resultado del tuning es, en sí mismo, uno de los hallazgos más relevantes de este _notebook_.
+El _tuning_ explora 10 configuraciones que combinan arquitectura, hiperparámetros de entrenamiento y distintos valores de `lambda_corr` (de 0.0 a 0.5). El resultado del _tuning_ es, en sí mismo, uno de los hallazgos más relevantes de este _notebook_.
 
 En la #ref(<tab-30>) se puede ver los diferentes conjuntos de hiperparámetros probados y los resultados de cada uno, sienod el $R²$ en negrita, el mejor valor de todos.
 
@@ -734,15 +732,15 @@ En la #ref(<tab-30>) se puede ver los diferentes conjuntos de hiperparámetros p
   kind: table
 )<tab-30>
 
-La configuración ganadora del tuning fue `hidden=[64, 32]` con `lambda_corr=0.0`, es decir: de entre todas las combinaciones probadas, la que mejor R² de validación obtuvo fue la que equivale a MSE puro, sin ninguna penalización de correlación activa. 
+La configuración ganadora del _tuning_ fue `hidden=[64, 32]` con `lambda_corr=0.0`, es decir: de entre todas las combinaciones probadas, la que mejor R² de validación obtuvo fue la que equivale a MSE puro, sin ninguna penalización de correlación activa. 
 
-Esto indica que, con el tamaño de dataset disponible en este trabajo, el término adicional de coherencia de correlaciones no aportó una mejora medible frente al MSE estándar e incluso empeoró el resultado en la mayoría de las configuraciones donde se activó.
+Esto indica que, con el tamaño de _dataset_ disponible en este trabajo, el término adicional de coherencia de correlaciones no aportó una mejora medible frente al MSE estándar e incluso empeoró el resultado en la mayoría de las configuraciones donde se activó.
 
 #colbreak()
 
 ==== Entrenamiento
 
-Al igual que en el MLP multisalida estándar, no se aplica una validación cruzada explícita: la arquitectura se selecciona mediante la comparación directa de las 10 configuraciones del tuning sobre la partición fija de entrenamiento/validación, y se entrena un único modelo final con la configuración ganadora (sin ensamblado de semillas).
+Al igual que en el MLP multisalida estándar, no se aplica una validación cruzada explícita: la arquitectura se selecciona mediante la comparación directa de las 10 configuraciones del _tuning_ sobre la partición fija de entrenamiento/validación, y se entrena un único modelo final con la configuración ganadora (sin ensamblado de semillas).
 
 Además de las métricas de error habituales, este _notebook_ calcula la diferencia media entre la matriz de correlación real y la matriz de correlación predicha como indicador directo de si la función de pérdida personalizada está cumpliendo su objetivo. Sobre `X_train`, esta diferencia media es de *0.1131*.
 
@@ -760,13 +758,13 @@ La gráfica que muestra las variables más importantes se puede ver más adelant
 
 Con un R² medio de *-0.1316*, este es el modelo con *peor rendimiento global* de los ocho evaluados en este trabajo, por debajo incluso del MLP multisalida estándar (-0.038) del que parte. 
 
-Esto es consistente con el resultado del propio tuning: al haberse seleccionado `lambda_corr=0.0` como configuración óptima, el modelo final es, en la práctica, equivalente a un MLP multisalida con una arquitectura ligeramente distinta ([64,32] en vez de [128,32]) y menos épocas de entrenamiento (150 en vez de 250), sin que la penalización de correlación llegue a aplicarse de forma efectiva. 
+Esto es consistente con el resultado del propio _tuning_: al haberse seleccionado `lambda_corr=0.0` como configuración óptima, el modelo final es, en la práctica, equivalente a un MLP multisalida con una arquitectura ligeramente distinta ([64,32] en vez de [128,32]) y menos épocas de entrenamiento (150 en vez de 250), sin que la penalización de correlación llegue a aplicarse de forma efectiva. 
 
 Sobre los _targets_ prioritarios obtiene *R²=0.3750* (`earthworm_shannon_z`) y *R²=0.4671* (`earthworm_richness_z`), ambos por debajo de los conseguidos por el MLP multisalida estándar. El _target_ `coll_species_richness_z` vuelve a ser el más problemático, con un *R²=-2.2411*, el peor resultado individual de todo este trabajo.
 
-En la #ref(<tab-31>) se pueden ver los resultados obtenidos por _target_ tras el entrenamiento del modelo.
-
 #colbreak()
+
+En la #ref(<tab-31>) se pueden ver los resultados obtenidos por _target_ tras el entrenamiento del modelo.
 
 #figure( 
   align(center)[ 

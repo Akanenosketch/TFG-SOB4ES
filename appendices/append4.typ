@@ -195,11 +195,11 @@ if __name__ == "__main__":
 
 ```
 
-El objetivo princial de este _script_ es el de automatizar la ejecución de todos los _notebooks_ (o los que se indiquen) localizados dentro de una misma rama, permitiendo así no tener que ejecutarlos uno a uno.
+El objetivo principal de este _script_ es el de automatizar la ejecución de todos los _notebooks_ (o los que se indiquen) localizados dentro de una misma rama, permitiendo así no tener que ejecutarlos uno a uno.
 
 #colbreak()
 
-El _script_ también cuenta con las siguentes capacidades:
+El _script_ también cuenta con las siguientes capacidades:
 + Capacidad de hacer _commits_ en local al terminar de ejecutar correctamente cada _notebook_.
 + Al final de la ejecución de cada _notebook_ genera un archivo de texto en el que se muestra si en alguno de los _notebooks_ hubo algún error o no.
 + En caso de que ocurra un error en uno de los _notebooks_, se registra para añadirlo en el reporte final (archivo de texto) y se sigue con el siguiente _notebook_, es decir, la ejecución de los _notebooks_ no se para en el caso de que uno de los _notebooks_ a ejecutar devuelve un error.
@@ -240,7 +240,7 @@ echo "Trabajo terminado..."
 
 Este _script_ permite la automatización de la ejecución de todos los _notebooks_ o de los _notebooks_ indicados dentro de distintas ramas.
 
-El _script_ cuenta con las siguentes capacidades:
+El _script_ cuenta con las siguientes capacidades:
 + Capacidad de realizar _commits_ en local y subirlos a remoto cuando se completa la ejecución de una rama completa. Esto es si se ejecuta dentro de un IDE con el plugin de GitHub instalado, en caso contrario subir a remoto va a ser imposible.
 + Capacidad de saltar entre ramas del mismo repositorio y actualizarlas en el caso de que haya _commits_ previos.
 
@@ -380,7 +380,7 @@ En la #ref(<fig-19>) se pueden ver las matrices de confusión de los modelos ent
 
 ==== Fundamentos y configuración
 
-A diferencia del resto de _notebooks_ de este anexo, `extractor_resultados` no es un análisis en sí mismo sino una herramienta reutilizable que automatiza la extracción de métricas (`R²`, `RMSE`, `MAE`, `random_state`, `número de variables activas`) directamente desde el contenido de los _notebooks_ tal y como están guardados en una rama concreta de git, sin necesidad de hacer checkout de esa rama ni de reejecutar ningún _notebook_. Se apoya en git show <rama>:<archivo> para leer el JSON de cada `.ipynb` de forma aislada.
+A diferencia del resto de _notebooks_ de este anexo, `extractor_resultados` no es un análisis en sí mismo sino una herramienta reutilizable que automatiza la extracción de métricas (`R²`, `RMSE`, `MAE`, `random_state`, `número de variables activas`) directamente desde el contenido de los _notebooks_ tal y como están guardados en una rama concreta de git, sin necesidad de hacer _checkout_ de esa rama ni de reejecutar ningún _notebook_. Se apoya en git show <rama>:<archivo> para leer el JSON de cada `.ipynb` de forma aislada.
 
 ==== Metodología
 
@@ -400,7 +400,7 @@ Dado un `GIT_REPO_PATH` y una lista de ramas a comparar (`BRANCHES` para la prue
 
 *Validaciones automáticas:* La única salvedad es que el aviso de "el nombre de la rama sugiere `random_state = N` "produce *falsos positivos sistemáticos* sobre las 7 ramas de eliminación de variables que terminan en dígito (`model-prep-var-1`, `-2`, `-1-2`...): la expresión regular que extrae ese dígito del nombre de la rama se diseñó pensando en las ramas de barrido (`model-prep-rs-group-1`), y al aplicarse también a las de eliminación de variables interpreta el sufijo como si fuera un `random_state` esperado, cuando en realidad identifica qué variable se elimina. 
 
-El resto de validaciones no señalan ningún aviso real: los 8 notebooks se leyeron correctamente en las 8 ramas, y el `random_state` es consistente (42) en las 8 ramas y los 8 notebooks.
+El resto de validaciones no señalan ningún aviso real: los 8 _notebooks_ se leyeron correctamente en las 8 ramas, y el `random_state` es consistente (42) en las 8 ramas y los 8 _notebooks_.
 
 *Coherencia de variables:* El criterio detectado automáticamente para las 8 ramas de eliminación de variables es `n_vars`, con la cascada esperada: 34 variables en la rama base, 33 al eliminar una sola variable (`var-1`, `var-2`, `var-3`), 32 al eliminar dos (`var-1-2`, `var-1-3`, `var-2-3`) y 31 al eliminar las tres (`var-1-2-3`), confirmando que la prueba de eliminación de variables se ejecutó correctamente en las 8 ramas.
 
@@ -431,13 +431,13 @@ El resto de validaciones no señalan ningún aviso real: los 8 notebooks se leye
     kind: table
 )<tab-38>
 
-Como se puede ver en la #ref(<tab-38>), el ranking por R² medio global (21 targets) es *estable en las 8 ramas de eliminación de variables*: _Random Forest_ multisalida y _Random Forest_ quedan siempre en 1ª/2ª posición (desviación 0.46, es decir, como mucho intercambian el puesto entre sí de una rama a otra) y MLP _custom loss_ queda siempre último (desviación 0.00, sin ninguna excepción en las 8 ramas). 
+Como se puede ver en la #ref(<tab-38>), el ranking por R² medio global (21 _targets_) es *estable en las 8 ramas de eliminación de variables*: _Random Forest_ multisalida y _Random Forest_ quedan siempre en 1ª/2ª posición (desviación 0.46, es decir, como mucho intercambian el puesto entre sí de una rama a otra) y MLP _custom loss_ queda siempre último (desviación 0.00, sin ninguna excepción en las 8 ramas). 
 
 Ningún modelo cambia de mitad de la tabla (`top-4` frente a `bottom-4`) al eliminar `cu_z`, `ni_z` y/o `mo_z`, lo que indica que la prueba de eliminación de variables no altera el ranking de modelos, solo su rendimiento absoluto.
 
 *Barrido de `random_state` (ranking global, 21 targets):* 
 
-A diferencia de `comparador_barrido_rs`, que solo consideraba el R² medio de los dos targets prioritarios, aquí se calcula también el ranking medio sobre el *R² medio de los 21 targets*, y sobre un barrido ampliado: la rama `model-prep-rs-group-1` pasó de 101 a *491 semillas* evaluadas.
+A diferencia de `comparador_barrido_rs`, que solo consideraba el R² medio de los dos _targets_ prioritarios, aquí se calcula también el ranking medio sobre el *R² medio de los 21 targets*, y sobre un barrido ampliado: la rama `model-prep-rs-group-1` pasó de 101 a *491 semillas* evaluadas.
 
 #figure(
     align(center)[
@@ -470,7 +470,7 @@ Como se puede ver en la #ref(<tab-43>), ampliar el barrido de 101 a 491 semillas
 
 La mayor variación es la de XGBoost, que pasa del puesto 7.62 al 7.06, sin llegar a adelantar a ningún otro modelo, lo que confirma que 101 semillas ya eran suficientes para una estimación estable. 
 
-Este resultado, centrado en el R² medio de los *21 targets*, es coherente con el de `comparador_barrido_rs`: *_Random Forest_ multisalida* domina de forma robusta el ranking global (los 21 targets a la vez), mientras que *XGBoost multisalida* domina de forma igualmente robusta el ranking restringido a los dos targets prioritarios, hecho ya visto en múltiples ocasiones.
+Este resultado, centrado en el R² medio de los *21 targets*, es coherente con el de `comparador_barrido_rs`: *_Random Forest_ multisalida* domina de forma robusta el ranking global (los 21 _targets_ a la vez), mientras que *XGBoost multisalida* domina de forma igualmente robusta el ranking restringido a los dos _targets_ prioritarios, hecho ya visto en múltiples ocasiones.
 
 
 #let file = "../media/anexos/extractor_resultados.pdf"
@@ -484,13 +484,13 @@ Este resultado, centrado en el R² medio de los *21 targets*, es coherente con e
   )[]
 }
 
-=== Notebook para la comparación de variables (Prueba I) <notebook-p1>
+=== _Notebook_ para la comparación de variables (Prueba I) <notebook-p1>
 
 ===== Fundamentos y configuración
 
-Cada notebook de modelado dentro de la primera prueba (véase #link(<prueba-1>)[*Eliminación de variables*]) exporta, como parte de su análisis de explicabilidad, un archivo `variables_menos_relevantes_<modelo>.csv` con las 10 variables que ese modelo concreto considera menos influyentes (el "bottom-10"). 
+Cada _notebook_ de modelado dentro de la primera prueba (véase #link(<prueba-1>)[*Eliminación de variables*]) exporta, como parte de su análisis de explicabilidad, un archivo `variables_menos_relevantes_<modelo>.csv` con las 10 variables que ese modelo concreto considera menos influyentes (el "bottom-10"). 
 
-Este notebook carga los ocho archivos, uno por modelo, y calcula un consenso sobre qué variables aparecen recurrentemente como poco relevantes independientemente del modelo empleado, con el objetivo de fundamentar la selección de variables a eliminar en la #link(<prueba-1>)[*Eliminación de variables*].
+Este _notebook_ carga los ocho archivos, uno por modelo, y calcula un consenso sobre qué variables aparecen recurrentemente como poco relevantes independientemente del modelo empleado, con el objetivo de fundamentar la selección de variables a eliminar en la #link(<prueba-1>)[*Eliminación de variables*].
 
 ===== Metodología
 
@@ -557,7 +557,7 @@ En la #ref(<fig-20>) se pueden ver varias gráficas que muestran de diferentes f
   )[]
 }
 
-=== _Notebook_ para la comparación de barrido de rs (Prueba III) <notebook-p3>
+=== _Notebook_ para la comparación de barrido de random_state (Prueba III) <notebook-p3>
 
 ==== Fundamentos y configuración
 
@@ -636,7 +636,7 @@ En la #ref(<fig-21>) se pueden ver las gráficas de porcentaje de veces en la qu
   )[]
 }
 
-=== Notebooks para la prueba de ensamblado (Prueba IV) <notebooks-p4>
+=== _Notebooks_ para la prueba de ensamblado (Prueba IV) <notebooks-p4>
 
 ==== _Notebook_ de ensamblado de predicciones sin meta-modelos (Prueba IV.I) <notebook-p4-1>
 
