@@ -5,7 +5,7 @@ Como se indica en #link(<lenguaje-de-programacion-control-de-versiones-y-libreri
 
 A diferencia de un flujo de trabajo con una única rama principal, en el que cada modelo y cada prueba adicional se acumularían de forma secuencial sobre el mismo historial, se optó por un esquema de ramas independientes por prueba. Esto responde al carácter exploratorio de este TFG.
 
-A lo largo del trabajo se han entrenado múltiples variantes de un mismo modelo, en específico las variantes multisalida (véase #link(<xgb-multi-model>)[*Modelo XGBoost multisalida*] para la variante de XGBoost y #link(<rf-multi-model>)[*Modelo _Random Forest_ multisalida*] para la variante de _Random Forest_) y las variantes elaboradas para las pruebas de #link(<prueba-1>)[*Eliminación de variables*], #link(<prueba-2>)[*Sensibilidad de random_state*] y #link(<prueba-3>)[*Barrido de random_state*]. Esto ha sido necesario para poder comparar los resultados de las diferentes variantes entre sí, independientemente de que se haya hecho de forma manual o automatizada, sin que los cambios realizados sobrescribiesen los resultados de las demás.
+A lo largo del trabajo se han entrenado múltiples variantes de un mismo modelo, en concreto las variantes multisalida (véase #link(<xgb-multi-model>)[*Modelo XGBoost multisalida*] para la variante de XGBoost y #link(<rf-multi-model>)[*Modelo _Random Forest_ multisalida*] para la variante de _Random Forest_) y las variantes elaboradas para las pruebas de #link(<prueba-1>)[*Eliminación de variables*], #link(<prueba-2>)[*Sensibilidad de random_state*] y #link(<prueba-3>)[*Barrido de random_state*]. Esto ha sido necesario para poder comparar los resultados de las diferentes variantes entre sí, independientemente de que se haya hecho de forma manual o automatizada, sin que los cambios realizados sobrescribiesen los resultados de las demás.
 
 Para proporcionar una mayor visibilidad e interpretabilidad al trabajo realizado, se ha decidido aplicar las siguientes medidas:
 + Alojar cada prueba/modificación realizada dentro de ramas independientes para tener una mejor forma de comparar los resultados entre varias ramas. 
@@ -15,16 +15,16 @@ Para proporcionar una mayor visibilidad e interpretabilidad al trabajo realizado
 
 #rect[
   *Nota:*\
-  Los _notebooks_ relacionados con la preparación de datos y los _scripts_ de automatización no se incluyen en este anexo, al este mismo estar más centrado en las #link(<pruebas-llevadas-a-cabo>)[*pruebas adicionales llevadas a cabo*]. Si se quieren consultas estos _notebooks_ y _scripts_ con más detalles, se puede hacer revisando los siguientes anexos:
+  Los _notebooks_ relacionados con la preparación de datos y los _scripts_ de automatización no se incluyen en este anexo, ya que este mismo está más centrado en las #link(<pruebas-llevadas-a-cabo>)[*pruebas adicionales llevadas a cabo*]. Si se quieren consultar estos _notebooks_ y _scripts_ con más detalle, se puede hacer revisando los siguientes anexos:
   - #link(<elementos-auxiliares>)[*Anexo IV*] para *_Scripts_ y _notebooks_ auxiliares*.
   - #link(<preparacion-de-datos>)[*Anexo III*] para los *_Notebooks_ de preparación de datos*.
 ]
 
-Esta nomenclatura jerárquica permite, además, identificar de un vistazo qué ramas están relacionadas entre sí, es decir todas las variantes o iteraciones de una prueba comparten el mismo prefijo (por ejemplo, `model-prep-var`) y se diferencian haciendo uso de un sufijo numérico que indica la iteración o número de variante de cada pueba.
+Esta nomenclatura jerárquica permite, además, identificar de un vistazo qué ramas están relacionadas entre sí, es decir todas las variantes o iteraciones de una prueba comparten el mismo prefijo (por ejemplo, `model-prep-var`) y se diferencian haciendo uso de un sufijo numérico que indica la iteración o número de variante de cada prueba.
 
 #colbreak()
 
-A partir de estas medidas y una vez realizadas todas las pruebas, las cuales se pueden ver dentro del #link(<pruebas-llevadas-a-cabo>)[*Anexo V*], el repositorio en su estado final presenta la siguiente distribución de ramas en base al objetivo o funcionalidad de las misma, la cual se puede ver en la #ref(<tab-44>).
+A partir de estas medidas y una vez realizadas todas las pruebas, las cuales se pueden ver dentro del #link(<pruebas-llevadas-a-cabo>)[*Anexo V*], el repositorio en su estado final presenta la siguiente distribución de ramas en función del objetivo o funcionalidad de las mismas, la cual se puede ver en la #ref(<tab-44>).
 
   #figure(
     align(center)[
@@ -58,7 +58,7 @@ A partir de estas medidas y una vez realizadas todas las pruebas, las cuales se 
         table.cell(align: center, rowspan: 2)[2],
         table.cell(align: left)[model-prep-rs-group], 
         table.cell(align: left)[model-prep-rs-group-1], 
-      table.cell(align: center, rowspan: 2)[*Ensamblado de  predicciones*], 
+      table.cell(align: center, rowspan: 2)[*Ensamblado de predicciones*], 
         table.cell(align: center, rowspan: 2)[2],
         table.cell(align: left)[model-prep-mixin], 
         table.cell(align: left)[model-prep-mixin-1], 
@@ -79,10 +79,10 @@ A partir de estas medidas y una vez realizadas todas las pruebas, las cuales se 
     kind: image
   )<fig-22>
 
-Además de la distribución de todas las ramas, en la siguiente tabla se muestran todas las ramas con su correspondiente objetivo, explicado de una forma más concisa. Como se puede observar, la rama `master` no figura en la tabla debido a que no tiene un objetivo funcional, sino su único objetivo es mostrar de un vistazo los elementos principales de este TFG.
+Además de la distribución de todas las ramas, en la siguiente tabla se muestran todas las ramas con su correspondiente objetivo, explicado de una forma más concisa. Como se puede observar, la rama `master` no figura en la tabla debido a que no tiene un objetivo funcional, sino que su único objetivo es mostrar de un vistazo los elementos principales de este TFG.
 
 Esta distribución de ramas, a lo largo de la realización de todas las pruebas, ha permitido lo siguiente:
-- Iterar sobre configuraciones experimentales concretas de forma aislada sin que esta afectara, combinado con la estrategia empleada en la elaboración de los modelos, al resto de modelos ni a los resultados de los modelos base o los modelos del resto de las pruebas realizadas.
+- Iterar sobre configuraciones experimentales concretas de forma aislada sin que esto afectara, combinado con la estrategia empleada en la elaboración de los modelos, al resto de modelos ni a los resultados de los modelos base o los modelos del resto de las pruebas realizadas.
 - Facilitar la comparación en cualquier momento el código y los resultados de dos o varias ramas distintas, independientemente de que dicha revisión sea manual o automatizada.
 - Preservar un historial completo y trabajable de cada decisión experimental: si una prueba concreta produce resultados inesperados, es posible volver a la rama correspondiente y revisar exactamente qué parámetros o variables se emplearon en ella, sin depender de la memoria del investigador ni de anotaciones externas al propio repositorio.
 - Facilitar la reproducibilidad de cualquier resultado concreto de la memoria: cada figura, cada tabla o métrica reportada puede rastrearse hasta la rama y el _notebook_ exactos que la generaron.
@@ -103,7 +103,7 @@ Esta distribución de ramas, a lo largo de la realización de todas las pruebas,
       table.cell(align: center)[*data-prep*], 
         table.cell(align: center)[Rama en la que se encuentra todo lo relacionado a las primeras dos capas de la arquitectura (ingesta y procesamiento de los datos).],
       table.cell()[*model-prep*], 
-        table.cell()[Rama en la que se encuentran las primeras versiones de los modelos desarrollados, a lo largo de las iteraciones se han ido realizando cambios, algunos de dichos cambios se han pasado a los modelos de esta rama.],
+        table.cell()[Rama en la que se encuentran las primeras versiones de los modelos desarrollados, a lo largo de las iteraciones se han ido realizando cambios; algunos de dichos cambios se han pasado a los modelos de esta rama.],
       table.cell()[*model-prep-var*], 
         table.cell()[Rama en la que se hacen las pruebas iniciales para la prueba de eliminación de variables.],
       table.cell()[*model-prep-var-1*], 
@@ -172,11 +172,11 @@ En la #ref(<tab-45>) se resumen todos los _notebooks_ principales empleados a lo
     table.cell()[*rf_multisalida*], 
       table.cell()[Entrenamiento del modelo _Random Forest_ con salida múltiple: un mismo conjunto de árboles predice simultáneamente los 21 _targets_. \ Reutiliza la mayor parte de la estructura de rf_model, adaptando la preparación de los datos para que y sea una matriz en vez de un vector.], 
     table.cell()[*regressorchain*], 
-      table.cell()[Entrenamiento del modelo _Random Forest_ pero envuelto en RegressorChain para que devuelva cadenas de predicciones. \ Implementa la estrategia de Ensemble of Chains (ECC), entrenando varias cadenas con orden aleatorio de _targets_ y semilla distinta por iteración, y promediando sus predicciones finales.], 
+      table.cell()[Entrenamiento del modelo _Random Forest_ pero envuelto en `RegressorChain` para que devuelva cadenas de predicciones. \ Implementa la estrategia de _Ensemble of Chains_ (ECC), entrenando varias cadenas con orden aleatorio de _targets_ y semilla distinta por iteración, y promediando sus predicciones finales.], 
     table.cell()[*xgboost_model*], 
       table.cell()[Entrenamiento del modelo XGBoost base (salida simple). \ Incorpora una celda de detección de GPU/CUDA para configurar automáticamente los parámetros de dispositivo según el equipo en el que se ejecute el _notebook_.], 
     table.cell()[*xgb_multisalida*], 
-      table.cell()[Entrenamiento del modelo XGBoost con múltiples salidas y con soporte de predicción multi-target, empleando el parámetro `multi_strategy="multi_output_tree"` para que las divisiones del árbol capturen relaciones compartidas entre _targets_. \ Comparte la misma lógica de detección de GPU que xgboost_model.], 
+      table.cell()[Entrenamiento del modelo XGBoost con múltiples salidas y con soporte de predicción _multi-target_, empleando el parámetro `multi_strategy="multi_output_tree"` para que las divisiones del árbol capturen relaciones compartidas entre _targets_. \ Comparte la misma lógica de detección de GPU que xgboost_model.], 
     table.cell()[*mlp_multisalida*], 
       table.cell()[Entrenamiento de una red neuronal con salida múltiple, con la función de pérdida MSE estándar calculada conjuntamente sobre los 21 _targets_. \ Implementado sobre PyTorch, incluye la definición de la arquitectura de capas, el bucle de entrenamiento con el optimizador Adam y las celdas de seguimiento de la curva de pérdida por época.], 
     table.cell()[*mlp_custom_loss*], 

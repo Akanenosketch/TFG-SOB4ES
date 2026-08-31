@@ -19,7 +19,7 @@ Antes de clonar el repositorio, comprueba que dispones de lo siguiente:
 - Una cuenta en el *Copernicus Climate Data Store* con un _token_ de acceso personal, necesaria para hacer uso de `cdsapi`.
 - Opcionalmente, una *GPU* compatible con PyTorch/CUDA si se quiere reproducir el entrenamiento con CUDA de los modelos compatibles con dicha tecnología (véase #link(<hardware-recomendado>)[*Hardware recomendado*]).
 
-=== Clonación el repositorio <clonar-repo>
+=== Clonación del repositorio <clonar-repo>
 
 ```bash
 git clone https://github.com/Akanenosketch/TFG-SOB4ES.git
@@ -41,7 +41,7 @@ git switch model-prep-var-1-2-3
 git switch model-prep-rs-group
 ```
 
-=== Configuración el entorno Python <configuracion-entorno>
+=== Configuración del entorno Python <configuracion-entorno>
 
 Existen dos formas equivalentes de crear el entorno; a continuación se describen las dos más comunes.
 
@@ -98,7 +98,7 @@ uv run jupyter nbconvert --to notebook --execute --inplace notebook.ipynb
 
 #colbreak()
 
-=== Configuración las credenciales de los servicios externos <credenciales-externas>
+=== Configuración de las credenciales de los servicios externos <credenciales-externas>
 
 ==== Google Earth Engine (GEE)
 

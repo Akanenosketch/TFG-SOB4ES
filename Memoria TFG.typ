@@ -229,7 +229,7 @@ la biodiversidad del suelo_
 
 = Anexos <anexos>
 
-En los siguientes apartados se introducirán elementos que serán de utilidad par tener un mayor entendimiento sobre las diferentes partes de este TFG.
+En los siguientes apartados se introducirán elementos que serán de utilidad para tener un mayor entendimiento sobre las diferentes partes de este TFG.
 
 
 #include "appendices/append1.typ"
