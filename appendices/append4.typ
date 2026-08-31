@@ -9,16 +9,16 @@ En este anexo se muestra el código de todos los _scripts_ y _notebooks_ auxilia
 ```python
 """
 Ejecuta de principio a fin varios notebooks (todos los .ipynb de una carpeta, o los
-que le indiques) y deja constancia de si cada uno termino bien o fallo.
+que le indiques) y deja constancia de si cada uno terminó bien o falló.
 
-Que hace por cada notebook:
+Qué hace por cada notebook:
   1. Ejecuta todas las celdas en orden (jupyter nbconvert --execute --inplace), sin
-     limite de tiempo por celda.
+     límite de tiempo por celda.
   2. Guarda el resultado sobre el propio notebook (con las tablas/graficas ya
      generadas dentro).
-  3. Si un notebook falla (una celda lanza una excepcion), no interrumpe el resto:
+  3. Si un notebook falla (una celda lanza una excepción), no interrumpe el resto:
      sigue con el siguiente y lo apunta en el resumen final (output/report/resumen_ejecucion.txt).
-  4. Si termino bien, hace commit del notebook con git automaticamente.
+  4. Si terminó bien, hace commit del notebook con git automáticamente.
      Usa --no-git para desactivar esto.
 
 Uso:
@@ -38,8 +38,8 @@ Requisitos: jupyter y nbconvert instalados (pip install jupyter nbconvert ipyker
 y el kernel de Python que usan los notebooks disponible (el que se ve en
 "kernelspec" -> "name" dentro del .ipynb; por defecto "python3").
 
-AVISO: al ejecutar in-place, el notebook original se sobreescribe con los resultados
-de la ejecucion. Si quieres conservar el original sin ejecutar, haz una copia antes.
+AVISO: al ejecutar in-place, el notebook original se sobrescribe con los resultados
+de la ejecución. Si quieres conservar el original sin ejecutar, haz una copia antes.
 """
 
 import argparse
@@ -49,13 +49,13 @@ import time
 from pathlib import Path
 
 def buscar_notebooks(directorio: Path, pattern: str, recursive: bool) -> list:
-    """Busca notebooks segun el patron."""
+    """Busca notebooks según el patrón."""
     buscador = directorio.rglob(pattern) if recursive else directorio.glob(pattern)
     return sorted(buscador)
 
 
 def ejecutar_notebook(nb_path: Path) -> dict:
-    """Ejecuta un notebook de principio a fin, sobreescribiendolo con el resultado,
+    """Ejecuta un notebook de principio a fin, sobrescribiéndolo con el resultado,
     y devuelve un resumen. No aplica timeout: cada celda puede tardar lo que
     necesite."""
     inicio = time.time()
@@ -80,22 +80,22 @@ def ejecutar_notebook(nb_path: Path) -> dict:
     }
 
 def _extraer_error(stderr: str) -> str:
-    """Se queda con las ultimas lineas del stderr, que suelen tener el traceback util
+    """Se queda con las últimas líneas del stderr, que suelen tener el traceback útil
     (el principio de la salida de nbconvert suele ser solo progreso, no el error)."""
     lineas = [l for l in stderr.strip().split("\n") if l.strip()]
-    return "\n".join(lineas[-15:]) if lineas else "Error desconocido (nbconvert no genero stderr)."
+    return "\n".join(lineas[-15:]) if lineas else "Error desconocido (nbconvert no generó stderr)."
 
 def git_commit(paths: list, mensaje: str) -> bool:
     """Hace 'git add' de los paths indicados y un commit con el mensaje dado.
-    Devuelve True si el commit se creo, False si fallo o no habia nada que commitear
-    (por ejemplo, si el notebook ya estaba igual que en el ultimo commit)."""
+    Devuelve True si el commit se creó, False si falló o no había nada que commitear
+    (por ejemplo, si el notebook ya estaba igual que en el último commit)."""
     paths_str = [str(p) for p in paths if p is not None]
     if not paths_str:
         return False
 
     add = subprocess.run(["git", "add", *paths_str], capture_output=True, text=True)
     if add.returncode != 0:
-        print(f"      [git] fallo 'git add': {add.stderr.strip()}")
+        print(f"      [git] falló 'git add': {add.stderr.strip()}")
         return False
 
     commit = subprocess.run(
@@ -105,7 +105,7 @@ def git_commit(paths: list, mensaje: str) -> bool:
         # Suele ser porque no hay cambios que commitear; no es un error grave.
         if "nothing to commit" in commit.stdout.lower():
             return False
-        print(f"      [git] fallo 'git commit': {commit.stdout.strip()} {commit.stderr.strip()}")
+        print(f"      [git] falló 'git commit': {commit.stdout.strip()} {commit.stderr.strip()}")
         return False
 
     return True
@@ -120,15 +120,15 @@ def main():
     )
     parser.add_argument(
         "--pattern", default="*.ipynb",
-        help="Patron para buscar notebooks si no se pasan explicitamente (default: *.ipynb, es decir, todos)",
+        help="Patrón para buscar notebooks si no se pasan explícitamente (default: *.ipynb, es decir, todos)",
     )
     parser.add_argument(
         "--recursive", action="store_true",
-        help="Busca tambien en subcarpetas (por defecto solo mira el directorio actual)",
+        help="Busca también en subcarpetas (por defecto solo mira el directorio actual)",
     )
     parser.add_argument(
         "--no-git", action="store_true",
-        help="No hace commit automatico tras cada notebook (por defecto SI se commitea)",
+        help="No hace commit automático tras cada notebook (por defecto SÍ se commitea)",
     )
     args = parser.parse_args()
 
@@ -142,7 +142,7 @@ def main():
         notebooks_existentes = buscar_notebooks(Path("."), args.pattern, args.recursive)
 
     if not notebooks_existentes:
-        print(f"No se encontro ningun notebook (patron: {args.pattern}, recursive={args.recursive}). "
+        print(f"No se encontró ningún notebook (patrón: {args.pattern}, recursive={args.recursive}). "
               f"Nada que ejecutar.")
         sys.exit(1)
 
@@ -201,9 +201,9 @@ El objetivo principal de este _script_ es el de automatizar la ejecución de tod
 
 El _script_ también cuenta con las siguientes capacidades:
 + Capacidad de hacer _commits_ en local al terminar de ejecutar correctamente cada _notebook_.
-+ Al final de la ejecución de cada _notebook_ genera un archivo de texto en el que se muestra si en alguno de los _notebooks_ hubo algún error o no.
-+ En caso de que ocurra un error en uno de los _notebooks_, se registra para añadirlo en el reporte final (archivo de texto) y se sigue con el siguiente _notebook_, es decir, la ejecución de los _notebooks_ no se para en el caso de que uno de los _notebooks_ a ejecutar devuelve un error.
-+ Si hay un _notebook_ que no exista dentro de la rama en la que se ejecuta, el _script_ lo omite y ejecuta los que se haya indicado y encontrado.
++ Al final de la ejecución de cada _notebook_, genera un archivo de texto en el que se muestra si hubo algún error en alguno de los _notebooks_.
++ En caso de que ocurra un error en uno de los _notebooks_, se registra para añadirlo en el reporte final (archivo de texto) y se sigue con el siguiente _notebook_, es decir, la ejecución de los _notebooks_ no se para en el caso de que uno de los _notebooks_ a ejecutar devuelva un error.
++ Si hay un _notebook_ que no exista dentro de la rama en la que se ejecuta, el _script_ lo omite y ejecuta los que se hayan indicado y encontrado.
 
 === _Script_ de automatización general <autom-general>
 
@@ -213,7 +213,7 @@ echo "AUTOMATED WORK STARTED DO NOT TOUCH"
 # O nombre de la carpeta/repositorio (se ejecuta desde la carpeta anterior al repositorio)
 cd TFG-SOB4ES
 
-# Creamos un array con las ramas, aqui se ponen las ramas que se quieren ejecutar
+# Creamos un array con las ramas, aquí se ponen las ramas que se quieren ejecutar
 ramas = ("model-prep" "model-prep-var" "model-prep-var-1" "model-prep-var-2" "model-prep-var-3" "model-prep-var-1-2" "model-prep-var-1-3" "model-prep-var-2-3" "model-prep-var-1-2-3" "model-prep-rs" "model-prep-rs-1" "model-prep-rs-group" "model-prep-rs-group-1" "model-prep-mixin" "model-prep-mixin-1")
 
 # Recorrer el array
@@ -241,11 +241,11 @@ echo "Trabajo terminado..."
 Este _script_ permite la automatización de la ejecución de todos los _notebooks_ o de los _notebooks_ indicados dentro de distintas ramas.
 
 El _script_ cuenta con las siguientes capacidades:
-+ Capacidad de realizar _commits_ en local y subirlos a remoto cuando se completa la ejecución de una rama completa. Esto es si se ejecuta dentro de un IDE con el plugin de GitHub instalado, en caso contrario subir a remoto va a ser imposible.
++ Capacidad de realizar _commits_ en local y subirlos a remoto cuando se completa la ejecución de una rama completa. Esto solo funciona si se ejecuta dentro de un IDE con el _plugin_ de GitHub instalado; en caso contrario, subir a remoto será imposible.
 + Capacidad de saltar entre ramas del mismo repositorio y actualizarlas en el caso de que haya _commits_ previos.
 
 #rect[
-  *Nota:* Si se crean conflictos a partir de la recuperación de _commits_ en remoto, el _script_ no podrá hacer nada.\ El _script_ no tiene la capacidad de resolver conflictos ni hacer _merges_ a las ramas remotas debido a que es una tarea que debería de ser realizada por un humano, no un _script_.
+  *Nota:* Si se crean conflictos a partir de la recuperación de _commits_ en remoto, el _script_ no podrá hacer nada.\ El _script_ no tiene la capacidad de resolver conflictos ni hacer _merges_ a las ramas remotas debido a que es una tarea que debería ser realizada por un humano, no un _script_.
 ]
 
 === _Notebooks_ para la comparación de modelos <model-comp>
@@ -256,11 +256,11 @@ El _script_ cuenta con las siguientes capacidades:
 
 Este es el _notebook_ central de la #link(<capa-evaluacion>)[*Capa de evaluación de modelos*] desde el punto de vista numérico. 
 
-Carga los `.pkl` de los ocho modelos ya entrenados y produce, además de la comparación de `R²/RMSE/MAE` ya vista en el #link(<modelos-empleados>)[*Anexo II*], un score compuesto que combina el rendimiento de regresión con una discretización de las predicciones en tres niveles ordinales.
+Carga los `.pkl` de los ocho modelos ya entrenados y produce, además de la comparación de `R²/RMSE/MAE` ya vista en el #link(<modelos-empleados>)[*Anexo II*], un _score_ compuesto que combina el rendimiento de regresión con una discretización de las predicciones en tres niveles ordinales.
 
 ===== Metodología
 
-Para cada uno de los 21 _targets_, se calculan los umbrales del percentil 33 y 66 sobre la unión de `train.csv + eval.csv`, y se discretiza tanto la predicción como el valor real en tres niveles (Bajo/Medio/Alto). Sobre esa discretización se calculan precision, recall y f1-score para cada modelo. El score compuesto de cada modelo se define como:
+Para cada uno de los 21 _targets_, se calculan los umbrales del percentil 33 y 66 sobre la unión de `train.csv + eval.csv`, y se discretiza tanto la predicción como el valor real en tres niveles (Bajo/Medio/Alto). Sobre esa discretización se calculan _precision_, _recall_ y _f1-score_ para cada modelo. El _score_ compuesto de cada modelo se define como:
 
 $ "Score" = frac(max(0, R^2) + "Precisión" + "Recall" + "F1"_"macro", 4) $
 
@@ -268,7 +268,7 @@ El R² se recorta a 0 en caso de ser negativo (max(0, R²)) para evitar que los 
 
 ===== Resultados
 
-En la #ref(<tab-36>) se pueden ver los resultados obtenidos por modelo tras la ejecución del comparador por regresión, dichos resultados se pueden ver de forma más gráfica con la #ref(<fig-18>).
+En la #ref(<tab-36>) se pueden ver los resultados obtenidos por modelo tras la ejecución del comparador por regresión. Dichos resultados se pueden ver de forma más gráfica en la #ref(<fig-18>).
 
 #figure(
     align(center)[
@@ -276,7 +276,7 @@ En la #ref(<tab-36>) se pueden ver los resultados obtenidos por modelo tras la e
             columns: (auto, auto, auto, auto, auto, auto, auto), 
             align: (center, center, center, center, center, center, center), 
             fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
-            table.header([*Puesto*], [*Modelo*], [*Score compuesto*], [*R²*], [*Precisión*], [*Recall*], [*F1*]), 
+            table.header([*Puesto*], [*Modelo*], [*_Score_ compuesto*], [*R²*], [*Precisión*], [*_Recall_*], [*F1*]), 
                 [*1*], [*XGBoost multisalida*],  [0.3549], [0.0835],  [0.4664], [0.4598], [0.4101], 
                 [*2*], [*RegressorChain*],       [0.3263], [0.0809],  [0.4433], [0.4246], [0.3564], 
                 [*3*], [*MLP Custom*],           [0.3248], [-0.1316], [0.4911], [0.4292], [0.3789], 
@@ -286,7 +286,7 @@ En la #ref(<tab-36>) se pueden ver los resultados obtenidos por modelo tras la e
                 [*7*], [*RF multisalida*],       [0.2968], [0.0964],  [0.3834], [0.4073], [0.3002], 
                 [*8*], [*Ridge*],                [0.2706], [-0.0164], [0.3839], [0.3952], [0.3034], )
     ],
-    caption: [Ranking final del comparador de modelos de regresión.],
+    caption: [_Ranking_ final del comparador de modelos de regresión.],
     kind: table
 )<tab-36>
 
@@ -313,11 +313,11 @@ En la #ref(<tab-36>) se pueden ver los resultados obtenidos por modelo tras la e
 
 ===== Fundamentos y configuración
 
-Complementa al _notebook_ anterior desde el punto de vista puramente ordinal: en vez de un score compuesto que mezcla regresión y clasificación, aquí se reportan directamente las métricas de clasificación estándar descritas en la #link(<capa-evaluacion>)[*Capa de evaluación de modelos*] y explicadas en #link(<metricas-clasificacion>)[*Métricas de clasificación*] (Accuracy, Kappa de Cohen y F1-macro) sobre la misma discretización en tres niveles (Bajo/Medio/Alto) usada por `comparador_modelos`.
+Complementa al _notebook_ anterior desde el punto de vista puramente ordinal: en vez de un _score_ compuesto que mezcla regresión y clasificación, aquí se reportan directamente las métricas de clasificación estándar descritas en la #link(<capa-evaluacion>)[*Capa de evaluación de modelos*] y explicadas en #link(<metricas-clasificacion>)[*Métricas de clasificación*] (_Accuracy_, Kappa de Cohen y F1-macro) sobre la misma discretización en tres niveles (Bajo/Medio/Alto) usada por `comparador_modelos`.
 
 ===== Metodología
 
-Idéntica discretización por terciles (percentiles 33/66 sobre train+eval) que en `comparador_modelos`, pero aquí las métricas se calculan y reportan de forma independiente, sin combinarlas en un único score, y además se desglosan por cada uno de los 21 _targets_ (no solo a nivel global), lo que permite identificar en qué grupos taxonómicos concretos destaca o falla cada modelo.
+Idéntica discretización por terciles (percentiles 33/66 sobre train+eval) que en `comparador_modelos`, pero aquí las métricas se calculan y reportan de forma independiente, sin combinarlas en un único _score_, y además se desglosan por cada uno de los 21 _targets_ (no solo a nivel global), lo que permite identificar en qué grupos taxonómicos concretos destaca o falla cada modelo.
 
 ===== Resultados
 
@@ -329,7 +329,7 @@ En la #ref(<tab-37>) se pueden ver los resultados obtenidos tras la ejecución d
             columns: (auto, auto, auto, auto, auto, auto), 
             align: (center, center, center, center, center, center), 
             fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
-            table.header([*Puesto (por R²)*], [*Modelo*], [*R²*], [*Accuracy*], [*Kappa*], [*F1*]), 
+            table.header([*Puesto (por R²)*], [*Modelo*], [*R²*], [*_Accuracy_*], [*Kappa*], [*F1*]), 
                 [*1*], [*RF Multisalida*],      [0.0964],  [0.3824], [0.1331], [0.3002], 
                 [*2*], [*RF Individual*],       [0.0904],  [0.3971], [0.1644], [0.3443], 
                 [*3*], [*XGBoost Multisalida*], [0.0835],  [0.4403], [0.2341], [0.4101], 
@@ -340,7 +340,7 @@ En la #ref(<tab-37>) se pueden ver los resultados obtenidos tras la ejecución d
                 [*8*], [*MLP Custom*],          [-0.1316], [0.4103], [0.1864], [0.3789] 
         )
     ],
-    caption: [Ranking final del comparador de modelos de clasificación.],
+    caption: [_Ranking_ final del comparador de modelos de clasificación.],
     kind: table
 )<tab-37>
 
@@ -398,7 +398,7 @@ Dado un `GIT_REPO_PATH` y una lista de ramas a comparar (`BRANCHES` para la prue
 
 ==== Resultados
 
-*Validaciones automáticas:* La única salvedad es que el aviso de "el nombre de la rama sugiere `random_state = N` "produce *falsos positivos sistemáticos* sobre las 7 ramas de eliminación de variables que terminan en dígito (`model-prep-var-1`, `-2`, `-1-2`...): la expresión regular que extrae ese dígito del nombre de la rama se diseñó pensando en las ramas de barrido (`model-prep-rs-group-1`), y al aplicarse también a las de eliminación de variables interpreta el sufijo como si fuera un `random_state` esperado, cuando en realidad identifica qué variable se elimina. 
+*Validaciones automáticas:* La única salvedad es que el aviso de "el nombre de la rama sugiere `random_state = N`" produce *falsos positivos sistemáticos* sobre las 7 ramas de eliminación de variables que terminan en dígito (`model-prep-var-1`, `-2`, `-1-2`...): la expresión regular que extrae ese dígito del nombre de la rama se diseñó pensando en las ramas de barrido (`model-prep-rs-group-1`), y al aplicarse también a las de eliminación de variables interpreta el sufijo como si fuera un `random_state` esperado, cuando en realidad identifica qué variable se elimina. 
 
 El resto de validaciones no señalan ningún aviso real: los 8 _notebooks_ se leyeron correctamente en las 8 ramas, y el `random_state` es consistente (42) en las 8 ramas y los 8 _notebooks_.
 
@@ -406,7 +406,7 @@ El resto de validaciones no señalan ningún aviso real: los 8 _notebooks_ se le
 
 #colbreak()
 
-*Ranking global (8 ramas de eliminación de variables):*
+*_Ranking_ global (8 ramas de eliminación de variables):*
 
 #figure(
     align(center)[
@@ -416,7 +416,7 @@ El resto de validaciones no señalan ningún aviso real: los 8 _notebooks_ se le
           fill: (col, row) => if row == 0 or col == 0{ rgb("d6e3da") },
           table.header(
             table.cell(align:center)[*Modelo*], 
-            [*Ranking medio (8 ramas)*], [*Desviación*]),
+            [*_Ranking_ medio (8 ramas)*], [*Desviación*]),
           [*RF multisalida*],      [*1.25*], [0.46],
           [*RF individual*],       [1.75], [0.46],
           [*XGBoost multisalida*], [3.31], [0.46],
@@ -431,13 +431,13 @@ El resto de validaciones no señalan ningún aviso real: los 8 _notebooks_ se le
     kind: table
 )<tab-38>
 
-Como se puede ver en la #ref(<tab-38>), el ranking por R² medio global (21 _targets_) es *estable en las 8 ramas de eliminación de variables*: _Random Forest_ multisalida y _Random Forest_ quedan siempre en 1ª/2ª posición (desviación 0.46, es decir, como mucho intercambian el puesto entre sí de una rama a otra) y MLP _custom loss_ queda siempre último (desviación 0.00, sin ninguna excepción en las 8 ramas). 
+Como se puede ver en la #ref(<tab-38>), el _ranking_ por R² medio global (21 _targets_) es *estable en las 8 ramas de eliminación de variables*: _Random Forest_ multisalida y _Random Forest_ quedan siempre en 1ª/2ª posición (desviación 0.46, es decir, como mucho intercambian el puesto entre sí de una rama a otra) y MLP _custom loss_ queda siempre último (desviación 0.00, sin ninguna excepción en las 8 ramas). 
 
-Ningún modelo cambia de mitad de la tabla (`top-4` frente a `bottom-4`) al eliminar `cu_z`, `ni_z` y/o `mo_z`, lo que indica que la prueba de eliminación de variables no altera el ranking de modelos, solo su rendimiento absoluto.
+Ningún modelo cambia de mitad de la tabla (`top-4` frente a `bottom-4`) al eliminar `cu_z`, `ni_z` y/o `mo_z`, lo que indica que la prueba de eliminación de variables no altera el _ranking_ de modelos, solo su rendimiento absoluto.
 
-*Barrido de `random_state` (ranking global, 21 targets):* 
+*Barrido de `random_state` (_ranking_ global, 21 _targets_):* 
 
-A diferencia de `comparador_barrido_rs`, que solo consideraba el R² medio de los dos _targets_ prioritarios, aquí se calcula también el ranking medio sobre el *R² medio de los 21 targets*, y sobre un barrido ampliado: la rama `model-prep-rs-group-1` pasó de 101 a *491 semillas* evaluadas.
+A diferencia de `comparador_barrido_rs`, que solo consideraba el R² medio de los dos _targets_ prioritarios, aquí se calcula también el _ranking_ medio sobre el *R² medio de los 21 _targets_*, y sobre un barrido ampliado: la rama `model-prep-rs-group-1` pasó de 101 a *491 semillas* evaluadas.
 
 #figure(
     align(center)[
@@ -447,8 +447,8 @@ A diferencia de `comparador_barrido_rs`, que solo consideraba el R² medio de lo
           fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") },
           table.header(
             table.cell(align: center)[*Modelo*], 
-            [*Ranking medio \ (101 semillas)*], 
-            [*Ranking medio \ (491 semillas)*], 
+            [*_Ranking_ medio \ (101 semillas)*], 
+            [*_Ranking_ medio \ (491 semillas)*], 
             [*R² medio global \ (491 semillas)*], 
             [*Desv. R² global*]
             ),
@@ -462,15 +462,15 @@ A diferencia de `comparador_barrido_rs`, que solo consideraba el R² medio de lo
           [*XGBoost*],             [7.62],   [7.06],   [-0.0636], [0.0000],
         )
     ],
-    caption : [Resultados del extractor de resultados en las ramas de la #link(<prueba-3>)[*prueba de barrido de `random_state`*].],
+    caption: [Resultados del extractor de resultados en las ramas de la #link(<prueba-3>)[*prueba de barrido de `random_state`*].],
     kind: table
 )<tab-43>
 
-Como se puede ver en la #ref(<tab-43>), ampliar el barrido de 101 a 491 semillas *no cambia el ranking medio de forma apreciable*. 
+Como se puede ver en la #ref(<tab-43>), ampliar el barrido de 101 a 491 semillas *no cambia el _ranking_ medio de forma apreciable*. 
 
 La mayor variación es la de XGBoost, que pasa del puesto 7.62 al 7.06, sin llegar a adelantar a ningún otro modelo, lo que confirma que 101 semillas ya eran suficientes para una estimación estable. 
 
-Este resultado, centrado en el R² medio de los *21 targets*, es coherente con el de `comparador_barrido_rs`: *_Random Forest_ multisalida* domina de forma robusta el ranking global (los 21 _targets_ a la vez), mientras que *XGBoost multisalida* domina de forma igualmente robusta el ranking restringido a los dos _targets_ prioritarios, hecho ya visto en múltiples ocasiones.
+Este resultado, centrado en el R² medio de los *21 _targets_*, es coherente con el de `comparador_barrido_rs`: *_Random Forest_ multisalida* domina de forma robusta el _ranking_ global (los 21 _targets_ a la vez), mientras que *XGBoost multisalida* domina de forma igualmente robusta el _ranking_ restringido a los dos _targets_ prioritarios, hecho ya visto en múltiples ocasiones.
 
 
 #let file = "../media/anexos/extractor_resultados.pdf"
@@ -496,11 +496,11 @@ Este _notebook_ carga los ocho archivos, uno por modelo, y calcula un consenso s
 
 Para cada variable que aparece en al menos un `bottom-10`, se calcula su frecuencia (en cuántos de los 8 modelos aparece) y su posición media dentro del `bottom-10` (1 = la variable considerada menos relevante de todas, 10 = la décima menos relevante). 
 
-El ranking final se ordena primero por frecuencia (descendente) y, en caso de empate, por posición media (ascendente, priorizando las que son consistentemente de las peores). Se establece como "candidata fuerte a eliminar" cualquier variable que aparezca en al menos la mitad de los modelos utilizables $("umbral" max(2, ("n_modelos"+1)div 2)$, es decir, 4 de 8 en este caso).
+El _ranking_ final se ordena primero por frecuencia (descendente) y, en caso de empate, por posición media (ascendente, priorizando las que son consistentemente de las peores). Se establece como "candidata fuerte a eliminar" cualquier variable que aparezca en al menos la mitad de los modelos utilizables ($"umbral" = max(2, ("n_modelos"+1)div 2)$, es decir, 4 de 8 en este caso).
 
 ===== Resultados
 
-En la tabla #ref(<tab-39>) se puede ver el ranking de consenso resultante tras realizar la comparación con los 8 modelos base.
+En la tabla #ref(<tab-39>) se puede ver el _ranking_ de consenso resultante tras realizar la comparación con los 8 modelos base.
 
 #figure(
     align(center)[
@@ -522,11 +522,11 @@ En la tabla #ref(<tab-39>) se puede ver el ranking de consenso resultante tras r
                 [*as_z*],                   [4/8], [5.0], [MLP Multi, MLP Custom, RF, Ridge], 
                 [*dem_pendiente_deg_z*],    [4/8], [6.0], [RF Multi, RF, RegressorChain, XGBoost], )
     ],
-    caption: [Ranking de variables menos relevantes.],
+    caption: [_Ranking_ de variables menos relevantes.],
     kind: table
 )<tab-39>
 
-*`cu_z`* (cobre) aparece en el bottom-10 de los 8/8 modelos, y `ni_z` (níquel) en 7/8, siendo las dos candidatas más consistentes de todo el ranking. Ambas coinciden, además, con dos de las tres variables efectivamente probadas en el #link(<prueba-1>)[*Eliminación de variables*] (`cu_z`, `ni_z`, `mo_z`). 
+*`cu_z`* (cobre) aparece en el bottom-10 de los 8/8 modelos, y `ni_z` (níquel) en 7/8, siendo las dos candidatas más consistentes de todo el _ranking_. Ambas coinciden, además, con dos de las tres variables efectivamente probadas en el #link(<prueba-1>)[*Eliminación de variables*] (`cu_z`, `ni_z`, `mo_z`). 
 
 La tercera variable de esa prueba, `mo_z`, aparece también entre las candidatas fuertes (5/8, posición media 5.0), aunque por detrás de `dem_orientacion_deg_z` (6/8), que no llegó a probarse pese a tener mayor consenso, esto fue para comprobar como afectaría la eliminación de una variable algo más relevante a los modelos. 
 
@@ -561,7 +561,7 @@ En la #ref(<fig-20>) se pueden ver varias gráficas que muestran de diferentes f
 
 ==== Fundamentos y configuración
 
-Todas las comparativas anteriores se basan en una única semilla de entrenamiento (`random_state=42`). Este _notebook_ responde a la pregunta de si el ranking de modelos se mantiene estable al cambiar la semilla, cargando los resultados de la #link(<prueba-3>)[*Barrido de random_state*]: un barrido de 101 semillas (`random_state` de 0 a 100) para cada uno de los 8 modelos, calculado sobre los dos _targets_ prioritarios.
+Todas las comparativas anteriores se basan en una única semilla de entrenamiento (`random_state=42`). Este _notebook_ responde a la pregunta de si el _ranking_ de modelos se mantiene estable al cambiar la semilla, cargando los resultados de la #link(<prueba-3>)[*Barrido de random_state*]: un barrido de 101 semillas (`random_state` de 0 a 100) para cada uno de los 8 modelos, calculado sobre los dos _targets_ prioritarios.
 
 #rect[
     *Nota:*\
@@ -570,7 +570,7 @@ Todas las comparativas anteriores se basan en una única semilla de entrenamient
 
 ==== Metodología
 
-Para cada semilla y modelo se calcula `r2_medio_prioritarios`, la media del R² sobre `earthworm_shannon_z` y `earthworm_richness_z`. Con las $101 times 8 = 808$ combinaciones resultantes se construye, para cada semilla, un ranking de los 8 modelos (posición 1 = mejor R² medio de esa semilla), y se agregan estadísticos de estabilidad: media, desviación estándar, mínimo, máximo y el porcentaje de semillas en las que cada modelo queda dentro del `top-1`, `top-2`, `top-3` y `top-5`.
+Para cada semilla y modelo se calcula `r2_medio_prioritarios`, la media del R² sobre `earthworm_shannon_z` y `earthworm_richness_z`. Con las $101 times 8 = 808$ combinaciones resultantes se construye, para cada semilla, un _ranking_ de los 8 modelos (posición 1 = mejor R² medio de esa semilla), y se agregan estadísticos de estabilidad: media, desviación estándar, mínimo, máximo y el porcentaje de semillas en las que cada modelo queda dentro del `top-1`, `top-2`, `top-3` y `top-5`.
 
 ==== Resultados
 
@@ -652,9 +652,9 @@ Se prueban cinco métodos de combinación, por cada uno de los 21 _targets_:
 
 + *Media simple:* Promedio aritmético de las predicciones de los 8 modelos.
 + *Media ponderada por R²:* Cada modelo pesa en proporción a su R² en `meta-train` (recortado a 0 si es negativo).
-+ *Top-k:* Promedio simple de únicamente los k modelos con mejor R² en `meta-train`.
++ *_Top-k_:* Promedio simple de únicamente los k modelos con mejor R² en `meta-train`.
 + *Mediana:* Mediana de las 8 predicciones, más robusta frente a un modelo con una predicción muy desviada.
-+ *Stacking convexo:* Pesos $ w_i >= 0 "con" "sumw"_i = 1$ que minimizan el MSE en `meta-train`, obtenidos mediante optimización numérica (`scipy.optimize.minimize`, método SLSQP).
++ *_Stacking_ convexo:* Pesos $ w_i >= 0 "con" sum_i w_i = 1 $ que minimizan el MSE en `meta-train`, obtenidos mediante optimización numérica (`scipy.optimize.minimize`, método SLSQP).
 
 ===== Resultados
 
@@ -699,7 +699,7 @@ Esto sugiere que, con el tamaño de _holdout_ disponible (20 filas), los pesos c
 
 Extiende la idea del _notebook_ anterior sustituyendo los métodos de combinación fijos por `meta-modelos` entrenados: en vez de calcular unos pesos con una fórmula cerrada, se entrena un modelo de regresión adicional cuya entrada son las predicciones de los 8 modelos base, y cuya salida es la predicción combinada final. 
 
-Corresponde a la `rama model-prep-mixin-1` (véase #link(<dist-ramas-y-notebooks>)[*Anexo VI*]), en la que, a diferencia de `model-prep-mixin`, se prueba con la totalidad de los 21 _targets_.
+Corresponde a la rama `model-prep-mixin-1` (véase #link(<dist-ramas-y-notebooks>)[*Anexo VI*]), en la que, a diferencia de `model-prep-mixin`, se prueba con la totalidad de los 21 _targets_.
 
 ===== Metodología
 

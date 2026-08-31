@@ -4,13 +4,13 @@ En esta sección de los anexos se detalla, para cada uno de los ocho modelos des
 
 Los 21 _targets_ predichos corresponden a los índices de biodiversidad (Shannon) y de riqueza de especies de 11 grupos taxonómicos distintos, los cuales se encuentran mencionados en el #link(<informe-eda>)[*Anexo I*] y en #link(<variables>)[*Variables empleadas*], todos ellos normalizados a la *escala z* antes del entrenamiento. Por ello un $R²$ de 0 no implica que no prediga nada, sino que su rendimiento es equivalente al de predecir siempre la media del conjunto de entrenamiento, mientras que un valor negativo indica que el modelo predice peor que dicha media.
 
-A lo largo de todos los modelos, `earthworm_shannon_z` y `earthworm_richness_z` se tratan como los dos _targets_ prioritaios, por lo que en los siguientes subapartados se hará referencia explicita a los rendimientos obtenidos a la hora de predecir dichos _targets_.
+A lo largo de todos los modelos, `earthworm_shannon_z` y `earthworm_richness_z` se tratan como los dos _targets_ prioritarios, por lo que en los siguientes subapartados se hará referencia explícita a los rendimientos obtenidos a la hora de predecir dichos _targets_.
 
-También a lo largo de los siguientes subapartados, se tendrá una explicación de los modelos y de los resultados obtenidos, como también el _notebook_ base de dcho modelo exportado.
+También a lo largo de los siguientes subapartados, se tendrá una explicación de los modelos y de los resultados obtenidos, como también el _notebook_ base de dicho modelo exportado.
 
 === Modelo de Regresión Ridge <ridge-model>
 
-==== Fundamentos y configuración
+==== Fundamentos y configuración <ridge-model-fundamentos>
 
 Ridge (véase #link(<regresion-ridge>)[*Modelo de Regresión Ridge*]) se emplea como modelo _baseline_ del trabajo: al ser un modelo lineal, permite establecer un suelo mínimo de rendimiento frente al que comparar el resto de modelos, más complejos y con mayor capacidad de capturar relaciones no lineales.
 
@@ -21,19 +21,19 @@ La búsqueda de hiperparámetros se realiza mediante `GridSearchCV (validación 
 - *`fit_intercept`:* True / False.
 - *`solver`:* auto, cholesky, lsqr.
 
-Para evitar seleccionar una combinación que sobreajuste, se aplica además un filtro de estabilidad: de entre todas las combinaciones evaluadas, solo se consideran válidas aquellas cuya diferencia entre el R² de entrenamiento y el R² de validación cruzada (gap) sea igual o inferior a 0.10; si ninguna combinación cumple ese criterio para un _target_ concreto, se selecciona la de menor gap con seguridad. El alpha óptimo encontrado varía considerablemente entre _targets_ (de 105.98 a 719.69), lo que confirma que la señal predictiva disponible es distinta para cada grupo taxonómico y que un único valor de regularización global no sería adecuado.
+Para evitar seleccionar una combinación que sobreajuste, se aplica además un filtro de estabilidad: de entre todas las combinaciones evaluadas, solo se consideran válidas aquellas cuya diferencia entre el R² de entrenamiento y el R² de validación cruzada (_gap_) sea igual o inferior a 0.10; si ninguna combinación cumple ese criterio para un _target_ concreto, se selecciona la de menor _gap_ con seguridad. El alpha óptimo encontrado varía considerablemente entre _targets_ (de 105.98 a 719.69), lo que confirma que la señal predictiva disponible es distinta para cada grupo taxonómico y que un único valor de regularización global no sería adecuado.
 
-==== Entrenamiento
+==== Entrenamiento <ridge-model-entrenamiento>
 
 Al tratarse de un modelo determinista, no se recurre a un ensamblado de semillas: se entrena un único modelo por _target_ con los hiperparámetros seleccionados en el _tuning_.
 
-La validación cruzada repetida `(RepeatedKFold, 5 pliegues × 3 repeticiones = 15 evaluaciones)` sobre `X_train` no mostró señales relevantes de sobreajuste: de los 21 _targets_, únicamente `bac_shannon_z` superó el umbral de aviso (diferencia Train-CV > 0.15, concretamente 0.161). 
+La validación cruzada repetida `(RepeatedKFold, 5 pliegues × 3 repeticiones = 15 evaluaciones)` sobre `X_train` no mostró señales relevantes de sobreajuste: de los 21 _targets_, únicamente `bac_shannon_z` superó el umbral de aviso (diferencia `Train-CV` > 0.15, concretamente 0.161). 
 
 El resto se mantuvo en un rango de diferencia razonable (entre 0.054 y 0.161), coherente con la baja capacidad de un modelo lineal para memorizar el conjunto de entrenamiento.
 
 #colbreak()
 
-==== Explicabilidad y variables más relevantes
+==== Explicabilidad y variables más relevantes <ridge-model-explicabilidad>
 
 A partir del valor absoluto de los coeficientes del modelo (interpretables directamente al estar las variables normalizadas), las variables más relevantes a nivel global fueron, por este orden: `soil_ph_z`, `gee_temp_media_C_z`, `eu_p_z`, `dem_elevacion_m_z`, `zn_z`, `gee_humedad_rel_pct_z`, `clay_content_z`, `eu_ph_z`, `pb_z` y `soil_moisture_z`. 
 
@@ -41,9 +41,9 @@ El pH del suelo y la temperatura media (variable climática remota de GEE) desta
 
 La gráfica que muestra las variables más importantes se puede ver más adelante en el _notebook_ exportado en la sección *5.- Importancia de variables*.
 
-==== Resultados sobre eval.csv
+==== Resultados sobre eval.csv <ridge-model-resultados>
 
-El R² medio sobre los 21 _targets_ es de *-0.016*, es decir, en promedio Ridge se comporta ligeramente peor que predecir la media del conjunto de entrenamiento.
+El R² medio sobre los 21 _targets_ es de *-0.016*, es decir, en promedio _Ridge_ se comporta ligeramente peor que predecir la media del conjunto de entrenamiento.
 
 Sobre los dos _targets_ prioritarios obtiene *R²=0.2395* (`earthworm_shannon_z`) y *R²=0.2789* (`earthworm_richness_z`), sus dos mejores resultados junto con `macro_shannon_z` (0.1257). 
 
@@ -84,7 +84,7 @@ En el extremo opuesto, `coll_species_richness_z` (-0.7341) y `meso_shannon_z` (-
       [*Riqueza cercozoos (ASV)*], [cerc_asv_richness_z],     [0.1019],  [0.9350], [0.7211], 
       )
     ], 
-      caption: [Resultados de Ridge sobre eval.csv, por _target_.], 
+      caption: [Resultados de _Ridge_ sobre eval.csv, por _target_.], 
       kind: table, 
     )<tab-20>
 
@@ -101,7 +101,7 @@ En el extremo opuesto, `coll_species_richness_z` (-0.7341) y `meso_shannon_z` (-
 
 === Modelo _Random Forest_ <rf-model>
 
-==== Fundamentos y configuración
+==== Fundamentos y configuración <rf-model-fundamentos>
 
 _Random Forest_ (véase #link(<random-forest>)[*Modelo _Random Forest_*]) se entrena, en esta primera variante, en su forma de salida única: un conjunto de árboles independiente por cada uno de los 21 _targets_, cada uno con su propia búsqueda de hiperparámetros.
 
@@ -118,38 +118,38 @@ Algunos de dichos parámetros se han capado a un mínimo o máximo específico p
 + *max_depth:* Limitado a un máximo de 20 para reducir el riesgo de sobreajuste a causa del tamaño reducido de los datos.
 + *min_samples_leaf:* Limitado a un mínimo de 2 hojas para evitar la creación de hojas triviales.
 
-==== Entrenamiento
+==== Entrenamiento <rf-model-entrenamiento>
 
 La validación cruzada repetida sobre `X_train` muestra señales de sobreajuste (diferencia `Train-CV > 0.15`) en la práctica totalidad de los 21 _targets_, algo esperable dada la combinación de un modelo con alta capacidad (`max_depth` hasta 20) y un conjunto de entrenamiento reducido (~300 muestras).
 
-Este comportamiento es muy distinto al observado en Ridge, y es coherente con la mayor capacidad de un ensamblado de árboles para memorizar el conjunto de entrenamiento frente a un modelo lineal.
+Este comportamiento es muy distinto al observado en _Ridge_, y es coherente con la mayor capacidad de un ensamblado de árboles para memorizar el conjunto de entrenamiento frente a un modelo lineal.
 
-Además, a diferencia de Ridge, _Random Forest_ sí depende de la semilla aleatoria (tanto en el _bootstrap_ de las muestras como en la selección aleatoria de variables en cada división). 
+Además, a diferencia de _Ridge_, _Random Forest_ sí depende de la semilla aleatoria (tanto en el _bootstrap_ de las muestras como en la selección aleatoria de variables en cada división). 
 Para reducir la varianza de las predicciones finales, se entrena un ensamblado de 5 modelos por _target_ (semillas `RANDOM_STATE, RANDOM_STATE+1, ..., RANDOM_STATE+4`), cuyas predicciones se promedian en el momento de la inferencia. 
 
 En total se generan y almacenan *$21 times 5 = 105$ modelos `.pkl`*.
 
-==== Explicabilidad y variables más relevantes
+==== Explicabilidad y variables más relevantes <rf-model-explicabilidad>
 
 Se calculan valores *SHAP* sobre `X_train` para todos los _targets_ conjuntamente.
 
 El top-10 de variables más relevantes a nivel global por importancia SHAP media es: `soil_ph_z`, `gee_temp_media_C_z`, `eu_ph_z`, `eu_as_z`, `eu_cn_ratio_z`, `gee_humedad_rel_pct_z`, `eu_p_z`, `eu_clay_content_z`, `silt_content_z` y `eu_silt_content_z`. 
 
-Este resultado es consistente con el obtenido por los coeficientes de Ridge (soil_ph_z y gee_temp_media_C_z en primer y segundo lugar en ambos casos), lo que refuerza la fiabilidad de ambas variables como predictores robustos, independientemente del tipo de modelo empleado.
+Este resultado es consistente con el obtenido por los coeficientes de _Ridge_ (soil_ph_z y gee_temp_media_C_z en primer y segundo lugar en ambos casos), lo que refuerza la fiabilidad de ambas variables como predictores robustos, independientemente del tipo de modelo empleado.
 
 La gráfica que muestra las variables más importantes se puede ver más adelante en el _notebook_ exportado en la sección *5.- Explicabilidad del modelo (SHAP)*.
 
 #colbreak()
 
-==== Resultados sobre eval.csv
+==== Resultados sobre eval.csv <rf-model-resultados>
 
-El R² medio sobre los 21 _targets_ es de *0.090*, una mejora sustancial frente al -0.016 de Ridge. 
+El R² medio sobre los 21 _targets_ es de *0.090*, una mejora sustancial frente al -0.016 de _Ridge_. 
 
 _Random Forest_ es, de hecho, el modelo de salida única con mejor rendimiento global de todo el trabajo. 
 
 Sobre los _targets_ prioritarios: *R²=0.5041* (`earthworm_shannon_z`) y *R²=0.5722* (`earthworm_richness_z`), los mejores resultados obtenidos para ambos _targets_ entre todos los modelos de salida única evaluados. 
 
-Por otro lado, `coll_species_richness_z` (-0.5484) vuelve a ser, como en Ridge, el _target_ con peor ajuste.
+Por otro lado, `coll_species_richness_z` (-0.5484) vuelve a ser, como en _Ridge_, el _target_ con peor ajuste.
 
 En la #ref(<tab-21>) se pueden ver los resultados por cada _target_ de forma más detallada.
 
@@ -179,11 +179,11 @@ En la #ref(<tab-21>) se pueden ver los resultados por cada _target_ de forma má
       [*Riqueza oribátidos*],       [orib_species_richness_z], [0.2034],  [1.0679], [0.7166], 
       [*Riqueza mesostigmátidos*],  [meso_species_richness_z], [-0.0438], [0.9854], [0.7472], 
       [*Riqueza colémbolos*],       [coll_species_richness_z], [-0.5484], [0.6407], [0.5033], 
-      [*Riqueza bacterias (ASV*)],  [bac_asv_richness_z],      [0.0042],  [1.0965], [0.8126], 
-      [*Riqueza hongos (ASV*)],     [fun_asv_richness_z],      [-0.0256], [1.0915], [0.8189], 
-      [*Riqueza eucariotas (ASV*)], [euk_asv_richness_z],      [0.2520],  [0.7022], [0.5142], 
-      [*Riqueza oomicetos (ASV*)],  [oomy_asv_richness_z],     [0.1843],  [0.9071], [0.7446], 
-      [*Riqueza cercozoos (ASV*)],  [cerc_asv_richness_z],     [0.1250],  [0.9229], [0.7550], 
+      [*Riqueza bacterias (ASV)*],  [bac_asv_richness_z],      [0.0042],  [1.0965], [0.8126], 
+      [*Riqueza hongos (ASV)*],     [fun_asv_richness_z],      [-0.0256], [1.0915], [0.8189], 
+      [*Riqueza eucariotas (ASV)*], [euk_asv_richness_z],      [0.2520],  [0.7022], [0.5142], 
+      [*Riqueza oomicetos (ASV)*],  [oomy_asv_richness_z],     [0.1843],  [0.9071], [0.7446], 
+      [*Riqueza cercozoos (ASV)*],  [cerc_asv_richness_z],     [0.1250],  [0.9229], [0.7550], 
       )], 
       caption: [Resultados de _Random Forest_ (salida única) sobre eval.csv, por _target_.], 
       kind: table 
@@ -202,7 +202,7 @@ En la #ref(<tab-21>) se pueden ver los resultados por cada _target_ de forma má
 
 === Modelo _Random Forest_ Multisalida <rf-multi-model>
 
-==== Fundamentos y configuración
+==== Fundamentos y configuración <rf-multi-model-fundamentos>
 
 Esta variante entrena un único `RandomForestRegressor` que predice los 21 _targets_ de forma simultánea, aprovechando el soporte nativo de `scikit-learn` para `y` multivariante: cada división de cada árbol se decide considerando conjuntamente los 21 _targets_, lo que permite capturar correlaciones entre grupos biológicos directamente en la estructura del árbol, sin necesidad de un mecanismo explícito de encadenamiento.
 
@@ -230,19 +230,19 @@ El consenso resultante se puede ver en la #ref(<tab-22>):
 
 Resulta interesante que el consenso limite la profundidad a solo 6 niveles (frente al máximo de 20 permitido en la búsqueda), lo que sugiere que, al tener que servir a los 21 _targets_ simultáneamente, el modelo prioriza una estructura de árbol menos profunda y más generalista, en vez de sobreajustar a las particularidades de un _target_ concreto.
 
-Cabe destacar que la matriz de parámetros empleado para realizar la búsqueda de hiperparámetros es idéntico al empleado en #link(<rf-model>)[*_Random Forest_*].
+Cabe destacar que la matriz de parámetros empleada para realizar la búsqueda de hiperparámetros es idéntica a la empleada en #link(<rf-model>)[*_Random Forest_*].
 
-==== Entrenamiento
+==== Entrenamiento <rf-multi-model-entrenamiento>
 
 Al igual que _Random Forest_ de salida única, esta variante depende de la semilla aleatoria del _bootstrap_ y de la selección de variables en cada división. Se entrena un ensamblado de 5 modelos con semillas `RANDOM_STATE` a `RANDOM_STATE+4`, cuyas predicciones se promedian en la inferencia. Al tratarse de un único bosque multisalida por semilla (no uno por _target_), el ensamblado completo requiere solo 5 modelos `.pkl`, frente a los 105 de la variante de salida única.
 
-La validación cruzada repetida sobre `X_train`, evaluada de forma global sobre los 21 _targets_ conjuntamente, muestra una diferencia Train-CV de 0.166 (R² train 0.307 frente a R² CV 0.142), por encima del umbral de aviso de 0.15. 
+La validación cruzada repetida sobre `X_train`, evaluada de forma global sobre los 21 _targets_ conjuntamente, muestra una diferencia `Train-CV` de 0.166 (R² train 0.307 frente a R² CV 0.142), por encima del umbral de aviso de 0.15. 
 
 A diferencia de _Random Forest_ de salida única, donde prácticamente todos los _targets_ mostraban aviso individual, aquí el consenso de hiperparámetros (con una profundidad más conservadora) modera algo el sobreajuste, aunque no lo elimina del todo.
 
 #colbreak()
 
-==== Explicabilidad y variables más relevantes
+==== Explicabilidad y variables más relevantes <rf-multi-model-explicabilidad>
 
 Se calculan valores *SHAP* sobre `X_train`, promediando el valor absoluto sobre los 21 _targets_. El top-10 de variables más relevantes es: `soil_ph_z`, `gee_temp_media_C_z`, `eu_as_z`, `eu_ph_z`, `p_z`, `gee_humedad_rel_pct_z`, `eu_cn_ratio_z`, `eu_p_z`, `eu_clay_content_z` y `dem_elevacion_m_z`. 
 
@@ -250,7 +250,7 @@ Este ranking es prácticamente idéntico al obtenido por _Random Forest_ de sali
 
 La gráfica que muestra las variables más importantes se puede ver más adelante en el _notebook_ exportado en la sección *5.- Explicabilidad del modelo (SHAP)*.
 
-==== Resultados sobre eval.csv
+==== Resultados sobre eval.csv <rf-multi-model-resultados>
 
 Con un R² medio de *0.0964*, _Random Forest_ multisalida es, de los ocho modelos evaluados en este trabajo, el que obtiene el *mejor promedio global* de R² sobre `eval.csv`, ligeramente por encima incluso de su propia variante de salida única (0.090). Sobre los _targets_ prioritarios obtiene *R²=0.4160* (`earthworm_shannon_z`) y *R²=0.4509* (`earthworm_richness_z`), algo por debajo de lo logrado por _Random Forest_ de salida única para estos dos _targets_ concretos. 
 
@@ -307,7 +307,7 @@ En la #ref(<tab-23>) se pueden ver los resultados por _target_ tras el entrenami
 
 === Modelo RegressorChain con _Random Forest_ <reg-chain-model>
 
-==== Fundamentos y configuración
+==== Fundamentos y configuración <reg-chain-model-fundamentos>
 
 RegressorChain (véase #link(<regressorchain>)[*RegressorChain*]) encadena las predicciones de los 21 _targets_: el modelo predice primero un _target_, y usa esa predicción, junto con las variables originales, como entrada adicional para predecir el siguiente, y así sucesivamente. 
 
@@ -334,13 +334,13 @@ El mejor R² promedio de validación cruzada obtenido en esta búsqueda fue de 0
   kind: table
 )<tab-24>
 
-==== Ensemble of Chains (ECC)
+==== _Ensemble of Chains_ (ECC) <reg-chain-model-ecc>
 
 El principal problema del encadenamiento simple es que los _targets_ al principio de la cadena disponen de menos información (solo las variables originales) que los del final, los que además cuentan con las predicciones de todos los _targets_ anteriores, por lo que el orden elegido condiciona el rendimiento de cada _target_ concreto. 
 
 Para compensar este efecto, se entrena un ensamble de 10 cadenas `(N_CHAINS=10)`, cada una con un orden aleatorio distinto de los 21 _targets_ (permutación generada con semilla `RANDOM_STATE + chain_id`) y su propio modelo base con semilla también distinta. Las predicciones finales se obtienen promediando las 10 cadenas, de forma que los efectos de orden favorables y desfavorables para cada _target_ tienden a cancelarse entre sí.
 
-==== Entrenamiento
+==== Entrenamiento <reg-chain-model-entrenamiento>
 
 La validación cruzada del modelo base muestra avisos de sobreajuste (diferencia `Train-CV > 0.15`) en varios de los _targets_ situados en la segunda mitad de la cadena por defecto, por ejemplo, `coll_species_richness_z` (0.416), `cerc_asv_richness_z` (0.433) u `oomy_asv_richness_z` (0.421), un patrón distinto al de _Random Forest_ de salida única, donde los avisos aparecían de forma más homogénea en casi todos los _targets_.
 
@@ -348,7 +348,7 @@ En una cadena de referencia con orden por defecto, el R² de entrenamiento del p
 
 #colbreak()
 
-==== Explicabilidad y variables más relevantes
+==== Explicabilidad y variables más relevantes <reg-chain-model-explicabilidad>
 
 Se calcula la importancia de variables (SHAP y MDI) del modelo base únicamente para el primer _target_ de la cadena, al ser la posición de mayor dificultad. El top-10 por MDI para esta posición es: `sand_content_z`, `silt_content_z`, `soil_ph_z`, `gee_humedad_rel_pct_z`, `gee_temp_media_C_z`, `aggregate_stability_z`, `pb_z`, `eu_water_holding_capacity_z`, `k_z` y `ni_z`. 
 
@@ -356,7 +356,7 @@ A diferencia del resto de modelos, aquí `sand_content_z` (contenido de arena) d
 
 La gráfica que muestra las variables más importantes se puede ver más adelante en el _notebook_ exportado en la sección *5.- Análisis de la cadena*.
 
-==== Resultados sobre eval.csv
+==== Resultados sobre eval.csv <reg-chain-model-resultados>
 
 Con un R² medio de *0.0809*, RegressorChain queda por debajo de _Random Forest_ multisalida (0.0964) pero, en cambio, obtiene los mejores resultados de todo el trabajo sobre los dos _targets_ prioritarios: *R²=0.4876* (`earthworm_shannon_z`) y *R²=0.5359* (`earthworm_richness_z`), superando incluso a _Random Forest_ de salida única. 
 
@@ -411,7 +411,7 @@ Esto es coherente con la hipótesis de partida del modelo: al encadenar explíci
 
 === Modelo XGBoost <xgboost-model>
 
-==== Fundamentos y configuración
+==== Fundamentos y configuración <xgboost-model-fundamentos>
 
 XGBoost (véase #link(<xgboost>)[*Modelo XGBoost*]) se entrena, igual que en el caso de _Random Forest_, en su variante de salida única: un modelo independiente por _target_, cada uno con su propia búsqueda de hiperparámetros mediante `RandomizedSearchCV` sobre `X_train`.
 
@@ -432,13 +432,13 @@ El espacio de búsqueda de hiperparámetros se restringe deliberadamente hacia m
 
 Esta combinación de árboles poco profundos, submuestreo agresivo y regularización fuerte responde directamente a la limitación de tener solo 300 muestras de entrenamiento: sin estas restricciones, XGBoost tiende a sobreajustar con rapidez.
 
-==== Entrenamiento 
+==== Entrenamiento <xgboost-model-entrenamiento>
 
 Al igual que _Random Forest_, XGBoost depende de la semilla aleatoria, por lo que se entrena un ensamblado de 5 modelos por _target_ `(NUM_EXPERTOS=5)`, variando únicamente la semilla, y promediando sus predicciones en la inferencia.
 
 La validación cruzada repetida sobre `X_train` muestra avisos de sobreajuste en 19 de los 21 _targets_, un patrón similar al de _Random Forest_ de salida única aunque con diferencias `Train-CV` algo menores en varios _targets_, lo que sugiere que la regularización fuerte aplicada en el espacio de búsqueda modera ligeramente el sobreajuste sin llegar a eliminarlo.
 
-==== Explicabilidad y variables más relevantes
+==== Explicabilidad y variables más relevantes <xgboost-model-explicabilidad>
 
 A diferencia de _Random Forest_, en este _notebook_ SHAP se calcula únicamente sobre los dos _targets_ prioritarios (`earthworm_shannon_z` y `earthworm_richness_z`), en vez de sobre el conjunto completo de 21 _targets_, por lo que no se dispone de un ranking de variables a nivel global comparable al del resto de modelos.
 
@@ -446,13 +446,13 @@ La gráfica que muestra las variables más importantes se puede ver más adelant
 
 #colbreak()
 
-==== Resultados sobre eval.csv
+==== Resultados sobre eval.csv <xgboost-model-resultados>
 
-El R² medio sobre los 21 _targets_ es de *0.067*, ligeramente por debajo de _Random Forest_ de salida única (0.090) pero muy por encima de Ridge. 
+El R² medio sobre los 21 _targets_ es de *0.067*, ligeramente por debajo de _Random Forest_ de salida única (0.090) pero muy por encima de _Ridge_. 
 
 Sobre los _targets_ prioritarios: *R²=0.4946* (`earthworm_shannon_z`) y *R²=0.5171* (`earthworm_richness_z`).
 
-En la #ref(<tab-26>) se pueden ver los resultador por _target_ obtenidos tras entrenar el modelo.
+En la #ref(<tab-26>) se pueden ver los resultados por _target_ obtenidos tras entrenar el modelo.
 
 #figure( 
   align(center)[ 
@@ -503,7 +503,7 @@ En la #ref(<tab-26>) se pueden ver los resultador por _target_ obtenidos tras en
 
 === Modelos XGBoost multisalida <xgb-multi-model>
 
-==== Fundamentos y configuración
+==== Fundamentos y configuración <xgb-multi-model-fundamentos>
 
 Disponible desde la versión 1.7 de XGBoost mediante el parámetro `multi_strategy='multi_output_tree'`, esta variante construye, en cada iteración del _boosting_, un único árbol que predice los 21 _targets_ a la vez, en lugar del comportamiento por defecto de XGBoost. Al igual que en _Random Forest_ multisalida, esto permite que las divisiones del árbol capturen relaciones compartidas entre _targets_ directamente en su estructura.
 
@@ -511,13 +511,13 @@ Comparte la misma celda de detección de GPU/CUDA que la variante de salida úni
 
 Al igual que en las variantes de salida única, se entrena un ensamblado de varios modelos (5 expertos) para reducir la varianza de las predicciones.
 
-==== Entrenamiento
+==== Entrenamiento <xgb-multi-model-entrenamiento>
 
-La validación cruzada global sobre `X_train` muestra una diferencia Train-CV de 0.5423, muy por encima del umbral de aviso de 0.15 y notablemente mayor que la obtenida por _Random Forest_ multisalida (0.166) para el mismo tipo de evaluación global. 
+La validación cruzada global sobre `X_train` muestra una diferencia `Train-CV` de 0.5423, muy por encima del umbral de aviso de 0.15 y notablemente mayor que la obtenida por _Random Forest_ multisalida (0.166) para el mismo tipo de evaluación global. 
 
-Esto indica que, a pesar de la regularización aplicada en el espacio de búsqueda, el mecanismo de boosting de XGBoost combinado con la estrategia `multi_output_tree` tiende a memorizar con más facilidad el conjunto de entrenamiento cuando debe servir a los 21 _targets_ a la vez, en comparación con un bosque de _Random Forest_ equivalente.
+Esto indica que, a pesar de la regularización aplicada en el espacio de búsqueda, el mecanismo de _boosting_ de XGBoost combinado con la estrategia `multi_output_tree` tiende a memorizar con más facilidad el conjunto de entrenamiento cuando debe servir a los 21 _targets_ a la vez, en comparación con un bosque de _Random Forest_ equivalente.
 
-==== Explicabilidad y variables más relevantes
+==== Explicabilidad y variables más relevantes <xgb-multi-model-explicabilidad>
 
 A diferencia de la variante de salida única, donde SHAP solo se calculaba sobre los dos _targets_ prioritarios, aquí sí se dispone de un ranking de importancia global. 
 
@@ -529,7 +529,7 @@ La gráfica que muestra las variables más importantes se puede ver más adelant
 
 #colbreak()
 
-==== Resultados sobre eval.csv
+==== Resultados sobre eval.csv <xgb-multi-model-resultados>
 
 Con un R² medio de *0.0835*, XGBoost multisalida queda en segunda posición del ranking global de R² medio de este trabajo, por detrás de _Random Forest_ multisalida (0.0964) pero por delante de RegressorChain (0.0809) y de XGBoost de salida única (0.067).
 
@@ -583,9 +583,9 @@ En la #ref(<tab-27>) se pueden ver los resultados por _target_ del modelo entren
   )[]
 }
 
-=== Modelos MLP mutlisalida <mlp-multi>
+=== Modelos MLP multisalida <mlp-multi>
 
-==== Fundamentos y configuración
+==== Fundamentos y configuración <mlp-multi-fundamentos>
 
 El perceptrón multicapa (véase #link(<redes-neuronales>)[*Redes neuronales*]), implementado sobre PyTorch, representa el único enfoque de aprendizaje profundo de este trabajo. 
 
@@ -620,25 +620,25 @@ La mejor configuración obtenida se puede ver en la #ref(<tab-28>).
   kind: table
 )<tab-28>
 
-==== Entrenamiento
+==== Entrenamiento <mlp-multi-entrenamiento>
 
 A diferencia de los modelos basados en árboles, este _notebook_ no aplica una validación cruzada explícita tipo `RepeatedKFold`: dado el coste computacional de reentrenar una red neuronal por cada pliegue y cada una de las 6 configuraciones evaluadas, la selección de la arquitectura se apoya en la partición fija de `train.csv/test.csv`, monitorizando la curva de pérdida (entrenamiento frente a validación) por época para detectar sobreajuste. 
 
 Al ser un modelo determinista una vez fijada la semilla de inicialización de pesos, no se entrena un ensamblado de varias semillas como en _Random Forest_ o XGBoost, sino un único modelo con la configuración ganadora.
 
-==== Explicabilidad y variables más relevantes
+==== Explicabilidad y variables más relevantes <mlp-multi-explicabilidad>
 
 Al no disponer las redes neuronales de una medida de importancia intrínseca como los árboles, se recurre a permutation importance sobre un modelo de referencia entrenado sobre todo `X_train`. 
 
 El top-10 resultante es el siguiente: `soil_ph_z`, `gee_temp_media_C_z`, `dem_elevacion_m_z`, `eu_p_z`, `eu_ph_z`, `gee_humedad_rel_pct_z`, `gee_ndvi_verano_z`, `silt_content_z`, `bulk_density_z`, `clay_content_z`. 
 
-Vuelve a situar a `soil_ph_z` y `gee_temp_media_C_z` en primer y segundo lugar, exactamente igual que en Ridge y en _Random Forest_, lo que refuerza aún más la robustez de ambas variables como predictores del problema, con independencia del tipo de modelo empleado.
+Vuelve a situar a `soil_ph_z` y `gee_temp_media_C_z` en primer y segundo lugar, exactamente igual que en _Ridge_ y en _Random Forest_, lo que refuerza aún más la robustez de ambas variables como predictores del problema, con independencia del tipo de modelo empleado.
 
 La gráfica que muestra las variables más importantes se puede ver más adelante en el _notebook_ exportado en la sección *5.- Importancia de variables*.
 
-==== Resultados sobre eval.csv
+==== Resultados sobre eval.csv <mlp-multi-resultados>
 
-Con un R² medio de *-0.038*, el MLP multisalida se sitúa por debajo de los tres modelos basados en árboles y también por debajo del modelo Ridge. 
+Con un R² medio de *-0.038*, el MLP multisalida se sitúa por debajo de los tres modelos basados en árboles y también por debajo del modelo _Ridge_. 
 
 Sobre los _targets_ prioritarios obtiene *R²=0.4264* (`earthworm_shannon_z`) y *R²=0.5176* (`earthworm_richness_z`), resultados razonables a pesar de que el rendimiento global se ve penalizado por un desempeño muy negativo en varios _targets_ minoritarios, en particular `coll_species_richness_z` (R²=-1.4628), con diferencia el peor resultado individual obtenido por ningún modelo sobre ningún _target_ en todo este trabajo. 
 
@@ -695,7 +695,7 @@ En la #ref(<tab-29>) se pueden ver los resultados por _target_ obtenidos tras en
 
 === Modelos MLP con función de pérdida personalizada <mlp-custom-loss>
 
-==== Fundamentos y configuración
+==== Fundamentos y configuración <mlp-custom-loss-fundamentos>
 
 Esta variante extiende el MLP multisalida anterior con una función de pérdida personalizada (`CorrelationAwareLoss`) que combina dos componentes:
 
@@ -707,7 +707,7 @@ El parámetro `lambda_corr` controla el peso relativo de esta penalización fren
 
 El _tuning_ explora 10 configuraciones que combinan arquitectura, hiperparámetros de entrenamiento y distintos valores de `lambda_corr` (de 0.0 a 0.5). El resultado del _tuning_ es, en sí mismo, uno de los hallazgos más relevantes de este _notebook_.
 
-En la #ref(<tab-30>) se puede ver los diferentes conjuntos de hiperparámetros probados y los resultados de cada uno, sienod el $R²$ en negrita, el mejor valor de todos.
+En la #ref(<tab-30>) se puede ver los diferentes conjuntos de hiperparámetros probados y los resultados de cada uno, siendo el $R²$ en negrita, el mejor valor de todos.
 
 #figure(
   align(center)[
@@ -728,7 +728,7 @@ En la #ref(<tab-30>) se puede ver los diferentes conjuntos de hiperparámetros p
         [[64, 16, 8]],   [0.5],  [0.005], [0.0071], 
         [[128, 64, 32]], [0.2],  [0.005], [0.0304], )
   ],
-  caption: [Combinaciones de arquitecturas para MLP _Custom Loss_],
+  caption: [Combinaciones de arquitecturas para MLP _Custom Loss_.],
   kind: table
 )<tab-30>
 
@@ -738,13 +738,13 @@ Esto indica que, con el tamaño de _dataset_ disponible en este trabajo, el tér
 
 #colbreak()
 
-==== Entrenamiento
+==== Entrenamiento <mlp-custom-loss-entrenamiento>
 
 Al igual que en el MLP multisalida estándar, no se aplica una validación cruzada explícita: la arquitectura se selecciona mediante la comparación directa de las 10 configuraciones del _tuning_ sobre la partición fija de entrenamiento/validación, y se entrena un único modelo final con la configuración ganadora (sin ensamblado de semillas).
 
 Además de las métricas de error habituales, este _notebook_ calcula la diferencia media entre la matriz de correlación real y la matriz de correlación predicha como indicador directo de si la función de pérdida personalizada está cumpliendo su objetivo. Sobre `X_train`, esta diferencia media es de *0.1131*.
 
-==== Explicabilidad y variables más relevantes
+==== Explicabilidad y variables más relevantes <mlp-custom-loss-explicabilidad>
 
 Al igual que en el MLP multisalida estándar, se recurre a permutation importance sobre `X_train`, esta vez calculada de forma global sobre los 21 _targets_. 
 
@@ -754,7 +754,7 @@ El top-10 resultante es: `soil_ph_z`, `gee_humedad_rel_pct_z`, `eu_ph_z`, `dem_e
 
 La gráfica que muestra las variables más importantes se puede ver más adelante en el _notebook_ exportado en la sección *5.- Importancia de variables*.
 
-==== Resultados sobre eval.csv
+==== Resultados sobre eval.csv <mlp-custom-loss-resultados>
 
 Con un R² medio de *-0.1316*, este es el modelo con *peor rendimiento global* de los ocho evaluados en este trabajo, por debajo incluso del MLP multisalida estándar (-0.038) del que parte. 
 

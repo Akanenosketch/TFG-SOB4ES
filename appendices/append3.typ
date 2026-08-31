@@ -4,16 +4,16 @@
 
 ==== Fundamentos y configuración
  
-Es el primer _notebook_ de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*]: integra las 428 muestras del proyecto SOB4ES (12 países europeos) a partir de más de una decena de ficheros Excel independientes los cuales contienen, entre otros, metadatos de sitio, propiedades físicas y químicas del suelo, comunidades biológicas de 10 grupos taxonómicos distintos (nemátodos, macrofauna, lombrices, oribátidos, mesostigmátidos, colémbolos, bacterias, hongos, eucariotas, oomicetos y cercozoos) y una capa de variables raster europeas (`eu_*`) ya extraídas. 
+Es el primer _notebook_ de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*]: integra las 428 muestras del proyecto SOB4ES (12 países europeos) a partir de más de una decena de ficheros Excel independientes los cuales contienen, entre otros, metadatos de sitio, propiedades físicas y químicas del suelo, comunidades biológicas de 10 grupos taxonómicos distintos (nematodos, macrofauna, lombrices, oribátidos, mesostigmátidos, colémbolos, bacterias, hongos, eucariotas, oomicetos y cercozoos) y una capa de variables _raster_ europeas (`eu_*`) ya extraídas.
  
 ==== Metodología
  
 El proceso sigue cuatro fases: 
 
 + *Normalización de nombres:* Una función `_to_snake()` convierte todos los nombres de columna (incluyendo casos con acrónimos como `pH` o `CN`) a `snake_case` de forma consistente entre las 15 fuentes. 
-+ *Cálculo de índices de diversidad alfa:* Se calculan los índices de la abundancia total, la riqueza de especies y el índice de Shannon $H' = -sum_i p_i ln(p_i)$  calculados de forma independiente para cada grupo taxonómico a partir de su matriz de abundancias por especie. 
-+ *Fusión de fuentes:* de las 15 fuentes sobre la tabla de metadatos de sitio mediante `left join` mediante `site_id`, verificando en todo momento que no se pierden ni duplican filas;
-+ *Limpieza de los datos:*, que cubre valores perdidos, valores fuera de rango físico y duplicados.
++ *Cálculo de índices de diversidad alfa:* se calculan la abundancia total, la riqueza de especies y el índice de diversidad de Shannon $H' = -sum_i p_i ln(p_i)$, de forma independiente para cada grupo taxonómico a partir de su matriz de abundancias por especie. 
++ *Fusión de fuentes:* se combinan las 15 fuentes sobre la tabla de metadatos de sitio mediante un `left join` por `site_id`, verificando en todo momento que no se pierden ni duplican filas.
++ *Limpieza de los datos:* cubre valores perdidos, valores fuera de rango físico y duplicados.
  
 Para uno de los _targets_ prioritarios, `earthworm_shannon_z`, el _notebook_ realiza un tratamiento especialmente cuidadoso: los datos de abundancia de lombrices provienen de *dos institutos distintos* (`NUID/UCD` y UVIGO, cada uno responsable de un subconjunto de países), que se procesan por separado y se combinan al final. Antes de aceptar el resultado, se ejecuta además una *verificación cruzada* frente al archivo oficial combinado (`DD2.2.7_EARTHWORMS_COM.xlsx`) que el propio proyecto SOB4ES distribuye.
  
@@ -49,7 +49,7 @@ En la #ref(<tab-32>) se pueden ver de forma resumida los resultados obtenidos tr
         [*NaN restantes tras imputación*],                                                               [0],
         [*Valores fuera de rango truncados*],                                                            [`aggregate_stability`: 36 valores],
         [*Filas con suma de texturas fuera de \[95, 105\]%*],                                            [40 (renormalizadas al 100%)],
-        [*Filas marcadas como outlier (IQR, factor 3)*],                                                 [341 (79.7%)],
+        [*Filas marcadas como _outlier_ (IQR, factor 3)*],                                               [341 (79.7%)],
         [*Variables escaladas (`_z`)*],                                                                  [61],
     )
   ],
@@ -90,7 +90,8 @@ Cada fuente se define de forma declarativa mediante un diccionario de registro (
  
 De *Google Earth Engine* se extraen 3 variables sobre los 428 puntos de muestreo: *temperatura media anual* y *humedad relativa media anual* (ambas de `ECMWF/ERA5_LAND/DAILY_AGGR`, periodo 2015-2020), y el *NDVI medio de verano* (de `COPERNICUS/S2_SR_HARMONIZED`, filtrando imágenes Sentinel-2 con menos de un 20% de nubosidad). 
 
-De *Copernicus DEM* se extraen *elevación*, *pendiente* y *orientación*, leyendo directamente el _tile_ COG correspondiente a cada punto vía `/vsicurl/` (sin descarga previa) y calculando pendiente/orientación mediante el método de diferencias centrales de Horn (1981) sobre una ventana $3 times 3$ alrededor del punto. 
+De *Copernicus DEM* se extraen *elevación*, *pendiente* y *orientación*, leyendo directamente el _tile_ COG correspondiente a cada punto vía `/vsicurl/` (sin descarga previa) y calculando pendiente/orientación mediante el método de diferencias centrales de Horn#sub([@horn1981]) sobre una ventana $3 times 3$ alrededor del punto.
+// TODO: añadir entrada bibliográfica "horn1981" al fichero .bib: Horn, B.K.P. (1981). "Hill shading and the reflectance map". Proceedings of the IEEE, 69(1), 14-47.
 
 De *Copernicus CDS* se intenta extraer la precipitación mensual media (`reanalysis-era5-land-monthly-means`, 2015-2020).
  
@@ -144,7 +145,7 @@ Cierra la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] combinan
  
 Tras verificar la integridad de las claves `site_id` en los tres ficheros de entrada (`sob4es_clean_vx.csv`, `sob4es_model_ready_vx.csv`, `online_features_vx.csv`) y comprobar que no quedan nombres de columna con patrones de fusión rotos, se realiza un `left join` de `clean` con `online` por `site_id`. 
 
-Las variables _online_ numéricas siguen la misma política de imputación por tramos ya usada en `data-prep` (indicador `_was_missing` para 5-50% de NaN, mediana para el resto) y se escalan con un `StandardScaler` *independiente* del usado para las variables locales (`scaler_online.pkl`, separado de `scaler.pkl`), antes de reordenar todas las columnas en bloques lógicos (geografía → descripción del sitio → abiótico → diversidad alfa → fauna → microbioma → teledetección/DEM → rasters EU → metadatos).
+Las variables _online_ numéricas siguen la misma política de imputación por tramos ya usada en `data-prep` (indicador `_was_missing` para 5-50% de NaN, mediana para el resto) y se escalan con un `StandardScaler` *independiente* del usado para las variables locales (`scaler_online.pkl`, separado de `scaler.pkl`), antes de reordenar todas las columnas en bloques lógicos (geografía → descripción del sitio → abiótico → diversidad alfa → fauna → microbioma → teledetección/DEM → _rasters_ EU → metadatos).
  
 ==== Resultados
 
@@ -173,7 +174,7 @@ La imputación de las variables _online_ no necesitó generar ningún indicador 
 El NaN total en ambos ficheros de salida es 0. 
 
 El desglose final por fuente confirma la composición del _dataset_ que efectivamente llega a los _notebooks_ de modelado: 
-- 15 columnas de rasters EU. 
+- 15 columnas de _rasters_ EU. 
 - 12 de metadatos de sitio. 
 - 9 abióticas químicas. 
 - 6 abióticas físicas.  
@@ -197,19 +198,20 @@ Este `sob4es_final_model_ready.csv` es, precisamente, el fichero del que parte e
 
 ==== Fundamentos y configuración
 
-Una vez `data-prep`, `data-prep-online` y `data-prep-combination` (véase #link(<notebooks-empleados>)[*Anexo V*]) generan el _dataset_ final armonizado (`sob4es_final_model_ready.csv`), este _notebook_ es responsable de dividirlo en los tres subconjuntos empleados por el resto del proyecto: *entrenamiento, test y evaluación*. Es, por tanto, el último eslabón de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] antes de entrar en la #link(<capa-modelado>)[*Capa de modelado predictivo*].
+Una vez `data-prep`, `data-prep-online` y `data-prep-combination` (véase #link(<notebooks-empleados>)[*Anexo V*]) generan el _dataset_ final armonizado (`sob4es_final_model_ready.csv`), este _notebook_ es responsable de dividirlo en los tres subconjuntos empleados por el resto del proyecto: *entrenamiento, `test` y evaluación*. Es, por tanto, el último eslabón de la #link(<capa-procesamiento>)[*Capa de procesamiento de datos*] antes de entrar en la #link(<capa-modelado>)[*Capa de modelado predictivo*].
 
-El _dataset_ de entrada contiene 428 filas y 71 columnas, sin ningún valor nulo. La partición se configura con `TEST_SIZE=0.30` (fracción reservada para test+eval conjuntamente), `EVAL_FRAC=0.50` (mitad de esa reserva para eval, mitad para test) y `RANDOM_SEED=42`.
+El _dataset_ de entrada contiene 428 filas y 71 columnas, sin ningún valor nulo. La partición se configura con `TEST_SIZE=0.30` (fracción reservada para `test`+eval conjuntamente), `EVAL_FRAC=0.50` (mitad de esa reserva para eval, mitad para `test`) y `RANDOM_SEED=42`.
 
 ==== Metodología
 
-La partición se realiza en dos pasos sucesivos con `train_test_split` de `scikit-learn`, estratificando por país de origen de la muestra (extraído del prefijo de `site_id`, por ejemplo BE, IL, RO) para asegurar que los tres subconjuntos mantengan una representación proporcional de cada país. 
+La partición se realiza en dos pasos sucesivos con `train_test_split` de `scikit-learn` estratificando por país de origen de la muestra (extraído del prefijo de `site_id`, por ejemplo BE, IL, RO) para asegurar que los tres subconjuntos mantengan una representación proporcional de cada país.
+// TODO: añadir entrada bibliográfica "pedregosa2011" al fichero .bib: Pedregosa et al. (2011). "Scikit-learn: Machine Learning in Python". Journal of Machine Learning Research, 12, 2825-2830.
 
 Italia (IT), con solo 2 filas en todo el _dataset_, se agrupa con Alemania (DE) únicamente a efectos de estratificación, al no ser posible estratificar un país con menos de 2 muestras por _split_.
 
 Las particiones resultantes son las siguientes:
-- *Primera partición:* train (70%) frente a un conjunto temporal (temp, 30%).
-- *Segunda partición:* temp se divide a su vez al 50% entre test y eval.
+- *Primera partición:* `train` (70%) frente a un conjunto temporal (`temp`, 30%).
+- *Segunda partición:* `temp` se divide a su vez al 50% entre `test` y `eval`.
 
 Tras la partición se verifica que la proporción de `outlier_flag` (una bandera de calidad de dato ya calculada en fases anteriores) se mantiene similar entre los tres subconjuntos, como comprobación adicional de que la partición no ha introducido un sesgo de calidad entre _splits_.
 
@@ -217,7 +219,7 @@ Tras la partición se verifica que la proporción de `outlier_flag` (una bandera
 
 ==== Resultados
 
-En la #ref(<tab-35>) y en la #ref(<fig-17>) se pueden ver los subconjuntos resultantes tras ejecutar el _notebook_ de división de datos, como también la estratificación de estos por país.
+En la #ref(<tab-35>) y en la #ref(<fig-17>) se pueden ver los subconjuntos resultantes tras ejecutar el _notebook_ de división de datos, así como la estratificación de estos por país.
 
 #figure(
     align(center)[
@@ -242,7 +244,7 @@ En la #ref(<tab-35>) y en la #ref(<fig-17>) se pueden ver los subconjuntos resul
     kind: image
 )<fig-17>
 
-La distribución de `outlier_flag` se mantiene prácticamente idéntica entre subconjuntos, confirmando que la estratificación por país no ha desequilibrado esta variable de calidad. De igual forma, la proporción de muestras por país se mantiene estable en los tres _splits_, con la única excepción esperable de Italia, cuyas 2 únicas muestras se reparten una a test y otra a eval, sin ninguna en train.
+La distribución de `outlier_flag` se mantiene prácticamente idéntica entre subconjuntos, confirmando que la estratificación por país no ha desequilibrado esta variable de calidad. De igual forma, la proporción de muestras por país se mantiene estable en los tres _splits_, con la única excepción esperable de Italia, cuyas 2 únicas muestras se reparten una a `test` y otra a `eval`, sin ninguna en `train`.
 
 #let file = "../media/anexos/data-prep-div.pdf"
 #let total_pages = 3 

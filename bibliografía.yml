@@ -796,3 +796,53 @@ googleDeepMindAlphaGo:
     title: "Google DeepMind"
   URL: "https://deepmind.google/research/alphago/"
   accessed: 2026-08-29
+
+wuReviewSoilHeavy2022:
+  type: article
+  title: "Review of soil heavy metal pollution in China: Spatial distribution, primary sources, and remediation alternatives"
+  author:
+    - Wu, Yufeng
+    - Li, Xiao
+    - Yu, Lu
+    - Wang, Tengqi
+    - Wang, Jinnan
+    - Liu, Tingting
+  date: 2022-06
+  parent:
+    type: periodical
+    title: Resources, Conservation and Recycling
+    volume: 181
+  page-range: 106261
+  doi: 10.1016/j.resconrec.2022.106261
+ 
+kabataPendiasTraceElements2011:
+  type: book
+  title: Trace Elements in Soils and Plants
+  author: Kabata-Pendias, Alina
+  edition: 4
+  date: 2011
+  publisher: CRC Press
+  location: Boca Raton, FL
+ 
+bradyWeilNatureProperties2016:
+  type: book
+  title: The Nature and Properties of Soils
+  author:
+    - Brady, Nyle C.
+    - Weil, Ray R.
+  edition: 15
+  date: 2016
+  publisher: Pearson
+  location: Columbus, OH
+
+horn1981:
+  type: article
+  title: Hill Shading and the Reflectance Map
+  author: Horn, Berthold K. P.
+  date: 1981
+  parent:
+    type: periodical
+    title: Proceedings of the IEEE
+    volume: 69
+    issue: 1
+  page-range: 14-47

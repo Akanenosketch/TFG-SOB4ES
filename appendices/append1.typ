@@ -5,7 +5,7 @@ En este anexo se presenta el análisis exploratorio de datos (EDA, *_Exploratory
 El objetivo de este análisis es triple:
 + caracterizar la calidad y la estructura de los datos disponibles (valores faltantes, distribución de las variables, escalas),
 + documentar de forma exhaustiva qué significa cada una de las 84 columnas del _dataset_ limpio, y
-+ justificar empíricamente algunas de las decisiones metodológicas tomadas en la sección #link(<marco-teorico-o-practico>)[*Marco teórico y práctico*], en particular la normalización de las variables predictoras (véase #link(<regresion-ridge>)[*Regresión Ridge*]) y el uso de modelos robustos frente a la colinealidad (véase #link(<seleccion-de-variables>)[*Selección de variables*]).
++ justificar empíricamente algunas de las decisiones metodológicas tomadas en #link(<marco-teorico-o-practico>)[*Marco teórico y práctico*], en particular la normalización de las variables predictoras (véase #link(<regresion-ridge>)[*Regresión Ridge*]) y el uso de modelos robustos frente a la colinealidad (véase #link(<seleccion-de-variables>)[*Selección de variables*]).
 
 Antes de entrenar un modelo predictivo conviene entender qué hay realmente en los datos: cuántas observaciones hay, qué significa cada variable, cómo se distribuyen entre países y usos de suelo, si faltan valores, si hay variables que se mueven juntas (colinealidad), si existen valores atípicos y si las relaciones entre variables predictoras y variables objetivo son lineales o no. Estas preguntas requieren calcular estadísticos y visualizar los datos directamente, que es lo que se hace en este anexo.
 
@@ -69,7 +69,7 @@ Es decir, *84 = 13 (descartadas) + 4 (sin escalar) + 67 (normalizadas `_z`)*.
 
 El conjunto de 67 variables numéricas normalizadas es el universo real desde el que se seleccionan, en una fase posterior de la #link(<seleccion-de-variables>)[*Selección de variables*], las 34 predictoras y 21 _targets_ finales. La diferencia entre 67 y 55 corresponde a variables numéricas descartadas por el proceso de selección de variables (colinealidad, varianza casi nula, etc.), no a identificadores.
 
-De acuerdo con la partición final descrita en la #link(<capa-modelado>)[*Fase de partición de datos*], el conjunto se divide en 299 observaciones de entrenamiento (70%), 64 de test (15%) y 65 de evaluación (15%), sobre el total de 428 parcelas.
+De acuerdo con la partición final descrita en la #link(<capa-modelado>)[*Fase de partición de datos*], el conjunto se divide en 299 observaciones de entrenamiento (70%), 64 de _test_ (15%) y 65 de evaluación (15%), sobre el total de 428 parcelas.
 
 #colbreak()
 
@@ -115,15 +115,15 @@ FEATURES_AUTORIZADAS = [
 
 Las *variables predictoras* (34) son las covariables edáficas, ambientales y de fuentes satelitales y estaciones climáticas (pH, textura, elementos traza, temperatura media, NDVI, elevación, etc.) que el modelo recibe como entrada para hacer una predicción.
 
-Las *variables objetivo* o _*targets*_ (21) son, en su mayoría, los índices de biodiversidad edáfica (Shannon, abundancias, riquezas) que el modelo intenta predecir a partir de esas covariables.
+Las *variables objetivo* o _*targets*_ (21) son, en su mayoría, los índices de biodiversidad edáfica (Shannon y riquezas) que el modelo intenta predecir a partir de esas covariables.
 
 Esta distinción es la que justifica por qué identificadores como `site_id` o `country` no entran en ninguno de los dos grupos: no aportan información edáfica ni son el fenómeno biológico que se quiere predecir, solo sirven para trazabilidad o para particionar los datos de forma estratificada (véase #link(<dist-geo>)[*Distribución geográfica de las muestras*]).
 
 Dividir los datos en tres subconjuntos (`train/test/eval`), y no en los dos habituales (`train/test`), permite separar dos usos distintos de los datos no vistos por el modelo durante el entrenamiento:
-- El *conjunto de test* (`test.csv`) se puede usar repetidamente mientras se ajustan hiperparámetros o se comparan arquitecturas en los diferentes modelos desarrollados.
+- El *conjunto de _test_* (`test.csv`) se puede usar repetidamente mientras se ajustan hiperparámetros o se comparan arquitecturas en los diferentes modelos desarrollados.
 - El *conjunto de evaluación* (`eval.csv`) se reserva y se consulta una única vez, al final, para dar una estimación honesta del rendimiento del modelo ya elegido.
 
-Si solo se usara `train/test` y el conjunto de test se consultara muchas veces durante la selección de modelo, existe el riesgo de que las decisiones de diseño se ajusten indirectamente a ese conjunto de test, inflando artificialmente el rendimiento reportado.
+Si solo se usara `train/test` y el conjunto de _test_ se consultara muchas veces durante la selección de modelo, existe el riesgo de que las decisiones de diseño se ajusten indirectamente a ese conjunto de _test_, inflando artificialmente el rendimiento reportado.
 
 #colbreak()
 
@@ -175,7 +175,7 @@ En la #ref(<fig-5>) se puede ver la repartición existente de los diferentes tip
 
 #figure(
   align(center)[
-    #image("../media/eda/02_usos_tipos.png", height: 35%)
+    #image("../media/eda/02_usos_tipos.png")
   ],
   caption: [Gráfica de usos y tipos de suelo.],
   kind: image
@@ -183,7 +183,7 @@ En la #ref(<fig-5>) se puede ver la repartición existente de los diferentes tip
 
 Esto es relevante para las #link(<vias-de-trabajo-futuro>)[*Vías de trabajo futuro*], en la cual figura la recolección de más datos como una de las posibles vías de trabajo futuro, ya que la falta de datos es una limitación grande cuando se trata de entrenar modelos de aprendizaje automático.
 
-Con solo 2 parcelas italianas sobre 428 (0.5% del _dataset_), el modelo apenas tiene información para aprender las particularidades edafoclimáticas de Italia, y cualquier métrica de error agregada (calculada sobre todo el conjunto de test) estará dominada por los países mejor representados (Israel, Rumanía, Suiza), enmascarando un posible mal desempeño en los países minoritarios.
+Con solo 2 parcelas italianas sobre 428 (0.5% del _dataset_), el modelo apenas tiene información para aprender las particularidades edafoclimáticas de Italia, y cualquier métrica de error agregada (calculada sobre todo el conjunto de _test_) estará dominada por los países mejor representados (Israel, Rumanía, Suiza), enmascarando un posible mal desempeño en los países minoritarios.
 
 #colbreak()
 
@@ -196,7 +196,7 @@ Esta sección documenta las 84 columnas de `sob4es_final_clean.csv`, agrupadas p
 - *Descartada:* Columna categórica o de metadatos que no se conserva en absoluto en la versión escalada.
 - *Sin escalar:* Se conserva en `sob4es_final_model_ready.csv` sin transformar. Son variables del tipo identificador, coordenadas o indicador de calidad.
 
-==== Identificación, ubicación y metadatos del sitio (13 variables)
+==== Identificación, ubicación y metadatos del sitio (13 variables) <var-cat-metadatos>
 
 En la #ref(<tab-51>) se pueden ver las variables relacionadas con identificadores, ubicaciones y metadatos, como también su situación en el _dataset_ limpio.
 
@@ -233,7 +233,7 @@ En la #ref(<tab-51>) se pueden ver las variables relacionadas con identificadore
 
 #colbreak()
 
-==== Propiedades físicas del suelo, _in situ_ (6 variables)
+==== Propiedades físicas del suelo, _in situ_ (6 variables) <var-cat-fisicas>
 
 En la #ref(<tab-52>) se pueden ver las variables relacionadas con propiedades físicas del suelo, como también su situación en el _dataset_ limpio.
 
@@ -261,7 +261,7 @@ En la #ref(<tab-52>) se pueden ver las variables relacionadas con propiedades f�
   kind: table
 ) <tab-52>
 
-==== Propiedades químicas del suelo, _in situ_ (9 variables)
+==== Propiedades químicas del suelo, _in situ_ (9 variables) <var-cat-quimicas>
 
 En la #ref(<tab-53>) se pueden ver las variables relacionadas con propiedades químicas del suelo, como también su situación en el _dataset_ limpio.
 
@@ -294,7 +294,7 @@ En la #ref(<tab-53>) se pueden ver las variables relacionadas con propiedades qu
 
 #colbreak()
 
-==== Carbono y nitrógeno a nivel de parcela (3 variables)
+==== Carbono y nitrógeno a nivel de parcela (3 variables) <var-cat-cn>
 
 En la #ref(<tab-54>) se muestran las variables de carbono y nitrógeno a nivel de parcela.
 
@@ -320,11 +320,11 @@ En la #ref(<tab-54>) se muestran las variables de carbono y nitrógeno a nivel d
 ) <tab-54>
 
 
-==== Biodiversidad edáfica, por grupo taxonómico (32 variables)
+==== Biodiversidad edáfica, por grupo taxonómico (32 variables) <var-cat-biodiv>
 
 Todos los índices de riqueza y Shannon de la #ref(<tab-55>) son _targets_ del modelo (21 en total). 
 
-Las variables de abundancia/lecturas totales no se usan ni como predictoras ni como _targets_ (11 variables no seleccionadas), salvo `nematode_shannon`, único indicador disponible para ese grupo. Los índices Shannon se explican con detalle en la sección de biodiversidad edáfica del análisis univariante.
+Las variables de abundancia/lecturas totales no se usan ni como predictoras ni como _targets_ (11 variables no seleccionadas), salvo `nematode_shannon`, único indicador disponible para ese grupo. Los índices Shannon se explican con detalle en #link(<biodiversidad-edafica>)[*Biodiversidad edáfica*] del análisis univariante.
 
 #figure(
   align(center)[
@@ -357,7 +357,7 @@ Las variables de abundancia/lecturas totales no se usan ni como predictoras ni c
 
 #colbreak()
 
-==== Teledetección y topografía - GEE y DEM (6 variables)
+==== Teledetección y topografía - GEE y DEM (6 variables) <var-cat-teledeteccion>
 
 En la #ref(<tab-56>) se muestran las variables de teledetección y topografía, todas de ellas son variables predictoras.
 
@@ -387,9 +387,9 @@ En la #ref(<tab-56>) se muestran las variables de teledetección y topografía, 
 
 #colbreak()
 
-==== Capas de referencia europeas - ESDAC / CORINE (14 variables)
+==== Capas de referencia europeas - ESDAC / CORINE (14 variables) <var-cat-eu>
 
-Extraídas por coordenadas sobre rásters de referencia continental (véase discusión de su consistencia con las mediciones _in situ_ en la sección de análisis bivariante y multivariante).
+Extraídas por coordenadas sobre _rasters_ de referencia continental (véase discusión de su consistencia con las mediciones _in situ_ en #link(<refs-externas>)[*Consistencia con capas de referencia externas*]).
 
 En la #ref(<tab-57>) se pueden ver las variables de capas de referencia europeas (ESDAC/CORINE).
 
@@ -422,20 +422,20 @@ En la #ref(<tab-57>) se pueden ver las variables de capas de referencia europeas
       [*`eu_uso_suelo_nombre`*],        [Etiqueta textual de `eu_land_cover` (ej. "Non-irrigated arable land").], [Texto],                        [Descartada],
     )
   ],
-  caption: [Tabla de variables de de capas de referencia europeas (ESDAC/CORINE)],
+  caption: [Tabla de variables de capas de referencia europeas (ESDAC/CORINE)],
   kind: table
 ) <tab-57>
 
 #rect[
   *Nota:* \
-  Esta subsección lista 15 filas porque incluye `eu_uso_suelo_nombre` (la etiqueta de texto de `eu_land_cover`) junto a las 14 columnas numéricas/código propiamente dichas. De ahí que el recuento de variables `eu_*` categóricas descartadas en la sección de variables descartadas sea 5, no 4.
+  Esta subsección lista 15 filas porque incluye `eu_uso_suelo_nombre` (la etiqueta de texto de `eu_land_cover`) junto a las 14 columnas numéricas/código propiamente dichas. De ahí que el recuento de variables `eu_*` categóricas descartadas en #link(<var-descartadas>)[*Variables descartadas*] sea 5, no 4.
 ]
 
 #colbreak()
 
 === Variables descartadas durante la selección <var-descartadas>
 
-A partir del catálogo completo de la sección anterior y de la comparación directa entre `sob4es_final_clean.csv` y `sob4es_final_model_ready.csv` (véase #link(<desc-dataset>)[*Descripción general del dataset*]), las variables que no se usan directamente como predictoras (34) ni como _targets_ (21) se dividen en dos grupos de naturaleza distinta: 13 columnas categóricas o de metadatos que se eliminan por completo antes de escalar, y 12 columnas numéricas que sí se escalan (existen como `_z` en `sob4es_final_model_ready.csv`) pero no se seleccionan para el modelo.
+A partir del catálogo completo de la sección anterior y de la comparación directa entre `sob4es_final_clean.csv` y `sob4es_final_model_ready.csv` (véase #link(<desc-dataset>)[*Descripción general del _dataset_*]), las variables que no se usan directamente como predictoras (34) ni como _targets_ (21) se dividen en dos grupos de naturaleza distinta: 13 columnas categóricas o de metadatos que se eliminan por completo antes de escalar, y 12 columnas numéricas que sí se escalan (existen como `_z` en `sob4es_final_model_ready.csv`) pero no se seleccionan para el modelo.
 
 *Grupo 1 - Categóricas/metadatos, eliminadas por completo (13 columnas):*
 
@@ -454,7 +454,7 @@ En la #ref(<tab-12>) se pueden ver las variables categóricas o de metadatos eli
         [*`site_id`*],[Identificador único, sin valor predictivo.],
         [*`country` \ `pedoclimatic_region` \ `site_locality`*],[Identificadores geográficos categóricos. Se usan para estratificación/validación cruzada, no como predictoras directas del modelo final.],
         [*`latitude` \ `longitude` \ `sampling_date`*],[Usadas para la extracción de variables remotas (GEE, DEM) y para el control de estacionalidad, no como predictoras directas.],
-        [*`soil_type` \ `land_use_type` \ `land_use_intensity` \ `dominant_vegetation` \ `eu_soil_texture_class` \ `eu_env_zone` \ `eu_land_cover` \ `eu_soil_type_wrb` \ `eu_uso_suelo_nombre`*],[Variables categóricas de tipo/uso de suelo. Ninguna se conserva en el dataset escalado. No aparecen en la tabla de predictoras de #link(<seleccion-de-variables>)[*Selección de variables*], dado que el propio EDA muestra diferencias claras de pH y carbono orgánico según `land_use_type`.],
+        [*`soil_type` \ `land_use_type` \ `land_use_intensity` \ `dominant_vegetation` \ `eu_soil_texture_class` \ `eu_env_zone` \ `eu_land_cover` \ `eu_soil_type_wrb` \ `eu_uso_suelo_nombre`*],[Variables categóricas de tipo/uso de suelo. Ninguna se conserva en el _dataset_ escalado. No aparecen en la tabla de predictoras de #link(<seleccion-de-variables>)[*Selección de variables*], dado que el propio EDA muestra diferencias claras de pH y carbono orgánico según `land_use_type`.],
         [*`outlier_flag`*],[Variable de control de calidad, no un predictor ecológico. Se usa como posible filtro de filas, no de columnas.],
     )
   ],
@@ -471,7 +471,7 @@ En la #ref(<tab-12>) se pueden ver las variables categóricas o de metadatos eli
       align: horizon,
       fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da")},
       table.header(
-        [*Variable*],[*Familia*],[*Motivo probable de exclusión*],
+        [*Variable*],[*Familia*],[*Motivo de exclusión*],
       ),
       [*`plot_total_c`*],         [Carbono/nitrógeno\ de parcela],[Redundante con `plot_total_organic_c` (r = 0.976).\ Mantener ambas introduciría colinealidad severa.],
       [*`macro_total_abundance`*],[Macrofauna],                  [Abundancia total. Se prioriza `macro_order_richness` y `macro_shannon` como medidas de biodiversidad, no de abundancia bruta.],
@@ -506,7 +506,7 @@ El método de imputación, no es media/mediana agrupada por país o uso de suelo
 + Las variables con *más del 50%* de valores perdidos se eliminarían del _dataset_ antes de este paso.
 + Las variables categóricas se imputan con la *moda*.
 
-Es decir, la imputación es una *mediana global simple* (no condicionada por país ni por uso de suelo), acompañada de indicadores de "dato perdido" únicamente para el rango 5-50%. Esto tiene una implicación directa sobre las correlaciones calculadas en la sección de análisis bivariante y multivariante: al no preservar la estructura de covarianza entre variables (a diferencia de un método KNN), la imputación por mediana global puede atenuar ligeramente algunas correlaciones reales, lo cual debería mencionarse como limitación metodológica al citar los coeficientes de Pearson de este anexo.
+Es decir, la imputación es una *mediana global simple* (no condicionada por país ni por uso de suelo), acompañada de indicadores de "dato perdido" únicamente para el rango 5-50%. Esto tiene una implicación directa sobre las correlaciones calculadas en #link(<analisis-bivariante-multivariante>)[*Análisis bivariante y multivariante*]: al no preservar la estructura de covarianza entre variables (a diferencia de un método KNN), la imputación por mediana global puede atenuar ligeramente algunas correlaciones reales.
 
 #colbreak()
 
@@ -555,7 +555,7 @@ Cuatro países (Suiza, Israel, Eslovenia e Italia, el 45% de las parcelas del _d
 
 #colbreak()
 
-*`outlier_flag` no se construye con Isolation Forest ni Z-score*, pese a que así lo describen el diccionario de datos y una revisión anterior de este mismo informe EDA. El código real (`data-prep.ipynb`, sección 11.3, "Detección de Outliers") es el siguiente:
+El método real con el que se construye `outlier_flag` (no mediante *Isolation Forest* ni *Z-score*, sino mediante la función definida en el archivo `data-prep.ipynb`, véase #link(<ficheros-locales>)[*_Notebook_ de ingesta de datos en ficheros*]) es el siguiente:
 
 ```python
 def iqr_outlier_mask(series, factor=3.0):
@@ -568,18 +568,16 @@ for col in df_clean.select_dtypes(include=np.number).columns:
     df_clean['outlier_flag'] |= iqr_outlier_mask(df_clean[col])
 ```
 
-Es decir, `outlier_flag` se construye con el *mismo método IQR de Tukey* descrito en la sección de valores atípicos de este anexo (no con Isolation Forest ni Z-score), pero con dos diferencias importantes respecto al criterio "estándar" de esa sección:
+Es decir, `outlier_flag` se construye con el *mismo método IQR de Tukey* descrito en #link(<outliers-iqr>)[*Valores atípicos*] de este anexo (no con Isolation Forest ni Z-score), pero con dos diferencias importantes respecto al criterio "estándar" de esa sección:
 
-+ *Factor ampliado (3.0 en lugar de 1.5).* El multiplicador habitual de Tukey es 1.5; aquí se usa 3.0, un criterio más laxo columna a columna.
-+ *Evaluación conjunta sobre prácticamente todas las columnas numéricas del _dataset_ limpio en ese punto del pipeline (113 columnas)*, incluyendo las 36 columnas indicador `_was_missing` añadidas en el paso de imputación, mediante un operador lógico *OR* fila a fila: una parcela se marca `outlier_flag = True` si es atípica, según el criterio IQR ampliado, en *al menos una* de esas 113 columnas.
++ *Factor ampliado (3.0 en lugar de 1.5).* El multiplicador habitual de Tukey es 1.5, aquí se usa 3.0, un criterio más laxo columna a columna.
++ *Evaluación conjunta sobre prácticamente todas las columnas numéricas del _dataset_ limpio en ese punto del _pipeline_ (113 columnas)*, incluyendo las 36 columnas indicador `_was_missing` añadidas en el paso de imputación, mediante un operador lógico *OR* fila a fila: una parcela se marca `outlier_flag = True` si es atípica, según el criterio IQR ampliado, en *al menos una* de esas 113 columnas.
 
-Esta segunda diferencia explica dos cosas a la vez: *(a)* por qué el porcentaje global de `True` es tan alto (81.1%) pese a que el factor 3.0 es más estricto que el 1.5 habitual — al combinarse 113 pruebas independientes con un OR, basta con ser atípico en una sola variable de las 113 para quedar marcado; y *(b)* por qué el patrón por país es tan heterogéneo — si un país completo presenta un valor sistemáticamente distinto en aunque sea una única covariable (por ejemplo, una capa `eu_*`, `gee_*` o `dem_*` extraída por coordenadas, con cobertura o resolución distinta por región), es muy probable que todas o casi todas sus parcelas queden marcadas como atípicas en esa columna, y por tanto `True` en `outlier_flag`, sin que ello implique nada anómalo sobre la biodiversidad o las propiedades del suelo en sí.
+Esta segunda diferencia explica dos cosas a la vez: *(a)* por qué el porcentaje global de `True` es tan alto (81.1%) pese a que el factor 3.0 es más estricto que el 1.5 habitual, ya que al combinarse 113 pruebas independientes con un OR basta con ser atípico en una sola variable de las 113 para quedar marcado; y *(b)* por qué el patrón por país es tan heterogéneo, ya que si un país completo presenta un valor sistemáticamente distinto en aunque sea una única covariable (por ejemplo, una capa `eu_*`, `gee_*` o `dem_*` extraída por coordenadas, con cobertura o resolución distinta por región), es muy probable que todas o casi todas sus parcelas queden marcadas como atípicas en esa columna, y por tanto `True` en `outlier_flag`, sin que ello implique nada anómalo sobre la biodiversidad o las propiedades del suelo en sí.
 
-El propio informe de _outliers_ de `data-prep.ipynb` muestra además que las columnas con más recuentos de "atípicos" son, precisamente, columnas indicador binarias: `eu_as_was_missing` (103 filas, 24.1%), `eu_zn_was_missing` (102, 23.8%), `earthworm_shannon_was_missing` / `earthworm_abundance_was_missing` / `earthworm_richness_was_missing` (101 cada una, 23.6%), entre otras. Es decir, el sesgo de aplicar IQR directamente sobre flags binarios muy desbalanceados —que el diccionario de datos presentaba como el problema que Isolation Forest + Z-score evitaría— *ocurre de facto*: una parte no despreciable de las parcelas marcadas `outlier_flag = True` lo están porque tenían un dato imputado en alguna variable con ~24% de imputación (donde el valor "1", minoritario, se comporta como atípico bajo el criterio IQR), no porque sus valores biológicos o edáficos fueran extremos.
+El propio informe de _outliers_ de `data-prep.ipynb` muestra además que las columnas con más recuentos de "atípicos" son, precisamente, columnas indicador binarias: `eu_as_was_missing` (103 filas, 24.1%), `eu_zn_was_missing` (102, 23.8%), `earthworm_shannon_was_missing` / `earthworm_abundance_was_missing` / `earthworm_richness_was_missing` (101 cada una, 23.6%), entre otras. Es decir, el sesgo de aplicar IQR directamente sobre flags binarios muy desbalanceados (que el diccionario de datos presentaba como el problema que Isolation Forest + Z-score evitaría) *ocurre de facto*: una parte no despreciable de las parcelas marcadas `outlier_flag = True` lo están porque tenían un dato imputado en alguna variable con ~24% de imputación (donde el valor "1", minoritario, se comporta como atípico bajo el criterio IQR), no porque sus valores biológicos o edáficos fueran extremos.
 
-Se recomienda corregir la descripción de `outlier_flag` en el cuerpo principal y en el diccionario de datos, sustituyendo la referencia a Isolation Forest + Z-score por la descripción precisa del filtro IQR con factor 3.0 y agregación OR sobre 113 columnas. Se mantienen a continuación las definiciones conceptuales de Isolation Forest y Z-score porque son relevantes como referencia de un enfoque alternativo válido para trabajo futuro, no porque describan el método realmente usado.
-
-El *Isolation Forest* es un algoritmo de detección de anomalías no supervisado que construye múltiples árboles de decisión aleatorios y mide cuántas particiones hacen falta para aislar cada observación del resto: los puntos atípicos, al ser diferentes de la mayoría, tienden a aislarse con muy pocas particiones, mientras que los puntos típicos necesitan muchas más particiones para separarse del grueso de los datos. A diferencia del método IQR, que evalúa cada variable de forma aislada, el Isolation Forest puede considerar varias variables a la vez, detectando combinaciones inusuales de valores que individualmente no serían atípicos — una propiedad que, de hecho, habría evitado el problema de agregación por OR descrito arriba, y que podría explorarse como mejora en trabajo futuro para sustituir la construcción actual de `outlier_flag`. El umbral de tipo *Z-score* mide a cuántas desviaciones estándar se encuentra un valor respecto a la media de su variable (Z = (x menos la media) dividido entre la desviación estándar); un Z-score alto en valor absoluto (típicamente por encima de 3) se interpreta como indicio de valor atípico, pero no es el criterio realmente aplicado en este _pipeline_.
+El *Isolation Forest* es un algoritmo de detección de anomalías no supervisado que construye múltiples árboles de decisión aleatorios y mide cuántas particiones hacen falta para aislar cada observación del resto: los puntos atípicos, al ser diferentes de la mayoría, tienden a aislarse con muy pocas particiones, mientras que los puntos típicos necesitan muchas más particiones para separarse del grueso de los datos. A diferencia del método IQR, que evalúa cada variable de forma aislada, el Isolation Forest puede considerar varias variables a la vez, detectando combinaciones inusuales de valores que individualmente no serían atípicos, una propiedad que, de hecho, habría evitado el problema de agregación por OR descrito arriba y que podría explorarse como mejora en trabajo futuro para sustituir la construcción actual de `outlier_flag`. El umbral de tipo *Z-score* mide a cuántas desviaciones estándar se encuentra un valor respecto a la media de su variable (Z = (x menos la media) dividido entre la desviación estándar); un Z-score alto en valor absoluto (típicamente por encima de 3) se interpreta como indicio de valor atípico, pero no es el criterio realmente aplicado en este _pipeline_.
 
 #colbreak()
 
@@ -616,21 +614,21 @@ La segunda figura de esta sección resume la distribución univariante de seis v
 
 ==== Elementos traza y nutrientes <elementos-traza>
 
-Las concentraciones de elementos traza (`As`, `Cu`, `K`, `Mo`, `Ni`, `P`, `Pb`, `Zn`) presentan distribuciones muy asimétricas, con una minoría de parcelas concentrando valores muy superiores al resto, comportamiento esperable en variables de contaminación/toxicidad de suelo. Se visualizan en escala logarítmica para poder compararlas en un mismo gráfico.
+Las concentraciones de elementos traza (`As`, `Cu`, `K`, `Mo`, `Ni`, `P`, `Pb`, `Zn`) presentan distribuciones muy asimétricas, con una minoría de parcelas concentrando valores muy superiores al resto. En el caso de los metaloides y metales pesados potencialmente tóxicos del grupo (`As`, `Cu`, `Mo`, `Ni`, `Pb`, `Zn`), este comportamiento es el esperable en variables de contaminación/toxicidad del suelo #sub([@wuReviewSoilHeavy2022]). `K` y `P`, en cambio, no son contaminantes: son macronutrientes esenciales para las plantas, y su asimetría responde más bien a la heterogeneidad natural de la fertilidad edáfica entre parcelas. Se visualizan en escala logarítmica para poder compararlas en un mismo gráfico (véase #ref(<fig-9>)).
 
 Cuando una variable tiene una distribución muy asimétrica (con una cola larga de valores altos, como suele ocurrir con metales pesados o contaminantes), representarla en escala lineal hace que la mayoría de las parcelas (con valores bajos, cercanos entre sí) queden aplastadas visualmente contra el eje, mientras unas pocas parcelas extremas dominan el rango del gráfico. Aplicar una transformación logarítmica comprime los valores altos y expande los valores bajos, permitiendo comparar de un vistazo la forma de la distribución de `As`, `Cu`, `K`, `Mo`, `Ni`, `P`, `Pb` y `Zn` en un mismo gráfico, algo que sería ilegible en escala lineal dado que algunos metales (por ejemplo K) tienen concentraciones órdenes de magnitud mayores que otros (por ejemplo As).
 
-De cara al modelado, algunos algoritmos (en particular la Regresión Ridge, que asume relaciones lineales) se benefician de trabajar con variables cuya distribución se aproxime más a la normal, por lo que aplicar una transformación logarítmica de tipo `log1p` a estas variables antes de entrenar es una opción a considerar, más allá de la visualización de este EDA (véase #ref(<fig-9>)). Esta recomendación es además coherente con lo observado en la sección del indicador `outlier_flag`: si el filtro se recalculara tras una transformación `log1p` de estas variables asimétricas, es previsible que el número de columnas que contribuyen "falsos" atípicos por asimetría natural (no por error de medición) se reduzca.
+De cara al modelado, algunos algoritmos (en particular la Regresión Ridge, que asume relaciones lineales) se benefician de trabajar con variables cuya distribución se aproxime más a la normal, por lo que aplicar una transformación logarítmica de tipo `log1p` a estas variables antes de entrenar es una opción a considerar, más allá de la visualización de este EDA (véase #ref(<fig-9>)). Esta recomendación es además coherente con lo observado en #link(<outlier>)[*El indicador de calidad `outlier_flag`*]: si el filtro se recalculara tras una transformación `log1p` de estas variables asimétricas, es previsible que el número de columnas que contribuyen "falsos" atípicos por asimetría natural (no por error de medición) se reduzca.
 
 #figure(
   align(center)[
-    #image("../media/eda/05_metales.png", height: 25%)
+    #image("../media/eda/05_metales.png", height: 20%)
   ],
   caption: [Gráfica de los datos de metales.],
   kind: image
 )<fig-9>
 
-La #ref(<fig-10>) muestra las distribuciones univariantes de las tres variables de carbono/nitrógeno del plot (`plot_total_c`, `plot_total_organic_c`, `plot_total_n`), cuya fuerte correlación mutua se analiza en detalle en la sección #link(<analisis-bivariante-multivariante>)[*Análisis bivariante y multivariante*]:
+La #ref(<fig-10>) muestra las distribuciones univariantes de las tres variables de carbono/nitrógeno del plot (`plot_total_c`, `plot_total_organic_c`, `plot_total_n`), cuya fuerte correlación mutua se analiza en detalle en  #link(<analisis-bivariante-multivariante>)[*Análisis bivariante y multivariante*]:
 
 #figure(
   align(center)[
@@ -660,15 +658,15 @@ La siguiente gráfica compara la distribución de estos 11 índices entre sí:
   kind: image
 )<fig-11>
 
-Se observa que los distintos grupos taxonómicos ocupan rangos de Shannon bastante diferentes entre sí (por ejemplo, los grupos microbianos, bacterias y hongos, tienden a mostrar valores más altos y menos dispersos que la fauna macroscópica), lo cual es coherente con la altísima riqueza de especies típica de las comunidades microbianas del suelo frente a grupos de fauna con menos taxones potenciales por parcela. Esta heterogeneidad entre grupos es uno de los argumentos a favor de modelar cada índice por separado en lugar de asumir que se comportan de forma equivalente; véase la discusión sobre correlación entre _targets_ en la sección #link(<correlacion-shannon>)[*Correlación entre targets (índices Shannon)*].
+Se observa que los distintos grupos taxonómicos ocupan rangos de Shannon bastante diferentes entre sí (por ejemplo, los grupos microbianos, bacterias y hongos, tienden a mostrar valores más altos y menos dispersos que la fauna macroscópica), lo cual es coherente con la altísima riqueza de especies típica de las comunidades microbianas del suelo frente a grupos de fauna con menos taxones potenciales por parcela. Esta heterogeneidad entre grupos es uno de los argumentos a favor de modelar cada índice por separado en lugar de asumir que se comportan de forma equivalente. Véase la discusión sobre correlación entre _targets_ en #link(<correlacion-shannon>)[*Correlación entre _targets_ (índices Shannon)*].
 
-Junto a los 11 índices Shannon, los 10 _targets_ de riqueza/ASV restantes son: `macro_order_richness_z`, `earthworm_richness_z`, `orib_species_richness_z`, `meso_species_richness_z`, `coll_species_richness_z`, `bac_asv_richness_z`, `fun_asv_richness_z`, `euk_asv_richness_z`, `oomy_asv_richness_z` y `cerc_asv_richness_z`, completando así los 21 _targets_ del modelo (constante `TARGETS`; véase también el catálogo de la sección #link(<var-cat>)[*Catálogo de variables*]).
+Junto a los 11 índices Shannon, los 10 _targets_ de riqueza/ASV restantes son: `macro_order_richness_z`, `earthworm_richness_z`, `orib_species_richness_z`, `meso_species_richness_z`, `coll_species_richness_z`, `bac_asv_richness_z`, `fun_asv_richness_z`, `euk_asv_richness_z`, `oomy_asv_richness_z` y `cerc_asv_richness_z`, completando así los 21 _targets_ del modelo (constante `TARGETS`. Véase #link(<var-cat>)[*Catálogo de variables*]).
 
 #colbreak()
 
 === Variables por uso de suelo <var-uso-suelo>
 
-Medianas recalculadas tras normalizar el espacio en blanco de `land_use_type` (véase la sección #link(<var-descartadas>)[*Variables excluidas de la selección final*]).
+Medianas recalculadas tras normalizar el espacio en blanco de `land_use_type` (véase #link(<var-descartadas>)[*Variables excluidas de la selección final*]).
 
 *Mediana de pH por uso de suelo:*
 
@@ -698,7 +696,7 @@ En la #ref(<tab-14>) se muestra la mediana de pH por uso de suelo.
 
 *Mediana de carbono orgánico por uso de suelo:*
 
-En la #ref(<tab-15>) se muestra la mediana de carbono orgánico por uso de modelo.
+En la #ref(<tab-15>) se muestra la mediana de carbono orgánico por uso de suelo.
 
 #figure(
   align(center)[
@@ -732,9 +730,9 @@ En la #ref(<fig-12>) se puede ver de forma gráfica los datos de las tablas ante
   kind: image
 )<fig-12>
 
-Estas diferencias claras por `land_use_type` (Wetland más que duplica el carbono orgánico mediano de Arable) refuerzan la duda señalada en la sección de variables descartadas: si `land_use_type` no se está incluyendo como predictor, ni siquiera codificado, podría estar dejándose fuera una variable con señal real.
+Estas diferencias claras por `land_use_type` (Wetland más que duplica el carbono orgánico mediano de Arable) refuerzan la duda señalada en #link(<var-descartadas>)[*Variables descartadas*]: si `land_use_type` no se está incluyendo como predictor, ni siquiera codificado, podría estar dejándose fuera una variable con señal real.
 
-Los suelos de *`Forest`* presentan el pH mediano más bajo (4.33, moderadamente ácido) porque la descomposición de hojarasca y acículas libera ácidos orgánicos y porque no reciben encalado agrícola; en el otro extremo, *`Urban`* (6.89) y *`Wetland`* (6.55) tienden a valores más neutros, en el caso urbano por la influencia de materiales de construcción alcalinos en el entorno edáfico, y en el caso de los humedales por procesos de acumulación de bases en condiciones de saturación hídrica.
+Los suelos de *`Forest`* presentan el pH mediano más bajo (4.33, moderadamente ácido) porque la descomposición de hojarasca y acículas libera ácidos orgánicos y porque no reciben encalado agrícola #sub([@bradyWeilNatureProperties2016]); en el otro extremo, *`Urban`* (6.89) y *`Wetland`* (6.55) tienden a valores más neutros, en el caso urbano por la influencia de materiales de construcción alcalinos en el entorno edáfico, y en el caso de los humedales por procesos de acumulación de bases en condiciones de saturación hídrica #sub([@bradyWeilNatureProperties2016]).
 
 En cuanto al carbono orgánico, que *`Wetland`* (10.23) más que duplique al resto de usos es un patrón clásico en ciencia del suelo: la saturación de agua limita la disponibilidad de oxígeno, ralentizando drásticamente la descomposición microbiana de la materia orgánica y provocando su acumulación a largo plazo, el mismo proceso que da lugar a las turberas. Por contraste, `Arable` presenta el carbono orgánico más bajo (2.51) porque el laboreo agrícola repetido airea el suelo, acelera la descomposición de la materia orgánica y habitualmente exporta biomasa (cosechas) que no vuelve al sistema. Este contraste, tan marcado y ecológicamente bien fundamentado, es el argumento más fuerte para reconsiderar la exclusión de `land_use_type` como predictor del modelo.
 
@@ -742,9 +740,9 @@ En cuanto al carbono orgánico, que *`Wetland`* (10.23) más que duplique al res
 
 El rango *intercuartílico (IQR)* es una medida de dispersión robusta frente a valores extremos, definida como $"IQR" = "Q3" minus "Q1"$, donde Q1 y Q3 son el primer y tercer cuartil (percentiles 25 y 75) de la variable. El *criterio estándar de Tukey* marca como atípico cualquier valor por debajo de Q1 menos 1.5 veces el IQR o por encima de Q3 más 1.5 veces el IQR: el multiplicador 1.5 es una convención (no un umbral estadístico con una probabilidad asociada) que, para una distribución aproximadamente normal, marcaría como atípico en torno al 0.7% de los datos, pero que puede marcar un porcentaje mucho mayor en variables muy asimétricas como los metales o las abundancias biológicas de este _dataset_. De ahí la recomendación de valorar una transformación logarítmica antes de aplicar este criterio.
 
-La tabla siguiente usa el criterio *estándar* de Tukey (factor 1.5), distinto del filtro con factor 3.0 usado para construir la columna `outlier_flag` (véase sección del indicador `outlier_flag`): esta tabla ilustra qué variables individuales son más problemáticas bajo el criterio académico estándar, mientras que dicha sección documenta el criterio realmente implementado en el _pipeline_ para esa columna del _dataset_.
+La tabla siguiente usa el criterio *estándar* de Tukey (factor 1.5), distinto del filtro con factor 3.0 usado para construir la columna `outlier_flag` (véase sección #link(<outlier>)[*El indicador de calidad `outlier_flag`*]): esta tabla ilustra qué variables individuales son más problemáticas bajo el criterio académico estándar, mientras que dicha sección documenta el criterio realmente implementado en el _pipeline_ para esa columna del _dataset_.
 
-*Variables continuas con más outliers detectados mediante el método IQR estándar* (excluyendo códigos categóricos numéricos):
+*Variables continuas con más _outliers_ detectados mediante el método IQR estándar* (excluyendo códigos categóricos numéricos):
 
 #figure(
   align(center)[
@@ -800,7 +798,7 @@ En la #ref(<tab-17>) se pueden ver los pares de variables con mayor correlación
         [*mo / ni*],                              [0.770],
     )
   ],
-  caption: [Variables fisico-químicas con mayor nivel de correlación absoluto.],
+  caption: [Variables físico-químicas con mayor nivel de correlación absoluto.],
   kind: table
 )<tab-17>
 
@@ -814,9 +812,9 @@ En la #ref(<tab-17>) se pueden ver los pares de variables con mayor correlación
 
 #colbreak()
 
-Estas correlaciones muy altas (0.95 a 0.98 entre las tres variables de carbono/nitrógeno del plot) son la evidencia empírica directa que justifica el uso de Ridge y la necesidad de regularización mencionada en la sección #link(<regresion-ridge>)[*Regresión Ridge*]; también explican, junto al patrón sistemático de la sección de variables descartadas, por qué `plot_total_c` es precisamente una de las 12 variables no seleccionadas: al estar casi perfectamente correlacionada con `plot_total_organic_c` (r=0.976), aporta poca información adicional como predictora.
+Estas correlaciones muy altas (0.95 a 0.98 entre las tres variables de carbono/nitrógeno del plot) son la evidencia empírica directa que justifica el uso de Ridge y la necesidad de regularización mencionada en #link(<regresion-ridge>)[*Regresión Ridge*]. También explican, junto al patrón sistemático de #link(<var-descartadas>)[*Variables descartadas*], por qué `plot_total_c` es precisamente una de las 12 variables no seleccionadas: al estar casi perfectamente correlacionada con `plot_total_organic_c` (r=0.976), aporta poca información adicional como predictora.
 
-Esta justificación queda reforzada, además, por los propios valores de `alpha` que selecciona el ajuste de hiperparámetros de Ridge para los 21 modelos de producción: valores muy alejados de 0 (entre ≈106 y ≈720, según el _target_), lo que indica empíricamente que una regularización sustancial es necesaria para mantener el hueco train-CV por debajo del umbral de estabilidad fijado (0.10), coherente con la colinealidad detectada en esta sección. 
+Esta justificación queda reforzada, además, por los propios valores de `alpha` que selecciona el ajuste de hiperparámetros de Ridge para los 21 modelos de producción: valores muy alejados de 0 (entre ≈106 y ≈720, según el _target_), lo que indica empíricamente que una regularización sustancial es necesaria para mantener el hueco _train-CV_ por debajo del umbral de estabilidad fijado (0.10), coherente con la colinealidad detectada en esta sección. 
 
 La matriz de correlación completa (véase #ref(<fig-13>)) muestra además que `sand_content` correlaciona negativamente y con fuerza tanto con `silt_content` como con `clay_content`, una relación mecánica esperable ya que las tres fracciones granulométricas suman aproximadamente el 100%, lo que añade un tercer bloque de colinealidad relevante más allá de C/N y Mo/Ni.
 
@@ -860,7 +858,7 @@ En la #ref(<tab-18>) se muestran los _targets_ que presentan un mayor nivel de c
 
 Este es probablemente el resultado más relevante de todo el EDA para la discusión del TFG: las correlaciones entre _targets_ son modestas (máximo 0.38), no altas. 
 
-La matriz completa (véase #ref(<fig-18>)) confirma que este patrón se extiende al resto de pares: ningún par de los 11 índices Shannon supera r=0.4, y la mayoría se sitúan por debajo de 0.2. Esto matiza la hipótesis de partida sobre las ventajas esperables del modelado multisalida: si los _targets_ no están fuertemente correlacionados entre sí, la ganancia teórica de compartir una representación común entre ellos es limitada, lo que ayuda a explicar por qué las variantes multisalida no superan de forma clara a las de salida única en los resultados obtenidos. 
+La matriz completa (véase #ref(<fig-14>)) confirma que este patrón se extiende al resto de pares: ningún par de los 11 índices Shannon supera r=0.4, y la mayoría se sitúan por debajo de 0.2. Esto matiza la hipótesis de partida sobre las ventajas esperables del modelado multisalida: si los _targets_ no están fuertemente correlacionados entre sí, la ganancia teórica de compartir una representación común entre ellos es limitada, lo que ayuda a explicar por qué las variantes multisalida no superan de forma clara a las de salida única en los resultados obtenidos. 
 
 #colbreak()
 
@@ -876,7 +874,7 @@ La matriz completa (véase #ref(<fig-18>)) confirma que este patrón se extiende
 
 En la #ref(<fig-15>) muestra la relación entre cuatro variables edáficas representativas (`pH`, `carbono orgánico`, `contenido en arcilla` y `estabilidad de agregados`) y cuatro índices de biodiversidad de distintos grupos taxonómicos (`oribátidos`, `macrofauna`, `bacterias` y `nematodos`), con el coeficiente de correlación de Pearson indicado en cada panel. 
 
-En línea con lo observado en la sección anterior para los _targets_ entre sí, las relaciones directas entre variables edáficas individuales y los índices de biodiversidad son en general débiles, con la mayoría de los coeficientes por debajo de 0.3 en valor absoluto, sin que ningún par destaque con una relación claramente fuerte. Esto es coherente con la naturaleza ecológica del problema: la biodiversidad edáfica rara vez responde de forma lineal a una única covariable, sino a combinaciones de factores (textura, pH, disponibilidad de nutrientes, uso del suelo, clima), lo que refuerza la necesidad de modelos no lineales y multivariantes, como los árboles de decisión y ensembles ya empleados en la #link(<capa-modelado>)[*Capa de modelado predictivo*], frente a un enfoque de regresión lineal simple variable a variable.
+En línea con lo observado en anterior para los _targets_ entre sí, las relaciones directas entre variables edáficas individuales y los índices de biodiversidad son en general débiles, con la mayoría de los coeficientes por debajo de 0.3 en valor absoluto, sin que ningún par destaque con una relación claramente fuerte. Esto es coherente con la naturaleza ecológica del problema: la biodiversidad edáfica rara vez responde de forma lineal a una única covariable, sino a combinaciones de factores (textura, pH, disponibilidad de nutrientes, uso del suelo, clima), lo que refuerza la necesidad de modelos no lineales y multivariantes, como los árboles de decisión y _ensembles_ ya empleados en la #link(<capa-modelado>)[*Capa de modelado predictivo*], frente a un enfoque de regresión lineal simple variable a variable.
 
 #colbreak()
 
@@ -918,11 +916,11 @@ En la #ref(<tab-19>), se muestra la correlación entre la medición propia (_in 
 
 Estas correlaciones son, en el mejor de los casos, moderadas (arena, arcilla) y en el peor débiles (fósforo, arsénico). 
 
-Este es un resultado con conexión directa a los #link(<antecedentes-y-contexto>)[*Antecedentes y contexto*] del TFG: apoya empíricamente, con datos propios, la conclusión de Phillips et al.#sub([@phillipsEarthwormDiversity]) de que los datos _in situ_ de alta calidad aportan información que las capas globales derivadas no capturan.
+Este es un resultado con conexión directa a los #link(<antecedentes-y-contexto>)[*Antecedentes y contexto*] del TFG: apoya empíricamente, con datos propios, la conclusión de Phillips _et al._#sub([@phillipsEarthwormDiversity]) de que los datos _in situ_ de alta calidad aportan información que las capas globales derivadas no capturan.
 
 La #ref(<fig-16>) confirma además que, para fósforo y arsénico en particular, la nube de puntos se aleja considerablemente de la diagonal 1:1, lo que indica que la capa externa tiene menor resolución y precisión que la medición directa y debe tratarse como covariable de contexto y no como validación independiente de la medición _in situ_. 
 
-La cobertura real de estas capas, verificada en el _dataset_ limpio, también es relevante aquí: `eu_p`, `eu_ph`, `eu_cn_ratio`, `eu_k` y `eu_n` solo cubren un 72.9% de las 428 parcelas antes de imputar (116 valores perdidos cada una), y `eu_as`, `eu_cu`, `eu_ni`, `eu_pb`, `eu_zn` entre el 75.9% y el 76.4%. Esta cobertura incompleta, combinada con la imputación por mediana global de la sección de valores faltantes, añade una fuente adicional de ruido a las correlaciones de esta tabla que debería mencionarse junto a la limitación de resolución espacial ya señalada.
+La cobertura real de estas capas, verificada en el _dataset_ limpio, también es relevante aquí: `eu_p`, `eu_ph`, `eu_cn_ratio`, `eu_k` y `eu_n` solo cubren un 72.9% de las 428 parcelas antes de imputar (116 valores perdidos cada una), y `eu_as`, `eu_cu`, `eu_ni`, `eu_pb`, `eu_zn` entre el 75.9% y el 76.4%. Esta cobertura incompleta, combinada con la imputación por mediana global de #link(<missing-vals>)[*Valores faltantes e imputación*], añade una fuente adicional de ruido a las correlaciones de esta tabla que debería mencionarse junto a la limitación de resolución espacial ya señalada.
 
 #colbreak()
 
@@ -934,5 +932,5 @@ La cobertura real de estas capas, verificada en el _dataset_ limpio, también es
 - Existe colinealidad fuerte y confirmada entre variables de carbono/nitrógeno (r > 0.95), entre fracciones granulométricas (r > 0.8, con relación mecánica esperable entre arena, limo y arcilla) y entre Mo y Ni (r = 0.77), lo que justifica empíricamente el uso de regularización (Ridge) y la tolerancia a colinealidad exigida a los modelos de árboles.
 - La correlación entre los índices Shannon es, en general, baja (máximo 0.38 entre oribátidos y mesofauna, la mayoría por debajo de 0.2), lo que matiza, sin invalidar necesariamente, la hipótesis de partida sobre las ventajas del modelado multisalida. Las relaciones bivariadas suelo-biodiversidad son igualmente débiles, lo que refuerza la necesidad de modelos no lineales y multivariantes, y es coherente con el bajo rendimiento en algunos de los modelos sobre `eval.csv`.
 - La consistencia entre mediciones _in situ_ y capas de referencia europeas es de moderada a baja según la variable (0.19-0.61), aportando evidencia propia a favor de la ventaja informativa de los datos _in situ_ ya discutida en #link(<antecedentes-y-contexto>)[*Antecedentes y contexto*]. Esta consistencia limitada coincide además con una cobertura incompleta de las capas EU (72.9%-76.4% antes de imputar).
-- `outlier_flag` (347 `True` / 81 `False`) no se genera mediante Isolation Forest ni Z-score, sino mediante un filtro IQR con factor ampliado (3.0) aplicado a 113 columnas numéricas (incluidas las 36 columnas indicador `_was_missing`) y agregado mediante un OR fila a fila. Esto explica tanto el porcentaje global tan alto de `True` (81.1%) como la fuerte heterogeneidad por país: Suiza, Israel, Eslovenia e Italia no presentan ningún caso `False`, mientras que Rumanía tiene una proporción casi equilibrada (51% `False`). *No debe usarse como filtro de outliers*.
+- `outlier_flag` (347 `True` / 81 `False`) no se genera mediante Isolation Forest ni Z-score, sino mediante un filtro IQR con factor ampliado (3.0) aplicado a 113 columnas numéricas (incluidas las 36 columnas indicador `_was_missing`) y agregado mediante un OR fila a fila. Esto explica tanto el porcentaje global tan alto de `True` (81.1%) como la fuerte heterogeneidad por país: Suiza, Israel, Eslovenia e Italia no presentan ningún caso `False`, mientras que Rumanía tiene una proporción casi equilibrada (51% `False`). *No debe usarse como filtro de _outliers_*.
 - De las 84 columnas del _dataset_ limpio, 13 son identificadores/metadatos categóricos descartados, 4 se conservan sin escalar (`site_id`, `latitude`, `longitude`, `outlier_flag`) y 67 son variables numéricas normalizadas (`_z`) en el _dataset_ escalado. El subconjunto final de 34 predictoras + 21 _targets_ (55 variables) se selecciona a partir de estas 67, no directamente de las 84.
