@@ -48,7 +48,7 @@ En la #ref(<tab-10>) se pueden ver las estadísticas generales sobre el _dataset
         table.cell()[12],
       table.cell(align: center)[*Nº de variables \ en el _dataset_ limpio*],
         table.cell()[84],
-      table.cell(align: center)[*Nº de variables predictoras \ finales seleccionads*],
+      table.cell(align: center)[*Nº de variables predictoras \ finales seleccionadas*],
         table.cell()[34 \ (véase #link(<seleccion-de-variables>)[*Selección de variables*])],
       table.cell(align: center)[*Valores nulos detectados en el _dataset_ limpio*],
         table.cell()[0],

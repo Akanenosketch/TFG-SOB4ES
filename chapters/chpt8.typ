@@ -12,7 +12,7 @@ A partir de la realización del siguiente trabajo se obtuvieron las siguientes c
   
   Al desglosar el barrido por los 21 targets, sin embargo, no se encontró un modelo "ganador universal": el modelo más prominente varía según el grupo taxonómico, por lo que se concluyó que la estrategia más adecuada es recomendar un modelo distinto según el grupo de targets en lugar de imponer un único modelo para los 21, si bien para los dos targets prioritarios la elección de *XGBoost multisalida* queda respaldada de forma robusta por este barrido.
 
-- En cuanto a la *eliminación de variables* (véase #link(<prueba-1>)[*Prueba de eliminación de vairables (Anexo V)*]), las pruebas realizadas retirando entre 1 y 3 predictoras del conjunto original de 34 variables autorizadas mostraron variaciones de $R^2$ global muy reducidas para todos los modelos, generalmente dentro de un margen de $plus.minus$0.01-0.02, sin que la eliminación de ninguna combinación concreta de variables provocase una caída brusca de rendimiento. 
+- En cuanto a la *eliminación de variables* (véase #link(<prueba-1>)[*Prueba de eliminación de variables (Anexo V)*]), las pruebas realizadas retirando entre 1 y 3 predictoras del conjunto original de 34 variables autorizadas mostraron variaciones de $R^2$ global muy reducidas para todos los modelos, generalmente dentro de un margen de $plus.minus$0.01-0.02, sin que la eliminación de ninguna combinación concreta de variables provocase una caída brusca de rendimiento. 
 
   Esto indica que el conjunto de predictoras empleado (edáficas, de teledetección y topográficas) no depende de forma crítica de ninguna variable aislada, y que el pipeline es razonablemente robusto frente a una reducción moderada del espacio de variables. 
   

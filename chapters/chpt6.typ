@@ -66,7 +66,7 @@ Además del diagrama de Gantt mostrado en la #ref(<fig-3>), en la #ref(<tab-9>) 
       table.cell(align: center)[*Porcentaje de esfuerzo \ estimado (%)*],),  
     table.cell(align: left)[*Comprensión y preparación inicial de los datos*], 
       table.cell(align: center)[50], 
-      table.cell(align: center)[18.3%], 
+      table.cell(align: center)[16.7%], 
     table.cell(align: left)[*Cierre de la preparación de los datos*], 
       table.cell(align: center)[40], 
       table.cell(align: center)[13.3%], 

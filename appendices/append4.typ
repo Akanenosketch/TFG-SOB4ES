@@ -427,7 +427,7 @@ El resto de validaciones no señalan ningún aviso real: los 8 notebooks se leye
           [*MLP _custom loss_*],   [8.00], [0.00],
         )
     ], 
-    caption: [Resultados del extractor de resultados en las ramas de la #link(<prueba-1>)[*prueba de eliminación de vairables*].],
+    caption: [Resultados del extractor de resultados en las ramas de la #link(<prueba-1>)[*prueba de eliminación de variables*].],
     kind: table
 )<tab-38>
 
