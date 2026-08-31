@@ -30,7 +30,7 @@ Esta definición es la adoptada como referencia en el presente trabajo, al desco
 
 Estas dos definiciones de _Machine Learning_ se pueden resumir de la siguiente forma #sub([@bergmannMachineLearningIBM]):
 
-#rect[“El _Machine Learning_ es una rama o subconjunto de la Inteligencia Artificial que se centra en dotar a los algoritmos de la capacidad de “aprender”. Este aprendizaje utiliza como base la detección de patrones en los datos de entrenamiento para, posteriormente, hacer predicciones o inferencias sobre nuevos datos.”]
+#rect[“El _Machine Learning_ es una rama o subconjunto de la Inteligencia Artificial que se centra en dotar a los algoritmos de la capacidad de 'aprender'. Este aprendizaje utiliza como base la detección de patrones en los datos de entrenamiento para, posteriormente, hacer predicciones o inferencias sobre nuevos datos.”]
 
 Esta capacidad de aprender permite a los modelos de ML realizar predicciones, tomar decisiones y realizar acciones variadas sin que lo tengan estrictamente indicado dentro de su código. También les permite diferenciarse de los sistemas expertos tradicionales, en los que el conocimiento se codifica explícitamente, y los acerca a la estadística, de la que toma buena parte de su base matemática.
 
@@ -73,11 +73,11 @@ La expresión anterior es un caso particular del *principio de minimización del
 
 Esta aproximación introduce un problema central dentro del aprendizaje automático: la minimización del riesgo empírico sin ningún control sobre la complejidad de $cal(H)$ puede producir una función que memorice el ruido específico del conjunto de entrenamiento en lugar de aprender el patrón subyacente; este es el fenómeno de *sobreajuste* o *_overfitting_*.
 
-El término *$Omega(f)$* existe precisamente para mitigar el riesgo de sobreajuste, y es la razón teórica que justifica, por ejemplo, la penalización $alpha norm(w)^2$ de_ Ridge_ o el término
+El término *$Omega(f)$* existe precisamente para mitigar el riesgo de sobreajuste, y es la razón teórica que justifica, por ejemplo, la penalización $alpha norm(w)^2$ de _Ridge_ o el término
 
 $ Omega(h_m) = gamma T + 1/2 lambda sum_(j=1)^T w_j^2 $
 
-de XGBoost (véase #link(<regresion-ridge>)[*Regresión_ Ridge_*] y #link(<xgboost>)[*XGBoost*]).
+de XGBoost (véase #link(<regresion-ridge>)[*Regresión _Ridge_*] y #link(<xgboost>)[*XGBoost*]).
 
 *Compromiso sesgo-varianza:* El error de generalización de un modelo puede descomponerse, para un punto $x$ cualquiera, en tres términos:
 
@@ -589,7 +589,7 @@ En este TFG se ha empleado la estrategia *`multi_output_tree`*, precisamente par
 
 === RegressorChain <regressorchain>
 
-Los modelos anteriores, en su forma multisalida, tratan todos los _targets_ de forma simétrica dentro del mismo árbol o coeficientes. *RegressorChain*#sub([@scikitLearn]) basado en el concepto de cadena de clasificadores propuesto por Read et al.#sub([@readClassifierChains]) aborda la regresión multi-salida de una forma distinta: encadenando un modelo base por cada _target_, de forma que cada modelo de la cadena recibe como entrada las variables predictoras originales junto con las predicciones ya generadas por los modelos anteriores de la cadena:
+Los modelos anteriores, en su forma multisalida, tratan todos los _targets_ de forma simétrica dentro del mismo árbol o coeficientes. *RegressorChain*#sub([@scikitLearn]) basado en el concepto de cadena de clasificadores propuesto por Read _et al._#sub([@readClassifierChains]) aborda la regresión multi-salida de una forma distinta: encadenando un modelo base por cada _target_, de forma que cada modelo de la cadena recibe como entrada las variables predictoras originales junto con las predicciones ya generadas por los modelos anteriores de la cadena:
 
 $ hat(y)_k = f_k (X, hat(y)_1, hat(y)2, dots, hat(y)_(k-1)) $
 
@@ -660,7 +660,7 @@ En la #ref(<tab-3>) se muestra una comparativa rápida de los modelos descritos 
     columns: (20%, auto, auto, auto, auto, 20%),
     align: horizon, 
     fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") }, 
-    table.header([*Criterio*], [*Ridge*], [*_Random Forest_*], [*XGBoost*], [*Regressor Chain*], [*MLP*]), 
+    table.header([*Criterio*], [*_Ridge_*], [*_Random Forest_*], [*XGBoost*], [*Regressor Chain*], [*MLP*]), 
       [*Relaciones no \ lineales*], [No], [Sí], [Sí], [Sí (según\  modelo base)], [Sí], 
       [*Interpretabilidad nativa*], [Alta], [Media], [Media], [Media \ (heredada del modelo base)], [Baja], 
       [*Robustez a \ colinealidad*], [Requiere \ regularización], [Alta], [Alta], [Alta (según \ modelo base)], [Media], 
@@ -724,7 +724,7 @@ Generalmente, si se comparan MAE con RMSE, se puede obtener una vista informativ
 
 Las *métricas de clasificación* evalúan la correspondencia entre una etiqueta real y una etiqueta predicha, ambas categóricas y pertenecientes a un conjunto finito de clases.
 
-Cuando el problema original es de regresión, se puede optar por hacer una discretización a posteriori para poder aplicar este tipo de métricas, y así disponer también de un punto de vista categórico, además del numérico.
+Cuando el problema original es de regresión, se puede optar por hacer una discretización _a posteriori_ para poder aplicar este tipo de métricas, y así disponer también de un punto de vista categórico, además del numérico.
 
 ==== Exactitud (_Accuracy_) <accuracy>
 
@@ -812,7 +812,7 @@ La adquisición de datos se realiza en dos fases, las cuales están basadas en e
 Además de las fases de la adquisición de datos, destacamos las siguientes bibliotecas empleadas para ello:
 - *pandas#sub([@pandas]):* Librería empleada para la manipulación e ingeniería de datos tabulares. Permite la lectura y la escritura de archivos .csv y .xlsx (Excel). También puede gestionar uniones, filtrados y operaciones vectorizadas sobre múltiples filas de forma no muy compleja y eficaz.
 - *earthengine-api#sub([@googleEarthEngine]):* Librería de desarrollo oficial de Google que permite la conexión remota, la autenticación y la orquestación de _scripts_ de procesamiento geoespacial sobre la API de Google Earth Engine.
-- *cdsapi#sub([@copernicusHomepage]):* Librería que habilita un enlace directo y oficial a la API de CCDS, para el envío de solicitudes de extracción de datos parametrizadas y para la descarga automática de los datos meteorológicos solicitados.
+- *cdsapi#sub([@copernicusHomepage]):* Librería que habilita un enlace directo y oficial a la API de CDS, para el envío de solicitudes de extracción de datos parametrizadas y para la descarga automática de los datos meteorológicos solicitados.
 
 Al final de todo el procesamiento de esta capa se crea un archivo requirements.txt cuyo objetivo es almacenar todas las dependencias de Python para que lo realizado pueda ser reproducido en nuevos entornos.
 
@@ -845,7 +845,7 @@ Además de los subprocesos, a lo largo de procesamiento de esta datos se hace us
 - *numpy#sub([@numpy]):* Librería especializada en computación numérica que es generalmente empleada para el manejo de datos numéricos complejos, así como para dar soporte matemático a otras bibliotecas como pandas.
 - *rasterio#sub([@rasterio]):* Herramienta geoespacial destinada a la lectura de archivos matriciales con formato GeoTIFF, procedentes de las diferentes fuentes de datos europeas. También sirven para la realización de consultas directamente a las URLs correspondientes al DEM de Copernicus.
 - *xarray#sub([@xarrayDocs]):* Librería diseñada para la manipulación de conjuntos de datos multidimensionales, los cuales se encuentran distribuidos en múltiples archivos .nc (NetCDF).
-- *dbfread#sub([@dbfread]):* Librería ligera de bajo nivel capaz de leer de forma nativa y eficiente archivos con formato .dbf, facilitando la extracción de la información tabular contenida en ciertos conjuntos de datos vectoriales del catálogo europeo.
+- *dbfread#sub([@dbfread]):* Librería ligera de bajo nivel capaz de leer de forma nativa y eficiente archivos con formato `.dbf`, facilitando la extracción de la información tabular contenida en ciertos conjuntos de datos vectoriales del catálogo europeo.
 - *netCDF4#sub([@netcdf4]):* Librería que permite la lectura, escritura y manipulación de archivos con formatos netCDF y HDF5.
 
 #colbreak()
@@ -859,8 +859,11 @@ Esta capa y la siguiente, van a estar comunicadas entre sí debido a que el _fee
 
 De la misma forma que las capas anteriores, esta capa va a estar dividida en varias fases o subprocesos:
 + *Fase de partición de datos:* Esta fase consiste en coger el _dataset_ final con los datos ya normalizados y armonizarlos y dividirlos en tres sets de menor tamaño para emplearlos cada uno para una de las siguientes funciones#sub([@setsEntrenamiento1, @setsEntrenamiento2]).
+  
   + *Set de Entrenamiento:* Conjunto inicial, el cual será empleado para que los modelos que se desarrollen aprendan los patrones que haya ocultos entre los datos mediante el ajuste de los parámetros de los modelos.
+  
   + *Set de Validación:* Conjunto usado para el ajuste de los hiperparámetros de los modelos y seleccionar cuáles funcionan mejor de forma objetiva sin contaminar en proceso. En esta parte también se hará uso del _feedback_ obtenido de la #link(<capa-evaluacion>)[*Capa de evaluación de modelos*].
+  
   + *Set de Evaluación:* Conjunto de datos no incluídos en ninguno de los sets mencionados previamente, se usa para estimar la eficacia del modelo en condiciones reales y con datos con los cuales nunca ha trabajo.
   La división de los datos se ha hecho teniendo en cuenta el origen de las muestras tomadas y a partir de la realización de esta fase obtenemos los _datasets_ indicados en la #ref(<tab-4>):
 
@@ -914,7 +917,7 @@ A lo largo del desarrollo de esta capa, se hace uso de las siguientes biblioteca
         fill: (col, row) => if row == 0 or col == 0 { rgb("d6e3da") },  
       table.header(
         table.cell(align: center)[*Submódulo*], [*Descripción*]),  
-      table.cell(align: center)[*linear_model.Ridge*], 
+      table.cell(align: center)[*linear_model._Ridge_*], 
         table.cell(align: left)[Implementa la regresión lineal con regularización L2, siendo este el algoritmo base para_ Ridge_ Regression.],
       table.cell(align: center)[*ensemble.RandomForest*], 
         table.cell(align: left)[Implementación del algoritmo de _Random Forest_ para regresión.],
@@ -937,6 +940,7 @@ A lo largo del desarrollo de esta capa, se hace uso de las siguientes biblioteca
 
 - *XGBoost#sub([@xgboostDocs, @xgboostIBM]):* Librería que implementa algoritmos de ML bajo el _framework_ de _Gradient Boosting_. Su aprendizaje se basa en árboles de decisión potenciados por el _framework_ mencionado previamente.\
   Además de hacer uso de la propia librería destacamos el siguiente submódulo o función:
+  
   - *XGBRegressor:* Implementa el algoritmo de _gradient boosting_ sobre los árboles de decisión. Además, de que permite trabajar con múltiples salidas haciendo uso del argumento `multi_strategy=multi_output_tree`.
   #colbreak()
 
@@ -1022,7 +1026,7 @@ A lo largo del desarrollo de esta capa, se hace uso de las siguientes biblioteca
         table.cell(align: left)[Calcula el coeficiente de determinación $R^2$, la métrica principal para medir qué proporción de la varianza real consigue explicar el modelo.],
       table.cell(align: center)[*metrics.\ mean_squared_error*], 
         table.cell(align: left)[Calcula el error cuadrático medio, empleado para medir el error de predicción penalizando más de esa forma los errores grandes.],
-      table.cell(align: center)[*metric.\ mean_absolute_error*], 
+      table.cell(align: center)[*metrics.\ mean_absolute_error*], 
         table.cell(align: left)[Calcula el error absoluto medio (MAE).],
       table.cell(align: center)[*inspection.\ permutation_importance*], 
         table.cell(align: left)[Mide la importancia de cada variable predictora mediante el barajeo de sus valores y observando en cuánto cae el rendimiento del modelo. Se emplea en los modelos que presentan compatibilidad son SHAP (modelos que no son de árbol) y también para complementar a SHAP.],
@@ -1036,8 +1040,11 @@ A lo largo del desarrollo de esta capa, se hace uso de las siguientes biblioteca
 
   También se hacen uso de los submódulos *RepeatedKFold* y *cross_validate*, los cuales ya se han explicado en la parte de bibliotecas empleadas de la #link(<capa-modelado>)[*Capa de modelado predictivo*].
 
+
 - *SHAP#sub([@shapDocs]):* Librería que calcula los valores de Shapley haciendo uso de TreeExplainer para determinar la contribución exacta de cada variable a cada predicción realizada. Esto nos permite ver de forma gráfica cómo funciona el modelo y también ver cuánto impacto tiene cada una de las variables en los diferentes _targets_ establecidos.
+
 - *matplotlib#sub([@matplotlib]):* Librería creada para la generación de visualizaciones de diferentes tipos en Python, permitiendo mostrar datos de forma gráfica y crear ilustraciones complejas de forma intuitiva y sencilla. También funciona como motor subyacente para otras bibliotecas como shap y seaborn.
+
 - *seaborn#sub([@seabornDocs, @waskomSeaborn]):* Librería basada en matplotlib, que permite la creación de gráficas de datos con una interfaz de mayor nivel en comparación con matplotlib. Está integrada de forma más cercana con otras bibliotecas empleadas en este trabajo, como pandas.
 
 #colbreak()
@@ -1110,9 +1117,9 @@ Para la redacción de la memoria y la gestión de las referencias bibliográfica
 
 === Programas de desarrollo de código <programas-de-desarrollo-de-codigo>
 
-Para el desarrollo de los _notebooks_, como también de _script_ de automatización para la ejecución de los mismos (véase #link(<elementos-auxiliares>)[*Anexo IV*]) se ha trabajado alternando entre *Visual Studio Code (VSCode)#sub([@vscode])* y *OpenCode#sub([@vscodeOSS])* según la máquina empleada.
+Para el desarrollo de los _notebooks_, como también de _script_ de automatización para la ejecución de los mismos (véase #link(<elementos-auxiliares>)[*Anexo IV*]) se ha trabajado alternando entre *Visual Studio Code (VSCode)#sub([@vscode])* y *Code - OSS#sub([@vscodeOSS])* según la máquina empleada.
 
-Esta alternancia responde a haber trabajo desde distintos equipos a lo largo del desarrollo del TFG, para lo cual ambos IDEs ofrecen una experiencia equivalente y compatible con el resto del entorno (Python, terminal y git), permitiendo continuar el trabajo indistintamente desde cualquiera de las máquinas empleadas.
+Esta alternancia responde a haber trabajado desde distintos equipos a lo largo del desarrollo del TFG, para lo cual ambos IDEs ofrecen una experiencia equivalente y compatible con el resto del entorno (Python, terminal y git), permitiendo continuar el trabajo indistintamente desde cualquiera de las máquinas empleadas.
 
 #colbreak()
 
@@ -1122,5 +1129,7 @@ Esta alternancia responde a haber trabajo desde distintos equipos a lo largo del
 - *gantt-web#sub([@ganttWeb]):* Herramienta ligera disponible en GitHub, desarrollada específicamente para la creación del diagrama de Gantt, se optó por el desarrollo de una herramienta externa a emplear las ya existentes al no ajustarse a los estilos y diseños deseados para la representación de la planificación de este TFG.
 
 El resto de diagramas/gráficas se han hecho con las siguientes herramientas:
+
 - *draw.io#sub([@drawio]):* Herramienta de acceso gratuito y online de creación de diagramas. Ofrece soporte nativo para la exportación de imágenes y fue seleccionado por su facilidad de acceso e intuitividad a la hora de crear todos los diagramas de este TFG.
+
 - Las gráficas de carácter analítico se han generado de forma programática con *Matplotlib#sub([@matplotlib])* y *seaborn#sub([@seabornDocs, @waskomSeaborn])* las mismas bibliotecas empleadas dentro de la #link(<capa-evaluacion>)[*Capa de evaluación de modelos*]. Frente a una gráfica de creación de diagramas manuales, el uso de estas bibliotecas permite generar gráficas directamente a partir de los resultados numéricos que se obtienen en los modelos, garantizando la reproducibilidad y evitando errores de transcripción al representarlos.

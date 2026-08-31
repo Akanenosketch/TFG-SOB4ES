@@ -29,7 +29,7 @@ En el diagrama que se muestra en la #ref(<fig-1>), podemos distinguir las siguie
 
 Además, el proyecto también cuenta con un componente metodológico iterativo incremental, descrito a continuación.
 
-El *desarrollo iterativo incremental* se basa en la capacidad de poder dividir un proyecto en diversos bloques reducidos y asignarlos a franjas temporales generalmente fijas, las cuales pueden ser adaptadas a futuro. Estos bloques reducidos se denominan como *iteraciones*.
+El *desarrollo iterativo incremental* se basa en la capacidad de poder dividir un proyecto en diversos bloques reducidos y asignarlos a franjas temporales generalmente fijas, las cuales pueden ser adaptadas a futuro. Estos bloques reducidos se denominan *iteraciones*.
 
 De forma más específica, las iteraciones se pueden definir como miniproyectos o como un set de tareas en las cuales "_se repite un proceso de trabajo similar para proporcionar un resultado completo sobre el producto final_" #sub([@desarrolloIterativoIncremental]). Cada iteración tiene como resultado una parte del producto final funcional, el cual se va integrando a lo largo de las iteraciones hasta crear el producto final.
 
@@ -38,7 +38,7 @@ Todos los detalles relacionados con las fases, hitos y los tiempos de realizaci�
 La aplicación conjunta de ambas metodologías (CRISP-ML(Q), junto con desarrollo iterativo incremental) se justifica por los siguientes motivos:
 
 + *Permite acortar en el tiempo las fases de mayor incertidumbre de CRISP-ML(Q).*
-  - Las fases de Ingeniería del modelo y Evaluación del modelo son, por su propia naturaleza, las que más ciclos de prueba-error requieren en un proyecto de aprendizaje automático. Tratarlas como un bloque monolítico dificultaría la estimación de tiempos y la detección de desviaciones en el tiempo; al dividirlas en iteraciones concretas, cada una entrega un resultado evaluable en el plazo acotado.
+  - Las fases de Ingeniería del modelo y Evaluación del modelo son, por su propia naturaleza, las que más ciclos de prueba-error requieren en un proyecto de aprendizaje automático. Tratarlas como un bloque monolítico dificultaría la estimación de tiempos y la detección de desviaciones en el tiempo, al dividirlas en iteraciones concretas, cada una entrega un resultado evaluable en el plazo acotado.
 
 + *Cada iteración produce un incremento funcional y evaluable.*
   - En este caso, un modelo entrenado junto con sus métricas de rendimiento, en lugar de posponer cualquier resultado tangible hasta el final del proyecto. Esto permite detectar pronto problemas transversales, como el rendimiento inesperado de un modelo o la necesidad de revisar alguna variable predictora, sin tener que esperar a que todo el _pipeline_ esté terminado.

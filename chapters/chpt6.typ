@@ -118,7 +118,7 @@ Además, la calidad de los datos de entrada, condiciona directamente a la fiabil
 
 Para reducir, en la medida de lo posible, los riesgos provenientes de los puntos anteriores se han aplicado las siguientes medidas de mitigación:
 - Uso sistemático de validación cruzada repetida en todos los modelos desarrollados, en lugar de hacer uso de una única partición de validación, para obtener estimaciones más robustas y precisas sobre el rendimiento real.
-- Separación estricta del _dataset_ original en tres subconjuntos (entrenamiento, validación y evaluación) desde la fase inicial de modelado. Esto permite evitar que el set de evaluación se use en ningún momento en otros procesos para los cuales no fue creado, como puede ser la búsqueda de hiperparámetros.
+- Separación estricta del _dataset_ original en tres subconjuntos (entrenamiento, validación y evaluación) desde la fase inicial de desarrollo de modelos. Esto permite evitar que el set de evaluación se use en ningún momento en otros procesos para los cuales no fue creado, como puede ser la búsqueda de hiperparámetros.
 - Registro de los campos sin datos de los _datasets_ originales mediante un archivo de banderas de imputación. Esto permite tener un mayor conocimiento y control sobre los datos que se poseen o que siguen carentes en todo momento, además, permite la determinación sobre qué datos son mediciones reales y cuáles son estimaciones. 
 - Revisiones periódicas del proceso de desarrollo en forma de reuniones semanales (véase #link(<seguimiento>)[*Seguimiento*]), permitiendo así detectar errores o desviaciones en el desarrollo y parametrización de los modelos antes de que afecten a fases posteriores.
 - Realización de pruebas complementarias para la simplificación y mejor selección de los modelos finales (véase #link(<pruebas-llevadas-a-cabo>)[*Anexo V*]). Dichas pruebas también sirven para medir la robustez actual de los modelos.
@@ -143,4 +143,4 @@ En casos en los que las circunstancias del proyecto lo requieran, por ejemplo, a
 
 == Justificación de desviaciones <justificacion-de-desviaciones>
 
-A fecha de 25/08/2026, no existen diferencias con la planificación creada.
+A fecha de 02/09/2026, no existen diferencias con la planificación creada.
