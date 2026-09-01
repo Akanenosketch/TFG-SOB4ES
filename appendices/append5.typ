@@ -193,11 +193,11 @@ En la #ref(<tab-64>) se pueden ver los resultados de ambas iteraciones a nivel g
     [*RF multisalida*],      [0.0953],  [0.0030], [0.0953],  [0.0033],
     [*_Random Forest_*],     [0.0890],  [0.0040], [0.0892],  [0.0042],
     [*XGBoost multisalida*], [0.0780],  [0.0055], [0.0786],  [0.0049],
+    [*XGBoost*],             [0.0650],  [0.0043], [0.0655],  [0.0044],
     [*RegressorChain*],      [0.0635],  [0.0104], [0.0643],  [0.0116],
-    [*_Ridge_*],               [-0.0164], [0.0000], [-0.0164], [0.0000],
+    [*_Ridge_*],             [-0.0164], [0.0000], [-0.0164], [0.0000],
     [*MLP multisalida*],     [-0.0271], [0.0342], [-0.0678], [0.0516],
     [*MLP _custom loss_*],   [-0.0495], [0.0312], [-0.0588], [0.0348],
-    [*XGBoost*],             [-0.0636], [0.0000], [-0.0636], [0.0000],
   ),
   caption: [Media y desviación típica de $R²$ GLOBAL (21 _targets_) en los barridos de 101 y 491 semillas.],
 )<tab-64>
@@ -211,13 +211,13 @@ En la #ref(<tab-64>) se pueden ver los resultados de ambas iteraciones a nivel g
       [*Modelo*], [*Shannon (101 s.)*], [*Shannon (491 s.)*], [*Richness (101 s.)*], [*Richness (491 s.)*],
     ),
     [*XGBoost\ multisalida*], [0.5343], [0.5330], [0.5866], [0.5867],
-    [*_Random Forest_*],     [0.4990], [0.5018], [0.5643], [0.5635],
-    [*RegressorChain*],      [0.4789], [0.4792], [0.5270], [0.5279],
-    [*RF multisalida*],      [0.4140], [0.4142], [0.4493], [0.4494],
-    [*XGBoost*],             [0.3898], [0.3898], [0.4895], [0.4895],
-    [*MLP multisalida*],     [0.3452], [0.3653], [0.4354], [0.4592],
-    [*MLP _custom loss_*],   [0.3169], [0.3464], [0.4185], [0.4491],
-    [*_Ridge_*],               [0.2395], [0.2395], [0.2789], [0.2789],
+    [*_Random Forest_*],      [0.4990], [0.5018], [0.5643], [0.5635],
+    [*XGBoost*],              [0.4921], [0.4914], [0.5140], [0.5135],
+    [*RegressorChain*],       [0.4789], [0.4792], [0.5270], [0.5279],
+    [*RF multisalida*],       [0.4140], [0.4142], [0.4493], [0.4494],
+    [*MLP multisalida*],      [0.3452], [0.3653], [0.4354], [0.4592],
+    [*MLP _custom loss_*],    [0.3169], [0.3464], [0.4185], [0.4491],
+    [*_Ridge_*],              [0.2395], [0.2395], [0.2789], [0.2789],
   ),
   caption: [Media de $R²$ en los dos _targets_ prioritarios sobre los barridos de 101 y 491 semillas.],
 )<tab-65>
@@ -240,22 +240,22 @@ En la #ref(<tab-64>) se pueden ver los resultados de ambas iteraciones a nivel g
     ),
     [*RF multisalida*],      [1.11], [0.34], [1.12], [0.34],
     [*_Random Forest_*],     [1.96], [0.37], [1.95], [0.42],
-    [*XGBoost multisalida*], [3.04], [0.37], [3.08], [0.41],
-    [*RegressorChain*],      [3.90], [0.41], [3.85], [0.42],
-    [*_Ridge_*],               [5.48], [0.63], [5.25], [0.51],
-    [*MLP multisalida*],     [6.02], [0.99], [6.92], [1.09],
-    [*MLP _custom loss_*],   [6.87], [0.87], [6.77], [0.88],
-    [*XGBoost*],             [7.62], [0.51], [7.06], [0.82],
+    [*XGBoost multisalida*], [3.09], [0.45], [3.10], [0.45],
+    [*XGBoost*],             [4.38], [0.56], [4.44], [0.55],
+    [*RegressorChain*],      [4.48], [0.74], [4.38], [0.76],
+    [*_Ridge_*],             [6.48], [0.63], [6.25], [0.51],
+    [*MLP multisalida*],     [6.90], [0.79], [7.42], [0.72],
+    [*MLP _custom loss_*],   [7.61], [0.60], [7.33], [0.61],
   ),
   caption: [_Ranking_ medio por modelo a lo largo de las semillas, en cada uno de los dos barridos.],
   kind: table
 )<tab-66>
 
-_Ridge_ y XGBoost (variante single-_target_) tienen desviación típica exactamente 0.0000 en ambos barridos, es decir, son completamente deterministas frente a `random_state` con la configuración de hiperparámetros actual. Para _Ridge_ ya se había confirmado en la @prueba-2; que XGBoost single-_target_ también lo sea es un hallazgo nuevo, que sugiere que `subsample` y `colsample_bytree` no introducen aleatoriedad efectiva o que `random_state` no se está propagando realmente al proceso de entrenamiento.
+_Ridge_ es el único modelo con desviación típica exactamente 0.0000 en ambos barridos, es decir, completamente determinista frente a `random_state`, comportamiento ya confirmado en la @prueba-2 y esperado por tratarse de una solución cerrada. En una primera ejecución de este barrido, XGBoost (variante _single-target_) mostró el mismo patrón (desviación 0.0000), lo cual resultaba anómalo dado que su configuración de `subsample` y `colsample_bytree` sí debería introducir variabilidad entre semillas. Tras repetir el experimento, la desviación observada para XGBoost _single-target_ es de 0.0043-0.0044, en línea con el resto de modelos basados en árboles (véanse las tablas anteriores), no se ha podido aislar con certeza qué causó el determinismo de la primera ejecución, por lo que los valores considerados válidos para esta memoria son los de la segunda.
 
 El _ranking_, como se puede ver en la #ref(<tab-66>), es prácticamente idéntico entre los dos barridos pese a que uno tiene casi 5 veces más semillas que el otro, lo que es una fuerte evidencia de que 101 semillas ya son suficientes para estimar el _ranking_ de forma estable. RF multisalida es, con diferencia, el modelo más estable y con mejor _rank_ medio en ambos barridos, sin bajar nunca de la 2ª posición. Esto contrasta con la #link(<prueba-1>)[*Prueba de eliminación de variables*], donde XGBoost destacaba sobre los _targets_ prioritarios: en $R²$ global sobre los 21 _targets_ gana RF multisalida, en $R²$ sobre los dos _targets_ prioritarios gana XGBoost multisalida, son conclusiones distintas según qué métrica se priorice, no contradictorias.
 
-Como conclusión, el barrido confirma que 5 semillas es un tamaño de ensamble razonable para _Random Forest_, XGBoost multisalida y RegressorChain, pero probablemente insuficiente para MLP dada su desviación típica varias veces mayor que el resto. Se recomienda considerar un ensamble mayor (p. ej. 10-15 redes) para las dos variantes de MLP, o al menos reportar esta limitación en las conclusiones finales, y verificar si `random_state` se propaga correctamente en `xgboost_model.ipynb`.
+Como conclusión, el barrido confirma que 5 semillas es un tamaño de ensamble razonable para _Random Forest_, XGBoost (ambas variantes) y RegressorChain, pero probablemente insuficiente para MLP dada su desviación típica varias veces mayor que el resto. Se recomienda considerar un ensamble mayor (p. ej. 10-15 redes) para las dos variantes de MLP, o al menos reportar esta limitación en las conclusiones finales.
 
 === Prueba de ensamblado de predicciones <prueba-4>
 
@@ -410,7 +410,7 @@ Los dos MLP y _Ridge_ quedan sistemáticamente en las últimas posiciones. Sin e
 
 No es una contradicción entre pruebas, sino una diferencia real de comportamiento según qué métrica se priorice.
 
-El hallazgo más importante no es de modelo, sino de _target_: se trata de _negative transfer_. La #link(<prueba-1>)[*Prueba de eliminación de variables*] muestra que el $R²$ agregado sobre los 21 _targets_ es sustancialmente más bajo, en todos los modelos, que el $R²$ sobre los dos _targets_ prioritarios, no solo en los multisalida, sino también en los modelos single-_target_ evaluados sobre el mismo conjunto de 21 _targets_. 
+El hallazgo más importante no es de modelo, sino de _target_: se trata de _negative transfer_. La #link(<prueba-1>)[*Prueba de eliminación de variables*] muestra que el $R²$ agregado sobre los 21 _targets_ es sustancialmente más bajo, en todos los modelos, que el $R²$ sobre los dos _targets_ prioritarios, no solo en los multisalida, sino también en los modelos _single-target_ evaluados sobre el mismo conjunto de 21 _targets_. 
 
 Esto confirma que el problema no es exclusivo de compartir representación entre salidas, sino que refleja la heterogeneidad real de los 21 _targets_ como problema de predicción. La variante multisalida añade además el riesgo teórico de _negative transfer_ (optimizar bien los _targets_ dominantes a costa del resto), pero el patrón de fondo es independiente de la arquitectura.
 
@@ -422,6 +422,6 @@ La inestabilidad del MLP es el segundo hallazgo transversal más relevante. Las 
 
 #colbreak()
 
-Por último, cabe destacar el determinismo inesperado de _Ridge_ y XGBoost. Las pruebas 2 y 3 muestran que _Ridge_ tiene varianza cero entre semillas comportamiento esperado por tratarse de una solución cerrada) y que XGBoost también la tiene, un hallazgo menos esperado que queda como pregunta abierta: si `random_state` no se está propagando correctamente al entrenamiento de este modelo concreto, el ensamble de 5 semillas de XGBoost en producción no estaría aportando la diversidad que se le presupone. 
+Por último, cabe destacar el determinismo de _Ridge_ frente a `random_state`, confirmado en las pruebas 2 y 3 y esperado por tratarse de una solución cerrada. XGBoost (variante _single-target_) mostró este mismo comportamiento en una primera ejecución de la @prueba-3, un hallazgo inesperado dado que su configuración de hiperparámetros sí incluye `subsample` y `colsample_bytree` por debajo de 1. Al repetir el experimento, la desviación típica de XGBoost _single-target_ resultó ser de 0.0043-0.0044, coherente con el resto de modelos basados en árboles, por lo que el ensamble de 5 semillas en producción sí aporta la diversidad esperada, no obstante, no se ha podido determinar con certeza la causa del determinismo observado en la primera ejecución, por lo que se documenta como una incidencia resuelta pero no explicada. 
 
 En síntesis, los resultados respaldan la hipótesis de partida, los modelos basados en árboles igualan o superan al MLP en este _dataset_ reducido, pero matizan qué significa "el mejor modelo": depende de si se prioriza el rendimiento agregado sobre los 21 _targets_ (RF multisalida) o el rendimiento sobre los dos _targets_ prioritarios de lombrices (XGBoost multisalida). El factor que más limita el rendimiento global no es la elección de modelo, variables o método de combinación, sino la heterogeneidad intrínseca de los 21 _targets_.
