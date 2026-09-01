@@ -5,8 +5,8 @@ rf_model.ipynb,model-prep-rs-group,0.5643,0.0103,0.5426,0.5873,101
 rf_model.ipynb,model-prep-rs-group-1,0.5635,0.0106,0.5353,0.59,491
 regressorchain.ipynb,model-prep-rs-group-1,0.5279,0.0121,0.4924,0.5664,491
 regressorchain.ipynb,model-prep-rs-group,0.527,0.0118,0.5046,0.559,101
+xgboost_model.ipynb,model-prep-rs-group,0.514,0.0114,0.4831,0.5456,101
 xgboost_model.ipynb,model-prep-rs-group-1,0.4895,0.0,0.4895,0.4895,491
-xgboost_model.ipynb,model-prep-rs-group,0.4895,0.0,0.4895,0.4895,101
 mlp_multisalida.ipynb,model-prep-rs-group-1,0.4592,0.0455,0.2597,0.5618,491
 rf_multisalida.ipynb,model-prep-rs-group-1,0.4494,0.0086,0.42,0.4808,491
 rf_multisalida.ipynb,model-prep-rs-group,0.4493,0.0087,0.4178,0.4733,101

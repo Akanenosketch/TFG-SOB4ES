@@ -1,4 +1,4 @@
-OK | xgboost_model.ipynb | 1026.9s
+OK | xgboost_model.ipynb | 993.3s
 ----------------------------------------------------------------------
-OK | extractor_resultados.ipynb | 4.9s
+OK | extractor_resultados.ipynb | 4.6s
 ----------------------------------------------------------------------
