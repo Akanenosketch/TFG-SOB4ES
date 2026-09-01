@@ -30,7 +30,7 @@ Esta definición es la adoptada como referencia en el presente trabajo, al desco
 
 Estas dos definiciones de _Machine Learning_ se pueden resumir de la siguiente forma #sub([@bergmannMachineLearningIBM]):
 
-#rect[“El _Machine Learning_ es una rama o subconjunto de la Inteligencia Artificial que se centra en dotar a los algoritmos de la capacidad de 'aprender'. Este aprendizaje utiliza como base la detección de patrones en los datos de entrenamiento para, posteriormente, hacer predicciones o inferencias sobre nuevos datos.”]
+#rect[ “El _Machine Learning_ es una rama o subconjunto de la Inteligencia Artificial que se centra en dotar a los algoritmos de la capacidad de «aprender». Este aprendizaje utiliza como base la detección de patrones en los datos de entrenamiento para, posteriormente, hacer predicciones o inferencias sobre nuevos datos.” ]
 
 Esta capacidad de aprender permite a los modelos de ML realizar predicciones, tomar decisiones y realizar acciones variadas sin que lo tengan estrictamente indicado dentro de su código. También les permite diferenciarse de los sistemas expertos tradicionales, en los que el conocimiento se codifica explícitamente, y los acerca a la estadística, de la que toma buena parte de su base matemática.
 
@@ -71,7 +71,7 @@ Algunos modelos representativos de este paradigma son la regresión lineal, los 
 
 La expresión anterior es un caso particular del *principio de minimización del riesgo empírico* (_Empirical Risk Minimization_, ERM)#sub([@mitchellMachineLearning]): como no se conoce la distribución real que generan los datos, se aproxima el riesgo empírico.
 
-Esta aproximación introduce un problema central dentro del aprendizaje automático: la minimización del riesgo empírico sin ningún control sobre la complejidad de $cal(H)$ puede producir una función que memorice el ruido específico del conjunto de entrenamiento en lugar de aprender el patrón subyacente; este es el fenómeno de *sobreajuste* o *_overfitting_*.
+Esta aproximación introduce un problema central dentro del aprendizaje automático: la minimización del riesgo empírico sin ningún control sobre la complejidad de $cal(H)$ puede producir una función que memorice el ruido específico del conjunto de entrenamiento en lugar de aprender el patrón subyacente; este es el fenómeno de *sobreajuste* u *_overfitting_*.
 
 El término *$Omega(f)$* existe precisamente para mitigar el riesgo de sobreajuste, y es la razón teórica que justifica, por ejemplo, la penalización $alpha norm(w)^2$ de _Ridge_ o el término
 
@@ -852,7 +852,8 @@ Además de los subprocesos, a lo largo de procesamiento de esta datos se hace us
 
 === Capa de modelado predictivo <capa-modelado>
 
-El objetivo principal de esta capa es el desarrollo de los diferentes modelos predictivos como también la preparación de los sets de aprendizaje y pruebas y su consecuente entrenamiento.\
+El objetivo principal de esta capa es el desarrollo de los diferentes modelos predictivos como también la preparación de los sets de aprendizaje y pruebas y su consecuente entrenamiento.
+
 Antes de comenzar a trabajar en esta capa es recomendable tener el _dataset_ con los datos finales preparado y armonizado para que el proceso pueda, de esta forma, ser mucho más lineal y sencillo de seguir. 
 
 Esta capa y la siguiente, van a estar comunicadas entre sí debido a que el _feedback_ que se reciba de la *Capa de evaluación de modelos* va a ser usado para mejorar los modelos que se desarrollen en esta capa. De esta forma se pueden obtener múltiples modelos predictivos de mayor calidad, el cual es el quinto sub objetivo de este trabajo de fin de grado.
@@ -889,7 +890,8 @@ De la misma forma que las capas anteriores, esta capa va a estar dividida en var
       kind: table,
   )<tab-4>
 
-+ *Fase de investigación de posibles modelos predictivos:* El objetivo de esta fase es tener una lista de modelos predictivos que se puedan desarrollar y emplear teniendo en cuenta los requisitos de este trabajo, como también condicionantes como el formato de datos y el número de estos mismos.\
++ *Fase de investigación de posibles modelos predictivos:* El objetivo de esta fase es tener una lista de modelos predictivos que se puedan desarrollar y emplear teniendo en cuenta los requisitos de este trabajo, como también condicionantes como el formato de datos y el número de estos mismos.
+
   También en esta fase, además del listado de modelos predictivos a desarrollar, se elaborará un listado de parámetros a utilizar como variables para que el modelo tenga ya cierta calidad a la hora de hacer el primer aprendizaje y evaluación.
 
 + *Fase de configuración del entorno:* El objetivo de esta fase es tener el entorno con las bibliotecas y todos los componentes necesarios para poder ejecutar sin problemas los diferentes modelos que se desarrollen a lo largo de la siguiente fase.

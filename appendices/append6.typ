@@ -82,9 +82,13 @@ A partir de estas medidas y una vez realizadas todas las pruebas, las cuales se 
 Además de la distribución de todas las ramas, en la siguiente tabla se muestran todas las ramas con su correspondiente objetivo, explicado de una forma más concisa. Como se puede observar, la rama `master` no figura en la tabla debido a que no tiene un objetivo funcional, sino que su único objetivo es mostrar de un vistazo los elementos principales de este TFG.
 
 Esta distribución de ramas, a lo largo de la realización de todas las pruebas, ha permitido lo siguiente:
+
 - Iterar sobre configuraciones experimentales concretas de forma aislada sin que esto afectara, combinado con la estrategia empleada en la elaboración de los modelos, al resto de modelos ni a los resultados de los modelos base o los modelos del resto de las pruebas realizadas.
+
 - Facilitar la comparación en cualquier momento el código y los resultados de dos o varias ramas distintas, independientemente de que dicha revisión sea manual o automatizada.
-- Preservar un historial completo y trabajable de cada decisión experimental: si una prueba concreta produce resultados inesperados, es posible volver a la rama correspondiente y revisar exactamente qué parámetros o variables se emplearon en ella, sin depender de la memoria del investigador ni de anotaciones externas al propio repositorio.
+
+- Preservar un historial completo y trazable de cada decisión experimental: si una prueba concreta produce resultados inesperados, es posible volver a la rama correspondiente y revisar exactamente qué parámetros o variables se emplearon en ella, sin depender de la memoria del investigador ni de anotaciones externas al propio repositorio.
+
 - Facilitar la reproducibilidad de cualquier resultado concreto de la memoria: cada figura, cada tabla o métrica reportada puede rastrearse hasta la rama y el _notebook_ exactos que la generaron.
 
 #colbreak()

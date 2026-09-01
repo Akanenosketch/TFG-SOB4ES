@@ -474,7 +474,7 @@ Este resultado, centrado en el R² medio de los *21 _targets_*, es coherente con
 
 
 #let file = "../media/anexos/extractor_resultados.pdf"
-#let total_pages = 24
+#let total_pages = 21
 #set page(number-align: right)
 #for p in range(1, total_pages + 1) {
   page(
@@ -500,7 +500,7 @@ El _ranking_ final se ordena primero por frecuencia (descendente) y, en caso de 
 
 ===== Resultados
 
-En la tabla #ref(<tab-39>) se puede ver el _ranking_ de consenso resultante tras realizar la comparación con los 8 modelos base.
+En la #ref(<tab-39>) se puede ver el _ranking_ de consenso resultante tras realizar la comparación con los 8 modelos base.
 
 #figure(
     align(center)[

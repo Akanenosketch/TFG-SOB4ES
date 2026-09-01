@@ -183,7 +183,7 @@ TFG-SOB4ES/
 
 === Ejecución del _pipeline_ <orden-ejecucion>
 
-Los _notebooks_ deben ejecutarse siguiendo el mismo orden que las capas descritas en la #link(<arquitectura>)[*Arquitectura general*]. En la tabla #ref(<tab-48>) se indica el orden de ejecución.
+Los _notebooks_ deben ejecutarse siguiendo el mismo orden que las capas descritas en la #link(<arquitectura>)[*Arquitectura general*]. En la #ref(<tab-48>) se indica el orden de ejecución.
 
 #figure(
   align(center)[
